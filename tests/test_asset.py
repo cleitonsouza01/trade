@@ -7,10 +7,17 @@ from trade_tools import trade_tools
 class TestAssetCreation(unittest.TestCase):
 
     def setUp(self):
-        self.asset = trade_tools.Asset(name='some stock')
+        self.asset1 = trade_tools.Asset(name='some stock')
+        self.asset2 = trade_tools.Asset()
 
-    def test_asset_exists(self):
-        self.assertTrue(self.asset)
+    def test_asset1_should_exist(self):
+        self.assertTrue(self.asset1)
 
-    def test_asset_name_should_be_some_stock(self):
-        self.assertEqual(self.asset.name, 'some stock')
+    def test_asset1_name_should_be_some_stock(self):
+        self.assertEqual(self.asset1.name, 'some stock')
+
+    def test_asset2_should_exist(self):
+        self.assertTrue(self.asset2)
+
+    def test_asset2_name_should_be_empty_string(self):
+        self.assertEqual(self.asset2.name, '')
