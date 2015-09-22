@@ -45,12 +45,13 @@ class Trade:
 	A trade represents the purchase or sale of an asset.
 
 	Attributes:
-        date: A string 'YYYY-mm-dd' representing the date trade occurred
+        date: A string 'YYYY-mm-dd' representing the date the trade
+			occurred.
 		asset: An Asset instance, the asset that is being traded.
 		quantity: A number representing the quantity being traded.
-		price: The raw unitary price of the trade.
-		discounts: A dict containing numeric values to be deducted
-			from the operation total value.
+		price: The raw unitary price of the asset being traded.
+		discounts: A dict of discount names and values to be deducted from
+			the trade total value.
 	"""
 
 	def __init__(self, quantity, price,
@@ -89,11 +90,11 @@ class TradeContainer:
 	the same date, and then perform tasks on them.
 
 	Attributes:
-        date: A string 'YYYY-mm-dd' representing the date of the
-			trades on the container.
+        date: A string 'YYYY-mm-dd' representing the date of the trades
+			on the container.
 		trades: A list of Trade instances.
-		discounts: A dict with the discounts names and values to be
-			deducted from the trades.
+		discounts: A dict with discount names and values to be deducted from
+			the trades.
 	"""
 
 	def __init__(self, date=None, trades=None, discounts=None):
@@ -105,7 +106,7 @@ class TradeContainer:
 
 	@property
 	def total_discount_value(self):
-		"""Return the sum of the discounts in the container."""
+		"""Return the sum of discount values in the container."""
 		return sum(self.discounts.values())
 
 	@property
@@ -114,10 +115,9 @@ class TradeContainer:
 		return sum(trade.volume for trade in self.trades)
 
 	def rate_discounts_by_trade(self, trade):
-		"""Rate the discounts of the container to one trade.
+		"""Rate the discounts of the container for one trade.
 
-		The rating is based on the container volume (the sum of the volume
-		of all its trades) and the trade volume.
+		The rate is based on the container volume and the trade volume.
 		"""
 		percent = trade.volume / self.volume * 100
 		for key, value in self.discounts.iteritems():
