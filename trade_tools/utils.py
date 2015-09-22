@@ -1,4 +1,4 @@
-"""trade_tools: Tools To Work With Financial Data.
+"""trade_tools: Tools For Stock Trading Applications.
 
 Copyright (c) 2015 Rafael da Silva Rocha
 
