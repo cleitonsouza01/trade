@@ -4,6 +4,9 @@ import unittest
 import trade_tools
 
 
+# TODO document this
+
+
 class TestAssetCreation(unittest.TestCase):
 
     def setUp(self):

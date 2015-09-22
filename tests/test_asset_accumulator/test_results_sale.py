@@ -4,6 +4,10 @@ import unittest
 from trade_tools import AssetAccumulator
 
 
+# TODO document this
+# TODO more tests
+
+
 class TestAccumulatorResults_sale_case_00(unittest.TestCase):
 
     maxDiff = None

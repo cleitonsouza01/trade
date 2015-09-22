@@ -5,6 +5,10 @@ from trade_tools.utils import average_price, same_sign, daytrade_condition
 from trade_tools import Asset, Trade
 
 
+# TODO document this
+# TODO more tests
+
+
 class Test_same_sign(unittest.TestCase):
 
     def setUp(self):
