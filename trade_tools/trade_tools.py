@@ -54,11 +54,12 @@ class Trade:
 	"""
 
 	def __init__(self, quantity, price,
-					date=None, asset=None, discounts={}):
+					date=None, asset=None, discounts=None):
 		self.date = date
 		self.asset = asset
 		self.quantity = quantity
 		self.price = price
+		if discounts is None: discounts={}
 		self.discounts = discounts
 
 	@property
@@ -79,3 +80,45 @@ class Trade:
 	@property
 	def volume(self):
 		return abs(self.quantity) * self.price
+
+
+class TradeContainer:
+	"""A trade container.
+
+	A TradeContainer is used to group trades, like trades that occurred on
+	the same date, and then perform tasks on them.
+
+	Attributes:
+        date: A string 'YYYY-mm-dd' representing the date of the
+			trades on the container.
+		trades: A list of Trade instances.
+		discounts: A dict with the discounts names and values to be
+			deducted from the trades.
+	"""
+
+	def __init__(self, date=None, trades=None, discounts=None):
+		self.date = date
+		if trades is None: trades=[]
+		if discounts is None: discounts = {}
+		self.trades = trades
+		self.discounts = discounts
+
+	@property
+	def total_discount_value(self):
+		"""Return the sum of the discounts in the container."""
+		return sum(self.discounts.values())
+
+	@property
+	def volume(self):
+		"""Return the sum of the volume of the trades in the container."""
+		return sum(trade.volume for trade in self.trades)
+
+	def rate_discounts_by_trade(self, trade):
+		"""Rate the discounts of the container to one trade.
+
+		The rating is based on the container volume (the sum of the volume
+		of all its trades) and the trade volume.
+		"""
+		percent = trade.volume / self.volume * 100
+		for key, value in self.discounts.iteritems():
+			trade.discounts[key] = value * percent / 100
