@@ -22,6 +22,7 @@ THE SOFTWARE.
 """
 
 from __future__ import absolute_import
+from __future__ import division
 
 import math
 
@@ -46,5 +47,8 @@ def average_price(quantity_1, price_1, quantity_2, price_2):
 
 
 def same_sign(x, y):
-    """Check if two numbers have the same sign."""
-    return x == math.copysign(x, y)
+	"""Check if two numbers have the same sign."""
+	try:
+		return x == math.copysign(x, y)
+	except:
+		return None
