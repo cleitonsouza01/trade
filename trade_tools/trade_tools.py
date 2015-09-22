@@ -65,7 +65,7 @@ class Trade:
 
 	@property
 	def real_value(self):
-		return self.quantity * self.real_price
+		return abs(self.quantity) * self.real_price
 
 	@property
 	def real_price(self):
@@ -122,3 +122,32 @@ class TradeContainer:
 		percent = trade.volume / self.volume * 100
 		for key, value in self.discounts.iteritems():
 			trade.discounts[key] = value * percent / 100
+
+
+class Daytrade:
+	"""A daytrade operation.
+
+	A daytrade is the operation of purchase and sale of the same asset on
+	the same date.
+
+	Attributes:
+		asset: An asset instance, the asset that is being traded.
+		quantity: The traded quantity of the asset.
+		buy: A Trade instance representing the purchase of the asset.
+		sale: A Trade instance representing the sale of the asset.
+	"""
+
+	def __init__(self, date, asset, quantity, buy_price, sale_price):
+		self.date = date
+		self.asset = asset
+		self.quantity = quantity
+		self.buy = Trade(
+			date=date, asset=asset, quantity=quantity, price=buy_price
+		)
+		self.sale = Trade(
+			date=date, asset=asset, quantity=quantity*-1, price=sale_price
+		)
+
+	@property
+	def result(self):
+		return self.sale.real_value - self.buy.real_value

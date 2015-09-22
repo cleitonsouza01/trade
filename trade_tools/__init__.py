@@ -23,4 +23,4 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from .trade_tools import Asset, Trade, TradeContainer
+from .trade_tools import Asset, Trade, TradeContainer, Daytrade
