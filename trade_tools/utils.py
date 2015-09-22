@@ -23,5 +23,28 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from .trade_tools import Asset, Trade, TradeContainer, Daytrade
-from .utils import daytrade_condition, calc_average_price, same_sign
+import math
+
+
+def daytrade_condition(trade_a, trade_b):
+	"""Check if two trades configure a daytrade."""
+	return (
+		trade_a.asset == trade_b.asset and
+		not same_sign(trade_a.quantity, trade_b.quantity) and
+		trade_a.quantity != 0 and
+		trade_b.quantity != 0
+	)
+
+
+def calc_average_price(quantity_1, price_1, quantity_2, price_2):
+    """Calculate the average price between two positions.
+
+	A position is the quantity of an asset and its unitary average price.
+    """
+    return (quantity_1 * price_1 + quantity_2 * price_2) / \
+			(quantity_1 + quantity_2)
+
+
+def same_sign(x, y):
+    """Check if two numbers have the same sign."""
+    return x == math.copysign(x, y)

@@ -24,6 +24,9 @@ THE SOFTWARE.
 from __future__ import division
 
 import math
+import copy
+
+import utils
 
 
 class Asset:
@@ -37,6 +40,9 @@ class Asset:
 
 	def __init__(self, name=''):
 		self.name = name
+
+	def __deepcopy__(self, memo):
+		return self
 
 
 class Trade:
@@ -103,10 +109,12 @@ class TradeContainer:
 		if discounts is None: discounts = {}
 		self.trades = trades
 		self.discounts = discounts
+		self.daytrades = []
+		self.common_trades = []
 
 	@property
 	def total_discount_value(self):
-		"""Return the sum of discount values in the container."""
+		"""Return the sum of values in the container discounts dict."""
 		return sum(self.discounts.values())
 
 	@property
@@ -123,6 +131,94 @@ class TradeContainer:
 		for key, value in self.discounts.iteritems():
 			trade.discounts[key] = value * percent / 100
 
+	# TODO better docstring and comments
+	def identify_daytrades_and_common_trades(self):
+		"""Separate trades into daytrades and common trades.
+
+		The daytrades are operations of purchase and sale of the same
+		asset. The common trades are the resulting trades.
+		"""
+		trades = copy.deepcopy(self.trades)
+
+		for trade in trades:
+			for other_trade in trades:
+				if utils.daytrade_condition(trade, other_trade):
+					if trade.quantity > 0:
+						self.append_to_daytrades(trade, other_trade)
+					else:
+						self.append_to_daytrades(other_trade, trade)
+
+		for trade in trades:
+			if trade.quantity != 0:
+				self.append_to_common_trades(trade)
+
+	# TODO docstring! This method change the
+	#      params attrs among other things!
+	def append_to_daytrades(self, buy_trade, sale_trade):
+		daytrade_quantity = abs(min([buy_trade.quantity, sale_trade.quantity]))
+		buy_trade.quantity -= daytrade_quantity
+		sale_trade.quantity += daytrade_quantity
+		daytrade = Daytrade(
+			self.date,
+			buy_trade.asset,
+			daytrade_quantity,
+			buy_trade.price,
+			sale_trade.price
+		)
+		if not self.add_to_existing_daytrade(daytrade):
+			self.daytrades.append(daytrade)
+
+	def add_to_existing_daytrade(self, daytrade):
+		"""Merge an daytrade with a already existing daytrade.
+
+        Returns True if a merge occurred; None otherwise.
+		"""
+		for other_daytrade in self.daytrades:
+			if other_daytrade.asset == daytrade.asset:
+				self.merge_daytrade_operations(
+					other_daytrade.buy,
+					daytrade.buy
+				)
+				self.merge_daytrade_operations(
+					other_daytrade.sale,
+					daytrade.sale
+				)
+				other_daytrade.quantity += daytrade.quantity
+				return True
+
+	# TODO docstring
+	def merge_daytrade_operations(self, existing_operation, operation):
+		existing_operation.price = utils.calc_average_price(
+										existing_operation.quantity,
+										existing_operation.price,
+										operation.quantity,
+										operation.price
+									)
+		existing_operation.quantity += operation.quantity
+
+	def append_to_common_trades(self, trade):
+		"""Append a trade to the TradeContainer common trades list.
+		"""
+		if not self.add_to_existing_common_trade(trade):
+			self.common_trades.append(trade)
+
+	# TODO better docstring
+	def add_to_existing_common_trade(self, trade):
+		"""Merge an trade with a common trade of the same asset.
+
+        Returns True if a merge occurred; None otherwise.
+		"""
+		for existing_trade in self.common_trades:
+			if existing_trade.asset == trade.asset:
+				existing_trade.price = utils.calc_average_price(
+											existing_trade.quantity,
+											existing_trade.price,
+											trade.quantity,
+											trade.price
+										)
+				existing_trade.quantity += trade.quantity
+				return True
+
 
 class Daytrade:
 	"""A daytrade operation.
@@ -137,6 +233,7 @@ class Daytrade:
 		sale: A Trade instance representing the sale of the asset.
 	"""
 
+	# TODO docstring explaining buy and sale trade creation
 	def __init__(self, date, asset, quantity, buy_price, sale_price):
 		self.date = date
 		self.asset = asset
