@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 import unittest
 
-from trade_tools import trade_tools
+import trade_tools
 
 
 class TestAssetCreation(unittest.TestCase):

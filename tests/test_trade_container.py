@@ -1,9 +1,7 @@
 from __future__ import absolute_import
 import unittest
-import decimal
-decimal.getcontext().prec = 8
 
-from trade_tools import trade_tools
+import trade_tools
 
 
 class TestTradeContainerCreation(unittest.TestCase):
