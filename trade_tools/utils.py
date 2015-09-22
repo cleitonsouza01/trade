@@ -36,7 +36,7 @@ def daytrade_condition(trade_a, trade_b):
 	)
 
 
-def calc_average_price(quantity_1, price_1, quantity_2, price_2):
+def average_price(quantity_1, price_1, quantity_2, price_2):
     """Calculate the average price between two positions.
 
 	A position is the quantity of an asset and its unitary average price.

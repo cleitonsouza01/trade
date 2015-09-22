@@ -23,5 +23,7 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from .trade_tools import Asset, Trade, TradeContainer, Daytrade
-from .utils import daytrade_condition, calc_average_price, same_sign
+from .trade_tools import (
+    Asset, Trade, TradeContainer, Daytrade, AssetAccumulator
+)
+from .utils import daytrade_condition, average_price, same_sign
