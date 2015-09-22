@@ -1,7 +1,9 @@
 trade_tools: Tools For Stock Trading Applications.
 ==================================================
 Copyright (c) 2015 Rafael da Silva Rocha  
-rocha.rafaelsilva@gmail.com  
+rocha.rafaelsilva@gmail.com
+
+Project repository:  
 http://github.com/rochars/trade_tools
 
 
@@ -141,11 +143,6 @@ for more information on how to use trade_tools.
 What about compatibility?
 -------------------------
 trade_tools is compatible with Python 2.7 and on, including Python 3.x.
-
-
-License
--------
-This software is licensed under the MIT license: https://opensource.org/licenses/MIT
 
 
 Copyright (c) 2015 Rafael da Silva Rocha
