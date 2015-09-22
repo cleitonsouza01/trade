@@ -784,3 +784,69 @@ class TestTradeContainer_add_to_existing_common_trade(unittest.TestCase):
 
     def test_common_trades0_price_should_be_3(self):
         self.assertEqual(self.trade_container.common_trades[0].price, 3)
+
+
+class TestTradeContainer_rate_discounts_by_common_trades_and_daytrades(unittest.TestCase):
+
+    def setUp(self):
+        discounts = {
+            'some discount': 1,
+            'other discount': 3
+        }
+        self.asset1 = trade_tools.Asset('some asset')
+        self.asset2 = trade_tools.Asset('some other asset')
+        trade1 = trade_tools.Trade(date='2015-09-21', asset=self.asset1, quantity=10, price=2)
+        trade2 = trade_tools.Trade(date='2015-09-21', asset=self.asset1, quantity=-5, price=3)
+        trade3 = trade_tools.Trade(date='2015-09-21', asset=self.asset2, quantity=-5, price=7)
+        self.trade_container = trade_tools.TradeContainer(trades=[trade1,trade2,trade3], discounts=discounts)
+        self.trade_container.identify_daytrades_and_common_trades()
+        self.trade_container.rate_discounts_by_common_trades_and_daytrades()
+
+    def test_trade_container_should_exist(self):
+        self.assertTrue(self.trade_container)
+
+    def test_check_trade_container_volume(self):
+        self.assertEqual(self.trade_container.volume, 70)
+
+    def test_check_daytrade0_buy_discounts(self):
+        self.assertEqual(round(self.trade_container.daytrades[0].buy.discounts['some discount'], 2), 0.14)
+        self.assertEqual(round(self.trade_container.daytrades[0].buy.discounts['other discount'], 2), 0.43)
+
+    def test_check_daytrade0_sale_discounts(self):
+        self.assertEqual(round(self.trade_container.daytrades[0].sale.discounts['some discount'], 2), 0.21)
+        self.assertEqual(round(self.trade_container.daytrades[0].sale.discounts['other discount'], 2), 0.64)
+
+    def test_check_common_trades0_asset(self):
+        self.assertEqual(self.trade_container.common_trades[0].asset, self.asset1)
+
+    def test_common_trades0_quantity_should_be_5(self):
+        self.assertEqual(self.trade_container.common_trades[0].quantity, 5)
+
+    def test_common_trades0_price_should_be_2(self):
+        self.assertEqual(self.trade_container.common_trades[0].price, 2)
+
+    def test_common_trades0_volume_should_be_35(self):
+        self.assertEqual(self.trade_container.common_trades[0].volume, 10)
+
+    def test_check_common_trades0_discounts(self):
+        self.assertEqual(round(self.trade_container.common_trades[0].discounts['some discount'], 2), 0.14)
+        self.assertEqual(round(self.trade_container.common_trades[0].discounts['other discount'], 2), 0.43)
+
+    def test_check_common_trades1_asset(self):
+        self.assertEqual(self.trade_container.common_trades[1].asset, self.asset2)
+
+    def test_common_trades1_quantity_should_be_minus_5(self):
+        self.assertEqual(self.trade_container.common_trades[1].quantity, -5)
+
+    def test_common_trades1_price_should_be_7(self):
+        self.assertEqual(self.trade_container.common_trades[1].price, 7)
+
+    def test_common_trades1_volume_should_be_35(self):
+        self.assertEqual(self.trade_container.common_trades[1].volume, 35)
+
+    def test_check_common_trades1_discounts(self):
+        expected_discounts = {
+            'some discount': 0.5,
+            'other discount': 1.5
+        }
+        self.assertEqual(self.trade_container.common_trades[1].discounts, expected_discounts)

@@ -93,7 +93,15 @@ class TradeContainer:
 	"""A trade container.
 
 	A TradeContainer is used to group trades, like trades that occurred on
-	the same date, and then perform tasks on them.
+	the same date, and then perform tasks on them. It can:
+
+	- Separate the daytrades and the common trades of a group of trades
+	  that occurred on the same date by using the method:
+	  self.identify_daytrades_and_common_trades()
+
+	- Rate a group of taxes proportionally for all daytrades and common
+	  trades, if any, by using the method:
+	  self.rate_discounts_by_common_trades_and_daytrades()
 
 	Attributes:
         date: A string 'YYYY-mm-dd' representing the date of the trades
@@ -121,6 +129,21 @@ class TradeContainer:
 	def volume(self):
 		"""Return the sum of the volume of the trades in the container."""
 		return sum(trade.volume for trade in self.trades)
+
+	def rate_discounts_by_common_trades_and_daytrades(self):
+		"""Rate the TradeContainer discounts by its trades.
+
+        This method sums all discounts on the self.discounts dict. The
+        total discount value is then rated proportionally by the trades
+        based on their volume, where volume = quantity * real price.
+
+        The taxes are rated for both common and daytrade operations.
+		"""
+		for trade in self.common_trades:
+			self.rate_discounts_by_trade(trade)
+		for daytrade in self.daytrades:
+			self.rate_discounts_by_trade(daytrade.buy)
+			self.rate_discounts_by_trade(daytrade.sale)
 
 	def rate_discounts_by_trade(self, trade):
 		"""Rate the discounts of the container for one trade.
