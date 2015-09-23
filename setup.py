@@ -17,7 +17,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='trade_tools',
+    name='trade',
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
@@ -28,7 +28,7 @@ setup(
     long_description=long_description,
 
     # The project's main homepage.
-    url='https://github.com/rochars/trade_tools',
+    url='https://github.com/rochars/trade',
 
     # Author details
     author='Rafael da Silva Rocha',
@@ -47,7 +47,7 @@ setup(
 
         # Indicate who your project is intended for
         'Intended Audience :: Developers',
-        'Topic :: Software Development :: Securities Market :: Stock Market',
+        'Topic :: Software Development',
 
         # Pick your license as you wish (should match "license" above)
         'License :: OSI Approved :: MIT License',
@@ -65,7 +65,7 @@ setup(
     ],
 
     # What does your project relate to?
-    keywords='asset stock securities market finance software quantity price value average investment money',
+    keywords='asset stock securities market finance software quantity price value average investment money currency',
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().

@@ -1,4 +1,4 @@
-"""trade_tools: Tools For Stock Trading Applications.
+"""trade: Tools For Stock Trading Applications.
 
 Copyright (c) 2015 Rafael da Silva Rocha
 
