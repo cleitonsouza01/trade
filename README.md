@@ -7,10 +7,10 @@ http://github.com/rochars/trade
 
 What is it?
 -----------
-trade is a Python module with simple functions and classes for the
-development of investment applications in Python. It provides basic notions
-of assets, trades, daytrades, cost deduction and functions related to
-processing stock trading data.
+trade is a Python module with functions and classes for the development
+of investment applications in Python. It provides basic notions of assets,
+operations, daytrades, cost deduction and functions related to processing
+stock trading data.
 
 You may use the trade module as a framework to create applications that
 implement specific rules of stock markets around the world or use it "as is"
@@ -19,14 +19,15 @@ and controlling how much you spent to buy and how much you profited from the
 trades.
 
 
-How can I install trade?
+How can I install the trade module?
 ------------------------------
->> pip install trade
+
+  >> pip install trade
 
 
 How can I use it?
 -----------------
-A basic example of trade in action:
+A basic example of the trade module in action:
 
 ```python
 import trade
@@ -51,8 +52,8 @@ print accumulator.results
 #>> {'trades': 0}
 
 
-# create a trade buying the asset
-purchase = trade.Trade(asset=asset, quantity=10, price=2, date='2015-09-22')
+# create the asset purchase operation
+purchase = trade.Operation(asset=asset, quantity=10, price=2, date='2015-09-22')
 
 # accumulate the trade
 accumulator.accumulate_trade(purchase)
@@ -68,8 +69,8 @@ print accumulator.results
 #>> {'trades': 0}
 
 
-# create a new trade selling the asset
-sale = trade.Trade(asset=asset, quantity=-5, price=3, date='2015-09-23')
+# create the asset sale operation
+sale = trade.Operation(asset=asset, quantity=-5, price=3, date='2015-09-23')
 
 # accumulate the new trade
 accumulator.accumulate_trade(sale)
@@ -134,22 +135,21 @@ print accumulator.results
 #>> {'trades': 5.0}
 ```
 
-Trade objects may include taxes and comissions that are considered by the
+Operation objects may include taxes and comissions that are considered by the
 accumulator when calculating results.
 
-The Accumulator can also log the accumulated trades and their specific
-results.
+The Accumulator can also log the accumulated operations and their results.
 
 There are more features, like rating and applying discounts automatically
-to a group of trades, separating daytrades from common trades in a group of
-trades, calculating the resulting position from a group of trades and so
+to a group of operations, separating daytrades from common trades in a group of
+operations, calculating the resulting position from a group of operations and so
 on. Check the documentation and the examples for more information on how to
 use the trade module.
 
 
 What about compatibility?
 -------------------------
-the trade module is compatible with Python 2.7 and on, including Python 3.x.
+The Python trade module is compatible with Python 2.7 and on, including Python 3.x.
 
 
 License

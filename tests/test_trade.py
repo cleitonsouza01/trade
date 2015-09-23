@@ -11,7 +11,7 @@ class TestTradeCreation(unittest.TestCase):
 
     def setUp(self):
         self.asset = trade_tools.Asset(name='some asset')
-        self.trade = trade_tools.Trade(
+        self.trade = trade_tools.Operation(
 			date='2015-09-18',
 			asset=self.asset,
 			quantity=20,
@@ -49,7 +49,7 @@ class TestTrade_total_discounts(unittest.TestCase):
         self.asset = trade_tools.Asset(name='some asset')
 
     def test_trade_total_discounts_with_one_discount(self):
-        trade = trade_tools.Trade(
+        trade = trade_tools.Operation(
             quantity=1,
             price=1,
             discounts={
@@ -59,7 +59,7 @@ class TestTrade_total_discounts(unittest.TestCase):
         self.assertEqual(trade.total_discounts, 3)
 
     def test_trade_total_discounts_with_multiple_discounts_case_1(self):
-        trade = trade_tools.Trade(
+        trade = trade_tools.Operation(
             quantity=1,
             price=1,
             discounts={
@@ -70,7 +70,7 @@ class TestTrade_total_discounts(unittest.TestCase):
         self.assertEqual(trade.total_discounts, 4)
 
     def test_trade_total_discounts_with_multiple_discounts_case_2(self):
-        trade = trade_tools.Trade(
+        trade = trade_tools.Operation(
             quantity=1,
             price=1,
             discounts={
@@ -82,7 +82,7 @@ class TestTrade_total_discounts(unittest.TestCase):
         self.assertEqual(trade.total_discounts, 6)
 
     def test_trade_total_discounts_with_multiple_discounts_case_3(self):
-        trade = trade_tools.Trade(
+        trade = trade_tools.Operation(
             quantity=1,
             price=1,
             discounts={
@@ -100,14 +100,14 @@ class TestTrade_real_price(unittest.TestCase):
         self.asset = trade_tools.Asset(name='some asset')
 
     def test_real_price_with_no_discount(self):
-        trade = trade_tools.Trade(
+        trade = trade_tools.Operation(
 			price=10,
             quantity=20
         )
         self.assertEqual(trade.real_price, 10)
 
     def test_real_price_with_one_discount(self):
-        trade = trade_tools.Trade(
+        trade = trade_tools.Operation(
             price=10,
             quantity=20,
             discounts={
@@ -117,7 +117,7 @@ class TestTrade_real_price(unittest.TestCase):
         self.assertEqual(trade.real_price, 10.15)
 
     def test_trade_real_price_with_multiple_discounts_case_1(self):
-        trade = trade_tools.Trade(
+        trade = trade_tools.Operation(
             price=10,
             quantity=20,
             discounts={
@@ -128,7 +128,7 @@ class TestTrade_real_price(unittest.TestCase):
         self.assertEqual(trade.real_price, 10.2)
 
     def test_trade_real_price_with_multiple_discounts_case_2(self):
-        trade = trade_tools.Trade(
+        trade = trade_tools.Operation(
             price=10,
             quantity=20,
             discounts={
@@ -140,7 +140,7 @@ class TestTrade_real_price(unittest.TestCase):
         self.assertEqual(trade.real_price, 10.3)
 
     def test_trade_real_price_with_multiple_discounts_case_3(self):
-        trade = trade_tools.Trade(
+        trade = trade_tools.Operation(
             price=10,
             quantity=20,
             discounts={
@@ -158,14 +158,14 @@ class TestTrade_real_real_value(unittest.TestCase):
         self.asset = trade_tools.Asset(name='some asset')
 
     def test_real_price_with_no_discount(self):
-        trade = trade_tools.Trade(
+        trade = trade_tools.Operation(
             price=10,
             quantity=20
         )
         self.assertEqual(trade.real_value, 200)
 
     def test_real_value_with_one_discount(self):
-        trade = trade_tools.Trade(
+        trade = trade_tools.Operation(
             price=10,
             quantity=20,
             discounts={
@@ -175,7 +175,7 @@ class TestTrade_real_real_value(unittest.TestCase):
         self.assertEqual(trade.real_value, 203)
 
     def test_trade_real_value_with_multiple_discounts_case_1(self):
-        trade = trade_tools.Trade(
+        trade = trade_tools.Operation(
             price=10,
             quantity=20,
             discounts={
@@ -186,7 +186,7 @@ class TestTrade_real_real_value(unittest.TestCase):
         self.assertEqual(trade.real_value, 204)
 
     def test_trade_real_value_with_multiple_discounts_case_2(self):
-        trade = trade_tools.Trade(
+        trade = trade_tools.Operation(
             price=10,
             quantity=20,
             discounts={
@@ -198,7 +198,7 @@ class TestTrade_real_real_value(unittest.TestCase):
         self.assertEqual(trade.real_value, 206)
 
     def test_trade_real_value_with_multiple_discounts_case_3(self):
-        trade = trade_tools.Trade(
+        trade = trade_tools.Operation(
             price=10,
             quantity=20,
             discounts={
@@ -213,14 +213,14 @@ class TestTrade_real_real_value(unittest.TestCase):
 class TestTrade_volume(unittest.TestCase):
 
     def test_volume_should_be_100(self):
-        trade = trade_tools.Trade(
+        trade = trade_tools.Operation(
             price=10,
             quantity=10
         )
         self.assertEqual(trade.volume, 100)
 
     def test_volume_should_be_200(self):
-        trade = trade_tools.Trade(
+        trade = trade_tools.Operation(
             price=10,
             quantity=20
         )

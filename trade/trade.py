@@ -46,10 +46,10 @@ class Asset:
 		return self
 
 
-class Trade:
-	"""A trade.
+class Operation:
+	"""A trade operation.
 
-	A trade represents the purchase or sale of an asset.
+	A trade operation represents the purchase or sale of an asset.
 
 	Attributes:
         date: A string 'YYYY-mm-dd' representing the date the trade
@@ -58,7 +58,7 @@ class Trade:
 		quantity: A number representing the quantity being traded.
 		price: The raw unitary price of the asset being traded.
 		discounts: A dict of discount names and values to be deducted from
-			the trade total value.
+			the operation total value.
 	"""
 
 	def __init__(self, quantity, price,
@@ -90,36 +90,36 @@ class Trade:
 		return abs(self.quantity) * self.price
 
 
-class TradeContainer:
-	"""A trade container.
+class OperationContainer:
+	"""A operation container.
 
-	A TradeContainer is used to group trades, like trades that occurred on
-	the same date, and then perform tasks on them. It can:
+	A OperationContainer is used to group operations, like operations that
+	occurred on the same date, and then perform tasks on them. It can:
 
-	- Separate the daytrades and the common trades of a group of trades
-	  that occurred on the same date by using the method:
-	  self.identify_daytrades_and_common_trades()
+	- Separate the daytrades and the common operations of a group of
+	  operations that occurred on the same date by using the method:
+	  self.identify_daytrades_and_common_operations()
 
 	- Rate a group of taxes proportionally for all daytrades and common
-	  trades, if any, by using the method:
-	  self.rate_discounts_by_common_trades_and_daytrades()
+	  operations, if any, by using the method:
+	  self.rate_discounts_by_common_operations_and_daytrades()
 
 	Attributes:
-        date: A string 'YYYY-mm-dd' representing the date of the trades
-			on the container.
-		trades: A list of Trade instances.
+        date: A string 'YYYY-mm-dd' representing the date of the
+			operations on the container.
+		operations: A list of Operation instances.
 		discounts: A dict with discount names and values to be deducted from
-			the trades.
+			the operations.
 	"""
 
-	def __init__(self, date=None, trades=None, discounts=None):
+	def __init__(self, date=None, operations=None, discounts=None):
 		self.date = date
-		if trades is None: trades=[]
+		if operations is None: operations=[]
 		if discounts is None: discounts = {}
-		self.trades = trades
+		self.operations = operations
 		self.discounts = discounts
 		self.daytrades = []
-		self.common_trades = []
+		self.common_operations = []
 
 	@property
 	def total_discount_value(self):
@@ -128,42 +128,45 @@ class TradeContainer:
 
 	@property
 	def volume(self):
-		"""Return the sum of the volume of the trades in the container."""
-		return sum(trade.volume for trade in self.trades)
+		"""Return the sum of the volume of the operations in the container."""
+		return sum(operation.volume for operation in self.operations)
 
-	def rate_discounts_by_common_trades_and_daytrades(self):
-		"""Rate the TradeContainer discounts by its trades.
+	def rate_discounts_by_daytrades_and_common_operations(self):
+		"""Rate the TradeContainer discounts by its operations.
 
         This method sums all discounts on the self.discounts dict. The
-        total discount value is then rated proportionally by the trades
-        based on their volume, where volume = quantity * real price.
+        total discount value is then rated proportionally by the
+		operations based on their volume, where:
+
+			volume = quantity * real price.
 
         The taxes are rated for both common and daytrade operations.
 		"""
-		for trade in self.common_trades:
-			self.rate_discounts_by_trade(trade)
+		for operation in self.common_operations:
+			self.rate_discounts_by_operation(operation)
 		for daytrade in self.daytrades:
-			self.rate_discounts_by_trade(daytrade.buy)
-			self.rate_discounts_by_trade(daytrade.sale)
+			self.rate_discounts_by_operation(daytrade.buy)
+			self.rate_discounts_by_operation(daytrade.sale)
 
-	def rate_discounts_by_trade(self, trade):
-		"""Rate the discounts of the container for one trade.
+	def rate_discounts_by_operation(self, operation):
+		"""Rate the discounts of the container for one operation.
 
-		The rate is based on the container volume and the trade volume.
+		The rate is based on the container volume and the operation volume.
 		"""
-		percent = trade.volume / self.volume * 100
+		percent = operation.volume / self.volume * 100
 		#for key, value in self.discounts.iteritems():
 		for key, value in self.discounts.items():
-			trade.discounts[key] = value * percent / 100
+			operation.discounts[key] = value * percent / 100
 
 	# TODO better docstring and comments
-	def identify_daytrades_and_common_trades(self):
-		"""Separate trades into daytrades and common trades.
+	def identify_daytrades_and_common_operations(self):
+		"""Separate operations into daytrades and common operations.
 
 		The daytrades are operations of purchase and sale of the same
-		asset. The common trades are the resulting trades.
+		asset. The common operations are the resulting positions
+		from the operations that are not part of any daytrade.
 		"""
-		trades = copy.deepcopy(self.trades)
+		trades = copy.deepcopy(self.operations)
 
 		for trade in trades:
 			for other_trade in trades:
@@ -175,20 +178,22 @@ class TradeContainer:
 
 		for trade in trades:
 			if trade.quantity != 0:
-				self.append_to_common_trades(trade)
+				self.append_to_common_operations(trade)
 
 	# TODO docstring! This method change the
 	#      params attrs among other things!
-	def append_to_daytrades(self, buy_trade, sale_trade):
-		daytrade_quantity = abs(min([buy_trade.quantity, sale_trade.quantity]))
-		buy_trade.quantity -= daytrade_quantity
-		sale_trade.quantity += daytrade_quantity
+	def append_to_daytrades(self, buy_operation, sale_operation):
+		daytrade_quantity = abs(min(
+							[buy_operation.quantity, sale_operation.quantity]
+							))
+		buy_operation.quantity -= daytrade_quantity
+		sale_operation.quantity += daytrade_quantity
 		daytrade = Daytrade(
 			self.date,
-			buy_trade.asset,
+			buy_operation.asset,
 			daytrade_quantity,
-			buy_trade.price,
-			sale_trade.price
+			buy_operation.price,
+			sale_operation.price
 		)
 		if not self.add_to_existing_daytrade(daytrade):
 			self.daytrades.append(daytrade)
@@ -221,27 +226,27 @@ class TradeContainer:
 									)
 		existing_operation.quantity += operation.quantity
 
-	def append_to_common_trades(self, trade):
-		"""Append a trade to the TradeContainer common trades list.
+	def append_to_common_operations(self, operation):
+		"""Append a operation to the TradeContainer common operations list.
 		"""
-		if not self.add_to_existing_common_trade(trade):
-			self.common_trades.append(trade)
+		if not self.add_to_existing_common_operation(operation):
+			self.common_operations.append(operation)
 
 	# TODO better docstring
-	def add_to_existing_common_trade(self, trade):
-		"""Merge a trade with a common trade of the same asset.
+	def add_to_existing_common_operation(self, operation):
+		"""Merge a operation with a common operation of the same asset.
 
         Returns True if a merge occurred; None otherwise.
 		"""
-		for existing_trade in self.common_trades:
-			if existing_trade.asset == trade.asset:
-				existing_trade.price = average_price(
-											existing_trade.quantity,
-											existing_trade.price,
-											trade.quantity,
-											trade.price
+		for existing_operation in self.common_operations:
+			if existing_operation.asset == operation.asset:
+				existing_operation.price = average_price(
+											existing_operation.quantity,
+											existing_operation.price,
+											operation.quantity,
+											operation.price
 										)
-				existing_trade.quantity += trade.quantity
+				existing_operation.quantity += operation.quantity
 				return True
 
 
@@ -254,19 +259,20 @@ class Daytrade:
 	Attributes:
 		asset: An asset instance, the asset that is being traded.
 		quantity: The traded quantity of the asset.
-		buy: A Trade instance representing the purchase of the asset.
-		sale: A Trade instance representing the sale of the asset.
+		buy: A Operation instance representing the purchase of the asset.
+		sale: A Operation instance representing the sale of the asset.
 	"""
 
-	# TODO docstring explaining buy and sale trade creation
+	# TODO docstring explaining the creation of the
+	#	   purchase and sale operations
 	def __init__(self, date, asset, quantity, buy_price, sale_price):
 		self.date = date
 		self.asset = asset
 		self.quantity = quantity
-		self.buy = Trade(
+		self.buy = Operation(
 			date=date, asset=asset, quantity=quantity, price=buy_price
 		)
-		self.sale = Trade(
+		self.sale = Operation(
 			date=date, asset=asset, quantity=quantity*-1, price=sale_price
 		)
 
@@ -285,7 +291,7 @@ class Accumulator:
 	    quantity = The asset's accumulated quantity.
 	    price = The asset's average unitary price for the quantity
 			accumulated.
-	    results = A dict with the total results from from the trades
+	    results = A dict with the total results from from the operations
 			accumulated by the accumulator.
 	    log_operations = A boolean indicating if the accumulator should
 	        log the calls to the accumulate() method.
@@ -293,15 +299,15 @@ class Accumulator:
 	        provided that self.log_operations is True.
 
 	if created with log_operations=True the accumulator will keep a
-	log of the data of every trade it accumulate.
+	log of the data of every operation it accumulate.
 
 	Results are calculated by the accumulator according to the value
-	of the trades informed and the accumulator current status of the
+	of the operations informed and the accumulator current status of the
 	accumulator (the current quantity and average price of the asset).
 
 	The method accumulate() can take a optional param 'results', a dict
 	with other results to be included on the accumulator results dict
-	and on the trade log.
+	and on the operation log.
 	"""
 
 	def __init__(self, asset, initial_status=None, log_operations=False):
@@ -381,13 +387,13 @@ class Accumulator:
 	        self.log[date] = {'operations': []}
 
 		# Log the accumulator status after processing
-		# the trade
+		# the operation
 	    self.log[date]['position'] = {
 	        'quantity': self.quantity,
 	        'price': self.price,
 	    }
 
-		# Log the trade data
+		# Log the operation data
 	    self.log[date]['operations'].append(
 	        {
 	            'quantity': quantity,
@@ -439,7 +445,7 @@ class Accumulator:
 		if results is None:
 		    results = {'trades': 0}
 
-		# if the quantity of the trade has the same sign
+		# if the quantity of the operation has the same sign
 		# of the accumulated quantity then we need to
 		# find out the new average price of the asset
 		if same_sign(self.quantity, quantity):
@@ -498,11 +504,11 @@ class Accumulator:
 		if self.log_operations:
 		    self.log_operation(quantity, price, date, results)
 
-	def accumulate_trade(self, trade):
-		"""Accumulate a trade to the existing position.
+	def accumulate_operation(self, operation):
+		"""Accumulate a operation to the existing position.
 		"""
 		self.accumulate(
-			trade.quantity,
-			trade.price,
-			date=trade.date
+			operation.quantity,
+			operation.real_price,
+			date=operation.date
 		)

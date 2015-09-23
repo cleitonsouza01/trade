@@ -2,7 +2,7 @@ from __future__ import absolute_import
 import unittest
 
 from trade.utils import average_price, same_sign, daytrade_condition
-from trade import Asset, Trade
+from trade import Asset, Operation
 
 
 # TODO document this
@@ -49,26 +49,26 @@ class Test_daytrade_condition(unittest.TestCase):
         self.asset2 = Asset()
 
     def test_daytrade_condition_case_00(self):
-        trade1 = Trade(-10, 5, date='2015-09-22',asset=self.asset1)
-        trade2 = Trade(10, 5, date='2015-09-22', asset=self.asset1)
+        trade1 = Operation(-10, 5, date='2015-09-22',asset=self.asset1)
+        trade2 = Operation(10, 5, date='2015-09-22', asset=self.asset1)
         self.assertTrue(daytrade_condition(trade1,trade2))
 
     def test_daytrade_condition_case_01(self):
-        trade1 = Trade(10, 5, date='2015-09-22', asset=self.asset1)
-        trade2 = Trade(-10, 5,date='2015-09-22', asset=self.asset1)
+        trade1 = Operation(10, 5, date='2015-09-22', asset=self.asset1)
+        trade2 = Operation(-10, 5,date='2015-09-22', asset=self.asset1)
         self.assertTrue(daytrade_condition(trade1,trade2))
 
     def test_daytrade_condition_case_02(self):
-        trade1 = Trade(0, 5, date='2015-09-22', asset=self.asset1)
-        trade2 = Trade(0, 5, date='2015-09-22', asset=self.asset1)
+        trade1 = Operation(0, 5, date='2015-09-22', asset=self.asset1)
+        trade2 = Operation(0, 5, date='2015-09-22', asset=self.asset1)
         self.assertFalse(daytrade_condition(trade1,trade2))
 
     def test_daytrade_condition_case_03(self):
-        trade1 = Trade(0, 5, date='2015-09-22', asset=self.asset1)
-        trade2 = Trade(-10, 5, date='2015-09-22', asset=self.asset2)
+        trade1 = Operation(0, 5, date='2015-09-22', asset=self.asset1)
+        trade2 = Operation(-10, 5, date='2015-09-22', asset=self.asset2)
         self.assertFalse(daytrade_condition(trade1,trade2))
 
     def test_daytrade_condition_case_04(self):
-        trade1 = Trade(0, 5, date='2015-09-22', asset=self.asset1)
-        trade2 = Trade(0, 5, date='2015-09-22', asset=self.asset2)
+        trade1 = Operation(0, 5, date='2015-09-22', asset=self.asset1)
+        trade2 = Operation(0, 5, date='2015-09-22', asset=self.asset2)
         self.assertFalse(daytrade_condition(trade1,trade2))

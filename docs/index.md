@@ -1,41 +1,45 @@
-trade_tools: Tools For Stock Trading Applications.
-==================================================
+trade: Tools For Stock Trading Applications.
+============================================
 Copyright (c) 2015 Rafael da Silva Rocha  
-rocha.rafaelsilva@gmail.com
-
-Project repository:  
-http://github.com/rochars/trade_tools
+rocha.rafaelsilva@gmail.com  
+http://github.com/rochars/trade
 
 
 What is it?
 -----------
-trade_tools is a Python package with simple functions and classes for the
-development of stock trading apps. It provides basic notions of assets,
-trades, daytrades, cost deduction and functions related to processing stock
-trading data.
+trade is a Python module with functions and classes for the development
+of investment applications in Python. It provides basic notions of assets,
+operations, daytrades, cost deduction and functions related to processing
+stock trading data.
 
-You may use it as a framework to create applications that implement specific
-rules of stock markets around the world or use it "as is" in any  application
-that requires the notion of buying stuff, selling stuff and  controlling how
-much you spent to buy and how much you profited from the trades.
+You may use the trade module as a framework to create applications that
+implement specific rules of stock markets around the world or use it "as is"
+in any  application that requires the notion of buying stuff, selling stuff
+and controlling how much you spent to buy and how much you profited from the
+trades.
+
+
+How can I install trade?
+------------------------------
+>> pip install trade
 
 
 How can I use it?
 -----------------
-A basic example:
+A basic example of the trade module in action:
 
 ```python
-import trade_tools
+import trade
 
 # create the asset that we are going to trade
-asset = trade_tools.Asset('Euro')
+asset = trade.Asset('Some asset')
 
 # create the accumulator to accumulate trades with the asset
-accumulator = trade_tools.AssetAccumulator(asset)
+accumulator = trade.Accumulator(asset)
 
 
 print accumulator.asset.name
-#>> Euro
+#>> Some asset
 
 print accumulator.quantity
 #>> 0
@@ -44,14 +48,14 @@ print accumulator.price
 #>> 0
 
 print accumulator.results
-#>> {'trade': 0}
+#>> {'trades': 0}
 
 
-# create a trade buying the asset
-trade = trade_tools.Trade(asset=asset, quantity=10, price=2, date='2015-09-22')
+# create the asset purchase operation
+purchase = trade.Operation(asset=asset, quantity=10, price=2, date='2015-09-22')
 
 # accumulate the trade
-accumulator.accumulate_trade(trade)
+accumulator.accumulate_trade(purchase)
 
 
 print accumulator.quantity
@@ -61,14 +65,14 @@ print accumulator.price
 #>> 2.0
 
 print accumulator.results
-#>> {'trade': 0}
+#>> {'trades': 0}
 
 
-# create a new trade selling the asset
-trade = trade_tools.Trade(asset=asset, quantity=-5, price=3, date='2015-09-23')
+# create the asset sale operation
+sale = trade.Operation(asset=asset, quantity=-5, price=3, date='2015-09-23')
 
 # accumulate the new trade
-accumulator.accumulate_trade(trade)
+accumulator.accumulate_trade(sale)
 
 
 print accumulator.quantity
@@ -78,19 +82,19 @@ print accumulator.price
 #>> 2.0
 
 print accumulator.results
-#>> {'trade': 5.0}
+#>> {'trades': 5.0}
 ```
 
 You may also use only the Accumulator and ignore everything else:
 ```python
-import trade_tools
+import trade
 
 # create the accumulator to accumulate trades with the asset
-accumulator = trade_tools.AssetAccumulator('Euro')
+accumulator = trade.Accumulator('Some asset')
 
 
 print accumulator.asset
-#>> Euro
+#>> Some asset
 
 print accumulator.quantity
 #>> 0
@@ -99,7 +103,7 @@ print accumulator.price
 #>> 0
 
 print accumulator.results
-#>> {'trade': 0}
+#>> {'trades': 0}
 
 
 # accumulate trade data
@@ -113,7 +117,7 @@ print accumulator.price
 #>> 2.0
 
 print accumulator.results
-#>> {'trade': 0}
+#>> {'trades': 0}
 
 
 # accumulate new trade data
@@ -127,22 +131,29 @@ print accumulator.price
 #>> 2.0
 
 print accumulator.results
-#>> {'trade': 5.0}
+#>> {'trades': 5.0}
 ```
 
-The AssetAccumulator can also log the accumulated trades and their
-specific results.
+Operation objects may include taxes and comissions that are considered by the
+accumulator when calculating results.
 
-There are more ways of using it and more functionalities, like rating and
-applying discounts automatically to a group of trades, separate daytrades
-from common trades in a group of trades, calculating the resulting position
-from a group of trades and so on. Check the documentation and the examples
-for more information on how to use trade_tools.
+The Accumulator can also log the accumulated operations and their results.
+
+There are more features, like rating and applying discounts automatically
+to a group of operations, separating daytrades from common trades in a group of
+operations, calculating the resulting position from a group of operations and so
+on. Check the documentation and the examples for more information on how to
+use the trade module.
 
 
 What about compatibility?
 -------------------------
-trade_tools is compatible with Python 2.7 and on, including Python 3.x.
+The Python trade module is compatible with Python 2.7 and on, including Python 3.x.
+
+
+License
+-------
+This software is licensed under the MIT license: https://opensource.org/licenses/MIT
 
 
 Copyright (c) 2015 Rafael da Silva Rocha
