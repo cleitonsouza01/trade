@@ -22,7 +22,7 @@ trades.
 How do I install the trade module?
 ------------------------------
 
-  >> pip install trade
+  > pip install trade
 
 
 How can I use it?
@@ -39,50 +39,50 @@ asset = trade.Asset('Some asset')
 accumulator = trade.Accumulator(asset)
 
 
-print accumulator.asset.name
+print(accumulator.asset.name)
 #>> Some asset
 
-print accumulator.quantity
+print(accumulator.quantity)
 #>> 0
 
-print accumulator.price
+print(accumulator.price)
 #>> 0
 
-print accumulator.results
+print(accumulator.results)
 #>> {'trades': 0}
 
 
-# create the asset purchase operation
+# create a trade operation buying the asset
 purchase = trade.Operation(asset=asset, quantity=10, price=2, date='2015-09-22')
 
-# accumulate the trade operation
+# accumulate the trade
 accumulator.accumulate_operation(purchase)
 
 
-print accumulator.quantity
+print(accumulator.quantity)
 #>> 10
 
-print accumulator.price
+print(accumulator.price)
 #>> 2.0
 
-print accumulator.results
+print(accumulator.results)
 #>> {'trades': 0}
 
 
-# create the asset sale operation
+# create a new trade operation selling the asset
 sale = trade.Operation(asset=asset, quantity=-5, price=3, date='2015-09-23')
 
-# accumulate the new trade operation
+# accumulate the new trade
 accumulator.accumulate_operation(sale)
 
 
-print accumulator.quantity
+print(accumulator.quantity)
 #>> 5
 
-print accumulator.price
+print(accumulator.price)
 #>> 2.0
 
-print accumulator.results
+print(accumulator.results)
 #>> {'trades': 5.0}
 ```
 
@@ -90,20 +90,23 @@ You may also use only the Accumulator and ignore everything else:
 ```python
 import trade
 
+# create the asset that we are going to trade
+asset = 'Some asset'
+
 # create the accumulator to accumulate trades with the asset
-accumulator = trade.Accumulator('Some asset')
+accumulator = trade.Accumulator(asset)
 
 
-print accumulator.asset
+print(accumulator.asset)
 #>> Some asset
 
-print accumulator.quantity
+print(accumulator.quantity)
 #>> 0
 
-print accumulator.price
+print(accumulator.price)
 #>> 0
 
-print accumulator.results
+print(accumulator.results)
 #>> {'trades': 0}
 
 
@@ -111,32 +114,33 @@ print accumulator.results
 accumulator.accumulate(quantity=10, price=2, date='2015-09-22')
 
 
-print accumulator.quantity
+print(accumulator.quantity)
 #>> 10
 
-print accumulator.price
+print(accumulator.price)
 #>> 2.0
 
-print accumulator.results
+print(accumulator.results)
 #>> {'trades': 0}
 
 
-# accumulate new trade data
+# accumulate more trade
 accumulator.accumulate(quantity=-5, price=3, date='2015-09-23')
 
 
-print accumulator.quantity
+print(accumulator.quantity)
 #>> 5
 
-print accumulator.price
+print(accumulator.price)
 #>> 2.0
 
-print accumulator.results
+print(accumulator.results)
 #>> {'trades': 5.0}
+
 ```
 
 Operation objects may include taxes and comissions that are considered by the
-accumulator when calculating results.
+accumulator when calculating results and portfolio prices.
 
 The Accumulator can also log the accumulated operations and their results.
 
