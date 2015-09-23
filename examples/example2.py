@@ -4,7 +4,7 @@ import trade
 asset = 'Euro'
 
 # create the accumulator to accumulate trades with the asset
-accumulator = trade.AssetAccumulator(asset)
+accumulator = trade.Accumulator(asset)
 
 
 print accumulator.asset
