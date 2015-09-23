@@ -156,21 +156,27 @@ class OperationContainer:
         """
         operations = copy.deepcopy(self.operations)
 
-        for operation in operations:
-            for other_operation in operations:
-                if daytrade_condition(operation, other_operation):
-                    if operation.quantity > 0:
-                        self.append_to_daytrades(operation, other_operation)
-                    else:
-                        self.append_to_daytrades(other_operation, operation)
+        for i, operation_a in enumerate(operations):
+            for operation_b in \
+                    [
+                        op for op in operations[i:] if daytrade_condition(
+                                                                op, operation_a
+                                                        )
+                    ]:
+                self.append_to_daytrades(operation_a, operation_b)
 
-        for operation in operations:
-            if operation.quantity != 0:
-                self.append_to_common_operations(operation)
+            if operation_a.quantity != 0:
+                self.append_to_common_operations(operation_a)
 
     # TODO docstring! This method change the
     #      operations attrs among other things!
-    def append_to_daytrades(self, buy, sale):
+    def append_to_daytrades(self, operation_a, operation_b):
+        if operation_a.quantity > 0:
+            buy = operation_a
+            sale = operation_b
+        else:
+            buy = operation_b
+            sale = operation_a
         daytrade_quantity = min([abs(buy.quantity), abs(sale.quantity)])
         buy.quantity -= daytrade_quantity
         sale.quantity += daytrade_quantity
