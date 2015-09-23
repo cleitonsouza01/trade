@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 import unittest
 
-from trade_tools import AssetAccumulator
+from trade import AssetAccumulator
 
 
 # TODO document this

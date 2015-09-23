@@ -1,10 +1,10 @@
-import trade_tools
+import trade
 
 # create the asset that we are going to trade
-asset = trade_tools.Asset('Euro')
+asset = trade.Asset('Euro')
 
 # create the accumulator to accumulate trades with the asset
-accumulator = trade_tools.AssetAccumulator(asset)
+accumulator = trade.AssetAccumulator(asset)
 
 
 print accumulator.asset.name
@@ -21,7 +21,7 @@ print accumulator.results
 
 
 # create a trade buying the asset
-trade = trade_tools.Trade(asset=asset, quantity=10, price=2, date='2015-09-22')
+trade = trade.Trade(asset=asset, quantity=10, price=2, date='2015-09-22')
 
 # accumulate the trade
 accumulator.accumulate_trade(trade)
@@ -39,7 +39,7 @@ print accumulator.results
 
 
 # create a new trade selling the asset
-trade = trade_tools.Trade(asset=asset, quantity=-5, price=3, date='2015-09-23')
+trade = trade.Trade(asset=asset, quantity=-5, price=3, date='2015-09-23')
 
 # accumulate the new trade
 accumulator.accumulate_trade(trade)

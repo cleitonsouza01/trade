@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 import unittest
 
-import trade_tools
+import trade as trade_tools
 
 
 # TODO document this

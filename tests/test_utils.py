@@ -1,8 +1,8 @@
 from __future__ import absolute_import
 import unittest
 
-from trade_tools.utils import average_price, same_sign, daytrade_condition
-from trade_tools import Asset, Trade
+from trade.utils import average_price, same_sign, daytrade_condition
+from trade import Asset, Trade
 
 
 # TODO document this

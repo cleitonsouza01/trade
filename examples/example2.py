@@ -1,10 +1,10 @@
-import trade_tools
+import trade
 
 # create the asset that we are going to trade
 asset = 'Euro'
 
 # create the accumulator to accumulate trades with the asset
-accumulator = trade_tools.AssetAccumulator(asset)
+accumulator = trade.AssetAccumulator(asset)
 
 
 print accumulator.asset
