@@ -152,7 +152,8 @@ class TradeContainer:
 		The rate is based on the container volume and the trade volume.
 		"""
 		percent = trade.volume / self.volume * 100
-		for key, value in self.discounts.iteritems():
+		#for key, value in self.discounts.iteritems():
+		for key, value in self.discounts.items():
 			trade.discounts[key] = value * percent / 100
 
 	# TODO better docstring and comments
@@ -396,105 +397,106 @@ class AssetAccumulator:
 	    )
 
 	def accumulate(self, quantity, price, date=None, results=None):
-	    """Accumulate trade data to the existing position.
+		"""Accumulate trade data to the existing position.
 
-	    The method accumulate() can take a optional param 'results',
-	    a dict with other results to be included on the accumulator
-	    results dict.
+		The method accumulate() can take a optional param 'results',
+		a dict with other results to be included on the accumulator
+		results dict.
 
-	    For example, if in 2015-09-19 you had 100 of *something* at the
-	    price of $10.45, and then proceeded to buy 10 more for 10
-	    dollars, then sold 10 on the same day for 20 dollars, you had a
-	    result related to this stock, but not a change in position. In
-	    this case you would call the accumulate() method like this:
+		For example, if in 2015-09-19 you had 100 of *something* at the
+		price of $10.45, and then proceeded to buy 10 more for 10
+		dollars, then sold 10 on the same day for 20 dollars, you had a
+		result related to this stock, but not a change in position. In
+		this case you would call the accumulate() method like this:
 
-	        accumulator.accumulate(
-	            date='2015-09-19',
-	            results={
-	                'daytrade': 100
-	            }
-	        )
+		    accumulator.accumulate(
+		        date='2015-09-19',
+		        results={
+		            'daytrade': 100
+		        }
+		    )
 
 		The result dict passed to this method must obey the format:
 
-	        results = {
-	            'result name': float
-	        }
+		    results = {
+		        'result name': float
+		    }
 
 		The accumulator take care of adding the custom results to the
 		total results of the stock on its own results attribute, wich
 		is a dict like this:
 
-	        self.results = {
-	            'result name': float,
-	            ...
-	        }
+		    self.results = {
+		        'result name': float,
+		        ...
+		    }
 
 		The custom results will also be logged, if logging.
-	    """
+		"""
 
-	    new_quantity = self.quantity + quantity
+		new_quantity = self.quantity + quantity
 
-	    if results is None:
-	        results = {'trade': 0}
+		if results is None:
+		    results = {'trade': 0}
 
-	    # if the quantity of the trade has the same sign
+		# if the quantity of the trade has the same sign
 		# of the accumulated quantity then we need to
 		# find out the new average price of the asset
-	    if same_sign(self.quantity, quantity):
+		if same_sign(self.quantity, quantity):
 
-	        # if the new quantity is zero, then the new average
-	        # price is also zero; otherwise, we need to calc the
-	        # new average price
-	        if new_quantity:
-	            new_price = average_price(
-	                            self.quantity,
-	                            self.price,
-	                            quantity,
-	                            price
-	                        )
-	        else:
-	            new_price = 0
+		    # if the new quantity is zero, then the new average
+		    # price is also zero; otherwise, we need to calc the
+		    # new average price
+		    if new_quantity:
+		        new_price = average_price(
+		                        self.quantity,
+		                        self.price,
+		                        quantity,
+		                        price
+		                    )
+		    else:
+		        new_price = 0
 
 		# If the traded quantity has an opposite sign of the
 		# asset's accumulated quantity, then there was a
 		# result.
-	    else:
+		else:
 
-	        # If the new accumulated quantity is of the same sign
-	        # of the old accumulated quantity, the average of price
-	        # will not change.
-	        if same_sign(self.quantity, new_quantity):
-	            new_price = self.price
+		    # If the new accumulated quantity is of the same sign
+		    # of the old accumulated quantity, the average of price
+		    # will not change.
+		    if same_sign(self.quantity, new_quantity):
+		        new_price = self.price
 
-	        # If the new accumulated quantity is of different
-	        # sign of the old accumulated quantity then the
-	        # average price is now the price of the operation
-	        else:
-	            new_price = price
+		    # If the new accumulated quantity is of different
+		    # sign of the old accumulated quantity then the
+		    # average price is now the price of the operation
+		    else:
+		        new_price = price
 
-	        # calculate the result of this operation and add
-	        # the new result to the accumulated results
-	        results['trade'] += abs(quantity)*price - abs(quantity)*self.price
+		    # calculate the result of this operation and add
+		    # the new result to the accumulated results
+		    results['trade'] += abs(quantity)*price - abs(quantity)*self.price
 
-	    # update the accumulator quantity and average
-	    # price with the new values
-	    self.quantity = new_quantity
-	    if new_quantity:
-	        self.price = new_price
-	    else:
-	        self.price = 0
+		# update the accumulator quantity and average
+		# price with the new values
+		self.quantity = new_quantity
+		if new_quantity:
+		    self.price = new_price
+		else:
+		    self.price = 0
 
-	    # add whatever result was informed with or generated
-	    # by this operation to the accumulator results dict
-	    for key, value in results.iteritems():
-	        if key not in self.results:
-	            self.results[key] = 0
-	        self.results[key] += value
+		# add whatever result was informed with or generated
+		# by this operation to the accumulator results dict
+		#for key, value in results.iteritems():
+		for key, value in results.items():
+			if key not in self.results:
+				self.results[key] = 0
+			self.results[key] += value
 
-	    # log the operation, if logging
-	    if self.log_operations:
-	        self.log_operation(quantity, price, date, results)
+		# log the operation, if logging
+		if self.log_operations:
+		    self.log_operation(quantity, price, date, results)
 
 	def accumulate_trade(self, trade):
 		"""Accumulate a trade to the existing position.

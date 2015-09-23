@@ -36,4 +36,5 @@ class TestLogOperation(unittest.TestCase):
 
     def test_log_keys(self):
         self.accumulator.accumulate(100, 10, date='2015-01-01')
-        self.assertEqual(self.accumulator.log.keys(), ['2015-01-01'])
+        #self.assertEqual(self.accumulator.log.keys(), ['2015-01-01'])
+        self.assertEqual(list(self.accumulator.log), ['2015-01-01'])
