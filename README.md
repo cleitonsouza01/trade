@@ -2,7 +2,7 @@ trade: Tools For Stock Trading Applications.
 ============================================
 Copyright (c) 2015 Rafael da Silva Rocha  
 rocha.rafaelsilva@gmail.com  
-http://github.com/rochars/trade
+http://rochars.github.io/trade/
 
 
 What is it?
