@@ -34,7 +34,7 @@ import trade
 asset = trade.Asset('Some asset')
 
 # create the accumulator to accumulate trades with the asset
-accumulator = trade.AssetAccumulator(asset)
+accumulator = trade.Accumulator(asset)
 
 
 print accumulator.asset.name
@@ -51,10 +51,10 @@ print accumulator.results
 
 
 # create a trade buying the asset
-trade = trade.Trade(asset=asset, quantity=10, price=2, date='2015-09-22')
+purchase = trade.Trade(asset=asset, quantity=10, price=2, date='2015-09-22')
 
 # accumulate the trade
-accumulator.accumulate_trade(trade)
+accumulator.accumulate_trade(purchase)
 
 
 print accumulator.quantity
@@ -68,10 +68,10 @@ print accumulator.results
 
 
 # create a new trade selling the asset
-trade = trade.Trade(asset=asset, quantity=-5, price=3, date='2015-09-23')
+sale = trade.Trade(asset=asset, quantity=-5, price=3, date='2015-09-23')
 
 # accumulate the new trade
-accumulator.accumulate_trade(trade)
+accumulator.accumulate_trade(sale)
 
 
 print accumulator.quantity
@@ -136,7 +136,7 @@ print accumulator.results
 Trade objects may include taxes and comissions, wich are considered by the
 accumulator when calculating results.
 
-The AssetAccumulator can also log the accumulated trades and their specific
+The Accumulator can also log the accumulated trades and their specific
 results.
 
 There are more features, like rating and applying discounts automatically

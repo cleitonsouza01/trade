@@ -275,7 +275,7 @@ class Daytrade:
 		return self.sale.real_value - self.buy.real_value
 
 
-class AssetAccumulator:
+class Accumulator:
 	""" A accumulator of quantity @ some average price.
 
 	Attributes:
