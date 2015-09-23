@@ -90,7 +90,7 @@ You may also use only the Accumulator and ignore everything else:
 import trade
 
 # create the accumulator to accumulate trades with the asset
-accumulator = trade.AssetAccumulator('Some asset')
+accumulator = trade.Accumulator('Some asset')
 
 
 print accumulator.asset
