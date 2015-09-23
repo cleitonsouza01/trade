@@ -24,7 +24,7 @@ print accumulator.results
 purchase = trade.Operation(asset=asset, quantity=10, price=2, date='2015-09-22')
 
 # accumulate the trade
-accumulator.accumulate_trade(purchase)
+accumulator.accumulate_operation(purchase)
 
 
 print accumulator.quantity
@@ -41,7 +41,7 @@ print accumulator.results
 sale = trade.Operation(asset=asset, quantity=-5, price=3, date='2015-09-23')
 
 # accumulate the new trade
-accumulator.accumulate_trade(sale)
+accumulator.accumulate_operation(sale)
 
 
 print accumulator.quantity
