@@ -219,9 +219,16 @@ class TestTrade_volume(unittest.TestCase):
         )
         self.assertEqual(trade.volume, 100)
 
-    def test_volume_should_be_200(self):
+    def test_purchase_volume_should_be_200(self):
         trade = trade_tools.Operation(
             price=10,
             quantity=20
+        )
+        self.assertEqual(trade.volume, 200)
+
+    def test_sale_volume_should_be_200(self):
+        trade = trade_tools.Operation(
+            price=10,
+            quantity=-20
         )
         self.assertEqual(trade.volume, 200)

@@ -5,6 +5,7 @@ import trade as trade_tools
 
 
 # TODO document this
+# TODO more tests
 
 
 class TestTradeContainerCreation(unittest.TestCase):
@@ -15,6 +16,7 @@ class TestTradeContainerCreation(unittest.TestCase):
     def test_trade_container_should_exist(self):
         self.assertTrue(self.trade_container)
 
+
 class TestTradeContainer_total_discount_value_one_discount(
         unittest.TestCase
     ):
@@ -23,7 +25,9 @@ class TestTradeContainer_total_discount_value_one_discount(
         discounts = {
             'some discount': 1,
         }
-        self.trade_container = trade_tools.OperationContainer(discounts=discounts)
+        self.trade_container = trade_tools.OperationContainer(
+            discounts=discounts
+        )
 
     def test_trade_container_should_exist(self):
         self.assertTrue(self.trade_container)
@@ -47,7 +51,9 @@ class TestTradeContainer_total_discount_value_multiple_discounts(
             'some discount': 1,
             'other discount': 3,
         }
-        self.trade_container = trade_tools.OperationContainer(discounts=discounts)
+        self.trade_container = trade_tools.OperationContainer(
+            discounts=discounts
+        )
 
     def test_trade_container_should_exist(self):
         self.assertTrue(self.trade_container)
@@ -69,7 +75,9 @@ class TestTradeContainer_volume_one_trade(unittest.TestCase):
         asset = trade_tools.Asset('some asset')
         trade = trade_tools.Operation(
             date='2015-09-21', asset=asset, quantity=10, price=2)
-        self.trade_container = trade_tools.OperationContainer(operations=[trade])
+        self.trade_container = trade_tools.OperationContainer(
+            operations=[trade]
+        )
 
     def test_trade_container_should_exist(self):
         self.assertTrue(self.trade_container)
@@ -249,7 +257,9 @@ class TestTradeContainer_rate_discounts_by_trade_case_03(unittest.TestCase):
         self.trade3 = trade_tools.Operation(
             date='2015-09-21', asset=asset2, quantity=-10, price=2)
         self.trade_container = trade_tools.OperationContainer(
-            operations=[self.trade1,self.trade2, self.trade3], discounts=discounts)
+                            operations=[self.trade1,self.trade2, self.trade3],
+                            discounts=discounts
+                        )
 
     def test_trade_container_should_exist(self):
         self.assertTrue(self.trade_container)
@@ -860,7 +870,8 @@ class TestTradeContainer_add_to_existing_common_trade(unittest.TestCase):
         asset = trade_tools.Asset('some asset')
         trade = trade_tools.Operation(
                     date='2015-09-21', asset=asset, quantity=10, price=2)
-        self.trade_container = trade_tools.OperationContainer(operations=[trade])
+        self.trade_container = \
+                    trade_tools.OperationContainer(operations=[trade])
         self.trade_container.identify_daytrades_and_common_operations()
         trade = trade_tools.Operation(
                     date='2015-09-21', asset=asset, quantity=10, price=4)

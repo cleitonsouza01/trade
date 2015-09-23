@@ -4,6 +4,7 @@ https://packaging.python.org/en/latest/distributing.html
 https://github.com/pypa/sampleproject
 """
 
+
 # Always prefer setuptools over distutils
 from setuptools import setup, find_packages
 # To use a consistent encoding
@@ -43,7 +44,7 @@ setup(
         #   3 - Alpha
         #   4 - Beta
         #   5 - Production/Stable
-        'Development Status :: 4 - Beta',
+        'Development Status :: 3 - Alpha',
 
         # Indicate who your project is intended for
         'Intended Audience :: Developers',
@@ -65,7 +66,7 @@ setup(
     ],
 
     # What does your project relate to?
-    keywords='asset stock securities market finance software quantity price value average investment money currency',
+    keywords='asset stock securities market finance investment money currency',
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
