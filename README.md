@@ -14,12 +14,12 @@ stock trading data.
 
 You may use the trade module as a framework to create applications that
 implement specific rules of stock markets around the world or use it "as is"
-in any  application that requires the notion of buying stuff, selling stuff
+in any  application that requires the notion of buying things, selling things
 and controlling how much you spent to buy and how much you profited from the
 trades.
 
 
-How can I install the trade module?
+How do I install the trade module?
 ------------------------------
 
   >> pip install trade
@@ -55,8 +55,8 @@ print accumulator.results
 # create the asset purchase operation
 purchase = trade.Operation(asset=asset, quantity=10, price=2, date='2015-09-22')
 
-# accumulate the trade
-accumulator.accumulate_trade(purchase)
+# accumulate the trade operation
+accumulator.accumulate_operation(purchase)
 
 
 print accumulator.quantity
@@ -72,8 +72,8 @@ print accumulator.results
 # create the asset sale operation
 sale = trade.Operation(asset=asset, quantity=-5, price=3, date='2015-09-23')
 
-# accumulate the new trade
-accumulator.accumulate_trade(sale)
+# accumulate the new trade operation
+accumulator.accumulate_operation(sale)
 
 
 print accumulator.quantity
