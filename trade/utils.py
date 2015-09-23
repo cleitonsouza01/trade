@@ -27,13 +27,13 @@ from __future__ import division
 import math
 
 
-def daytrade_condition(trade_a, trade_b):
+def daytrade_condition(operation_a, operation_b):
 	"""Check if two trades configure a daytrade."""
 	return (
-		trade_a.asset == trade_b.asset and
-		not same_sign(trade_a.quantity, trade_b.quantity) and
-		trade_a.quantity != 0 and
-		trade_b.quantity != 0
+		operation_a.asset == operation_b.asset and
+		not same_sign(operation_a.quantity, operation_b.quantity) and
+		operation_a.quantity != 0 and
+		operation_b.quantity != 0
 	)
 
 
