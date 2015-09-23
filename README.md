@@ -7,15 +7,16 @@ http://github.com/rochars/trade
 
 What is it?
 -----------
-trade is a Python package with simple functions and classes for the
+trade is a Python module with simple functions and classes for the
 development of investment applications in Python. It provides basic notions
 of assets, trades, daytrades, cost deduction and functions related to
 processing stock trading data.
 
-You may use it as a framework to create applications that implement specific
-rules of stock markets around the world or use it "as is" in any  application
-that requires the notion of buying stuff, selling stuff and  controlling how
-much you spent to buy and how much you profited from the trades.
+You may use the trade module as a framework to create applications that
+implement specific rules of stock markets around the world or use it "as is"
+in any  application that requires the notion of buying stuff, selling stuff
+and controlling how much you spent to buy and how much you profited from the
+trades.
 
 
 How can I install trade?
@@ -25,7 +26,7 @@ pip install trade
 
 How can I use it?
 -----------------
-A basic example of trade in use:
+A basic example of trade in action:
 
 ```python
 import trade
@@ -133,22 +134,22 @@ print accumulator.results
 #>> {'trade': 5.0}
 ```
 
-Trade objects may include taxes and comissions, wich are considered by the
+Trade objects may include taxes and comissions that are considered by the
 accumulator when calculating results.
 
 The Accumulator can also log the accumulated trades and their specific
 results.
 
 There are more features, like rating and applying discounts automatically
-to a group of trades, separate daytrades from common trades in a group of
+to a group of trades, separating daytrades from common trades in a group of
 trades, calculating the resulting position from a group of trades and so
 on. Check the documentation and the examples for more information on how to
-use trade_tools.
+use the trade module.
 
 
 What about compatibility?
 -------------------------
-trade is compatible with Python 2.7 and on, including Python 3.x.
+the trade module is compatible with Python 2.7 and on, including Python 3.x.
 
 
 License
