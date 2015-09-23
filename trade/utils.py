@@ -28,27 +28,27 @@ import math
 
 
 def daytrade_condition(operation_a, operation_b):
-	"""Check if two trades configure a daytrade."""
-	return (
-		operation_a.asset == operation_b.asset and
-		not same_sign(operation_a.quantity, operation_b.quantity) and
-		operation_a.quantity != 0 and
-		operation_b.quantity != 0
-	)
+    """Check if two trades configure a daytrade."""
+    return (
+        operation_a.asset == operation_b.asset and
+        not same_sign(operation_a.quantity, operation_b.quantity) and
+        operation_a.quantity != 0 and
+        operation_b.quantity != 0
+    )
 
 
 def average_price(quantity_1, price_1, quantity_2, price_2):
     """Calculate the average price between two positions.
 
-	A position is the quantity of an asset and its unitary average price.
+    A position is the quantity of an asset and its unitary average price.
     """
     return (quantity_1 * price_1 + quantity_2 * price_2) / \
-			(quantity_1 + quantity_2)
+            (quantity_1 + quantity_2)
 
 
 def same_sign(x, y):
-	"""Check if two numbers have the same sign."""
-	try:
-		return x == math.copysign(x, y)
-	except:
-		return None
+    """Check if two numbers have the same sign."""
+    try:
+        return x == math.copysign(x, y)
+    except:
+        return None
