@@ -17,7 +17,7 @@ print accumulator.price
 #>> 0
 
 print accumulator.results
-#>> {'trade': 0}
+#>> {'trades': 0}
 
 
 # accumulate trade data
@@ -31,7 +31,7 @@ print accumulator.price
 #>> 2.0
 
 print accumulator.results
-#>> {'trade': 0}
+#>> {'trades': 0}
 
 
 # accumulate the new trade
@@ -45,4 +45,4 @@ print accumulator.price
 #>> 2.0
 
 print accumulator.results
-#>> {'trade': 5.0}
+#>> {'trades': 5.0}

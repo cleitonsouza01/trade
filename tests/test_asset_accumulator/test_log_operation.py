@@ -27,7 +27,7 @@ class TestLogOperation(unittest.TestCase):
                     {
                         'quantity': 100,
                         'price': 10,
-                        'results': {'trade': 0}
+                        'results': {'trades': 0}
                     }
                 ]
             }

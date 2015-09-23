@@ -340,8 +340,8 @@ class Accumulator:
 			self.quantity = 0
 			self.price = 0
 			self.results = {
-			'trade': 0
-		}
+				'trades': 0
+			}
 
 		self.log_operations = log_operations
 		self.log = {}
@@ -437,7 +437,7 @@ class Accumulator:
 		new_quantity = self.quantity + quantity
 
 		if results is None:
-		    results = {'trade': 0}
+		    results = {'trades': 0}
 
 		# if the quantity of the trade has the same sign
 		# of the accumulated quantity then we need to
@@ -476,7 +476,7 @@ class Accumulator:
 
 		    # calculate the result of this operation and add
 		    # the new result to the accumulated results
-		    results['trade'] += abs(quantity)*price - abs(quantity)*self.price
+		    results['trades'] += abs(quantity)*price - abs(quantity)*self.price
 
 		# update the accumulator quantity and average
 		# price with the new values

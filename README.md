@@ -21,7 +21,7 @@ trades.
 
 How can I install trade?
 ------------------------------
-pip install trade
+>> pip install trade
 
 
 How can I use it?
@@ -48,7 +48,7 @@ print accumulator.price
 #>> 0
 
 print accumulator.results
-#>> {'trade': 0}
+#>> {'trades': 0}
 
 
 # create a trade buying the asset
@@ -65,7 +65,7 @@ print accumulator.price
 #>> 2.0
 
 print accumulator.results
-#>> {'trade': 0}
+#>> {'trades': 0}
 
 
 # create a new trade selling the asset
@@ -82,7 +82,7 @@ print accumulator.price
 #>> 2.0
 
 print accumulator.results
-#>> {'trade': 5.0}
+#>> {'trades': 5.0}
 ```
 
 You may also use only the Accumulator and ignore everything else:
@@ -103,7 +103,7 @@ print accumulator.price
 #>> 0
 
 print accumulator.results
-#>> {'trade': 0}
+#>> {'trades': 0}
 
 
 # accumulate trade data
@@ -117,7 +117,7 @@ print accumulator.price
 #>> 2.0
 
 print accumulator.results
-#>> {'trade': 0}
+#>> {'trades': 0}
 
 
 # accumulate new trade data
@@ -131,7 +131,7 @@ print accumulator.price
 #>> 2.0
 
 print accumulator.results
-#>> {'trade': 5.0}
+#>> {'trades': 5.0}
 ```
 
 Trade objects may include taxes and comissions that are considered by the
