@@ -20,7 +20,7 @@ print accumulator.results
 #>> {'trades': 0}
 
 
-# create a trade buying the asset
+# create a trade operation buying the asset
 purchase = trade.Operation(asset=asset, quantity=10, price=2, date='2015-09-22')
 
 # accumulate the trade
@@ -37,7 +37,7 @@ print accumulator.results
 #>> {'trades': 0}
 
 
-# create a new trade selling the asset
+# create a new trade operation selling the asset
 sale = trade.Operation(asset=asset, quantity=-5, price=3, date='2015-09-23')
 
 # accumulate the new trade

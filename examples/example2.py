@@ -34,7 +34,7 @@ print accumulator.results
 #>> {'trades': 0}
 
 
-# accumulate the new trade
+# accumulate more trade
 accumulator.accumulate(quantity=-5, price=3, date='2015-09-23')
 
 
