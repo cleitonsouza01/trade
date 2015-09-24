@@ -52,3 +52,15 @@ def same_sign(x, y):
         return x == math.copysign(x, y)
     except:
         return None
+
+
+def find_purchase_and_sale(operation_a, operation_b):
+    """Find in two operations which is a purchase and wich is a sale.
+
+    Return None if both are purchases or both are sales.
+    """
+    if same_sign(operation_a.quantity, operation_b.quantity):
+        return None
+    if operation_a.quantity > 0:
+        return operation_a, operation_b
+    return operation_b, operation_a

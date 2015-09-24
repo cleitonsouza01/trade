@@ -27,7 +27,9 @@ from __future__ import division
 import math
 import copy
 
-from .utils import average_price, daytrade_condition, same_sign
+from .utils import (
+    average_price, daytrade_condition, same_sign, find_purchase_and_sale
+)
 
 
 class Asset:
@@ -52,7 +54,7 @@ class Operation:
         asset: An Asset instance, the asset that is being traded.
         quantity: A number representing the quantity being traded.
         price: The raw unitary price of the asset being traded.
-        discounts: A dict of discount names (string) and values (float).
+        discounts: A dict of discount string names and floar values.
     """
 
     def __init__(self, quantity, price,
@@ -87,8 +89,9 @@ class Operation:
 class OperationContainer:
     """A container for operations.
 
-    A OperationContainer is used to group operations, like operations that
-    occurred on the same date, and then perform tasks on them. It can:
+    A OperationContainer is used to group operations, like operations
+    that occurred on the same date, and then perform tasks on them. It
+    can:
 
     - Separate the daytrades and the common operations of a group of
       operations that occurred on the same date by using the method:
@@ -102,8 +105,12 @@ class OperationContainer:
         date: A string 'YYYY-mm-dd' representing the date of the
             operations on the container.
         operations: A list of Operation instances.
-        discounts: A dict with discount names and values to be deducted from
-            the operations.
+        discounts: A dict with discount names and values to be deducted
+            from the operations.
+        daytrades: a dict of Daytrade objects, indexed by the daytrade
+            asset.
+        common_operations: a dict of Operation objects, indexed by the
+            daytrade asset.
     """
 
     def __init__(self, date=None, operations=None, discounts=None):
@@ -112,8 +119,8 @@ class OperationContainer:
         if discounts is None: discounts = {}
         self.operations = operations
         self.discounts = discounts
-        self.daytrades = []
-        self.common_operations = []
+        self.daytrades = {}
+        self.common_operations = {}
 
     @property
     def total_discount_value(self):
@@ -122,7 +129,7 @@ class OperationContainer:
 
     @property
     def volume(self):
-        """Return the sum of the volume of the operations in the container."""
+        """Return the total volume of the operations in the container."""
         return sum(operation.volume for operation in self.operations)
 
     def rate_discounts_by_daytrades_and_common_operations(self):
@@ -132,16 +139,17 @@ class OperationContainer:
         total discount value is then rated proportionally by the
         daytrades and common operations based on their volume.
         """
-        for operation in self.common_operations:
+        for operation in self.common_operations.values():
             self.rate_discounts_by_operation(operation)
-        for daytrade in self.daytrades:
+        for daytrade in self.daytrades.values():
             self.rate_discounts_by_operation(daytrade.buy)
             self.rate_discounts_by_operation(daytrade.sale)
 
     def rate_discounts_by_operation(self, operation):
         """Rate the discounts of the container for one operation.
 
-        The rate is based on the container volume and the operation volume.
+        The rate is based on the container volume and the operation
+        volume.
         """
         percent = operation.volume / self.volume * 100
         for key, value in self.discounts.items():
@@ -150,9 +158,11 @@ class OperationContainer:
     def identify_daytrades_and_common_operations(self):
         """Separate operations into daytrades and common operations.
 
-        The daytrades are operations of purchase and sale of the same
-        asset on the same date. The common operations are the resulting
-        positions from the operations that are not part of any daytrade.
+        The original operations list remains untouched. After the
+        execution of this method, the container daytrades list and
+        common_operations list will be filled with the daytrades
+        and common operations found in the container operations list,
+        if any.
         """
         operations = copy.deepcopy(self.operations)
 
@@ -160,56 +170,74 @@ class OperationContainer:
             for operation_b in \
                     [
                         op for op in operations[i:] if daytrade_condition(
-                                                                op, operation_a
+                                                            op, operation_a
                                                         )
                     ]:
-                self.append_to_daytrades(operation_a, operation_b)
+                self.extract_daytrade(operation_a, operation_b)
 
             if operation_a.quantity != 0:
                 self.append_to_common_operations(operation_a)
 
-    # TODO docstring! This method change the
-    #      operations attrs among other things!
-    def append_to_daytrades(self, operation_a, operation_b):
-        if operation_a.quantity > 0:
-            buy = operation_a
-            sale = operation_b
-        else:
-            buy = operation_b
-            sale = operation_a
-        daytrade_quantity = min([abs(buy.quantity), abs(sale.quantity)])
-        buy.quantity -= daytrade_quantity
+    def extract_daytrade(self, operation_a, operation_b):
+        """Extract the daytrade part of two operations."""
+
+        # Find what is the purchase and what is the sale
+        purchase, sale = find_purchase_and_sale(operation_a, operation_b)
+
+        # Find the daytraded quantity; the daytraded
+        # quantity is always the smallest absolute quantity
+        daytrade_quantity = min([abs(purchase.quantity), abs(sale.quantity)])
+
+        # Update the operations that originated the
+        # daytrade with the new quantity after the
+        # daytraded part has been extracted; One of
+        # the operations will always have zero
+        # quantity after this, being fully consumed
+        # by the daytrade. The other operation may or
+        # may not end with zero quantity.
+        purchase.quantity -= daytrade_quantity
         sale.quantity += daytrade_quantity
+
+        # Now that we know everything we need to know
+        # about the daytrade, we create the Daytrade object
         daytrade = Daytrade(
             self.date,
-            buy.asset,
+            purchase.asset,
             daytrade_quantity,
-            buy.price,
+            purchase.price,
             sale.price
         )
-        if not self.add_to_existing_daytrade(daytrade):
-            self.daytrades.append(daytrade)
 
-    def add_to_existing_daytrade(self, daytrade):
-        """Merge an daytrade with a already existing daytrade.
+        # If this container already have a Daytrade
+        # with this asset, we merge this daytrade
+        # with the daytrade in self.daytrades -
+        # in the end, there is only one daytrade per
+        # asset per OperationContainer.
+        if daytrade.asset in self.daytrades:
+            self.merge_operations(
+                self.daytrades[daytrade.asset].buy,
+                daytrade.buy
+            )
+            self.merge_operations(
+                self.daytrades[daytrade.asset].sale,
+                daytrade.sale
+            )
+            self.daytrades[daytrade.asset].quantity += daytrade.quantity
+        else:
+            self.daytrades[daytrade.asset] = daytrade
 
-        Returns True if a merge occurred; None otherwise.
-        """
-        for other_daytrade in self.daytrades:
-            if other_daytrade.asset == daytrade.asset:
-                self.merge_daytrade_operations(
-                    other_daytrade.buy,
-                    daytrade.buy
-                )
-                self.merge_daytrade_operations(
-                    other_daytrade.sale,
-                    daytrade.sale
-                )
-                other_daytrade.quantity += daytrade.quantity
-                return True
+    def append_to_common_operations(self, operation):
+        """Append a operation to the common operations list."""
+        if operation.asset in self.common_operations:
+            self.merge_operations(
+                self.common_operations[operation.asset],
+                operation
+            )
+        else:
+            self.common_operations[operation.asset] = operation
 
-    def merge_daytrade_operations(self, existing_operation, operation):
-        """Merge and exiting daytrade with a new daytrade."""
+    def merge_operations(self, existing_operation, operation):
+        """Merge one operation with another operation."""
         existing_operation.price = average_price(
                                         existing_operation.quantity,
                                         existing_operation.price,
@@ -217,27 +245,6 @@ class OperationContainer:
                                         operation.price
                                     )
         existing_operation.quantity += operation.quantity
-
-    def append_to_common_operations(self, operation):
-        """Append a operation to the TradeContainer common operations list."""
-        if not self.add_to_existing_common_operation(operation):
-            self.common_operations.append(operation)
-
-    def add_to_existing_common_operation(self, operation):
-        """Merge a operation with a common operation of the same asset.
-
-        Returns True if a merge occurred; None otherwise.
-        """
-        for existing_operation in self.common_operations:
-            if existing_operation.asset == operation.asset:
-                existing_operation.price = average_price(
-                                            existing_operation.quantity,
-                                            existing_operation.price,
-                                            operation.quantity,
-                                            operation.price
-                                        )
-                existing_operation.quantity += operation.quantity
-                return True
 
 
 class Daytrade:
@@ -249,7 +256,8 @@ class Daytrade:
     Attributes:
         asset: An asset instance, the asset that is being traded.
         quantity: The traded quantity of the asset.
-        buy: A Operation instance representing the purchase of the asset.
+        buy: A Operation instance representing the purchase of the
+            asset.
         sale: A Operation instance representing the sale of the asset.
     """
 
@@ -287,8 +295,8 @@ class Accumulator:
         quantity = The asset's accumulated quantity.
         price = The asset's average unitary price for the quantity
             accumulated.
-        results = A dict with the total results from from the operations
-            accumulated by the accumulator.
+        results = A dict with the total results from from the
+            operations accumulated by the accumulator.
         log_operations = A boolean indicating if the accumulator should
             log the calls to the accumulate() method.
         log = A dict with all the operations performed with the asset,
@@ -298,8 +306,9 @@ class Accumulator:
     log of the data of every operation it accumulate.
 
     Results are calculated by the accumulator according to the value
-    of the operations informed and the accumulator current status of the
-    accumulator (the current quantity and average price of the asset).
+    of the operations informed and the accumulator current status of
+    the accumulator (the current quantity and average price of the
+    asset).
 
     The method accumulate() can take a optional param 'results', a dict
     with other results to be included on the accumulator results dict
@@ -349,9 +358,9 @@ class Accumulator:
     def log_operation(self, quantity, price, date, results):
         """Log operation data.
 
-        If self.log_operations is True then this method is callled behind
-        the scenes every time the method accumulate() is called. The
-        operations are logged like this:
+        If self.log_operations is True then this method is callled
+        behind the scenes every time the method accumulate() is called.
+        The operations are logged like this:
 
             self.log = {
                 '2017-09-19': {
