@@ -26,7 +26,7 @@ from __future__ import division
 
 
 def daytrade_condition(operation_a, operation_b):
-    """Check if two trades configure a daytrade."""
+    """Check if the operations are day trades."""
     return (
         operation_a.asset == operation_b.asset and
         not same_sign(operation_a.quantity, operation_b.quantity) and
@@ -38,7 +38,7 @@ def daytrade_condition(operation_a, operation_b):
 def average_price(quantity_1, price_1, quantity_2, price_2):
     """Calculate the average price between two positions.
 
-    A position is the quantity of an asset and its unitary average price.
+    A position is the quantity of an asset and its average price.
     """
     return (quantity_1 * price_1 + quantity_2 * price_2) / \
             (quantity_1 + quantity_2)
@@ -53,7 +53,7 @@ def same_sign(x, y):
 
 
 def find_purchase_and_sale(operation_a, operation_b):
-    """Find in two operations which is a purchase and wich is a sale."""
+    """Given two operations, find who is a purchase and who is a sale."""
     if same_sign(operation_a.quantity, operation_b.quantity):
         return None
     if operation_a.quantity > operation_b.quantity:
