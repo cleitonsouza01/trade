@@ -47,7 +47,7 @@ def average_price(quantity_1, price_1, quantity_2, price_2):
 def same_sign(x, y):
     """Check if two numbers have the same sign."""
     try:
-        return (x >= 0) ^ (y < 0)
+        return (int(x) >= 0) ^ (int(y) < 0)
     except:
         return None
 
