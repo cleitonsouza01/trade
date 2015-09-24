@@ -76,7 +76,9 @@ class TestEvent_log_event_Case_00(unittest.TestCase):
                 },
                 'events': [
                     {
-                        'name': 'stock split'
+                        'name': 'stock split',
+                        'factor': 2,
+                        'date': '2015-09-24'
                     }
                 ]
             }
@@ -96,7 +98,8 @@ class TestEvent_log_event_Case_00(unittest.TestCase):
                 },
                 'events': [
                     {
-                        'name': 'other event'
+                        'name': 'other event',
+                        'date': '2015-09-25'
                     }
                 ]
             },
@@ -107,7 +110,9 @@ class TestEvent_log_event_Case_00(unittest.TestCase):
                 },
                 'events': [
                     {
-                        'name': 'stock split'
+                        'name': 'stock split',
+                        'factor': 2,
+                        'date': '2015-09-24'
                     }
                 ]
             }
@@ -127,10 +132,13 @@ class TestEvent_log_event_Case_00(unittest.TestCase):
                 },
                 'events': [
                     {
-                        'name': 'stock split'
+                        'name': 'stock split',
+                        'factor': 2,
+                        'date': '2015-09-24'
                     },
                     {
-                        'name': 'other event'
+                        'name': 'other event',
+                        'date': '2015-09-24'
                     }
                 ]
             }

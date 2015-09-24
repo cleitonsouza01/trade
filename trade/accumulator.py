@@ -290,13 +290,18 @@ class Accumulator:
                     'events': [
                         {
                             'name': string,
+                            'other event attr': event attr value
+                            ...
                         },
                         ...
                     ],
                 },
                 ...
             }
+
+        Where every attribute of the event object will be logged.
         """
+        #print event.__dict__
         if event.date not in self.log:
             self.log[event.date] = {'events': []}
         elif 'events' not in self.log[event.date]:
@@ -308,7 +313,7 @@ class Accumulator:
             'price': self.price,
         }
         self.log[event.date]['events'].append(
-            {'name': event.name,}
+            event.__dict__
         )
 
 
