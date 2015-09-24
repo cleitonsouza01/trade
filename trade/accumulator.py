@@ -271,6 +271,45 @@ class Accumulator:
                                             self.price,
                                             self.results
                                     )
+        if self.logging:
+            self.log_event(event)
+
+    def log_event(self, event):
+        """Log event data.
+
+        If logging, this method is called behind the scenes every
+        time the method accumulate_event() is called. The events are
+        logged like this:
+
+            self.log = {
+                '2017-09-19': {
+                    'position': {
+                        'quantity': float
+                        'price': float
+                    }
+                    'events': [
+                        {
+                            'name': string,
+                        },
+                        ...
+                    ],
+                },
+                ...
+            }
+        """
+        if event.date not in self.log:
+            self.log[event.date] = {'events': []}
+        elif 'events' not in self.log[event.date]:
+            self.log[event.date]['events'] = []
+
+        # Log the accumulator status and event data
+        self.log[event.date]['position'] = {
+            'quantity': self.quantity,
+            'price': self.price,
+        }
+        self.log[event.date]['events'].append(
+            {'name': event.name,}
+        )
 
 
 class Event:
@@ -288,6 +327,10 @@ class Event:
     """
 
     __metaclass__ = ABCMeta
+
+    def __init__(self, date, name):
+        self.name = name
+        self.date = date
 
     @abstractmethod
     def update_portfolio(quantity, price, results):
