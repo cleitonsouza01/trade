@@ -23,7 +23,10 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
+from abc import ABCMeta, abstractmethod
+
 from .utils import average_price, same_sign
+
 
 
 class Accumulator:
@@ -256,3 +259,44 @@ class Accumulator:
             operation.real_price,
             date=operation.date
         )
+
+    def accumulate_event(self, event):
+        """Receive and event instance and let it do its work.
+
+        An event can change the quantity, price and results  stored in
+        the accumulator.
+
+        The way it changes the position is up to the event object; each
+        event object must implement a
+
+            update_portfolio(quantity, price, results)
+                return quantity, price
+
+        method that implements the logic of the change in the
+        portfolio.
+        """
+        self.quantity, self.price = event.update_portfolio(
+                                            self.quantity,
+                                            self.price,
+                                            self.results
+                                    )
+
+
+class Event:
+    """A portfolio-changing event.
+
+    Events can change the quantity, the price and the results stored in
+    the accumulator. This is a base class for Events; every event must
+    inherit from this class and have a
+
+        update_portfolio(quantity, price, results)
+            return quantity, price
+
+    method that implements the logic of the change in the portfolio.
+    """
+
+    __metaclass__ = ABCMeta
+
+    @abstractmethod
+    def update_portfolio(quantity, price, results):
+        return quantity, price
