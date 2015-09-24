@@ -13,7 +13,7 @@ class TestLogOperation(unittest.TestCase):
     #maxDiff = None
 
     def setUp(self):
-        self.accumulator = AssetAccumulator('euro', log_operations=True)
+        self.accumulator = AssetAccumulator('euro', logging=True)
 
     def test_log_first_operation(self):
         self.accumulator.accumulate(100, 10, date='2015-01-01')
