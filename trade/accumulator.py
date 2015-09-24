@@ -204,8 +204,9 @@ class Accumulator:
                 new_price = 0
 
         # If the traded quantity has an opposite sign of the
-        # asset's accumulated quantity, then there was a result.
-        else:
+        # asset's accumulated quantity and the accumulated
+        # quantity is not zero, then there was a result.
+        elif self.quantity != 0:
 
             # If the new accumulated quantity is of the same sign
             # of the old accumulated quantity, the average of price
@@ -222,6 +223,12 @@ class Accumulator:
             # calculate the result of this operation and add
             # the new result to the accumulated results
             results['trades'] += abs(quantity)*price - abs(quantity)*self.price
+
+        # If the accumulated quantity was zero then
+        # there was no result and the new average price
+        # is the price of the operation
+        else:
+            new_price = price
 
         # update the accumulator quantity and average
         # price with the new values
@@ -243,6 +250,7 @@ class Accumulator:
             self.log_operation(quantity, price, date, results)
 
     def accumulate_operation(self, operation):
+        """Interface to accumulate() that accepts an Operation object."""
         self.accumulate(
             operation.quantity,
             operation.real_price,

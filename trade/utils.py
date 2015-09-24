@@ -24,8 +24,6 @@ THE SOFTWARE.
 from __future__ import absolute_import
 from __future__ import division
 
-import math
-
 
 def daytrade_condition(operation_a, operation_b):
     """Check if two trades configure a daytrade."""
@@ -49,16 +47,15 @@ def average_price(quantity_1, price_1, quantity_2, price_2):
 def same_sign(x, y):
     """Check if two numbers have the same sign."""
     try:
-        return x == math.copysign(x, y)
+        return (x >= 0) ^ (y < 0)
     except:
         return None
 
 
 def find_purchase_and_sale(operation_a, operation_b):
     """Find in two operations which is a purchase and wich is a sale."""
-    if same_sign(operation_a.quantity, operation_b.quantity) or \
-            operation_a.quantity == 0 or operation_b.quantity == 0:
+    if same_sign(operation_a.quantity, operation_b.quantity):
         return None
-    if operation_a.quantity > 0:
+    if operation_a.quantity > operation_b.quantity:
         return operation_a, operation_b
     return operation_b, operation_a

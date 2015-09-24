@@ -115,7 +115,7 @@ class Test_find_purchase_and_sale(unittest.TestCase):
     def test_find_purchase_and_sale_case_05(self):
         trade1 = Operation(0, 0, date='2015-09-22', asset=self.asset)
         trade2 = Operation(-5, 5, date='2015-09-22', asset=self.asset)
-        result = None
+        result = (trade1, trade2)
         self.assertEqual(find_purchase_and_sale(trade1,trade2), result)
 
     def test_find_purchase_and_sale_case_06(self):
@@ -127,5 +127,5 @@ class Test_find_purchase_and_sale(unittest.TestCase):
     def test_find_purchase_and_sale_case_07(self):
         trade1 = Operation(-5, 0, date='2015-09-22', asset=self.asset)
         trade2 = Operation(0, 5, date='2015-09-22', asset=self.asset)
-        result = None
+        result = (trade2, trade1)
         self.assertEqual(find_purchase_and_sale(trade1,trade2), result)
