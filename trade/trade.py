@@ -70,10 +70,16 @@ class Operation:
 
     @property
     def real_value(self):
+        """Return the quantity * the real price of the operation."""
         return abs(self.quantity) * self.real_price
 
     @property
     def real_price(self):
+        """Return the real price of the operation.
+
+        The real price is the price with all comissions and taxes
+        already deducted or added.
+        """
         return self.price + math.copysign(
                                 self.total_comission / self.quantity,
                                 self.quantity
@@ -81,17 +87,19 @@ class Operation:
 
     @property
     def total_comission(self):
+        """Return the sum of all comissions included in this operation."""
         return sum(self.comissions.values())
 
     @property
     def volume(self):
+        """Return the quantity of the operation * its raw price."""
         return abs(self.quantity) * self.price
 
 
 class OperationContainer:
     """A container for operations.
 
-    A OperationContainer is used to group operations, like operations
+    An OperationContainer is used to group operations, like operations
     that occurred on the same date, and then perform tasks on them. It
     can:
 
@@ -103,7 +111,7 @@ class OperationContainer:
     - Prorate a group of taxes proportionally for all daytrades and
       common operations, if any, by using the method:
 
-        prorate_comissions_by_common_operations_and_daytrades()
+        prorate_comissions_by_daytrades_and_common_operations()
 
     Attributes:
         date: A string 'YYYY-mm-dd' representing the date of the
@@ -114,7 +122,7 @@ class OperationContainer:
         daytrades: a dict of Daytrade objects, indexed by the daytrade
             asset.
         common_operations: a dict of Operation objects, indexed by the
-            daytrade asset.
+            operation asset.
     """
 
     def __init__(self, date=None, operations=None, comissions=None):

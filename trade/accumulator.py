@@ -250,6 +250,15 @@ class Accumulator:
             date=operation.date
         )
 
+    def accumulate_daytrade(self, daytrade):
+        """Interface to accumulate() that accepts an Daytrade object."""
+        self.accumulate(
+            date=daytrade.date,
+            quantity=0,
+            price=0,
+            results={'daytrade': daytrade.result}
+        )
+
     def accumulate_event(self, event):
         """Receive a Event subclass instance and let it do its work.
 
@@ -301,7 +310,6 @@ class Accumulator:
 
         Where every attribute of the event object will be logged.
         """
-        #print event.__dict__
         if event.date not in self.log:
             self.log[event.date] = {'events': []}
         elif 'events' not in self.log[event.date]:

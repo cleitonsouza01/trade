@@ -1,12 +1,11 @@
-trade: Tools For Stock Trading Applications.
-============================================
+# trade: Tools For Stock Trading Applications.
 Copyright (c) 2015 Rafael da Silva Rocha  
 rocha.rafaelsilva@gmail.com  
-http://github.com/rochars/trade
+http://github.com/rochars/trade  
+http://trade.readthedocs.org  
 
 
-What is it?
------------
+## What is it?
 trade is a Python module with functions and classes for the development
 of investment applications in Python. It provides basic notions of assets,
 operations, daytrades, cost deduction and functions related to processing
@@ -19,14 +18,11 @@ and controlling how much you spent to buy and how much you profited from the
 trades.
 
 
-How do I install the trade module?
-------------------------------
-
+## How do I install the trade module?
   >> pip install trade
 
 
-How can I use it?
------------------
+## How can I use it?
 A basic example of the trade module in action:
 
 ```python
@@ -147,13 +143,11 @@ on. Check the documentation and the examples for more information on how to
 use the trade module.
 
 
-What about compatibility?
--------------------------
+## What about compatibility?
 The Python trade module is compatible with Python 2.7 and on, including Python 3.x.
 
 
-License
--------
+## License
 This software is licensed under the MIT license: https://opensource.org/licenses/MIT
 
 
