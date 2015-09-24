@@ -1,7 +1,9 @@
 from __future__ import absolute_import
 import unittest
 
-from trade.utils import average_price, same_sign, daytrade_condition
+from trade.utils import (
+    average_price, same_sign, daytrade_condition, find_purchase_and_sale
+)
 from trade import Asset, Operation
 
 
@@ -72,3 +74,58 @@ class Test_daytrade_condition(unittest.TestCase):
         trade1 = Operation(0, 5, date='2015-09-22', asset=self.asset1)
         trade2 = Operation(0, 5, date='2015-09-22', asset=self.asset2)
         self.assertFalse(daytrade_condition(trade1,trade2))
+
+
+
+class Test_find_purchase_and_sale(unittest.TestCase):
+
+    def setUp(self):
+        self.asset = Asset()
+
+    def test_find_purchase_and_sale_case_00(self):
+        trade1 = Operation(10, 5, date='2015-09-22',asset=self.asset)
+        trade2 = Operation(-10, 5, date='2015-09-22', asset=self.asset)
+        result = (trade1, trade2)
+        self.assertEqual(find_purchase_and_sale(trade1,trade2), result)
+
+    def test_find_purchase_and_sale_case_01(self):
+        trade1 = Operation(-10, 5, date='2015-09-22', asset=self.asset)
+        trade2 = Operation(10, 5,date='2015-09-22', asset=self.asset)
+        result = (trade2, trade1)
+        self.assertEqual(find_purchase_and_sale(trade1,trade2), result)
+
+    def test_find_purchase_and_sale_case_02(self):
+        trade1 = Operation(10, 5, date='2015-09-22', asset=self.asset)
+        trade2 = Operation(10, 5, date='2015-09-22', asset=self.asset)
+        result = None
+        self.assertEqual(find_purchase_and_sale(trade1,trade2), result)
+
+    def test_find_purchase_and_sale_case_03(self):
+        trade1 = Operation(-10, 5, date='2015-09-22', asset=self.asset)
+        trade2 = Operation(-10, 5, date='2015-09-22', asset=self.asset)
+        result = None
+        self.assertEqual(find_purchase_and_sale(trade1,trade2), result)
+
+    def test_find_purchase_and_sale_case_04(self):
+        trade1 = Operation(0, 0, date='2015-09-22', asset=self.asset)
+        trade2 = Operation(5, 5, date='2015-09-22', asset=self.asset)
+        result = None
+        self.assertEqual(find_purchase_and_sale(trade1,trade2), result)
+
+    def test_find_purchase_and_sale_case_05(self):
+        trade1 = Operation(0, 0, date='2015-09-22', asset=self.asset)
+        trade2 = Operation(-5, 5, date='2015-09-22', asset=self.asset)
+        result = None
+        self.assertEqual(find_purchase_and_sale(trade1,trade2), result)
+
+    def test_find_purchase_and_sale_case_06(self):
+        trade1 = Operation(5, 0, date='2015-09-22', asset=self.asset)
+        trade2 = Operation(0, 5, date='2015-09-22', asset=self.asset)
+        result = None
+        self.assertEqual(find_purchase_and_sale(trade1,trade2), result)
+
+    def test_find_purchase_and_sale_case_07(self):
+        trade1 = Operation(-5, 0, date='2015-09-22', asset=self.asset)
+        trade2 = Operation(0, 5, date='2015-09-22', asset=self.asset)
+        result = None
+        self.assertEqual(find_purchase_and_sale(trade1,trade2), result)

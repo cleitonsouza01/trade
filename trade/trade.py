@@ -173,7 +173,8 @@ class OperationContainer:
                                                             op, operation_a
                                                         )
                     ]:
-                self.extract_daytrade(operation_a, operation_b)
+                if operation_b.quantity != 0 and operation_a.quantity != 0:
+                    self.extract_daytrade(operation_a, operation_b)
 
             if operation_a.quantity != 0:
                 self.append_to_common_operations(operation_a)
