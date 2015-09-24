@@ -97,11 +97,13 @@ class OperationContainer:
 
     - Separate the daytrades and the common operations of a group of
       operations that occurred on the same date by using the method:
-      self.identify_daytrades_and_common_operations()
 
-    - Rate a group of taxes proportionally for all daytrades and common
-      operations, if any, by using the method:
-      self.rate_discounts_by_common_operations_and_daytrades()
+        identify_daytrades_and_common_operations()
+
+    - Prorate a group of taxes proportionally for all daytrades and
+      common operations, if any, by using the method:
+
+        prorate_comissions_by_common_operations_and_daytrades()
 
     Attributes:
         date: A string 'YYYY-mm-dd' representing the date of the
@@ -134,23 +136,23 @@ class OperationContainer:
         """Return the total volume of the operations in the container."""
         return sum(operation.volume for operation in self.operations)
 
-    def rate_comissions_by_daytrades_and_common_operations(self):
-        """Rate the TradeContainer comissions by its operations.
+    def prorate_comissions_by_daytrades_and_common_operations(self):
+        """Prorate the TradeContainer comissions by its operations.
 
-        This method sums all discounts on the self.comissions dict. The
-        total discount value is then rated proportionally by the
+        This method sums all discounts on the comissions dict of the
+        accumulator. The total discount value is then prorated by the
         daytrades and common operations based on their volume.
         """
         for operation in self.common_operations.values():
-            self.rate_comissions_by_operation(operation)
+            self.prorate_comissions_by_operation(operation)
         for daytrade in self.daytrades.values():
-            self.rate_comissions_by_operation(daytrade.purchase)
-            self.rate_comissions_by_operation(daytrade.sale)
+            self.prorate_comissions_by_operation(daytrade.purchase)
+            self.prorate_comissions_by_operation(daytrade.sale)
 
-    def rate_comissions_by_operation(self, operation):
-        """Rate the comissions of the container for one operation.
+    def prorate_comissions_by_operation(self, operation):
+        """Prorate the comissions of the container for one operation.
 
-        The rate is based on the container volume and the operation
+        The ratio is based on the container volume and the operation
         volume.
         """
         percent = operation.volume / self.volume * 100
@@ -179,7 +181,7 @@ class OperationContainer:
                     self.extract_daytrade(operation_a, operation_b)
 
             if operation_a.quantity != 0:
-                self.append_to_common_operations(operation_a)
+                self.add_to_common_operations(operation_a)
 
     def extract_daytrade(self, operation_a, operation_b):
         """Extract the daytrade part of two operations."""
@@ -229,8 +231,8 @@ class OperationContainer:
         else:
             self.daytrades[daytrade.asset] = daytrade
 
-    def append_to_common_operations(self, operation):
-        """Append a operation to the common operations list."""
+    def add_to_common_operations(self, operation):
+        """Add a operation to the common operations list."""
         if operation.asset in self.common_operations:
             self.merge_operations(
                 self.common_operations[operation.asset],
@@ -253,7 +255,7 @@ class OperationContainer:
 class Daytrade:
     """A daytrade operation.
 
-    Daytrades are operations of purchase and sale of the same asset on
+    Daytrades are operations of purchase and sale of an Asset on
     the same date.
 
     Attributes:
