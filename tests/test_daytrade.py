@@ -25,16 +25,16 @@ class TestDaytradeCreation(unittest.TestCase):
         self.assertEqual(self.daytrade.quantity, 10)
 
     def test_daytrade_buy_operation_should_exist(self):
-        self.assertTrue(self.daytrade.buy)
+        self.assertTrue(self.daytrade.purchase)
 
     def test_check_daytrade_buy_operation_asset(self):
-        self.assertEqual(self.daytrade.buy.asset, self.asset)
+        self.assertEqual(self.daytrade.purchase.asset, self.asset)
 
     def test_check_daytrade_buy_operation_quantity(self):
-        self.assertEqual(self.daytrade.buy.quantity, 10)
+        self.assertEqual(self.daytrade.purchase.quantity, 10)
 
     def test_check_daytrade_buy_operation_price(self):
-        self.assertEqual(self.daytrade.buy.price, 2)
+        self.assertEqual(self.daytrade.purchase.price, 2)
 
     def test_daytrade_sale_operation_should_exist(self):
         self.assertTrue(self.daytrade.sale)

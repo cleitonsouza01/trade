@@ -142,7 +142,7 @@ class OperationContainer:
         for operation in self.common_operations.values():
             self.rate_discounts_by_operation(operation)
         for daytrade in self.daytrades.values():
-            self.rate_discounts_by_operation(daytrade.buy)
+            self.rate_discounts_by_operation(daytrade.purchase)
             self.rate_discounts_by_operation(daytrade.sale)
 
     def rate_discounts_by_operation(self, operation):
@@ -216,8 +216,8 @@ class OperationContainer:
         # asset per OperationContainer.
         if daytrade.asset in self.daytrades:
             self.merge_operations(
-                self.daytrades[daytrade.asset].buy,
-                daytrade.buy
+                self.daytrades[daytrade.asset].purchase,
+                daytrade.purchase
             )
             self.merge_operations(
                 self.daytrades[daytrade.asset].sale,
@@ -268,7 +268,7 @@ class Daytrade:
         self.date = date
         self.asset = asset
         self.quantity = quantity
-        self.buy = Operation(
+        self.purchase = Operation(
             date=date,
             asset=asset,
             quantity=quantity,
@@ -283,4 +283,4 @@ class Daytrade:
 
     @property
     def result(self):
-        return self.sale.real_value - self.buy.real_value
+        return self.sale.real_value - self.purchase.real_value
