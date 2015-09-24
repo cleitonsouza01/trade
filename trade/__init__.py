@@ -23,7 +23,7 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from .trade import (
-    Asset, Operation, OperationContainer, Daytrade, Accumulator
-)
+from .trade import Asset, Operation, OperationContainer, Daytrade
+from .accumulator import Accumulator
+
 from .utils import daytrade_condition, average_price, same_sign
