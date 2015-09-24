@@ -10,8 +10,7 @@ What is it?
 -----------
 trade is a Python module with functions and classes for the development
 of investment applications in Python. It provides basic notions of assets,
-operations, daytrades, cost deduction and functions related to processing
-stock trading data.
+operations, daytrades, cost deduction, asset accumulation and so on.
 
 You may use the trade module as a framework to create applications that
 implement specific rules of stock markets around the world or use it "as is"
@@ -22,8 +21,18 @@ trades.
 
 How do I install the trade module?
 ------------------------------
+The trade module can be installated via pip:
 
-  > pip install trade
+> pip install trade
+
+To check if everything went OK, open the Python console and import the module:
+
+```python
+import trade
+asset = trade.Asset('some asset')
+print(asset.name)
+#>> some asset
+```
 
 
 How can I use it?
@@ -154,14 +163,11 @@ use the trade module.
 
 What about compatibility?
 -------------------------
-The Python trade module is compatible with Python 2.7 and on, including Python 3.x.
+The trade module is compatible with Python 2.7 and Python 3.x.
 
 
 License
 -------
-This software is licensed under the MIT license: https://opensource.org/licenses/MIT
-
-
 Copyright (c) 2015 Rafael da Silva Rocha
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

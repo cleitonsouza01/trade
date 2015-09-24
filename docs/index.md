@@ -17,12 +17,22 @@ and controlling how much you spent to buy and how much you profited from the
 trades.
 
 
-## How do I install the trade module?
+## Installation
+The trade module can be installated via pip:
 
-  > pip install trade
+> pip install trade
+
+To check if everything went OK, open the Python console and import the module:
+
+```python
+import trade
+asset = trade.Asset('some asset')
+print(asset.name)
+#>> some asset
+```
 
 
-## How can I use it?
+## Quickstart
 A basic example of the trade module in action:
 
 ```python
@@ -147,14 +157,15 @@ on. Check the documentation and the examples for more information on how to
 use the trade module.
 
 
-## What about compatibility?
-The Python trade module is compatible with Python 2.7 and on, including Python 3.x.
+## Compatibility
+The trade module is compatible with Python 2.7 and Python 3.x.
+
+
+## Version
+The current version is 0.0.5-alpha.
 
 
 ## License
-This software is licensed under the MIT license: https://opensource.org/licenses/MIT
-
-
 Copyright (c) 2015 Rafael da Silva Rocha
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
