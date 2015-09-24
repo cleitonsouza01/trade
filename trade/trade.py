@@ -54,17 +54,19 @@ class Operation:
         asset: An Asset instance, the asset that is being traded.
         quantity: A number representing the quantity being traded.
         price: The raw unitary price of the asset being traded.
-        discounts: A dict of discount string names and floar values.
+        comissions: A dict of discounts. String keys and float values
+            representing the name of the discounts and the values
+            to be deducted from the operation.
     """
 
     def __init__(self, quantity, price,
-                    date=None, asset=None, discounts=None):
+                    date=None, asset=None, comissions=None):
         self.date = date
         self.asset = asset
         self.quantity = quantity
         self.price = price
-        if discounts is None: discounts={}
-        self.discounts = discounts
+        if comissions is None: comissions={}
+        self.comissions = comissions
 
     @property
     def real_value(self):
@@ -73,13 +75,13 @@ class Operation:
     @property
     def real_price(self):
         return self.price + math.copysign(
-                                self.total_discounts / self.quantity,
+                                self.total_comission / self.quantity,
                                 self.quantity
                             )
 
     @property
-    def total_discounts(self):
-        return sum(self.discounts.values())
+    def total_comission(self):
+        return sum(self.comissions.values())
 
     @property
     def volume(self):
@@ -105,7 +107,7 @@ class OperationContainer:
         date: A string 'YYYY-mm-dd' representing the date of the
             operations on the container.
         operations: A list of Operation instances.
-        discounts: A dict with discount names and values to be deducted
+        comissions: A dict with discount names and values to be deducted
             from the operations.
         daytrades: a dict of Daytrade objects, indexed by the daytrade
             asset.
@@ -113,47 +115,47 @@ class OperationContainer:
             daytrade asset.
     """
 
-    def __init__(self, date=None, operations=None, discounts=None):
+    def __init__(self, date=None, operations=None, comissions=None):
         self.date = date
         if operations is None: operations=[]
-        if discounts is None: discounts = {}
+        if comissions is None: comissions = {}
         self.operations = operations
-        self.discounts = discounts
+        self.comissions = comissions
         self.daytrades = {}
         self.common_operations = {}
 
     @property
-    def total_discount_value(self):
-        """Return the sum of values in the container discounts dict."""
-        return sum(self.discounts.values())
+    def total_comission_value(self):
+        """Return the sum of values in the container comissions dict."""
+        return sum(self.comissions.values())
 
     @property
     def volume(self):
         """Return the total volume of the operations in the container."""
         return sum(operation.volume for operation in self.operations)
 
-    def rate_discounts_by_daytrades_and_common_operations(self):
-        """Rate the TradeContainer discounts by its operations.
+    def rate_comissions_by_daytrades_and_common_operations(self):
+        """Rate the TradeContainer comissions by its operations.
 
-        This method sums all discounts on the self.discounts dict. The
+        This method sums all discounts on the self.comissions dict. The
         total discount value is then rated proportionally by the
         daytrades and common operations based on their volume.
         """
         for operation in self.common_operations.values():
-            self.rate_discounts_by_operation(operation)
+            self.rate_comissions_by_operation(operation)
         for daytrade in self.daytrades.values():
-            self.rate_discounts_by_operation(daytrade.purchase)
-            self.rate_discounts_by_operation(daytrade.sale)
+            self.rate_comissions_by_operation(daytrade.purchase)
+            self.rate_comissions_by_operation(daytrade.sale)
 
-    def rate_discounts_by_operation(self, operation):
-        """Rate the discounts of the container for one operation.
+    def rate_comissions_by_operation(self, operation):
+        """Rate the comissions of the container for one operation.
 
         The rate is based on the container volume and the operation
         volume.
         """
         percent = operation.volume / self.volume * 100
-        for key, value in self.discounts.items():
-            operation.discounts[key] = value * percent / 100
+        for key, value in self.comissions.items():
+            operation.comissions[key] = value * percent / 100
 
     def identify_daytrades_and_common_operations(self):
         """Separate operations into daytrades and common operations.

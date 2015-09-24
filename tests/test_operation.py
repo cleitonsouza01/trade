@@ -16,7 +16,7 @@ class TestTradeCreation(unittest.TestCase):
 			asset=self.asset,
 			quantity=20,
 			price=10,
-			discounts={
+			comissions={
                 'some discount': 3
             }
         )
@@ -40,7 +40,7 @@ class TestTradeCreation(unittest.TestCase):
         discounts={
             'some discount': 3
         }
-        self.assertEqual(self.trade.discounts, discounts)
+        self.assertEqual(self.trade.comissions, discounts)
 
 
 class TestTrade_total_discounts(unittest.TestCase):
@@ -52,46 +52,46 @@ class TestTrade_total_discounts(unittest.TestCase):
         trade = trade_tools.Operation(
             quantity=1,
             price=1,
-            discounts={
+            comissions={
                 'some discount': 3
             }
         )
-        self.assertEqual(trade.total_discounts, 3)
+        self.assertEqual(trade.total_comission, 3)
 
     def test_trade_total_discounts_with_multiple_discounts_case_1(self):
         trade = trade_tools.Operation(
             quantity=1,
             price=1,
-            discounts={
+            comissions={
                 'some discount': 3,
                 'other discount': 1
             }
         )
-        self.assertEqual(trade.total_discounts, 4)
+        self.assertEqual(trade.total_comission, 4)
 
     def test_trade_total_discounts_with_multiple_discounts_case_2(self):
         trade = trade_tools.Operation(
             quantity=1,
             price=1,
-            discounts={
+            comissions={
                 'some discount': 3,
                 'other discount': 1,
                 'more discounts': 2
             }
         )
-        self.assertEqual(trade.total_discounts, 6)
+        self.assertEqual(trade.total_comission, 6)
 
     def test_trade_total_discounts_with_multiple_discounts_case_3(self):
         trade = trade_tools.Operation(
             quantity=1,
             price=1,
-            discounts={
+            comissions={
                 'some discount': 3,
                 'other discount': 1,
                 'negative discount': -1
             }
         )
-        self.assertEqual(trade.total_discounts, 3)
+        self.assertEqual(trade.total_comission, 3)
 
 
 class TestTrade_real_price(unittest.TestCase):
@@ -110,7 +110,7 @@ class TestTrade_real_price(unittest.TestCase):
         trade = trade_tools.Operation(
             price=10,
             quantity=20,
-            discounts={
+            comissions={
                 'some discount': 3
             }
         )
@@ -120,7 +120,7 @@ class TestTrade_real_price(unittest.TestCase):
         trade = trade_tools.Operation(
             price=10,
             quantity=20,
-            discounts={
+            comissions={
                 'some discount': 3,
                 'other discount': 1
             }
@@ -131,7 +131,7 @@ class TestTrade_real_price(unittest.TestCase):
         trade = trade_tools.Operation(
             price=10,
             quantity=20,
-            discounts={
+            comissions={
                 'some discount': 3,
                 'other discount': 1,
                 'more discounts': 2
@@ -143,7 +143,7 @@ class TestTrade_real_price(unittest.TestCase):
         trade = trade_tools.Operation(
             price=10,
             quantity=20,
-            discounts={
+            comissions={
                 'some discount': 3,
                 'other discount': 1,
                 'negative discount': -1
@@ -168,7 +168,7 @@ class TestTrade_real_real_value(unittest.TestCase):
         trade = trade_tools.Operation(
             price=10,
             quantity=20,
-            discounts={
+            comissions={
                 'some discount': 3
             }
         )
@@ -178,7 +178,7 @@ class TestTrade_real_real_value(unittest.TestCase):
         trade = trade_tools.Operation(
             price=10,
             quantity=20,
-            discounts={
+            comissions={
                 'some discount': 3,
                 'other discount': 1
             }
@@ -189,7 +189,7 @@ class TestTrade_real_real_value(unittest.TestCase):
         trade = trade_tools.Operation(
             price=10,
             quantity=20,
-            discounts={
+            comissions={
                 'some discount': 3,
                 'other discount': 1,
                 'more discounts': 2
@@ -201,7 +201,7 @@ class TestTrade_real_real_value(unittest.TestCase):
         trade = trade_tools.Operation(
             price=10,
             quantity=20,
-            discounts={
+            comissions={
                 'some discount': 3,
                 'other discount': 1,
                 'negative discount': -1
