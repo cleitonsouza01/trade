@@ -190,7 +190,7 @@ class TestAccumulatorResults_purchase_case_02(unittest.TestCase):
                     'quantity': 100,
                     'price': 20,
                     'results': {
-                        'trades': 1000
+                        'trades': -1000
                     }
                 }]
             },
@@ -238,7 +238,7 @@ class TestAccumulatorResults_purchase_case_02(unittest.TestCase):
 
     def test_accumulated_result(self):
         expected_log = {
-            'trades': 1000
+            'trades': -1000
         }
         self.assertEqual(self.accumulator.results, expected_log)
 
@@ -279,7 +279,7 @@ class TestAccumulatorResults_purchase_case_03(unittest.TestCase):
                     'quantity': 100,
                     'price': 20,
                     'results': {
-                        'trades': 1000
+                        'trades': -1000
                     }
                 }]
             },
@@ -327,7 +327,7 @@ class TestAccumulatorResults_purchase_case_03(unittest.TestCase):
 
     def test_accumulated_result(self):
         expected_log = {
-            'trades': 1000
+            'trades': -1000
         }
         self.assertEqual(self.accumulator.results, expected_log)
 
@@ -356,7 +356,7 @@ class TestAccumulatorResults_purchase_case_04(unittest.TestCase):
                     'quantity': 100,
                     'price': 40,
                     'results': {
-                        'trades': 2000
+                        'trades': -2000
                     }
                 }]
             },
@@ -382,7 +382,7 @@ class TestAccumulatorResults_purchase_case_04(unittest.TestCase):
                     'quantity': 100,
                     'price': 20,
                     'results': {
-                        'trades': 1000
+                        'trades': -1000
                     }
                 }]
             },
@@ -430,7 +430,7 @@ class TestAccumulatorResults_purchase_case_04(unittest.TestCase):
 
     def test_accumulated_result(self):
         expected_log = {
-            'trades': 3000
+            'trades': -3000
         }
         self.assertEqual(self.accumulator.results, expected_log)
 
@@ -459,7 +459,7 @@ class TestAccumulatorResults_purchase_case_05(unittest.TestCase):
                     'quantity': 50,
                     'price': 40,
                     'results': {
-                        'trades': 1000
+                        'trades': -1000
                     }
                 }]
             },
@@ -485,7 +485,7 @@ class TestAccumulatorResults_purchase_case_05(unittest.TestCase):
                     'quantity': 100,
                     'price': 20,
                     'results': {
-                        'trades': 1000
+                        'trades': -1000
                     }
                 }]
             },
@@ -533,6 +533,102 @@ class TestAccumulatorResults_purchase_case_05(unittest.TestCase):
 
     def test_accumulated_result(self):
         expected_log = {
-            'trades': 2000
+            'trades': -2000
+        }
+        self.assertEqual(self.accumulator.results, expected_log)
+
+
+class TestAccumulatorResults_purchase_case_06(unittest.TestCase):
+
+    maxDiff = None
+
+    def setUp(self):
+        self.accumulator = AssetAccumulator('euro', logging=True)
+        self.accumulator.accumulate(-100, 20, date='2015-01-01')
+        self.accumulator.accumulate(100, 10, date='2015-01-02')
+
+    def test_purchase_result_log(self):
+        expected_log = {
+            '2015-01-02': {
+                'position': {
+                    'quantity': 0,
+                    'price': 0,
+                },
+                'operations': [{
+                    'quantity': 100,
+                    'price': 10,
+                    'results': {
+                        'trades': 1000
+                    }
+                }]
+            },
+            '2015-01-01': {
+                'position': {
+                    'quantity': -100,
+                    'price': 20,
+                },
+                'operations': [{
+                    'quantity': -100,
+                    'price': 20,
+                    'results': {
+                        'trades': 0
+                    }
+                }]
+            },
+
+        }
+        self.assertEqual(self.accumulator.log, expected_log)
+
+    def test_accumulated_result(self):
+        expected_log = {
+            'trades': 1000
+        }
+        self.assertEqual(self.accumulator.results, expected_log)
+
+
+class TestAccumulatorResults_purchase_case_07(unittest.TestCase):
+
+    maxDiff = None
+
+    def setUp(self):
+        self.accumulator = AssetAccumulator('euro', logging=True)
+        self.accumulator.accumulate(-50, 20, date='2015-01-01')
+        self.accumulator.accumulate(100, 10, date='2015-01-02')
+
+    def test_purchase_result_log(self):
+        expected_log = {
+            '2015-01-02': {
+                'position': {
+                    'quantity': 50,
+                    'price': 10,
+                },
+                'operations': [{
+                    'quantity': 100,
+                    'price': 10,
+                    'results': {
+                        'trades': 500
+                    }
+                }]
+            },
+            '2015-01-01': {
+                'position': {
+                    'quantity': -50,
+                    'price': 20,
+                },
+                'operations': [{
+                    'quantity': -50,
+                    'price': 20,
+                    'results': {
+                        'trades': 0
+                    }
+                }]
+            },
+
+        }
+        self.assertEqual(self.accumulator.log, expected_log)
+
+    def test_accumulated_result(self):
+        expected_log = {
+            'trades': 500
         }
         self.assertEqual(self.accumulator.results, expected_log)

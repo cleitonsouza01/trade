@@ -24,6 +24,7 @@ THE SOFTWARE.
 from __future__ import absolute_import
 
 from abc import ABCMeta, abstractmethod
+import math
 
 from .utils import average_price, same_sign
 
@@ -213,9 +214,23 @@ class Accumulator:
             else:
                 new_price = price
 
+            # check if we are trading more than what
+            # we have on our portfolio; if yes,
+            # the result will be calculated based
+            # only on what was traded (the rest create
+            # a new position)
+            if abs(quantity) > abs(self.quantity):
+                    result_quantity = self.quantity * -1
+
+            # If we're not trading more than what we have,
+            # then use the operation quantity to calculate
+            # the result
+            else:
+                result_quantity = quantity
+
             # calculate the result of this operation and add
             # the new result to the accumulated results
-            results['trades'] += abs(quantity)*price - abs(quantity)*self.price
+            results['trades'] += result_quantity*self.price - result_quantity*price 
 
         # If the accumulated quantity was zero then
         # there was no result and the new average price
@@ -242,17 +257,19 @@ class Accumulator:
         if self.logging:
             self.log_operation(quantity, price, date, results)
 
+        return results
+
     def accumulate_operation(self, operation):
         """Interface to accumulate() that accepts an Operation object."""
-        self.accumulate(
+        return self.accumulate(
             operation.quantity,
             operation.real_price,
             date=operation.date
         )
 
     def accumulate_daytrade(self, daytrade):
-        """Interface to accumulate() that accepts an Daytrade object."""
-        self.accumulate(
+        """Interface to accumulate() that accepts a Daytrade object."""
+        return self.accumulate(
             date=daytrade.date,
             quantity=0,
             price=0,
