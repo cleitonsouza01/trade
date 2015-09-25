@@ -27,7 +27,7 @@ from __future__ import division
 import math
 import copy
 
-from .trade import Daytrade, Operation
+from .operation import Daytrade, Operation
 from .tax_manager import TaxManager
 from .utils import (
     average_price, daytrade_condition, find_purchase_and_sale
