@@ -110,10 +110,11 @@ class Operation:
 
     @property
     def total_tax_value(self):
-        tax_value = 0
-        for value in self.taxes.values():
-            tax_value += self.volume * value / 100
-        return tax_value
+        if self.taxes:
+            return sum(
+                [self.volume * value / 100  for value in self.taxes.values()]
+            )
+        return 0
 
 
 class Daytrade:
