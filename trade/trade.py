@@ -147,6 +147,11 @@ class OperationContainer:
         """Return the total volume of the operations in the container."""
         return sum(operation.volume for operation in self.operations)
 
+    def fetch_positions(self):
+        """Fetch the positions resulting from the operations."""
+        self.identify_daytrades_and_common_operations()
+        self.prorate_comissions_by_daytrades_and_common_operations()
+
     def prorate_comissions_by_daytrades_and_common_operations(self):
         """Prorate the TradeContainer comissions by its operations.
 

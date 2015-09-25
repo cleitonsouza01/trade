@@ -90,6 +90,9 @@ Return the total volume of the operations in the container.
 
 ### Methods
 
+#### fetch_positions(self):
+Fetch the positions resulting from the operations on the OperationContainer.
+
 #### prorate_comissions_by_daytrades_and_common_operations(self):
 Prorate the TradeContainer comissions by its operations.  
 
