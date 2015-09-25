@@ -6,3 +6,4 @@ from .test_operation_container import *
 from .test_daytrade import *
 from .test_accumulator import *
 from .test_utils import *
+from .test_tax_manager import *

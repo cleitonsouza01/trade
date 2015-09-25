@@ -27,6 +27,7 @@ from __future__ import division
 import math
 import copy
 
+from .tax_manager import TaxManager
 from .utils import (
     average_price, daytrade_condition, same_sign, find_purchase_and_sale
 )
@@ -60,17 +61,24 @@ class Operation:
         comissions: A dict of discounts. String keys and float values
             representing the name of the discounts and the values
             to be deducted from the operation.
+        taxes: A dict of taxes. string keys and float values
+            representing the name of the taxes and the percentual
+            values of the taxes to be applyed to the operation.
+            Taxes are applyed based on the volume of the operation.
     """
 
     def __init__(self, quantity, price,
-                    date=None, asset=None, comissions=None):
+                    date=None, asset=None, comissions=None, taxes=None):
         self.date = date
         self.asset = asset
         self.quantity = quantity
         self.price = price
         if comissions is None: comissions={}
+        if taxes is None: taxes={}
         self.comissions = comissions
+        self.taxes = taxes
 
+    #FIXME nao pode ser abs()!!!!!!
     @property
     def real_value(self):
         """Return the quantity * the real price of the operation."""
@@ -86,7 +94,10 @@ class Operation:
         return self.price + math.copysign(
                                 self.total_comission / self.quantity,
                                 self.quantity
-                            )
+                            ) + math.copysign(
+                                    self.total_tax_value / self.quantity,
+                                    self.quantity
+                                )
 
     @property
     def total_comission(self):
@@ -97,6 +108,13 @@ class Operation:
     def volume(self):
         """Return the quantity of the operation * its raw price."""
         return abs(self.quantity) * self.price
+
+    @property
+    def total_tax_value(self):
+        tax_value = 0
+        for value in self.taxes.values():
+            tax_value += self.volume * value / 100
+        return tax_value
 
 
 class OperationContainer:
@@ -128,7 +146,12 @@ class OperationContainer:
             operation asset.
     """
 
-    def __init__(self, date=None, operations=None, comissions=None):
+    def __init__(self,
+                date=None,
+                operations=None,
+                comissions=None,
+                tax_manager=TaxManager()
+            ):
         self.date = date
         if operations is None: operations=[]
         if comissions is None: comissions = {}
@@ -136,6 +159,7 @@ class OperationContainer:
         self.comissions = comissions
         self.daytrades = {}
         self.common_operations = {}
+        self.tax_manager = tax_manager
 
     @property
     def total_comission_value(self):
@@ -151,6 +175,12 @@ class OperationContainer:
         """Fetch the positions resulting from the operations."""
         self.identify_daytrades_and_common_operations()
         self.prorate_comissions_by_daytrades_and_common_operations()
+        for asset, daytrade in self.daytrades.items():
+            daytrade.taxes = \
+                self.tax_manager.get_taxes_for_daytrade(daytrade)
+        for asset, operation in self.common_operations.items():
+            operation.taxes = \
+                self.tax_manager.get_taxes_for_operation(operation)
 
     def prorate_comissions_by_daytrades_and_common_operations(self):
         """Prorate the TradeContainer comissions by its operations.
@@ -266,6 +296,11 @@ class OperationContainer:
                                         operation.price
                                     )
         existing_operation.quantity += operation.quantity
+
+
+    def find_taxes_for_positions(self):
+        """Get the taxes for every position on the container."""
+        pass
 
 
 class Daytrade:

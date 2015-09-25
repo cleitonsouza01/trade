@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+from __future__ import division
 import unittest
 
 import trade as trade_tools
@@ -232,3 +233,127 @@ class TestTrade_volume(unittest.TestCase):
             quantity=-20
         )
         self.assertEqual(trade.volume, 200)
+
+
+
+
+
+
+class TestTrade_total_tax_value_Case_00(unittest.TestCase):
+
+    def setUp(self):
+        self.asset = trade_tools.Asset(name='some asset')
+        self.trade = trade_tools.Operation(
+			date='2015-09-18',
+			asset=self.asset,
+			quantity=10,
+			price=10,
+            comissions = {
+                'brokerage': 2,
+                'some tax': 1.5,
+                'other tax': 1,
+            },
+			taxes={
+                'some tax': 0.005,
+    			'some other tax': 0.0275
+            }
+        )
+
+    def test_trade_exists(self):
+        self.assertTrue(self.trade)
+
+    def test_trade_asset(self):
+        self.assertEqual(self.trade.asset, self.asset)
+
+    def test_trade_date_should_be_2015_09_18(self):
+        self.assertEqual(self.trade.date, '2015-09-18')
+
+    def test_trade_quantity_should_be_20(self):
+        self.assertEqual(self.trade.quantity, 10)
+
+    def test_trade_price_should_be_10(self):
+        self.assertEqual(self.trade.price, 10)
+
+    def test_trade_comissions_dict(self):
+        comissions = {
+            'brokerage': 2,
+            'some tax': 1.5,
+            'other tax': 1,
+        }
+        self.assertEqual(self.trade.comissions, comissions)
+
+    def test_trade_taxes_dict(self):
+        taxes={
+            'some tax': 0.005,
+            'some other tax': 0.0275
+        }
+        self.assertEqual(self.trade.taxes, taxes)
+
+    def test_trade_total_tax_value(self):
+        self.assertEqual(round(self.trade.total_tax_value, 8), 0.03250000)
+
+    def test_trade_real_price(self):
+        self.assertEqual(round(self.trade.real_price, 8), 10.45325000)
+
+    def test_trade_real_value(self):
+        self.assertEqual(round(self.trade.real_value, 8), 104.532500)
+
+
+class TestTrade_total_tax_value_Case_00(unittest.TestCase):
+
+    def setUp(self):
+        self.asset = trade_tools.Asset(name='some asset')
+        self.trade = trade_tools.Operation(
+			date='2015-09-18',
+			asset=self.asset,
+			quantity=10,
+			price=10,
+            comissions = {
+                'brokerage': 2,
+                'some tax': 1.5,
+                'other tax': 1,
+            },
+			taxes={
+                'some tax': 0.005,
+    			'some other tax': 0.0275
+            }
+        )
+
+    def test_trade_exists(self):
+        self.assertTrue(self.trade)
+
+    def test_trade_asset(self):
+        self.assertEqual(self.trade.asset, self.asset)
+
+    def test_trade_date_should_be_2015_09_18(self):
+        self.assertEqual(self.trade.date, '2015-09-18')
+
+    def test_trade_quantity_should_be_20(self):
+        self.assertEqual(self.trade.quantity, 10)
+
+    def test_trade_price_should_be_10(self):
+        self.assertEqual(self.trade.price, 10)
+
+    def test_trade_comissions_dict(self):
+        comissions = {
+            'brokerage': 2,
+            'some tax': 1.5,
+            'other tax': 1,
+        }
+        self.assertEqual(self.trade.comissions, comissions)
+
+    def test_trade_taxes_dict(self):
+        taxes={
+            'some tax': 0.005,
+            'some other tax': 0.0275
+        }
+        self.assertEqual(self.trade.taxes, taxes)
+
+    def test_trade_total_tax_value(self):
+        self.assertEqual(round(self.trade.total_tax_value, 8), 0.03250000)
+
+    def test_trade_real_price(self):
+        self.assertEqual(round(self.trade.real_price, 8), 10.45325000)
+
+    def test_trade_real_value(self):
+        self.assertEqual(round(self.trade.real_value, 8), 104.532500)
