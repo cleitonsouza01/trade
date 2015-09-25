@@ -1,8 +1,7 @@
 # trade.utils
 
-This module contains functions that execute common tasks. The
-functions defined here are also imported on trade.__ init __ , so
-you can use them by just:
+This module contains functions that execute common tasks.
+You can use them by just:
 
 ```python
 import trade
