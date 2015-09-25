@@ -172,12 +172,44 @@ class OperationContainer:
         return sum(operation.volume for operation in self.operations)
 
     def fetch_positions(self):
-        """Fetch the positions resulting from the operations."""
+        """Fetch the positions resulting from the operations.
+
+        Fetching the position is a complex process that needs to be
+        better documented. What happens is as follows:
+
+        - Separate all daytrades and common operations;
+        - Group all common operations with one asset into a single Operation,
+            so in the end you only have one common operation per asset;
+        - Group all daytrades with one asset into a single Daytrade,
+            so in the end you only have one daytrade per asset;
+        - put all common_operations in self.common_operations, a dict
+            indexed by the operation's asset name;
+        - put all daytrades in self.daytrades, a dict indexed by the
+            daytrade's asset name;
+        - Prorate all comissions of the container for the common
+            operations and the purchase and sale operation of every
+            daytrade;
+        - Find the taxes to be applyed to every common operation and to
+            every purchase and sale operation of every daytrade.
+
+        After this method is executed:
+
+        - the raw operations list of the container remains untouched;
+        - the container common_operations list is filled with all
+            common operations of the container, with all information
+            about comissions and taxes to be applyed to each operation;
+        - the container daytrades list is filled with all daytrades
+            of the container, with all information about comissions
+            and taxes to be applyed to every daytrade's purchase and
+            sale operation.
+        """
         self.identify_daytrades_and_common_operations()
         self.prorate_comissions_by_daytrades_and_common_operations()
         for asset, daytrade in self.daytrades.items():
-            daytrade.taxes = \
-                self.tax_manager.get_taxes_for_daytrade(daytrade)
+            daytrade.purchase.taxes = \
+                self.tax_manager.get_taxes_for_daytrade(daytrade.purchase)
+            daytrade.sale.taxes = \
+                self.tax_manager.get_taxes_for_daytrade(daytrade.sale)
         for asset, operation in self.common_operations.items():
             operation.taxes = \
                 self.tax_manager.get_taxes_for_operation(operation)

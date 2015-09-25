@@ -1353,3 +1353,109 @@ class TestTradeContainer_fetch_positions_case_01(
 
     def test_daytrade2_sale_quantity_should_be_minus_5(self):
         self.assertEqual(self.trade_container.daytrades[self.asset3].sale.quantity, -10)
+
+
+
+
+
+class TaxManagerForTests:
+    def get_taxes_for_operation(self, operation):
+        return {}
+
+    def get_taxes_for_daytrade(self, operation):
+        return {
+            'emoluments': 0.005,
+            'liquidation': 0.02,
+            'registry': 0,
+        }
+
+
+
+
+
+class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):
+    """ Daytrades, comissions and taxes."""
+
+    def setUp(self):
+
+        receipts = []
+        receipt_operations = []
+        self.asset = trade_tools.Asset('PETR4')
+
+        # NOTA 2
+        date='2015-02-03'
+        operations = []
+        operations.append(
+            trade_tools.Operation(
+                date=date,
+                asset=self.asset,
+                quantity=10,
+                price=10
+            )
+        )
+        operations.append(
+            trade_tools.Operation(
+                date=date,
+                asset=self.asset,
+                quantity=-10,
+                price=10
+            )
+        )
+        comissions = {
+            'corretagem': 2,
+            'iss': 1.5,
+            'outros': 1,
+        }
+        self.container = trade_tools.OperationContainer(operations=operations, comissions=comissions)
+        self.container.tax_manager = TaxManagerForTests()
+        self.container.fetch_positions()
+
+    def test_receipt_daytrade_buy_operation_discounts(self):
+        discounts = {
+            'corretagem': 1,
+            'iss': 0.75,
+            'outros': 0.5,
+        }
+        self.assertEqual(self.container.daytrades[self.asset].purchase.comissions, discounts)
+
+    def test_receipt_daytrade_buy_sale_operation_discounts(self):
+        discounts = {
+            'corretagem': 1,
+            'iss': 0.75,
+            'outros': 0.5,
+        }
+        self.assertEqual(self.container.daytrades[self.asset].sale.comissions, discounts)
+
+    def test_receipt_daytrade_buy_operation_taxes(self):
+        taxes = {
+            'emoluments': 0.005,
+            'liquidation': 0.02,
+            'registry': 0,
+        }
+        self.assertEqual(self.container.daytrades[self.asset].purchase.taxes, taxes)
+
+    def test_receipt_daytrade_sale_operation_taxes(self):
+        taxes = {
+            'emoluments': 0.005,
+            'liquidation': 0.02,
+            'registry': 0,
+        }
+        self.assertEqual(self.container.daytrades[self.asset].sale.taxes, taxes)
+
+    def test_receipt_daytrade_operation_result(self):
+        self.assertEqual(round(self.container.daytrades[self.asset].result,8), -4.55000000)
+
+    def test_receipt_daytrade_operation_quantity(self):
+        self.assertEqual(self.container.daytrades[self.asset].quantity, 10)
+
+    def test_receipt_daytrade_buy_operation_real_price(self):
+        self.assertEqual(round(self.container.daytrades[self.asset].purchase.real_price,8), 10.22750000)
+
+    def test_receipt_daytrade_sale_operation_real_price(self):
+        self.assertEqual(round(self.container.daytrades[self.asset].sale.real_price,8), 9.77250000)
+
+    def test_receipt_daytrade_buy_operation_real_value(self):
+        self.assertEqual(round(self.container.daytrades[self.asset].purchase.real_value,8), 102.27500000)
+
+    def test_receipt_daytrade_sale_operation_real_value(self):
+        self.assertEqual(round(self.container.daytrades[self.asset].sale.real_value,8), 97.72500000)
