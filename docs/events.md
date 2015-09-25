@@ -13,6 +13,20 @@ that implements the logic for the change in the portfolio.
 Events are passed to trade.Accumulator objects by the accumulate_event
 method.
 
+An event subclass representing a stock split could look like this:
+
+```python
+class StockSplit(Event):
+
+    def __init__(self, name, factor):
+        self.factor = factor
+        self.name = name
+
+    def update_portfolio(self, quantity, price, results):
+        quantity = quantity * self.factor
+        price = price / self.factor
+        return quantity, price
+```
 
 Copyright (c) 2015 Rafael da Silva Rocha  
 rocha.rafaelsilva@gmail.com  
