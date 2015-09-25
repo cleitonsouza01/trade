@@ -38,8 +38,8 @@ class OperationContainer:
     """A container for operations.
 
     An OperationContainer is used to group operations, like operations
-    that occurred on the same date, and then perform tasks on them. It
-    can:
+    that occurred on the same date, and then perform tasks on them. The
+    OperationContainer can:
 
     - Separate the daytrades and the common operations of a group of
       operations that occurred on the same date by using the method:
@@ -55,8 +55,8 @@ class OperationContainer:
         date: A string 'YYYY-mm-dd' representing the date of the
             operations on the container.
         operations: A list of Operation instances.
-        comissions: A dict with discount names and values to be deducted
-            from the operations.
+        comissions: A dict with discount names and values to be
+            deducted from the operations.
         daytrades: a dict of Daytrade objects, indexed by the daytrade
             asset.
         common_operations: a dict of Operation objects, indexed by the
@@ -80,7 +80,7 @@ class OperationContainer:
 
     @property
     def total_comission_value(self):
-        """Return the sum of values in the container comissions dict."""
+        """Return the sum of values of all comissions."""
         return sum(self.comissions.values())
 
     @property
@@ -91,44 +91,45 @@ class OperationContainer:
     def fetch_positions(self):
         """Fetch the positions resulting from the operations.
 
-        Fetching the position is a complex process that needs to be
+        Fetch the position is a complex process that needs to be
         better documented. What happens is as follows:
 
         - Separate all daytrades and common operations;
-        - Group all common operations with one asset into a single Operation,
-            so in the end you only have one common operation per asset;
+        - Group all common operations with one asset into a single
+            Operation, so in the end you only have one operation
+            per asset (on self.common_operations);
         - Group all daytrades with one asset into a single Daytrade,
             so in the end you only have one daytrade per asset;
-        - put all common_operations in self.common_operations, a dict
+        - put all common operations in self.common_operations, a dict
             indexed by the operation's asset name;
         - put all daytrades in self.daytrades, a dict indexed by the
             daytrade's asset name;
         - Prorate all comissions of the container for the common
             operations and the purchase and sale operation of every
             daytrade;
-        - Find the taxes to be applyed to every common operation and to
+        - Find the taxes to be applied to every common operation and to
             every purchase and sale operation of every daytrade.
 
-        After this method is executed:
+        After this method:
 
         - the raw operations list of the container remains untouched;
         - the container common_operations list is filled with all
             common operations of the container, with all information
-            about comissions and taxes to be applyed to each operation;
+            about comissions and taxes to be applied to each operation;
         - the container daytrades list is filled with all daytrades
             of the container, with all information about comissions
-            and taxes to be applyed to every daytrade's purchase and
-            sale operation.
+            and taxes to be applied to every purchase and sale
+            operation of every daytrade.
         """
         self.identify_daytrades_and_common_operations()
         self.prorate_comissions_by_daytrades_and_common_operations()
         self.find_taxes_for_positions()
 
     def prorate_comissions_by_daytrades_and_common_operations(self):
-        """Prorate the TradeContainer comissions by its operations.
+        """Prorate the container's comissions by its operations.
 
-        This method sums all discounts on the comissions dict of the
-        accumulator. The total discount value is then prorated by the
+        This method sum the discounts in the comissions dict of the
+        container. The total discount value is then prorated by the
         daytrades and common operations based on their volume.
         """
         for operation in self.common_operations.values():
@@ -138,23 +139,22 @@ class OperationContainer:
             self.prorate_comissions_by_operation(daytrade.sale)
 
     def prorate_comissions_by_operation(self, operation):
-        """Prorate the comissions of the container for one operation.
+        """Prorates the comissions of the container for one operation.
 
-        The ratio is based on the container volume and the operation
-        volume.
+        The ratio is based on the container volume and the volume of
+        the operation.
         """
         percent = operation.volume / self.volume * 100
         for key, value in self.comissions.items():
             operation.comissions[key] = value * percent / 100
 
     def identify_daytrades_and_common_operations(self):
-        """Separate operations into daytrades and common operations.
+        """Separates operations into daytrades and common operations.
 
-        The original operations list remains untouched. After the
-        execution of this method, the container daytrades list and
-        common_operations list will be filled with the daytrades
+        After this process, the attributes 'daytrades' and
+        'common_operations'  will be filled with the daytrades
         and common operations found in the container operations list,
-        if any.
+        if any. The original operations list remains untouched.
         """
         operations = copy.deepcopy(self.operations)
 
@@ -172,7 +172,7 @@ class OperationContainer:
                 self.add_to_common_operations(operation_a)
 
     def extract_daytrade(self, operation_a, operation_b):
-        """Extract the daytrade part of two operations."""
+        """Extracts the daytrade part of two operations."""
 
         # Find what is the purchase and what is the sale
         purchase, sale = find_purchase_and_sale(operation_a, operation_b)
@@ -220,7 +220,7 @@ class OperationContainer:
             self.daytrades[daytrade.asset] = daytrade
 
     def add_to_common_operations(self, operation):
-        """Add a operation to the common operations list."""
+        """Adds a operation to the common operations list."""
         if operation.asset in self.common_operations:
             self.merge_operations(
                 self.common_operations[operation.asset],
@@ -230,7 +230,7 @@ class OperationContainer:
             self.common_operations[operation.asset] = operation
 
     def merge_operations(self, existing_operation, operation):
-        """Merge one operation with another operation."""
+        """Merges one operation with another operation."""
         existing_operation.price = average_price(
                                         existing_operation.quantity,
                                         existing_operation.price,
@@ -240,7 +240,7 @@ class OperationContainer:
         existing_operation.quantity += operation.quantity
 
     def find_taxes_for_positions(self):
-        """Get the taxes for every position on the container."""
+        """Gets the taxes for every position on the container."""
         for asset, daytrade in self.daytrades.items():
             daytrade.purchase.taxes = \
                 self.tax_manager.get_taxes_for_daytrade(daytrade.purchase)

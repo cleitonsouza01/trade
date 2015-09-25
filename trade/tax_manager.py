@@ -25,32 +25,30 @@ from __future__ import absolute_import
 
 
 class TaxManager:
-    """A base TaxManager.
+    """An base TaxManager.
 
     A TaxManager object reads an operation and returns the
     correspondent percentual taxes for that operation. Since taxes
-    (and also the way they are applyed) may vary greatly from one
-    context to another, this class only implements a dumb interface
+    (and also the way they are applied) may vary greatly from one
+    context to another, this class just implements a dumb interface
     for the tax discovery process, always returning a empty dict of
     taxes.
 
-    Every OperationContainer object have a reference to an instance
+    Every OperationContainer object has a reference to an instance
     of this TaxManager. If your app need to apply taxes to your
-    Operation objects, extend this class and inform the new TaxManager
-    to your OperationContainer by
+    Operation objects, then you should extend this class and inform
+    the new TaxManager to your OperationContainer by
 
         operation_container_object.tax_manger = your_tax_manager_object
 
-    The OperationContainer will always access the TaxManager when
-    fetch_positions() is called. Behind the scenes the container will
-    call this methods from the TaxManager object:
+    The OperationContainer always access the TaxManager when
+    fetch_positions() is called. Behind the scenes the container
+    calls this methods from the TaxManager object:
 
         tax_manager.get_taxes_for_operation(operation)
         tax_manager.get_taxes_for_daytrade(operation)
 
-    for every operation and daytrade present on the container
-    position dict. These taxes will then be considered when calculating
-    the results and average price resulting from the operations.
+    for every operation and daytrade present on the container.
     """
 
     def get_taxes_for_operation(self, operation):

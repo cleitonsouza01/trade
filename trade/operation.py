@@ -62,9 +62,10 @@ class Operation:
             representing the name of the discounts and the values
             to be deducted from the operation.
         taxes: A dict of taxes. string keys and float values
-            representing the name of the taxes and the percentual
-            values of the taxes to be applyed to the operation.
-            Taxes are applyed based on the volume of the operation.
+            representing the name of the taxes and the values of the
+            taxes to be applied to the operation. Tax values are always
+            represented as a percentage. Taxes are applied based on the
+            volume of the operation.
     """
 
     def __init__(self, quantity, price,
@@ -80,12 +81,12 @@ class Operation:
 
     @property
     def real_value(self):
-        """Return the quantity * the real price of the operation."""
+        """Returns the quantity * the real price of the operation."""
         return self.quantity * self.real_price
 
     @property
     def real_price(self):
-        """Return the real price of the operation.
+        """Returns the real price of the operation.
 
         The real price is the price with all comissions and taxes
         already deducted or added.
@@ -105,11 +106,12 @@ class Operation:
 
     @property
     def volume(self):
-        """Return the quantity of the operation * its raw price."""
+        """Returns the quantity of the operation * its raw price."""
         return abs(self.quantity) * self.price
 
     @property
     def total_tax_value(self):
+        """Returns the total tax value for this operation."""
         if self.taxes:
             return sum(
                 [self.volume * value / 100  for value in self.taxes.values()]
@@ -126,9 +128,9 @@ class Daytrade:
     Attributes:
         asset: An asset instance, the asset that is being traded.
         quantity: The traded quantity of the asset.
-        purchase: A Operation instance representing the purchase of the
+        purchase: A Operation object representing the purchase of the
             asset.
-        sale: A Operation instance representing the sale of the asset.
+        sale: A Operation object representing the sale of the asset.
     """
 
     # TODO docstring explaining the creation of the
