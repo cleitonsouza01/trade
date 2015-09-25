@@ -2,7 +2,7 @@
 
 This module contains the class definitions of Asset, Operation,
 OperationContainer and Daytrade. These classes are imported on
-trade.__ init __ , so you can use them by just:
+trade. _ _ init _ _ , so you can use them by just:
 
 ```python
 import trade
@@ -14,14 +14,19 @@ asset = trade.Asset()
 An asset represents anything that can be traded.
 
 Asset objects can be created with or without a name.
-```python
-import trade
-asset1 = trade.Asset('some asset')
-asset2 = trade.Asset()
-```
 
 ### Attributes:
 + name: A string representing the name of the asset.
++ expiration_date: A string 'YYYY-mm-dd' representing the expiration date of the asset, if any.
+
+### Methods:
+
+#### _ _ init _ _ (self, name='', expiration_date=None):
+Asset objects can be created empty or with name and expiration date.
+
+#### _ _ deepcopy _ _ (self, memo)
+Assets always return a reference to themselves when being copied, so they
+are never really copied.
 
 
 ## trade.trade.Operation
