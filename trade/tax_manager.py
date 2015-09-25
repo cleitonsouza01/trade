@@ -25,18 +25,18 @@ from __future__ import absolute_import
 
 
 class TaxManager:
-    """An abstract TaxManager.
+    """A base TaxManager.
 
     A TaxManager object reads an operation and returns the
     correspondent percentual taxes for that operation. Since taxes
     (and also the way they are applyed) may vary greatly from one
     context to another, this class only implements a dumb interface
-    for the tax discovery process, always returning a empty set of
-    classes.
+    for the tax discovery process, always returning a empty dict of
+    taxes.
 
     Every OperationContainer object have a reference to an instance
     of this TaxManager. If your app need to apply taxes to your
-    Operations, extend this class and inform the new TaxManager
+    Operation objects, extend this class and inform the new TaxManager
     to your OperationContainer by
 
         operation_container_object.tax_manger = your_tax_manager_object

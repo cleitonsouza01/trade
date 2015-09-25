@@ -122,14 +122,7 @@ class OperationContainer:
         """
         self.identify_daytrades_and_common_operations()
         self.prorate_comissions_by_daytrades_and_common_operations()
-        for asset, daytrade in self.daytrades.items():
-            daytrade.purchase.taxes = \
-                self.tax_manager.get_taxes_for_daytrade(daytrade.purchase)
-            daytrade.sale.taxes = \
-                self.tax_manager.get_taxes_for_daytrade(daytrade.sale)
-        for asset, operation in self.common_operations.items():
-            operation.taxes = \
-                self.tax_manager.get_taxes_for_operation(operation)
+        self.find_taxes_for_positions()
 
     def prorate_comissions_by_daytrades_and_common_operations(self):
         """Prorate the TradeContainer comissions by its operations.
@@ -248,4 +241,11 @@ class OperationContainer:
 
     def find_taxes_for_positions(self):
         """Get the taxes for every position on the container."""
-        pass
+        for asset, daytrade in self.daytrades.items():
+            daytrade.purchase.taxes = \
+                self.tax_manager.get_taxes_for_daytrade(daytrade.purchase)
+            daytrade.sale.taxes = \
+                self.tax_manager.get_taxes_for_daytrade(daytrade.sale)
+        for asset, operation in self.common_operations.items():
+            operation.taxes = \
+                self.tax_manager.get_taxes_for_operation(operation)

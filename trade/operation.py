@@ -78,11 +78,10 @@ class Operation:
         self.comissions = comissions
         self.taxes = taxes
 
-    #FIXME nao pode ser abs()!!!!!!
     @property
     def real_value(self):
         """Return the quantity * the real price of the operation."""
-        return abs(self.quantity) * self.real_price
+        return self.quantity * self.real_price
 
     @property
     def real_price(self):
@@ -126,7 +125,7 @@ class Daytrade:
     Attributes:
         asset: An asset instance, the asset that is being traded.
         quantity: The traded quantity of the asset.
-        buy: A Operation instance representing the purchase of the
+        purchase: A Operation instance representing the purchase of the
             asset.
         sale: A Operation instance representing the sale of the asset.
     """
@@ -152,4 +151,4 @@ class Daytrade:
 
     @property
     def result(self):
-        return self.sale.real_value - self.purchase.real_value
+        return abs(self.sale.real_value) - abs(self.purchase.real_value)
