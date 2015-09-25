@@ -32,17 +32,17 @@ class Accumulator:
     """An accumulator of quantity @ some average price.
 
     Attributes:
-        asset = An asset instance, the asset whose data are being
+        asset: An asset instance, the asset whose data are being
             accumulated.
-        date = A string 'YYYY-mm-dd' representing the date of the last
+        date: A string 'YYYY-mm-dd' representing the date of the last
             status change of the accumulator.
-        quantity = The asset's accumulated quantity.
-        price = The asset's average price for the quantity accumulated.
-        results = A dict with the total results from the operations
+        quantity: The asset's accumulated quantity.
+        price: The asset's average price for the quantity accumulated.
+        results: A dict with the total results from the operations
             accumulated.
-        logging = A boolean indicating if the accumulator should log
+        logging: A boolean indicating if the accumulator should log
             the calls to the accumulate() method.
-        log = A dict with all the operations performed with the asset,
+        log: A dict with all the operations performed with the asset,
             provided that self.logging is True.
 
     if created with log_operations=True the accumulator will log the
