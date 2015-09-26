@@ -69,7 +69,7 @@ class Operation:
     """
 
     def __init__(self, quantity, price,
-                    date=None, asset=None, comissions=None, taxes=None):
+                    date=None, asset=None, comissions=None, taxes=None, results=None):
         self.date = date
         self.asset = asset
         self.quantity = quantity
@@ -78,6 +78,7 @@ class Operation:
         if taxes is None: taxes={}
         self.comissions = comissions
         self.taxes = taxes
+        self.results = results
 
     @property
     def real_value(self):

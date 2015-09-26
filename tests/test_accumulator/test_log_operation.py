@@ -2,6 +2,7 @@ from __future__ import absolute_import
 import unittest
 
 from trade import Accumulator as AssetAccumulator
+from trade import Asset, Operation
 
 
 # TODO document this
@@ -10,36 +11,29 @@ from trade import Accumulator as AssetAccumulator
 
 class TestLogOperation(unittest.TestCase):
 
-    #maxDiff = None
-
     def setUp(self):
-        self.accumulator = AssetAccumulator('euro', logging=True)
+        self.accumulator = AssetAccumulator(Asset(), logging=True)
 
     def test_log_first_operation(self):
-        self.accumulator.accumulate(100, 10, date='2015-01-01')
+        operation = Operation(100, 10, asset=Asset(), date='2015-01-01')
+        self.accumulator.accumulate_operation(operation)
         expected_log = {
             '2015-01-01': {
                 'position': {
                     'quantity': 100,
                     'price': 10
                 },
-                'operations': [
-                    {
-                        'quantity': 100,
-                        'price': 10,
-                        'results': {'trades': 0}
-                    }
-                ]
+                'operations': [operation]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)
 
     def test_log_keys(self):
-        self.accumulator.accumulate(100, 10, date='2015-01-01')
-        #self.assertEqual(self.accumulator.log.keys(), ['2015-01-01'])
+        operation = Operation(100, 10, asset=Asset(), date='2015-01-01')
+        self.accumulator.accumulate_operation(operation)
         self.assertEqual(list(self.accumulator.log), ['2015-01-01'])
 
     def test_returned_result_should(self):
-        result = self.accumulator.accumulate(100, 10, date='2015-01-01')
-        #self.assertEqual(self.accumulator.log.keys(), ['2015-01-01'])
+        operation = Operation(100, 10, asset=Asset(), date='2015-01-01')
+        result = self.accumulator.accumulate_operation(operation)
         self.assertEqual(result, {'trades': 0})
