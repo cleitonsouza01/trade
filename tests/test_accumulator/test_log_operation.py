@@ -23,7 +23,7 @@ class TestLogOperation(unittest.TestCase):
                     'quantity': 100,
                     'price': 10
                 },
-                'operations': [operation]
+                'occurrences': [operation]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)

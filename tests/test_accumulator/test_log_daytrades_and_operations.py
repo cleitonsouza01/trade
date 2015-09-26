@@ -27,7 +27,7 @@ class TestLogDaytradesAndOperations_Case_00(unittest.TestCase):
                     'quantity': 100,
                     'price': 10
                 },
-                'operations': [daytrade, operation]
+                'occurrences': [daytrade, operation]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)
@@ -65,14 +65,14 @@ class TestLogDaytradesAndOperations_Case_01(unittest.TestCase):
                     'quantity': 100,
                     'price': 10
                 },
-                'operations': [operation]
+                'occurrences': [operation]
             },
             '2015-01-01': {
                 'position': {
                     'quantity': 0,
                     'price': 0
                 },
-                'operations': [daytrade]
+                'occurrences': [daytrade]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)
@@ -106,14 +106,14 @@ class TestLogDaytradesAndOperations_Case_02(unittest.TestCase):
                     'quantity': 100,
                     'price': 10
                 },
-                'operations': [operation, daytrade2]
+                'occurrences': [operation, daytrade2]
             },
             '2015-01-01': {
                 'position': {
                     'quantity': 0,
                     'price': 0
                 },
-                'operations': [daytrade]
+                'occurrences': [daytrade]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)

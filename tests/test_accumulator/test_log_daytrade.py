@@ -23,7 +23,7 @@ class TestLogDaytrade(unittest.TestCase):
                     'quantity': 0,
                     'price': 0
                 },
-                'operations': [daytrade]
+                'occurrences': [daytrade]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)

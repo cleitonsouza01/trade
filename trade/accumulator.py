@@ -99,8 +99,8 @@ class Accumulator:
 
     # FIXME explain that in Doctstring that this
     #       logs daytrades too, rename method
-    def log_operation(self, operation):
-        """Log operation data.
+    def log_occurrence(self, operation):
+        """Log operations, daytrades and events.
 
         If logging, this method is called behind the scenes every
         time the method accumulate() is called. The operations are
@@ -112,7 +112,7 @@ class Accumulator:
                         'quantity': float
                         'price': float
                     }
-                    'operations': [Operation, ...],
+                    'occurrences': [Operation, ...],
                 },
                 ...
             }
@@ -121,7 +121,7 @@ class Accumulator:
         # If the date is not present in the dict keys,
         # a new key created.
         if operation.date not in self.log:
-            self.log[operation.date] = {'operations': []}
+            self.log[operation.date] = {'occurrences': []}
 
         # Log the accumulator status and operation data
         self.log[operation.date]['position'] = {
@@ -129,7 +129,7 @@ class Accumulator:
             'price': self.price,
         }
 
-        self.log[operation.date]['operations'].append(operation)
+        self.log[operation.date]['occurrences'].append(operation)
 
     def accumulate_operation(self, operation):
         """Accumulates operation data to the existing position.
@@ -221,7 +221,7 @@ class Accumulator:
 
         # log the operation, if logging
         if self.logging:
-            self.log_operation(operation)
+            self.log_occurrence(operation)
 
         return operation.results
 
@@ -229,7 +229,7 @@ class Accumulator:
         """Accumulates a Daytrade operation."""
         self.results['daytrades'] += daytrade.result
         if self.logging:
-            self.log_operation(daytrade)
+            self.log_occurrence(daytrade)
         return daytrade.result
 
     def accumulate_event(self, event):
@@ -254,7 +254,7 @@ class Accumulator:
                                             self.results
                                     )
         if self.logging:
-            self.log_operation(event)
+            self.log_occurrence(event)
 
 
 class Event:

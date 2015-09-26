@@ -74,7 +74,7 @@ class TestEvent_log_event_Case_00(unittest.TestCase):
                     'price': 5.0,
                     'quantity': 200
                 },
-                'operations': [self.event]
+                'occurrences': [self.event]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)
@@ -90,14 +90,14 @@ class TestEvent_log_event_Case_00(unittest.TestCase):
                     'price': 5.0,
                     'quantity': 200
                 },
-                'operations': [self.event1]
+                'occurrences': [self.event1]
             },
             '2015-09-24': {
                 'position': {
                     'price': 5.0,
                     'quantity': 200
                 },
-                'operations': [self.event0]
+                'occurrences': [self.event0]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)
@@ -113,7 +113,7 @@ class TestEvent_log_event_Case_00(unittest.TestCase):
                     'price': 5.0,
                     'quantity': 200
                 },
-                'operations': [
+                'occurrences': [
                     self.event0,
                     self.event1
                 ]

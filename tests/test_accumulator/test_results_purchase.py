@@ -29,14 +29,14 @@ class TestAccumulatorResults_purchase_case_00(unittest.TestCase):
                     'quantity': 0,
                     'price': 0,
                 },
-                'operations': [self.operation1]
+                'occurrences': [self.operation1]
             },
             '2015-01-01': {
                 'position': {
                     'quantity': -100,
                     'price': 10,
                 },
-                'operations': [self.operation0]
+                'occurrences': [self.operation0]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)
@@ -70,7 +70,7 @@ class TestAccumulatorResults_purchase_case_01(unittest.TestCase):
                     'quantity': -100,
                     'price': 10,
                 },
-                'operations': [self.operation0]
+                'occurrences': [self.operation0]
         }
         self.assertEqual(self.accumulator.log['2015-01-01'], expected_log)
 
@@ -80,7 +80,7 @@ class TestAccumulatorResults_purchase_case_01(unittest.TestCase):
                 'quantity': 0,
                 'price': 0,
             },
-            'operations': [self.operation1]
+            'occurrences': [self.operation1]
         }
         self.assertEqual(self.accumulator.log['2015-01-02'], expected_log)
 
@@ -91,21 +91,21 @@ class TestAccumulatorResults_purchase_case_01(unittest.TestCase):
                     'quantity': -100,
                     'price': 10,
                 },
-                'operations': [self.operation2]
+                'occurrences': [self.operation2]
             },
             '2015-01-02': {
                 'position': {
                     'quantity': 0,
                     'price': 0,
                 },
-                'operations': [self.operation1]
+                'occurrences': [self.operation1]
             },
             '2015-01-01': {
                 'position': {
                     'quantity': -100,
                     'price': 10,
                 },
-                'operations': [self.operation0]
+                'occurrences': [self.operation0]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)
@@ -149,28 +149,28 @@ class TestAccumulatorResults_purchase_case_02(unittest.TestCase):
                     'quantity': 0,
                     'price': 0,
                 },
-                'operations': [self.operation3]
+                'occurrences': [self.operation3]
             },
             '2015-01-03': {
                 'position': {
                     'quantity': -100,
                     'price': 10,
                 },
-                'operations': [self.operation2]
+                'occurrences': [self.operation2]
             },
             '2015-01-02': {
                 'position': {
                     'quantity': 0,
                     'price': 0,
                 },
-                'operations': [self.operation1]
+                'occurrences': [self.operation1]
             },
             '2015-01-01': {
                 'position': {
                     'quantity': -100,
                     'price': 10,
                 },
-                'operations': [self.operation0]
+                'occurrences': [self.operation0]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)
@@ -211,35 +211,35 @@ class TestAccumulatorResults_purchase_case_03(unittest.TestCase):
                     'quantity': -100,
                     'price': 20,
                 },
-                'operations': [self.operation4]
+                'occurrences': [self.operation4]
             },
             '2015-01-04': {
                 'position': {
                     'quantity': 0,
                     'price': 0,
                 },
-                'operations': [self.operation3]
+                'occurrences': [self.operation3]
             },
             '2015-01-03': {
                 'position': {
                     'quantity': -100,
                     'price': 10,
                 },
-                'operations': [self.operation2]
+                'occurrences': [self.operation2]
             },
             '2015-01-02': {
                 'position': {
                     'quantity': 0,
                     'price': 0,
                 },
-                'operations': [self.operation1]
+                'occurrences': [self.operation1]
             },
             '2015-01-01': {
                 'position': {
                     'quantity': -100,
                     'price': 10,
                 },
-                'operations': [self.operation0]
+                'occurrences': [self.operation0]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)
@@ -283,42 +283,42 @@ class TestAccumulatorResults_purchase_case_04(unittest.TestCase):
                     'quantity': 00,
                     'price': 0,
                 },
-                'operations': [self.operation5]
+                'occurrences': [self.operation5]
             },
             '2015-01-05': {
                 'position': {
                     'quantity': -100,
                     'price': 20,
                 },
-                'operations': [self.operation4]
+                'occurrences': [self.operation4]
             },
             '2015-01-04': {
                 'position': {
                     'quantity': 0,
                     'price': 0,
                 },
-                'operations': [self.operation3]
+                'occurrences': [self.operation3]
             },
             '2015-01-03': {
                 'position': {
                     'quantity': -100,
                     'price': 10,
                 },
-                'operations': [self.operation2]
+                'occurrences': [self.operation2]
             },
             '2015-01-02': {
                 'position': {
                     'quantity': 0,
                     'price': 0,
                 },
-                'operations': [self.operation1]
+                'occurrences': [self.operation1]
             },
             '2015-01-01': {
                 'position': {
                     'quantity': -100,
                     'price': 10,
                 },
-                'operations': [self.operation0]
+                'occurrences': [self.operation0]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)
@@ -362,42 +362,42 @@ class TestAccumulatorResults_purchase_case_05(unittest.TestCase):
                     'quantity': -50,
                     'price': 20,
                 },
-                'operations': [self.operation5]
+                'occurrences': [self.operation5]
             },
             '2015-01-05': {
                 'position': {
                     'quantity': -100,
                     'price': 20,
                 },
-                'operations': [self.operation4]
+                'occurrences': [self.operation4]
             },
             '2015-01-04': {
                 'position': {
                     'quantity': 0,
                     'price': 0,
                 },
-                'operations': [self.operation3]
+                'occurrences': [self.operation3]
             },
             '2015-01-03': {
                 'position': {
                     'quantity': -100,
                     'price': 10,
                 },
-                'operations': [self.operation2]
+                'occurrences': [self.operation2]
             },
             '2015-01-02': {
                 'position': {
                     'quantity': 0,
                     'price': 0,
                 },
-                'operations': [self.operation1]
+                'occurrences': [self.operation1]
             },
             '2015-01-01': {
                 'position': {
                     'quantity': -100,
                     'price': 10,
                 },
-                'operations': [self.operation0]
+                'occurrences': [self.operation0]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)
@@ -429,14 +429,14 @@ class TestAccumulatorResults_purchase_case_06(unittest.TestCase):
                     'quantity': 0,
                     'price': 0,
                 },
-                'operations': [self.operation1]
+                'occurrences': [self.operation1]
             },
             '2015-01-01': {
                 'position': {
                     'quantity': -100,
                     'price': 20,
                 },
-                'operations': [self.operation0]
+                'occurrences': [self.operation0]
             },
 
         }
@@ -469,14 +469,14 @@ class TestAccumulatorResults_purchase_case_07(unittest.TestCase):
                     'quantity': 50,
                     'price': 10,
                 },
-                'operations': [self.operation1]
+                'occurrences': [self.operation1]
             },
             '2015-01-01': {
                 'position': {
                     'quantity': -50,
                     'price': 20,
                 },
-                'operations': [self.operation0]
+                'occurrences': [self.operation0]
             },
 
         }
