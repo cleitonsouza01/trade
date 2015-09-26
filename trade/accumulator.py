@@ -254,48 +254,7 @@ class Accumulator:
                                             self.results
                                     )
         if self.logging:
-            self.log_event(event)
-
-    def log_event(self, event):
-        """Log event data.
-
-        If logging, this method is called behind the scenes every
-        time the method accumulate_event() is called. The events are
-        logged like this:
-
-            self.log = {
-                '2017-09-19': {
-                    'position': {
-                        'quantity': float
-                        'price': float
-                    }
-                    'events': [
-                        {
-                            'name': string,
-                            'other event attr': event attr value
-                            ...
-                        },
-                        ...
-                    ],
-                },
-                ...
-            }
-
-        Where every attribute of the event object will be logged.
-        """
-        if event.date not in self.log:
-            self.log[event.date] = {'events': []}
-        elif 'events' not in self.log[event.date]:
-            self.log[event.date]['events'] = []
-
-        # Log the accumulator status and event data
-        self.log[event.date]['position'] = {
-            'quantity': self.quantity,
-            'price': self.price,
-        }
-        self.log[event.date]['events'].append(
-            event.__dict__
-        )
+            self.log_operation(event)
 
 
 class Event:

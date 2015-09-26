@@ -66,80 +66,56 @@ class TestEvent_log_event_Case_00(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {'trades': 1200})
 
     def test_check_log_case_00(self):
-        event = StockSplit('2015-09-24', 'stock split', 2)
-        self.accumulator.accumulate_event(event)
+        self.event = StockSplit('2015-09-24', 'stock split', 2)
+        self.accumulator.accumulate_event(self.event)
         expected_log = {
             '2015-09-24': {
                 'position': {
                     'price': 5.0,
                     'quantity': 200
                 },
-                'events': [
-                    {
-                        'name': 'stock split',
-                        'factor': 2,
-                        'date': '2015-09-24'
-                    }
-                ]
+                'operations': [self.event]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)
 
     def test_check_log_case_01(self):
-        event = StockSplit('2015-09-24', 'stock split', 2)
-        self.accumulator.accumulate_event(event)
-        event = DummyEvent('2015-09-25', 'other event')
-        self.accumulator.accumulate_event(event)
+        self.event0 = StockSplit('2015-09-24', 'stock split', 2)
+        self.accumulator.accumulate_event(self.event0)
+        self.event1 = DummyEvent('2015-09-25', 'other event')
+        self.accumulator.accumulate_event(self.event1)
         expected_log = {
             '2015-09-25': {
                 'position': {
                     'price': 5.0,
                     'quantity': 200
                 },
-                'events': [
-                    {
-                        'name': 'other event',
-                        'date': '2015-09-25'
-                    }
-                ]
+                'operations': [self.event1]
             },
             '2015-09-24': {
                 'position': {
                     'price': 5.0,
                     'quantity': 200
                 },
-                'events': [
-                    {
-                        'name': 'stock split',
-                        'factor': 2,
-                        'date': '2015-09-24'
-                    }
-                ]
+                'operations': [self.event0]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)
 
     def test_check_log_case_02(self):
-        event = StockSplit('2015-09-24', 'stock split', 2)
-        self.accumulator.accumulate_event(event)
-        event = DummyEvent('2015-09-24', 'other event')
-        self.accumulator.accumulate_event(event)
+        self.event0 = StockSplit('2015-09-24', 'stock split', 2)
+        self.accumulator.accumulate_event(self.event0)
+        self.event1 = DummyEvent('2015-09-24', 'other event')
+        self.accumulator.accumulate_event(self.event1)
         expected_log = {
             '2015-09-24': {
                 'position': {
                     'price': 5.0,
                     'quantity': 200
                 },
-                'events': [
-                    {
-                        'name': 'stock split',
-                        'factor': 2,
-                        'date': '2015-09-24'
-                    },
-                    {
-                        'name': 'other event',
-                        'date': '2015-09-24'
-                    }
+                'operations': [
+                    self.event0,
+                    self.event1
                 ]
             }
         }
