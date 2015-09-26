@@ -80,12 +80,12 @@ class OperationContainer:
 
     @property
     def total_comission_value(self):
-        """Return the sum of values of all comissions."""
+        """Returns the sum of values of all comissions."""
         return sum(self.comissions.values())
 
     @property
     def volume(self):
-        """Return the total volume of the operations in the container."""
+        """Returns the total volume of the operations in the container."""
         return sum(operation.volume for operation in self.operations)
 
     def fetch_positions(self):
@@ -126,7 +126,7 @@ class OperationContainer:
         self.find_taxes_for_positions()
 
     def prorate_comissions_by_daytrades_and_common_operations(self):
-        """Prorate the container's comissions by its operations.
+        """Prorates the container's comissions by its operations.
 
         This method sum the discounts in the comissions dict of the
         container. The total discount value is then prorated by the
@@ -220,7 +220,7 @@ class OperationContainer:
             self.daytrades[daytrade.asset] = daytrade
 
     def add_to_common_operations(self, operation):
-        """Adds a operation to the common operations list."""
+        """Adds an operation to the common operations list."""
         if operation.asset in self.common_operations:
             self.merge_operations(
                 self.common_operations[operation.asset],

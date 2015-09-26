@@ -25,7 +25,7 @@ from __future__ import absolute_import
 
 
 class TaxManager:
-    """An base TaxManager.
+    """The base TaxManager.
 
     A TaxManager object reads an operation and returns the
     correspondent percentual taxes for that operation. Since taxes
