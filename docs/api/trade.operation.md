@@ -1,4 +1,4 @@
-# trade.trade
+# trade.operation
 
 This module contains the class definitions of Asset, Operation,
 and Daytrade. You can use them by just:
@@ -9,7 +9,7 @@ asset = trade.Asset()
 ```
 
 
-## trade.trade.Asset
+## trade.operation.Asset
 An asset represents anything that can be traded.
 
 Asset objects can be created with or without a name.
@@ -28,7 +28,7 @@ Assets always return a reference to themselves when being copied, so they
 are never really copied.
 
 
-## trade.trade.Operation
+## trade.operation.Operation
 An operation represents the purchase or the sale of an asset.
 
 ### Attributes:  
@@ -65,7 +65,7 @@ Return the sum of all comissions included in this operation.
 Returns the quantity of the operation * its raw price.
 
 
-## trade.trade.Daytrade
+## trade.operation.Daytrade
 A daytrade operation.
 
 Daytrades are operations of purchase and sale of an Asset on

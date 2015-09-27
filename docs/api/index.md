@@ -1,30 +1,31 @@
 # trade
 
 trade is a Python module with functions and classes for the development
-of investment applications in Python. It provides basic notions of assets,
+ of
+investment applications in Python. It provides basic notions of assets,
 operations, daytrades, cost deduction, asset accumulation and so on.
 
 ## Classes available:
-+ trade.Asset  
++ [trade.Asset](trade.operation)  
   Representing assets.
-+ trade.Operation  
++ [trade.Operation](trade.operation)  
   Representing operations with assets.
-+ trade.Daytrade  
++ [trade.Daytrade](trade.operation)  
   Representing daytrade operations.
-+ trade.OperationContainer  
++ [trade.OperationContainer](trade.operation_container)  
   To identify daytrades, prorate comissions and apply taxes to operations.
-+ trade.TaxManager  
-  To get the right tax for each operation the OperationContainer identify.
-+ trade.Accumulator  
++ [trade.TaxManager](trade.tax_manager)  
+  To get the right tax foreach operation the OperationContainer identify.
++ [trade.Accumulator](trade.accumulator)  
   To accumulate the assets and calculate the result from the trades.
-+ trade.Event  
++ [trade.Event](trade.accumulator)  
   To change the asset's quantity and price on the accumulator.
 
 ## Functions available:
-+ trade.daytrade_condition(operation_a, operation_b)
-+ trade.average_price(quantity_1, price_1, quantity_2, price_2)
-+ trade.same_sign(x, y)
-+ trade.find_purchase_and_sale(operation_a, operation_b)
++ [trade.daytrade_condition(operation_a, operation_b)](trade.utils)
++ [trade.average_price(quantity_1, price_1, quantity_2, price_2)](trade.utils)
++ [trade.same_sign(x, y)](trade.utils)
++ [trade.find_purchase_and_sale(operation_a, operation_b)](trade.utils)
 
 ```python
 import trade

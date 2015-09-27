@@ -96,59 +96,6 @@ print(accumulator.results)
 #>> {'trades': 5.0}
 ```
 
-You may also use only the Accumulator and ignore everything else:
-```python
-import trade
-
-# create the asset that we are going to trade
-asset = 'Some asset'
-
-# create the accumulator to accumulate trades with the asset
-accumulator = trade.Accumulator(asset)
-
-
-print(accumulator.asset)
-#>> Some asset
-
-print(accumulator.quantity)
-#>> 0
-
-print(accumulator.price)
-#>> 0
-
-print(accumulator.results)
-#>> {'trades': 0}
-
-
-# accumulate trade data
-accumulator.accumulate(quantity=10, price=2, date='2015-09-22')
-
-
-print(accumulator.quantity)
-#>> 10
-
-print(accumulator.price)
-#>> 2.0
-
-print(accumulator.results)
-#>> {'trades': 0}
-
-
-# accumulate more trade
-accumulator.accumulate(quantity=-5, price=3, date='2015-09-23')
-
-
-print(accumulator.quantity)
-#>> 5
-
-print(accumulator.price)
-#>> 2.0
-
-print(accumulator.results)
-#>> {'trades': 5.0}
-
-```
-
 Operation objects may include taxes and comissions that are considered by the
 accumulator when calculating results and portfolio prices.
 
@@ -164,6 +111,11 @@ use the trade module.
 What about compatibility?
 -------------------------
 The trade module is compatible with Python 2.7 and Python 3.x.
+
+
+Version
+-------------------------
+The current version is 0.0.5-alpha.
 
 
 License
