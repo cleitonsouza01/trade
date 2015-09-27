@@ -92,7 +92,7 @@ Base on the informed values this method creates 2 operations:
 - a sale operation
 
 Both operations (self.purchase and self.sale) can be treated
-like any other operation when it comes to taxes and the prorate
+like any other operation when it comes to taxes and prorate
 of commissions.
 
 

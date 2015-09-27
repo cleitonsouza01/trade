@@ -1,8 +1,8 @@
 # Events
 
-Events can change the quantity, the price and the results stored in
-the accumulator. Every event must inherit from the accumulator.Event
-base class and have this method:
+Events can change the quantity, the price and the results of an asset
+stored in the accumulator. Every event must inherit from the
+accumulator.Event base class and have a method with this signature:
 
 ```python
 update_portfolio(quantity, price, results)
@@ -13,7 +13,8 @@ update_portfolio(quantity, price, results)
 that implements the logic for the change in the portfolio.
 
 Events must have an "asset" attribute with reference to an Asset
-instance and a date 'YYYY-mm-dd' attribute.
+instance and a date 'YYYY-mm-dd' attribute. The accumulator uses
+this information to correctly apply the event.
 
 Events are passed to trade.Accumulator objects by the accumulate_event
 method.
