@@ -10,17 +10,18 @@ What is it?
 -----------
 trade is a Python module with functions and classes for the development
 of investment applications in Python. It provides basic notions of assets,
-operations, daytrades, cost deduction, asset accumulation and so on.
+operations, daytrades, cost deduction, asset accumulation and taxes.
 
-You may use the trade module as a framework to create applications that
-implement specific rules of stock markets around the world or use it "as is"
-in any  application that requires the notion of buying things, selling things
-and controlling how much you spent to buy and how much you profited from the
-trades.
+With the trade module you can:
+* Identify daytrades in a group of operations
+* Prorate commissions and other costs by groups of operations  
+* Add taxes to operations
+* Calculate the average price of an asset after a series of operations
+* Calculate profits or losses relative to an asset, considering all taxes and costs involved on its operations
 
 
 How do I install the trade module?
-------------------------------
+----------------------------------
 The trade module can be installated via pip:
 
 > pip install trade
