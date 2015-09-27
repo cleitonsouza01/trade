@@ -39,7 +39,8 @@ class EventThatChangeResults(Event):
 class TestEvent_AssetSplit_case_00(unittest.TestCase):
 
     def setUp(self):
-        self.accumulator = Accumulator('Some asset')
+        self.asset = Asset()
+        self.accumulator = Accumulator(self.asset)
         self.accumulator.quantity = 100
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}
@@ -54,17 +55,17 @@ class TestEvent_AssetSplit_case_00(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {'trades': 1200})
 
     def test_check_quantity_after_split(self):
-        event = StockSplit(Asset(), '2015-09-27', 2)
+        event = StockSplit(self.asset, '2015-09-27', 2)
         self.accumulator.accumulate_event(event)
         self.assertEqual(self.accumulator.quantity, 200)
 
     def test_check_price_after_split(self):
-        event = StockSplit(Asset(), '2015-09-27', 2)
+        event = StockSplit(self.asset, '2015-09-27', 2)
         self.accumulator.accumulate_event(event)
         self.assertEqual(self.accumulator.price, 5)
 
     def test_check_quantity_after_split(self):
-        event = StockSplit(Asset(), '2015-09-27', 2)
+        event = StockSplit(self.asset, '2015-09-27', 2)
         self.accumulator.accumulate_event(event)
         self.assertEqual(self.accumulator.results, {'trades': 1200})
 
@@ -72,7 +73,8 @@ class TestEvent_AssetSplit_case_00(unittest.TestCase):
 class TestEvent_EventThatChangeResults_case_00(unittest.TestCase):
 
     def setUp(self):
-        self.accumulator = Accumulator('Some asset')
+        self.asset = Asset()
+        self.accumulator = Accumulator(self.asset)
         self.accumulator.quantity = 100
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}
@@ -87,16 +89,16 @@ class TestEvent_EventThatChangeResults_case_00(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {'trades': 1200})
 
     def test_check_quantity_after_split(self):
-        event = EventThatChangeResults(Asset(), '2015-09-27', 2)
+        event = EventThatChangeResults(self.asset, '2015-09-27', 2)
         self.accumulator.accumulate_event(event)
         self.assertEqual(self.accumulator.quantity, 100)
 
     def test_check_price_after_split(self):
-        event = EventThatChangeResults(Asset(), '2015-09-27', 2)
+        event = EventThatChangeResults(self.asset, '2015-09-27', 2)
         self.accumulator.accumulate_event(event)
         self.assertEqual(self.accumulator.price, 10)
 
     def test_check_quantity_after_split(self):
-        event = EventThatChangeResults(Asset(), '2015-09-27', 2)
+        event = EventThatChangeResults(self.asset, '2015-09-27', 2)
         self.accumulator.accumulate_event(event)
         self.assertEqual(self.accumulator.results, {'trades': 1202})

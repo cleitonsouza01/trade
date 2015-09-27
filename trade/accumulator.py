@@ -136,6 +136,8 @@ class Accumulator:
         present on the operation "results' attribute to the total
         results of the stock in the accumulator.
         """
+        if operation.asset != self.asset:
+            return None
 
         new_quantity = self.quantity + operation.quantity
 
@@ -225,6 +227,8 @@ class Accumulator:
 
     def accumulate_daytrade(self, daytrade):
         """Accumulates a Daytrade operation."""
+        if daytrade.asset != self.asset:
+            return None
         self.results['daytrades'] += daytrade.result
         if self.logging:
             self.log_occurrence(daytrade)
@@ -246,6 +250,8 @@ class Accumulator:
         that have the logic for the change in the accumulator's
         quantity, price and results.
         """
+        if event.asset != self.asset:
+            return None
         self.quantity, self.price = event.update_portfolio(
                                             self.quantity,
                                             self.price,

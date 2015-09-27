@@ -12,10 +12,11 @@ from trade import Asset, Daytrade
 class TestLogDaytrade(unittest.TestCase):
 
     def setUp(self):
-        self.accumulator = AssetAccumulator('euro', logging=True)
+        self.asset = Asset()
+        self.accumulator = AssetAccumulator(self.asset, logging=True)
 
     def test_log_first_operation(self):
-        daytrade = Daytrade('2015-01-01', Asset(), 100, 10, 20)
+        daytrade = Daytrade('2015-01-01', self.asset, 100, 10, 20)
         self.accumulator.accumulate_daytrade(daytrade)
         expected_log = {
             '2015-01-01': {
@@ -29,11 +30,11 @@ class TestLogDaytrade(unittest.TestCase):
         self.assertEqual(self.accumulator.log, expected_log)
 
     def test_log_keys(self):
-        daytrade = Daytrade('2015-01-01', Asset(), 100, 10, 20)
+        daytrade = Daytrade('2015-01-01', self.asset, 100, 10, 20)
         self.accumulator.accumulate_daytrade(daytrade)
         self.assertEqual(list(self.accumulator.log), ['2015-01-01'])
 
     def test_returned_result_should_be_1000(self):
-        daytrade = Daytrade('2015-01-01', Asset(), 100, 10, 20)
+        daytrade = Daytrade('2015-01-01', self.asset, 100, 10, 20)
         result = self.accumulator.accumulate_daytrade(daytrade)
         self.assertEqual(result, 1000)

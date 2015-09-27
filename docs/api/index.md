@@ -1,12 +1,11 @@
 # trade
 
 trade is a Python module with functions and classes for the development
- of
-investment applications in Python. It provides basic notions of assets,
-operations, daytrades, cost deduction, asset accumulation and so on.
+of investment applications in Python. It provides basic notions of assets,
+operations, daytrades, cost deduction, asset accumulation and taxes.
 
 ## Classes available:
-+ [trade.Asset](trade.operation)  
++ [trade.Asset](trade.asset)  
   Representing assets.
 + [trade.Operation](trade.operation)  
   Representing operations with assets.
@@ -71,11 +70,12 @@ print(accumulator.price * accumulator.quantity)
 Check each module doc for more information.
 
 ## Modules in this package:
-+ trade.accumulator (Accumulator, Event)
-+ trade.operation (Asset, Operation, Daytrade)
-+ trade.operation_container (OperationContainer)
-+ trade.tax_manager (TaxManager)
-+ trade.utils (all the functions)
++ [trade.accumulator](trade.accumulator) (Accumulator, Event)
++ [trade.asset](trade.asset) (Asset)
++ [trade.operation](trade.operation) (Operation, Daytrade)
++ [trade.operation_container](trade.operation_container) (OperationContainer)
++ [trade.tax_manager](trade.tax_manager) (TaxManager)
++ [trade.utils](trade.utils) (all the functions)
 
 
 Copyright (c) 2015 Rafael da Silva Rocha  

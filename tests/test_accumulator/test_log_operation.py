@@ -12,10 +12,11 @@ from trade import Asset, Operation
 class TestLogOperation(unittest.TestCase):
 
     def setUp(self):
-        self.accumulator = AssetAccumulator(Asset(), logging=True)
+        self.asset = Asset()
+        self.accumulator = AssetAccumulator(self.asset, logging=True)
 
     def test_log_first_operation(self):
-        operation = Operation(100, 10, asset=Asset(), date='2015-01-01')
+        operation = Operation(100, 10, asset=self.asset, date='2015-01-01')
         self.accumulator.accumulate_operation(operation)
         expected_log = {
             '2015-01-01': {
@@ -29,11 +30,11 @@ class TestLogOperation(unittest.TestCase):
         self.assertEqual(self.accumulator.log, expected_log)
 
     def test_log_keys(self):
-        operation = Operation(100, 10, asset=Asset(), date='2015-01-01')
+        operation = Operation(100, 10, asset=self.asset, date='2015-01-01')
         self.accumulator.accumulate_operation(operation)
         self.assertEqual(list(self.accumulator.log), ['2015-01-01'])
 
     def test_returned_result_should(self):
-        operation = Operation(100, 10, asset=Asset(), date='2015-01-01')
+        operation = Operation(100, 10, asset=self.asset, date='2015-01-01')
         result = self.accumulator.accumulate_operation(operation)
         self.assertEqual(result, {'trades': 0})
