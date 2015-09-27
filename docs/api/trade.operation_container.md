@@ -66,18 +66,19 @@ Fetch the positions resulting from the operations.
 
 Fetch the position is a complex process that needs to be
 better documented. What happens is as follows:
-- Separate all daytrades and common operations;
-- Group all common operations with one asset into a single Operation, so in the end you only have one operation per asset (on self.common_operations);
-- Group all daytrades with one asset into a single Daytrade, so in the end you only have one daytrade per asset;
-- put all common operations in self.common_operations, a dict indexed by the operation's asset name;
-- put all daytrades in self.daytrades, a dict indexed by the daytrade's asset name;
-- Prorate all comissions of the container for the common operations and the purchase and sale operation of every daytrade;
-- Find the taxes to be applied to every common operation and to every purchase and sale operation of every daytrade.
 
-After this method:
-- the raw operations list of the container remains untouched;
-- the container common_operations list is filled with all common operations of the container, with all information about comissions and taxes to be applied to each operation;
-- the container daytrades list is filled with all daytrades of the container, with all information about comissions and taxes to be applied to every purchase and sale operation of every daytrade.
+1. Separate all daytrades and common operations;  
+2. Group all common operations with one asset into a single Operation, so in the end you only have one operation per asset (on self.common_operations);  
+3. Group all daytrades with one asset into a single Daytrade, so in the end you only have one daytrade per asset;  
+4. put all common operations in self.common_operations, a dict indexed by the operation's asset name;  
+5. put all daytrades in self.daytrades, a dict indexed by the daytrade's asset name;
+6. Prorate all comissions of the container for the common operations and the purchase and sale operation of every daytrade;  
+7. Find the taxes to be applied to every common operation and to every purchase and sale operation of every daytrade.  
+
+After this method:  
+1. the raw operations list of the container remains untouched;  
+2. the container common_operations list is filled with all common operations of the container, with all information about comissions and taxes to be applied to each operation;  
+3. the container daytrades list is filled with all daytrades of the container, with all information about comissions and taxes to be applied to every purchase and sale operation of every daytrade.  
 
 #### prorate_comissions_by_daytrades_and_common_operations(self):
 Prorates the container's comissions by its operations.
