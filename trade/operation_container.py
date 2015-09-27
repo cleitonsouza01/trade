@@ -48,7 +48,7 @@ class OperationContainer:
     daytrade.
 
     The resulting common operations and daytrades contains the
-    OperationContiner comissions prorated by their volumes, and also
+    OperationContiner commissions prorated by their volumes, and also
     any taxes the OperationContainer TaxManager finds for them.
 
     This is achieved by calling this method:
@@ -66,7 +66,7 @@ class OperationContainer:
     - Prorate a group of taxes proportionally for all daytrades and
       common operations, if any, by using the method:
 
-        prorate_comissions_by_daytrades_and_common_operations()
+        prorate_commissions_by_daytrades_and_common_operations()
 
     - Find the appliable taxes for the resulting positions by calling
       this method:
@@ -77,7 +77,7 @@ class OperationContainer:
         date: A string 'YYYY-mm-dd' representing the date of the
             operations on the container.
         operations: A list of Operation instances.
-        comissions: A dict with discount names and values to be
+        commissions: A dict with discount names and values to be
             deducted from the operations.
         daytrades: a dict of Daytrade objects, indexed by the daytrade
             asset.
@@ -88,22 +88,22 @@ class OperationContainer:
     def __init__(self,
                 date=None,
                 operations=None,
-                comissions=None,
+                commissions=None,
                 tax_manager=TaxManager()
             ):
         self.date = date
         if operations is None: operations=[]
-        if comissions is None: comissions = {}
+        if commissions is None: commissions = {}
         self.operations = operations
-        self.comissions = comissions
+        self.commissions = commissions
         self.daytrades = {}
         self.common_operations = {}
         self.tax_manager = tax_manager
 
     @property
-    def total_comission_value(self):
-        """Returns the sum of values of all comissions."""
-        return sum(self.comissions.values())
+    def total_commission_value(self):
+        """Returns the sum of values of all commissions."""
+        return sum(self.commissions.values())
 
     @property
     def volume(self):
@@ -126,7 +126,7 @@ class OperationContainer:
             indexed by the operation's asset name;
         - put all daytrades in self.daytrades, a dict indexed by the
             daytrade's asset name;
-        - Prorate all comissions of the container for the common
+        - Prorate all commissions of the container for the common
             operations and the purchase and sale operation of every
             daytrade;
         - Find the taxes to be applied to every common operation and to
@@ -137,38 +137,38 @@ class OperationContainer:
         - the raw operations list of the container remains untouched;
         - the container common_operations list is filled with all
             common operations of the container, with all information
-            about comissions and taxes to be applied to each operation;
+            about commissions and taxes to be applied to each operation;
         - the container daytrades list is filled with all daytrades
-            of the container, with all information about comissions
+            of the container, with all information about commissions
             and taxes to be applied to every purchase and sale
             operation of every daytrade.
         """
         self.identify_daytrades_and_common_operations()
-        self.prorate_comissions_by_daytrades_and_common_operations()
+        self.prorate_commissions_by_daytrades_and_common_operations()
         self.find_taxes_for_positions()
 
-    def prorate_comissions_by_daytrades_and_common_operations(self):
-        """Prorates the container's comissions by its operations.
+    def prorate_commissions_by_daytrades_and_common_operations(self):
+        """Prorates the container's commissions by its operations.
 
-        This method sum the discounts in the comissions dict of the
+        This method sum the discounts in the commissions dict of the
         container. The total discount value is then prorated by the
         daytrades and common operations based on their volume.
         """
         for operation in self.common_operations.values():
-            self.prorate_comissions_by_operation(operation)
+            self.prorate_commissions_by_operation(operation)
         for daytrade in self.daytrades.values():
-            self.prorate_comissions_by_operation(daytrade.purchase)
-            self.prorate_comissions_by_operation(daytrade.sale)
+            self.prorate_commissions_by_operation(daytrade.purchase)
+            self.prorate_commissions_by_operation(daytrade.sale)
 
-    def prorate_comissions_by_operation(self, operation):
-        """Prorates the comissions of the container for one operation.
+    def prorate_commissions_by_operation(self, operation):
+        """Prorates the commissions of the container for one operation.
 
         The ratio is based on the container volume and the volume of
         the operation.
         """
         percent = operation.volume / self.volume * 100
-        for key, value in self.comissions.items():
-            operation.comissions[key] = value * percent / 100
+        for key, value in self.commissions.items():
+            operation.commissions[key] = value * percent / 100
 
     def identify_daytrades_and_common_operations(self):
         """Separates operations into daytrades and common operations.

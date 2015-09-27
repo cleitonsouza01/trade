@@ -60,7 +60,7 @@ class Operation:
             Positive quantities represent a purchase.
             Negative quantities represent a sale.
         price: The raw unitary price of the asset being traded.
-        comissions: A dict of discounts. String keys and float values
+        commissions: A dict of discounts. String keys and float values
             representing the name of the discounts and the values
             to be deducted from the operation.
         taxes: A dict of taxes. string keys and float values
@@ -71,14 +71,14 @@ class Operation:
     """
 
     def __init__(self, quantity, price,
-                    date=None, asset=None, comissions=None, taxes=None, results=None):
+                    date=None, asset=None, commissions=None, taxes=None, results=None):
         self.date = date
         self.asset = asset
         self.quantity = quantity
         self.price = price
-        if comissions is None: comissions={}
+        if commissions is None: commissions={}
         if taxes is None: taxes={}
-        self.comissions = comissions
+        self.commissions = commissions
         self.taxes = taxes
         self.results = results
 
@@ -91,11 +91,11 @@ class Operation:
     def real_price(self):
         """Returns the real price of the operation.
 
-        The real price is the price with all comissions and taxes
+        The real price is the price with all commissions and taxes
         already deducted or added.
         """
         return self.price + math.copysign(
-                                self.total_comission / self.quantity,
+                                self.total_commission / self.quantity,
                                 self.quantity
                             ) + math.copysign(
                                     self.total_tax_value / self.quantity,
@@ -103,9 +103,9 @@ class Operation:
                                 )
 
     @property
-    def total_comission(self):
-        """Return the sum of all comissions included in this operation."""
-        return sum(self.comissions.values())
+    def total_commission(self):
+        """Return the sum of all commissions included in this operation."""
+        return sum(self.commissions.values())
 
     @property
     def volume(self):
