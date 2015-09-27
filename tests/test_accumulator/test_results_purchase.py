@@ -14,7 +14,7 @@ class TestAccumulatorResults_purchase_case_00(unittest.TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.accumulator = AssetAccumulator('euro', logging=True)
+        self.accumulator = AssetAccumulator('', logging=True)
 
         self.operation0 = Operation(-100, 10, date='2015-01-01', asset=Asset())
         self.accumulator.accumulate_operation(self.operation0)
@@ -53,7 +53,7 @@ class TestAccumulatorResults_purchase_case_01(unittest.TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.accumulator = AssetAccumulator('euro', logging=True)
+        self.accumulator = AssetAccumulator('', logging=True)
 
         self.operation0 = Operation(-100, 10, date='2015-01-01', asset=Asset())
         self.accumulator.accumulate_operation(self.operation0)
@@ -128,7 +128,7 @@ class TestAccumulatorResults_purchase_case_02(unittest.TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.accumulator = AssetAccumulator('euro', logging=True)
+        self.accumulator = AssetAccumulator('', logging=True)
 
         self.operation0 = Operation(-100, 10, date='2015-01-01', asset=Asset())
         self.accumulator.accumulate_operation(self.operation0)
@@ -187,7 +187,7 @@ class TestAccumulatorResults_purchase_case_03(unittest.TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.accumulator = AssetAccumulator('euro', logging=True)
+        self.accumulator = AssetAccumulator('', logging=True)
 
         self.operation0 = Operation(-100, 10, date='2015-01-01', asset=Asset())
         self.accumulator.accumulate_operation(self.operation0)
@@ -256,7 +256,7 @@ class TestAccumulatorResults_purchase_case_04(unittest.TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.accumulator = AssetAccumulator('euro', logging=True)
+        self.accumulator = AssetAccumulator('', logging=True)
 
         self.operation0 = Operation(-100, 10, date='2015-01-01', asset=Asset())
         self.accumulator.accumulate_operation(self.operation0)
@@ -335,7 +335,7 @@ class TestAccumulatorResults_purchase_case_05(unittest.TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.accumulator = AssetAccumulator('euro', logging=True)
+        self.accumulator = AssetAccumulator('', logging=True)
 
         self.operation0 = Operation(-100, 10, date='2015-01-01', asset=Asset())
         self.accumulator.accumulate_operation(self.operation0)
@@ -414,7 +414,7 @@ class TestAccumulatorResults_purchase_case_06(unittest.TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.accumulator = AssetAccumulator('euro', logging=True)
+        self.accumulator = AssetAccumulator('', logging=True)
 
         self.operation0 = Operation(-100, 20, date='2015-01-01', asset=Asset())
         self.accumulator.accumulate_operation(self.operation0)
@@ -454,7 +454,7 @@ class TestAccumulatorResults_purchase_case_07(unittest.TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.accumulator = AssetAccumulator('euro', logging=True)
+        self.accumulator = AssetAccumulator('', logging=True)
 
         self.operation0 = Operation(-50, 20, date='2015-01-01', asset=Asset())
         self.accumulator.accumulate_operation(self.operation0)

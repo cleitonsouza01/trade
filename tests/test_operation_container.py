@@ -8,13 +8,45 @@ import trade as trade_tools
 # TODO more tests
 
 
-class TestTradeContainerCreation(unittest.TestCase):
+class TestTradeContainerCreation_Case_00(unittest.TestCase):
 
     def setUp(self):
-        self.trade_container = trade_tools.OperationContainer()
+        self.container = trade_tools.OperationContainer()
 
     def test_trade_container_should_exist(self):
-        self.assertTrue(self.trade_container)
+        self.assertTrue(self.container)
+
+
+class TestTradeContainerCreation_Case_01(unittest.TestCase):
+
+    def setUp(self):
+        commissions = {
+            'brokerage': 2.3,
+            'other': 1
+        }
+        self.container = trade_tools.OperationContainer(
+            commissions=commissions
+        )
+
+    def test_trade_container_should_exist(self):
+        self.assertTrue(self.container)
+
+    def test_trade_container_commissions(self):
+        commissions = {
+            'brokerage': 2.3,
+            'other': 1
+        }
+        self.assertEqual(self.container.commissions, commissions)
+
+class TestTradeContainerDefaultTaxManager(unittest.TestCase):
+
+    def setUp(self):
+        self.container = trade_tools.OperationContainer()
+
+    def test_check_container_default_tax_manager(self):
+        self.assertTrue(
+            isinstance(self.container.tax_manager, trade_tools.TaxManager)
+        )
 
 
 class TestTradeContainer_total_discount_value_one_discount(
@@ -315,25 +347,46 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_00(
         self.assertEqual(len(self.trade_container.daytrades.keys()), 1)
 
     def test_check_daytrade_asset(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset].asset, self.asset)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset].asset,
+            self.asset
+        )
 
     def test_daytrade_quantity_should_be_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset].quantity, 10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset].quantity,
+            10
+        )
 
     def test_daytrade_buy_price_should_be_2(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset].purchase.price, 2)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset].purchase.price,
+            2
+        )
 
     def test_daytrade_buy_quantity_should_be_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset].purchase.quantity, 10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset].purchase.quantity,
+            10
+        )
 
     def test_daytrade_sale_price_should_be_3(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset].sale.price, 3)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset].sale.price,
+            3
+        )
 
     def test_daytrade_sale_quantity_should_be_minus_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset].sale.quantity, -10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset].sale.quantity,
+            -10
+        )
 
     def test_daytrade_result_should_be_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset].result, 10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset].result,
+            10
+        )
 
 
 class TestTradeContainer_identify_daytrades_and_common_trades_case_01(
@@ -377,34 +430,61 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_01(
         )
 
     def test_common_trades1_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset].quantity, 5)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset].quantity,
+            5
+        )
 
     def test_common_trades1_price_should_be_2(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset].price, 2)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset].price,
+            2
+        )
 
     def test_daytrades_len_should_be_1(self):
         self.assertEqual(len(self.trade_container.daytrades.keys()), 1)
 
     def test_check_daytrade_asset(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset].asset, self.asset)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset].asset,
+            self.asset
+        )
 
     def test_daytrade_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset].quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset].quantity,
+            5
+        )
 
     def test_daytrade_buy_price_should_be_2(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset].purchase.price, 2)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset].purchase.price,
+            2
+        )
 
     def test_daytrade_buy_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset].purchase.quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset].purchase.quantity,
+            5
+        )
 
     def test_daytrade_sale_price_should_be_3(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset].sale.price, 3)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset].sale.price,
+            3
+        )
 
     def test_daytrade_sale_quantity_should_be_minus_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset].sale.quantity, -5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset].sale.quantity,
+            -5
+        )
 
     def test_daytrade_result_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset].result, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset].result,
+            5
+        )
 
 
 class TestTradeContainer_identify_daytrades_and_common_trades_case_02(
@@ -451,10 +531,16 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_02(
         )
 
     def test_common_trades0_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset1].quantity, 5)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset1].quantity,
+            5
+        )
 
     def test_common_trades0_price_should_be_2(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset1].price, 2)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset1].price,
+            2
+        )
 
     def test_check_common_trades1_asset(self):
         self.assertEqual(
@@ -463,34 +549,61 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_02(
         )
 
     def test_common_trades1_quantity_should_be_minus_5(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset2].quantity, -5)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset2].quantity,
+            -5
+        )
 
     def test_common_trades1_price_should_be_7(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset2].price, 7)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset2].price,
+            7
+        )
 
     def test_daytrades_len_should_be_1(self):
         self.assertEqual(len(self.trade_container.daytrades.keys()), 1)
 
     def test_check_daytrade_asset(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].asset, self.asset1)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].asset,
+            self.asset1
+        )
 
     def test_daytrade_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].quantity,
+            5
+        )
 
     def test_daytrade_buy_price_should_be_2(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].purchase.price, 2)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].purchase.price,
+            2
+        )
 
     def test_daytrade_buy_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].purchase.quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].purchase.quantity,
+            5
+        )
 
     def test_daytrade_sale_price_should_be_3(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].sale.price, 3)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].sale.price,
+            3
+        )
 
     def test_daytrade_sale_quantity_should_be_minus_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].sale.quantity, -5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].sale.quantity,
+            -5
+        )
 
     def test_daytrade_result_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].result, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].result,
+            5
+        )
 
 
 class TestTradeContainer_identify_daytrades_and_common_trades_case_03(
@@ -539,55 +652,103 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_03(
         )
 
     def test_common_trades0_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset1].quantity, 5)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset1].quantity,
+            5
+        )
 
     def test_common_trades0_price_should_be_2(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset1].price, 2)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset1].price,
+            2
+        )
 
     def test_daytrades_len_should_be_2(self):
         self.assertEqual(len(self.trade_container.daytrades.keys()), 2)
 
     def test_check_daytrade0_asset(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].asset, self.asset1)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].asset,
+            self.asset1
+        )
 
     def test_daytrade0_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].quantity,
+            5
+        )
 
     def test_daytrade0_buy_price_should_be_2(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].purchase.price, 2)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].purchase.price,
+            2
+        )
 
     def test_daytrade0_buy_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].purchase.quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].purchase.quantity,
+            5
+        )
 
     def test_daytrade0_sale_price_should_be_3(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].sale.price, 3)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].sale.price,
+            3
+        )
 
     def test_daytrade0_sale_quantity_should_be_minus_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].sale.quantity, -5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].sale.quantity,
+            -5
+        )
 
     def test_daytrade0_result_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].result, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].result,
+            5
+        )
 
     def test_check_daytrade1_asset(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].asset, self.asset2)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].asset,
+            self.asset2
+        )
 
     def test_daytrade1_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].quantity,
+            5
+        )
 
     def test_daytrade1_buy_price_should_be_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].purchase.price, 10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].purchase.price,
+            10
+        )
 
     def test_daytrade1_buy_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].purchase.quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].purchase.quantity,
+            5
+        )
 
     def test_daytrade1_sale_price_should_be_7(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].sale.price, 7)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].sale.price,
+            7
+        )
 
     def test_daytrade1_sale_quantity_should_be_minus_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].sale.quantity, -5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].sale.quantity,
+            -5
+        )
 
     def test_daytrade1_result_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].result, -15)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].result,
+            -15
+        )
 
 
 class TestTradeContainer_identify_daytrades_and_common_trades_case_04(
@@ -635,46 +796,88 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_04(
         self.assertEqual(len(self.trade_container.daytrades.keys()), 2)
 
     def test_check_daytrade0_asset(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].asset, self.asset1)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].asset,
+            self.asset1
+        )
 
     def test_daytrade0_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].quantity, 10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].quantity,
+            10
+        )
 
     def test_daytrade0_buy_price_should_be_2(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].purchase.price, 2)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].purchase.price,
+            2
+        )
 
     def test_daytrade0_buy_quantity_should_be_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].purchase.quantity, 10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].purchase.quantity,
+            10
+        )
 
     def test_daytrade0_sale_price_should_be_3(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].sale.price, 3)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].sale.price,
+            3
+        )
 
     def test_daytrade0_sale_quantity_should_be_minus_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].sale.quantity, -10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].sale.quantity,
+            -10
+        )
 
     def test_daytrade0_result_should_be_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].result, 10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].result,
+            10
+        )
 
     def test_check_daytrade1_asset(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].asset, self.asset2)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].asset,
+            self.asset2
+        )
 
     def test_daytrade1_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].quantity,
+            5
+        )
 
     def test_daytrade1_buy_price_should_be_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].purchase.price, 10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].purchase.price,
+            10
+        )
 
     def test_daytrade1_buy_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].purchase.quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].purchase.quantity,
+            5
+        )
 
     def test_daytrade1_sale_price_should_be_7(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].sale.price, 7)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].sale.price,
+            7
+        )
 
     def test_daytrade1_sale_quantity_should_be_minus_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].sale.quantity, -5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].sale.quantity,
+            -5
+        )
 
     def test_daytrade1_result_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].result, -15)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].result,
+            -15
+        )
 
 
 class TestTradeContainer_identify_daytrades_and_common_trades_case_05(
@@ -722,46 +925,88 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_05(
         self.assertEqual(len(self.trade_container.daytrades.keys()), 2)
 
     def test_check_daytrade0_asset(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].asset, self.asset1)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].asset,
+            self.asset1
+        )
 
     def test_daytrade0_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].quantity, 10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].quantity,
+            10
+        )
 
     def test_daytrade0_buy_price_should_be_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].purchase.price, 2)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].purchase.price,
+            2
+        )
 
     def test_daytrade0_buy_quantity_should_be_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].purchase.quantity, 10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].purchase.quantity,
+            10
+        )
 
     def test_daytrade0_sale_price_should_be_15(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].sale.price, 15)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].sale.price,
+            15
+        )
 
     def test_daytrade0_sale_quantity_should_be_minus_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].sale.quantity, -10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].sale.quantity,
+            -10
+        )
 
     def test_daytrade0_result_should_be_130(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].result, 130)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].result,
+            130
+        )
 
     def test_check_daytrade1_asset(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].asset, self.asset2)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].asset,
+            self.asset2
+        )
 
     def test_daytrade1_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].quantity,
+            5
+        )
 
     def test_daytrade1_buy_price_should_be_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].purchase.price, 10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].purchase.price,
+            10
+        )
 
     def test_daytrade1_buy_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].purchase.quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].purchase.quantity,
+            5
+        )
 
     def test_daytrade1_sale_price_should_be_7(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].sale.price, 7)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].sale.price,
+            7
+        )
 
     def test_daytrade1_sale_quantity_should_be_minus_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].sale.quantity, -5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].sale.quantity,
+            -5
+        )
 
     def test_daytrade1_result_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].result, -15)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].result,
+            -15
+        )
 
 
 class TestTradeContainer_identify_daytrades_and_common_trades_case_06(
@@ -812,55 +1057,106 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_06(
         )
 
     def test_common_trades0_quantity_should_be_10(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset1].quantity, 10)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset1].quantity,
+            10
+        )
 
     def test_common_trades0_price_should_be_3(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset1].price, 3)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset1].price,
+            3
+        )
 
     def test_daytrades_len_should_be_2(self):
-        self.assertEqual(len(self.trade_container.daytrades.keys()), 2)
+        self.assertEqual(
+            len(self.trade_container.daytrades.keys()),
+            2
+        )
 
     def test_check_daytrade0_asset(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].asset, self.asset1)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].asset,
+            self.asset1
+        )
 
     def test_daytrade0_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].quantity,
+            5
+        )
 
     def test_daytrade0_buy_price_should_be_2(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].purchase.price, 2)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].purchase.price,
+            2
+        )
 
     def test_daytrade0_buy_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].purchase.quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].purchase.quantity,
+            5
+        )
 
     def test_daytrade0_sale_price_should_be_3(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].sale.price, 3)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].sale.price,
+            3
+        )
 
     def test_daytrade0_sale_quantity_should_be_minus_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].sale.quantity, -5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].sale.quantity,
+            -5
+        )
 
     def test_daytrade0_result_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].result, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].result,
+            5
+        )
 
     def test_check_daytrade1_asset(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].asset, self.asset2)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].asset,
+            self.asset2
+        )
 
     def test_daytrade1_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].quantity,
+            5
+        )
 
     def test_daytrade1_buy_price_should_be_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].purchase.price, 10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].purchase.price,
+            10
+        )
 
     def test_daytrade1_buy_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].purchase.quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].purchase.quantity,
+            5
+        )
 
     def test_daytrade1_sale_price_should_be_7(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].sale.price, 7)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].sale.price,
+            7
+        )
 
     def test_daytrade1_sale_quantity_should_be_minus_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].sale.quantity, -5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].sale.quantity,
+            -5
+        )
 
     def test_daytrade1_result_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].result, -15)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].result,
+            -15
+        )
 
 
 class TestTradeContainer_identify_daytrades_and_common_trades_case_07(
@@ -892,7 +1188,10 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_07(
             date='2015-09-21', asset=self.asset3, quantity=-5, price=4)
 
         self.trade_container = trade_tools.OperationContainer(
-            operations=[trade1,trade2,trade3,trade4,trade5,trade6,trade7,trade8,trade9])
+            operations=[
+                trade1,trade2,trade3,trade4,trade5,trade6,trade7,trade8,trade9
+            ]
+        )
         self.trade_container.identify_daytrades_and_common_operations()
 
     def test_trade_container_should_exist(self):
@@ -923,74 +1222,142 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_07(
         )
 
     def test_common_trades0_quantity_should_be_10(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset1].quantity, 10)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset1].quantity,
+            10
+        )
 
     def test_common_trades0_price_should_be_3(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset1].price, 3)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset1].price,
+            3
+        )
 
     def test_daytrades_len_should_be_3(self):
-        self.assertEqual(len(self.trade_container.daytrades.keys()), 3)
+        self.assertEqual(
+            len(self.trade_container.daytrades.keys()),
+            3
+        )
 
     def test_check_daytrade0_asset(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].asset, self.asset1)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].asset,
+            self.asset1
+        )
 
     def test_daytrade0_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].quantity,
+            5
+        )
 
     def test_daytrade0_buy_price_should_be_2(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].purchase.price, 2)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].purchase.price,
+            2
+        )
 
     def test_daytrade0_buy_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].purchase.quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].purchase.quantity,
+            5
+        )
 
     def test_daytrade0_sale_price_should_be_3(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].sale.price, 3)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].sale.price,
+            3
+        )
 
     def test_daytrade0_sale_quantity_should_be_minus_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].sale.quantity, -5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].sale.quantity,
+            -5
+        )
 
     def test_daytrade0_result_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].result, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].result,
+            5
+        )
 
     def test_check_daytrade1_asset(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].asset, self.asset2)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].asset,
+            self.asset2
+        )
 
     def test_daytrade1_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].quantity,
+            5
+        )
 
     def test_daytrade1_buy_price_should_be_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].purchase.price, 10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].purchase.price,
+            10
+        )
 
     def test_daytrade1_buy_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].purchase.quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].purchase.quantity,
+            5
+        )
 
     def test_daytrade1_sale_price_should_be_7(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].sale.price, 7)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].sale.price,
+            7
+        )
 
     def test_daytrade1_sale_quantity_should_be_minus_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].sale.quantity, -5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].sale.quantity,
+            -5
+        )
 
     def test_daytrade1_result_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].result, -15)
-
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].result,
+            -15
+        )
 
     def test_check_daytrade2_asset(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset3].asset, self.asset3)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset3].asset,
+            self.asset3
+        )
 
     def test_daytrade2_quantity_should_be_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset3].quantity, 10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset3].quantity,
+            10
+        )
 
     def test_daytrade2_buy_price_should_be_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset3].purchase.price, 4)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset3].purchase.price,
+            4
+        )
 
     def test_daytrade2_buy_quantity_should_be_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset3].purchase.quantity, 10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset3].purchase.quantity,
+            10
+        )
 
     def test_daytrade2_sale_price_should_be_3(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset3].sale.price, 3)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset3].sale.price,
+            3
+        )
 
     def test_daytrade2_sale_quantity_should_be_minus_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset3].sale.quantity, -10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset3].sale.quantity,
+            -10
+        )
 
 
 class TestTradeContainer_add_to_common_operations(unittest.TestCase):
@@ -1013,10 +1380,16 @@ class TestTradeContainer_add_to_common_operations(unittest.TestCase):
         self.assertEqual(len(self.trade_container.daytrades.keys()), 0)
 
     def test_common_trades0_quantity_should_be_20(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset].quantity, 20)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset].quantity,
+            20
+        )
 
     def test_common_trades0_price_should_be_3(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset].price, 3)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset].price,
+            3
+        )
 
 
 class TestTradeContainer_prorate_discounts_by_common_trades_and_daytrades(
@@ -1030,15 +1403,30 @@ class TestTradeContainer_prorate_discounts_by_common_trades_and_daytrades(
         self.asset1 = trade_tools.Asset('some asset')
         self.asset2 = trade_tools.Asset('some other asset')
         trade1 = trade_tools.Operation(
-                date='2015-09-21', asset=self.asset1, quantity=10, price=2)
+                    date='2015-09-21',
+                    asset=self.asset1,
+                    quantity=10,
+                    price=2
+                )
         trade2 = trade_tools.Operation(
-                date='2015-09-21', asset=self.asset1, quantity=-5, price=3)
+                    date='2015-09-21',
+                    asset=self.asset1,
+                    quantity=-5,
+                    price=3
+                )
         trade3 = trade_tools.Operation(
-                date='2015-09-21', asset=self.asset2, quantity=-5, price=7)
+                    date='2015-09-21',
+                    asset=self.asset2,
+                    quantity=-5,
+                    price=7
+                )
         self.trade_container = trade_tools.OperationContainer(
-                operations=[trade1,trade2,trade3], commissions=discounts)
+                                    operations=[trade1,trade2,trade3],
+                                    commissions=discounts
+                                )
         self.trade_container.identify_daytrades_and_common_operations()
-        self.trade_container.prorate_commissions_by_daytrades_and_common_operations()
+        self.trade_container\
+            .prorate_commissions_by_daytrades_and_common_operations()
 
     def test_trade_container_should_exist(self):
         self.assertTrue(self.trade_container)
@@ -1077,13 +1465,22 @@ class TestTradeContainer_prorate_discounts_by_common_trades_and_daytrades(
         )
 
     def test_common_trades0_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset1].quantity, 5)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset1].quantity,
+            5
+        )
 
     def test_common_trades0_price_should_be_2(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset1].price, 2)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset1].price,
+            2
+        )
 
     def test_common_trades0_volume_should_be_35(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset1].volume, 10)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset1].volume,
+            10
+        )
 
     def test_check_common_trades0_discounts(self):
         self.assertEqual(
@@ -1104,13 +1501,22 @@ class TestTradeContainer_prorate_discounts_by_common_trades_and_daytrades(
         )
 
     def test_common_trades1_quantity_should_be_minus_5(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset2].quantity, -5)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset2].quantity,
+            -5
+        )
 
     def test_common_trades1_price_should_be_7(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset2].price, 7)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset2].price,
+            7
+        )
 
     def test_common_trades1_volume_should_be_35(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset2].volume, 35)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset2].volume,
+            35
+        )
 
     def test_check_common_trades1_discounts(self):
         expected_discounts = {
@@ -1179,13 +1585,22 @@ class TestTradeContainer_fetch_positions_case_00(unittest.TestCase):
         )
 
     def test_common_trades0_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset1].quantity, 5)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset1].quantity,
+            5
+        )
 
     def test_common_trades0_price_should_be_2(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset1].price, 2)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset1].price,
+            2
+        )
 
     def test_common_trades0_volume_should_be_35(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset1].volume, 10)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset1].volume,
+            10
+        )
 
     def test_check_common_trades0_discounts(self):
         self.assertEqual(
@@ -1206,13 +1621,22 @@ class TestTradeContainer_fetch_positions_case_00(unittest.TestCase):
         )
 
     def test_common_trades1_quantity_should_be_minus_5(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset2].quantity, -5)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset2].quantity,
+            -5
+        )
 
     def test_common_trades1_price_should_be_7(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset2].price, 7)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset2].price,
+            7
+        )
 
     def test_common_trades1_volume_should_be_35(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset2].volume, 35)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset2].volume,
+            35
+        )
 
     def test_check_common_trades1_discounts(self):
         expected_discounts = {
@@ -1254,7 +1678,10 @@ class TestTradeContainer_fetch_positions_case_01(
             date='2015-09-21', asset=self.asset3, quantity=-5, price=4)
 
         self.trade_container = trade_tools.OperationContainer(
-            operations=[trade1,trade2,trade3,trade4,trade5,trade6,trade7,trade8,trade9])
+            operations=[
+                trade1,trade2,trade3,trade4,trade5,trade6,trade7,trade8,trade9
+            ]
+        )
         self.trade_container.fetch_positions()
 
     def test_trade_container_should_exist(self):
@@ -1285,74 +1712,143 @@ class TestTradeContainer_fetch_positions_case_01(
         )
 
     def test_common_trades0_quantity_should_be_10(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset1].quantity, 10)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset1].quantity,
+            10
+        )
 
     def test_common_trades0_price_should_be_3(self):
-        self.assertEqual(self.trade_container.common_operations[self.asset1].price, 3)
+        self.assertEqual(
+            self.trade_container.common_operations[self.asset1].price,
+            3
+        )
 
     def test_daytrades_len_should_be_3(self):
-        self.assertEqual(len(self.trade_container.daytrades.keys()), 3)
+        self.assertEqual(
+            len(self.trade_container.daytrades.keys()),
+            3
+        )
 
     def test_check_daytrade0_asset(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].asset, self.asset1)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].asset,
+            self.asset1
+        )
 
     def test_daytrade0_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].quantity,
+            5
+        )
 
     def test_daytrade0_buy_price_should_be_2(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].purchase.price, 2)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].purchase.price,
+            2
+        )
 
     def test_daytrade0_buy_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].purchase.quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].purchase.quantity,
+            5
+        )
 
     def test_daytrade0_sale_price_should_be_3(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].sale.price, 3)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].sale.price,
+            3
+        )
 
     def test_daytrade0_sale_quantity_should_be_minus_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].sale.quantity, -5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].sale.quantity,
+            -5
+        )
 
     def test_daytrade0_result_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset1].result, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset1].result,
+            5
+        )
 
     def test_check_daytrade1_asset(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].asset, self.asset2)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].asset,
+            self.asset2
+        )
 
     def test_daytrade1_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].quantity,
+            5
+        )
 
     def test_daytrade1_buy_price_should_be_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].purchase.price, 10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].purchase.price,
+            10
+        )
 
     def test_daytrade1_buy_quantity_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].purchase.quantity, 5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].purchase.quantity,
+            5
+        )
 
     def test_daytrade1_sale_price_should_be_7(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].sale.price, 7)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].sale.price,
+            7
+        )
 
     def test_daytrade1_sale_quantity_should_be_minus_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].sale.quantity, -5)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].sale.quantity,
+            -5
+        )
 
     def test_daytrade1_result_should_be_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset2].result, -15)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset2].result,
+            -15
+        )
 
 
     def test_check_daytrade2_asset(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset3].asset, self.asset3)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset3].asset,
+            self.asset3
+        )
 
     def test_daytrade2_quantity_should_be_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset3].quantity, 10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset3].quantity,
+            10
+        )
 
     def test_daytrade2_buy_price_should_be_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset3].purchase.price, 4)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset3].purchase.price,
+            4
+        )
 
     def test_daytrade2_buy_quantity_should_be_10(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset3].purchase.quantity, 10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset3].purchase.quantity,
+            10
+        )
 
     def test_daytrade2_sale_price_should_be_3(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset3].sale.price, 3)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset3].sale.price,
+            3
+        )
 
     def test_daytrade2_sale_quantity_should_be_minus_5(self):
-        self.assertEqual(self.trade_container.daytrades[self.asset3].sale.quantity, -10)
+        self.assertEqual(
+            self.trade_container.daytrades[self.asset3].sale.quantity,
+            -10
+        )
 
 
 
@@ -1406,7 +1902,10 @@ class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):
             'iss': 1.5,
             'outros': 1,
         }
-        self.container = trade_tools.OperationContainer(operations=operations, commissions=commissions)
+        self.container = trade_tools.OperationContainer(
+            operations=operations,
+            commissions=commissions
+        )
         self.container.tax_manager = TaxManagerForTests()
         self.container.fetch_positions()
 
@@ -1416,7 +1915,10 @@ class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):
             'iss': 0.75,
             'outros': 0.5,
         }
-        self.assertEqual(self.container.daytrades[self.asset].purchase.commissions, discounts)
+        self.assertEqual(
+            self.container.daytrades[self.asset].purchase.commissions,
+            discounts
+        )
 
     def test_container_daytrade_buy_sale_operation_discounts(self):
         discounts = {
@@ -1424,7 +1926,10 @@ class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):
             'iss': 0.75,
             'outros': 0.5,
         }
-        self.assertEqual(self.container.daytrades[self.asset].sale.commissions, discounts)
+        self.assertEqual(
+            self.container.daytrades[self.asset].sale.commissions,
+            discounts
+        )
 
     def test_container_daytrade_buy_operation_taxes(self):
         taxes = {
@@ -1432,7 +1937,10 @@ class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):
             'liquidation': 0.02,
             'registry': 0,
         }
-        self.assertEqual(self.container.daytrades[self.asset].purchase.taxes, taxes)
+        self.assertEqual(
+            self.container.daytrades[self.asset].purchase.taxes,
+            taxes
+        )
 
     def test_container_daytrade_sale_operation_taxes(self):
         taxes = {
@@ -1443,19 +1951,34 @@ class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):
         self.assertEqual(self.container.daytrades[self.asset].sale.taxes, taxes)
 
     def test_container_daytrade_operation_result(self):
-        self.assertEqual(round(self.container.daytrades[self.asset].result,8), -4.55000000)
+        self.assertEqual(
+            round(self.container.daytrades[self.asset].result,8),
+            -4.55000000
+        )
 
     def test_container_daytrade_operation_quantity(self):
         self.assertEqual(self.container.daytrades[self.asset].quantity, 10)
 
     def test_container_daytrade_buy_operation_real_price(self):
-        self.assertEqual(round(self.container.daytrades[self.asset].purchase.real_price,8), 10.22750000)
+        self.assertEqual(
+            round(self.container.daytrades[self.asset].purchase.real_price,8),
+            10.22750000
+        )
 
     def test_container_daytrade_sale_operation_real_price(self):
-        self.assertEqual(round(self.container.daytrades[self.asset].sale.real_price,8), 9.77250000)
+        self.assertEqual(
+            round(self.container.daytrades[self.asset].sale.real_price,8),
+            9.77250000
+        )
 
     def test_container_daytrade_buy_operation_real_value(self):
-        self.assertEqual(round(self.container.daytrades[self.asset].purchase.real_value,8), 102.27500000)
+        self.assertEqual(
+            round(self.container.daytrades[self.asset].purchase.real_value,8),
+            102.27500000
+        )
 
     def test_container_daytrade_sale_operation_real_value(self):
-        self.assertEqual(round(self.container.daytrades[self.asset].sale.real_value,8), -97.72500000)
+        self.assertEqual(
+            round(self.container.daytrades[self.asset].sale.real_value,8),
+            -97.72500000
+        )

@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 import unittest
 
-import trade as trade_tools
+import trade
 
 
 class TestAssetCreation_Case_00(unittest.TestCase):
@@ -14,9 +14,9 @@ class TestAssetCreation_Case_00(unittest.TestCase):
     """
 
     def setUp(self):
-        self.asset1 = trade_tools.Asset(name='some stock')
-        self.asset2 = trade_tools.Asset()
-        self.asset3 = trade_tools.Asset(
+        self.asset1 = trade.Asset(name='some stock')
+        self.asset2 = trade.Asset()
+        self.asset3 = trade.Asset(
             name='other stock', expiration_date='2015-12-23'
         )
 
