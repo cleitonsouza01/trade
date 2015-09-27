@@ -20,7 +20,7 @@ class TestLogDaytradesOperationsAndEvents_Case_00(unittest.TestCase):
         operation = Operation(100, 10, asset=Asset(), date='2015-01-01')
         self.accumulator.accumulate_operation(operation)
 
-        event = TestEvent(name='some event', date='2015-01-01')
+        event = TestEvent(asset=Asset(), date='2015-01-01')
         self.accumulator.accumulate_event(event)
 
         expected_log = {
@@ -47,7 +47,7 @@ class TestLogDaytradesOperationsAndEvents_Case_01(unittest.TestCase):
         operation = Operation(100, 10, asset=Asset(), date='2015-01-02')
         self.accumulator.accumulate_operation(operation)
 
-        event = TestEvent(name='some event', date='2015-01-03')
+        event = TestEvent(asset=Asset(), date='2015-01-03')
         self.accumulator.accumulate_event(event)
 
         expected_log = {
@@ -91,7 +91,7 @@ class TestLogDaytradesOperationsAndEvents_Case_02(unittest.TestCase):
         daytrade2 = Daytrade('2015-01-02', Asset(), 100, 10, 20)
         self.accumulator.accumulate_daytrade(daytrade2)
 
-        event = TestEvent(name='some event', date='2015-01-02')
+        event = TestEvent(asset=Asset(), date='2015-01-02')
         self.accumulator.accumulate_event(event)
 
         expected_log = {

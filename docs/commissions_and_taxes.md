@@ -99,8 +99,8 @@ class MyTaxManager:
         return {'name of the daytrade tax': 2}
 ```
 
-All you need is to change the object in the OperationContainer for your
-own tax manager:
+All you need is to change the tax manager object in the OperationContainer
+for your own tax manager:
 
 ```python
 my_container = OperationContainer()

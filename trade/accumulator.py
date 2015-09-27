@@ -269,12 +269,15 @@ class Event:
             return quantity, price
 
     that implements the logic for the change in the portfolio.
+
+    Events must have an "asset" attribute with reference to an Asset
+    instance and a date 'YYYY-mm-dd' attribute.
     """
 
     __metaclass__ = ABCMeta
 
-    def __init__(self, date, name):
-        self.name = name
+    def __init__(self, asset, date):
+        self.asset = asset
         self.date = date
 
     @abstractmethod

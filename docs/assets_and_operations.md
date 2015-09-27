@@ -23,7 +23,9 @@ Check the API docs for more on this.
 ## Operations
 An operation represents the purchase or sale of an asset.
 
-Operations have a reference a to an Asset object, and also quantity and a price. They may also have a date representing the date the operation occurred.
+Operations have a reference a to an Asset object, and also quantity and a price.
+The price represents the unitary price of the asset that is being traded.
+They may also have a date representing the date the operation occurred.
 
 Creating Operation objects:
 ```python
