@@ -14,7 +14,7 @@ operations, daytrades, cost deduction, asset accumulation and taxes.
 + [trade.OperationContainer](trade.operation_container)  
   To identify daytrades, prorate comissions and apply taxes to operations.
 + [trade.TaxManager](trade.tax_manager)  
-  To get the right tax foreach operation the OperationContainer identify.
+  To get the right tax for the operations on the container.
 + [trade.Accumulator](trade.accumulator)  
   To accumulate the assets and calculate the result from the trades.
 + [trade.Event](trade.accumulator)  
