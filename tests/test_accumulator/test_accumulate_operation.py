@@ -31,4 +31,4 @@ class Test_accumulate_operation_Case_01(unittest.TestCase):
         self.result = self.accumulator.accumulate_operation(self.operation)
 
     def test_returned_result(self):
-        self.assertEqual(self.result, None)
+        self.assertEqual(self.result, {'trades': 0})

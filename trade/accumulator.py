@@ -54,7 +54,7 @@ class Accumulator:
     accumulator (the current quantity and average price of the asset).
     """
 
-    def __init__(self, asset, initial_status=None, logging=False):
+    def __init__(self, asset=None, initial_status=None, logging=False):
         """Creates a instance of the accumulator.
 
         A initial status (quantity, average price and results) can be
@@ -136,9 +136,6 @@ class Accumulator:
         present on the operation "results' attribute to the total
         results of the stock in the accumulator.
         """
-        if operation.asset != self.asset:
-            return None
-
         new_quantity = self.quantity + operation.quantity
 
         if operation.results is None:
@@ -227,8 +224,6 @@ class Accumulator:
 
     def accumulate_daytrade(self, daytrade):
         """Accumulates a Daytrade operation."""
-        if daytrade.asset != self.asset:
-            return None
         self.results['daytrades'] += daytrade.result
         if self.logging:
             self.log_occurrence(daytrade)
@@ -250,8 +245,6 @@ class Accumulator:
         that have the logic for the change in the accumulator's
         quantity, price and results.
         """
-        if event.asset != self.asset:
-            return None
         self.quantity, self.price = event.update_portfolio(
                                             self.quantity,
                                             self.price,

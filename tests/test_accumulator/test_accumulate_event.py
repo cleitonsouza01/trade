@@ -42,7 +42,7 @@ class Test_accumulate_event_Case_01(unittest.TestCase):
 
     def setUp(self):
         self.asset = Asset()
-        self.other_asset = Asset('wrong')
+        self.other_asset = Asset('other')
         self.operation = Operation(100, 10, asset=self.asset, date='2015-01-01')
         self.event = StockSplit('2015-09-24', self.other_asset, 2)
         self.accumulator = AssetAccumulator(self.asset, logging=True)
@@ -50,7 +50,7 @@ class Test_accumulate_event_Case_01(unittest.TestCase):
         self.accumulator.accumulate_event(self.event)
 
     def test_accumulator_price(self):
-        self.assertEqual(self.accumulator.price, 10)
+        self.assertEqual(self.accumulator.price, 5)
 
     def test_accumulator_quantity(self):
-        self.assertEqual(self.accumulator.quantity, 100)
+        self.assertEqual(self.accumulator.quantity, 200)
