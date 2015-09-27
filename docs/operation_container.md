@@ -14,14 +14,14 @@ operation, if any, and on a single daytrade, if any.
 ## Commissions
 The container prorates commissions by its operations based on their volume.
 
-Read more about this in [Commissions and Taxes](../commissions_and_taxes).  
-Read more about this in the [API docs](../api/trade.operation_container).
+Read more about this in [Commissions and Taxes](./commissions_and_taxes).  
+Read more about this in the [API docs](./api/trade.operation_container).
 
 
 ## Taxes
 By default all OperationContainer objects have a reference to a TaxManager
 object. This default tax manager will always return an empty dictionary of taxes.
-If you need to apply taxes to your operations, you must read this: [Commissions and Taxes](../commissions_and_taxes)
+If you need to apply taxes to your operations, you must read this: [Commissions and Taxes](./commissions_and_taxes)
 
 
 Copyright (c) 2015 Rafael da Silva Rocha  
