@@ -30,9 +30,9 @@ class TaxManager:
     A TaxManager object reads an operation and returns the
     correspondent percentual taxes for that operation. Since taxes
     (and also the way they are applied) may vary greatly from one
-    context to another, this class just implements a dumb interface
-    for the tax discovery process, always returning a empty dict of
-    taxes.
+    context to another, this class just implements a dummy interface
+    for the tax discovery process, always returning a empty dictionary
+    of taxes.
 
     Every OperationContainer object has a reference to an instance
     of this TaxManager. If your app need to apply taxes to your
@@ -41,7 +41,7 @@ class TaxManager:
 
         operation_container_object.tax_manger = your_tax_manager_object
 
-    The OperationContainer always access the TaxManager when
+    The OperationContainer always access his TaxManager object when
     fetch_positions() is called. Behind the scenes the container
     calls this methods from the TaxManager object:
 

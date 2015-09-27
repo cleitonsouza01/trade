@@ -38,8 +38,25 @@ class OperationContainer:
     """A container for operations.
 
     An OperationContainer is used to group operations, like operations
-    that occurred on the same date, and then perform tasks on them. The
-    OperationContainer can:
+    that occurred on the same date, and then perform tasks on them.
+
+    The main task task that the OperationContainer can perform is to
+    identify the resulting positions from a group of operations. The
+    resulting positions are all operations separated as daytrades and
+    common operations, with all common operations and daytrades with
+    the same asset grouped into a single operation or a single
+    daytrade.
+
+    The resulting common operations and daytrades contains the
+    OperationContiner comissions prorated by their volumes, and also
+    any taxes the OperationContainer TaxManager finds for them.
+
+    This is achieved by calling this method:
+
+        fetch_positions()
+
+    Every time fetch_positions() is called the OperationContainer
+    execute this tasks behind the scenes:
 
     - Separate the daytrades and the common operations of a group of
       operations that occurred on the same date by using the method:
@@ -50,6 +67,11 @@ class OperationContainer:
       common operations, if any, by using the method:
 
         prorate_comissions_by_daytrades_and_common_operations()
+
+    - Find the appliable taxes for the resulting positions by calling
+      this method:
+
+      find_taxes_for_positions()
 
     Attributes:
         date: A string 'YYYY-mm-dd' representing the date of the
@@ -240,7 +262,7 @@ class OperationContainer:
         existing_operation.quantity += operation.quantity
 
     def find_taxes_for_positions(self):
-        """Gets the taxes for every position on the container."""
+        """Finds the taxess for all daytrades and common operations."""
         for asset, daytrade in self.daytrades.items():
             daytrade.purchase.taxes = \
                 self.tax_manager.get_taxes_for_daytrade(daytrade.purchase)

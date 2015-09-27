@@ -100,10 +100,10 @@ class Accumulator:
     # FIXME explain that in Doctstring that this
     #       logs daytrades too, rename method
     def log_occurrence(self, operation):
-        """Log operations, daytrades and events.
+        """Log Operation, Daytrade and Event objects.
 
         If logging, this method is called behind the scenes every
-        time the method accumulate() is called. The operations are
+        time the method accumulate() is called. The occurrences are
         logged like this:
 
             self.log = {

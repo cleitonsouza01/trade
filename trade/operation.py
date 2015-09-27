@@ -51,12 +51,14 @@ class Asset:
 
 
 class Operation:
-    """An operation represents the purchase or sale of an asset.
+    """An operation represents the purchase or the sale of an asset.
 
     Attributes:
         date: A string 'YYYY-mm-dd', the date the operation occurred.
         asset: An Asset instance, the asset that is being traded.
         quantity: A number representing the quantity being traded.
+            Positive quantities represent a purchase.
+            Negative quantities represent a sale.
         price: The raw unitary price of the asset being traded.
         comissions: A dict of discounts. String keys and float values
             representing the name of the discounts and the values
