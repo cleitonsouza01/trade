@@ -9,11 +9,10 @@ comissions = {
     'some comission': 1,
     'other comission': 3,
 }
-container = trade.OperationContainer(operations=[operation], comissions=comissions)
+container = trade.OperationContainer(operations=[operation], commissions=comissions)
 
 # identify operations and prorate the comissions
-container.identify_daytrades_and_common_operations()
-container.prorate_comissions_by_daytrades_and_common_operations()
+container.fetch_positions()
 
 # create an accumulator for the asset
 accumulator = trade.Accumulator(asset)
