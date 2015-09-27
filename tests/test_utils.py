@@ -71,10 +71,29 @@ class Test_daytrade_condition(unittest.TestCase):
         self.assertFalse(daytrade_condition(trade1,trade2))
 
     def test_daytrade_condition_case_04(self):
-        trade1 = Operation(0, 5, date='2015-09-22', asset=self.asset1)
+        trade1 = Operation(-10, 5, date='2015-09-22', asset=self.asset1)
         trade2 = Operation(0, 5, date='2015-09-22', asset=self.asset2)
         self.assertFalse(daytrade_condition(trade1,trade2))
 
+    def test_daytrade_condition_case_05(self):
+        trade1 = Operation(10, 5, date='2015-09-22', asset=self.asset1)
+        trade2 = Operation(0, 5, date='2015-09-22', asset=self.asset2)
+        self.assertFalse(daytrade_condition(trade1,trade2))
+
+    def test_daytrade_condition_case_06(self):
+        trade1 = Operation(0, 5, date='2015-09-22', asset=self.asset1)
+        trade2 = Operation(10, 5, date='2015-09-22', asset=self.asset2)
+        self.assertFalse(daytrade_condition(trade1,trade2))
+
+    def test_daytrade_condition_case_07(self):
+        trade1 = Operation(-10, 5, date='2015-09-22', asset=self.asset1)
+        trade2 = Operation(-10, 5, date='2015-09-22', asset=self.asset2)
+        self.assertFalse(daytrade_condition(trade1,trade2))
+
+    def test_daytrade_condition_case_08(self):
+        trade1 = Operation(10, 5, date='2015-09-22', asset=self.asset1)
+        trade2 = Operation(10, 5, date='2015-09-22', asset=self.asset2)
+        self.assertFalse(daytrade_condition(trade1,trade2))
 
 
 class Test_find_purchase_and_sale(unittest.TestCase):
