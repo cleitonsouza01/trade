@@ -21,16 +21,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
 
-from __future__ import absolute_import
 
-from .asset import Asset
-from .operation import Operation, Daytrade
-from .accumulator import Accumulator, Event
-from .tax_manager import TaxManager
-from .operation_container import OperationContainer
+class Asset:
+    """An asset represents anything that can be traded.
 
-from .utils import daytrade_condition, average_price, same_sign
+    Attributes:
+        name: A string representing the name of the asset.
+        expiration_date: A string 'YYYY-mm-dd' representing the
+            expiration date of the asset, if any.
+    """
 
+    def __init__(self, name='', expiration_date=None):
+        self.name = name
+        self.expiration_date = expiration_date
 
-__author__ = 'rocha.rafaelsilva@gmail.com'
-__version__ = '0.0.7'
+    def __deepcopy__(self, memo):
+        return self

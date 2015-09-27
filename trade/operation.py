@@ -33,23 +33,6 @@ from .utils import (
 )
 
 
-class Asset:
-    """An asset represents anything that can be traded.
-
-    Attributes:
-        name: A string representing the name of the asset.
-        expiration_date: A string 'YYYY-mm-dd' representing the
-            expiration date of the asset, if any.
-    """
-
-    def __init__(self, name='', expiration_date=None):
-        self.name = name
-        self.expiration_date = expiration_date
-
-    def __deepcopy__(self, memo):
-        return self
-
-
 class Operation:
     """An operation represents the purchase or the sale of an asset.
 

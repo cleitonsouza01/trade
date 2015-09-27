@@ -97,8 +97,6 @@ class Accumulator:
         self.logging = logging
         self.log = {}
 
-    # FIXME explain that in Doctstring that this
-    #       logs daytrades too, rename method
     def log_occurrence(self, operation):
         """Log Operation, Daytrade and Event objects.
 
