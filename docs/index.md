@@ -11,6 +11,7 @@ of investment applications in Python. It provides basic notions of assets,
 operations, daytrades, cost deduction, asset accumulation and taxes.
 
 With the trade module you can:
+
 * Identify daytrades in a group of operations
 * Prorate commissions and other costs by groups of operations  
 * Add taxes to operations
@@ -93,16 +94,12 @@ print(accumulator.results)
 #>> {'trades': 5.0}
 ```
 
-Operation objects may include taxes and comissions that are considered by the
+Operation objects may include taxes and commissions that are considered by the
 accumulator when calculating results and portfolio prices.
 
 The Accumulator can also log the accumulated operations and their results.
 
-There are more features, like rating and applying discounts automatically
-to a group of operations, separating daytrades from common trades in a group of
-operations, calculating the resulting position from a group of operations and so
-on. Check the documentation and the examples for more information on how to
-use the trade module.
+Check the documentation for all the available features.
 
 
 ## Compatibility
