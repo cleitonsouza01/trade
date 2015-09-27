@@ -95,11 +95,11 @@ print(accumulator.results)
 ```
 
 Operation objects may include taxes and commissions that are considered by the
-accumulator when calculating results and portfolio prices.
+accumulator when it calculates results and average prices.
 
 The Accumulator can also log the accumulated operations and their results.
 
-Check the documentation for all the available features.
+Check the API documentation for all the available features.
 
 
 ## Compatibility
@@ -107,7 +107,7 @@ The trade module is compatible with Python 2.7 and Python 3.x.
 
 
 ## Version
-The current version is 0.0.5-alpha.
+The current version is 0.0.7-alpha.
 
 
 ## License
