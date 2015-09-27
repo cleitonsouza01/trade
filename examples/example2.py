@@ -1,53 +1,37 @@
-#!/usr/bin/env python
-
-from __future__ import  print_function
-
 import trade
 
+# create the asset and the operation
+asset = trade.Asset('some asset')
+operation = trade.Operation(date='2015-09-18', asset=asset, quantity=20, price=10)
 
-# create the asset that we are going to trade
-asset = 'Euro'
+# create a container with some comissions associated with it
+comissions = {
+    'some comission': 1,
+    'other comission': 3,
+}
+container = trade.OperationContainer(operations=[operation], comissions=comissions)
 
-# create the accumulator to accumulate trades with the asset
+# identify operations and prorate the comissions
+container.identify_daytrades_and_common_operations()
+container.prorate_comissions_by_daytrades_and_common_operations()
+
+# create an accumulator for the asset
 accumulator = trade.Accumulator(asset)
 
-
-print(accumulator.asset)
-#>> Euro
-
-print(accumulator.quantity)
-#>> 0
-
-print(accumulator.price)
-#>> 0
-
-print(accumulator.results)
-#>> {'trades': 0}
-
-
-# accumulate trade data
-accumulator.accumulate(quantity=10, price=2, date='2015-09-22')
-
+# accumulate the operation
+operation = container.common_operations[asset]
+accumulator.accumulate_operation(operation)
 
 print(accumulator.quantity)
-#>> 10
+#>>20
 
 print(accumulator.price)
-#>> 2.0
+#>>10.2
+# the original price (10) plus the comissions
+# the OperationContainer prorated
 
-print(accumulator.results)
-#>> {'trades': 0}
-
-
-# accumulate more trade
-accumulator.accumulate(quantity=-5, price=3, date='2015-09-23')
-
-
-print(accumulator.quantity)
-#>> 5
-
-print(accumulator.price)
-#>> 2.0
-
-print(accumulator.results)
-#>> {'trades': 5.0}
+print(accumulator.price * accumulator.quantity)
+#>>204
+# 200 from the raw operation
+# (20 quantity * 10 unitary price)
+# + 4 from the total comissions
