@@ -5,7 +5,7 @@ import unittest
 import trade as trade_tools
 
 
-class TestTradeCreation(unittest.TestCase):
+class TestOperationCreation(unittest.TestCase):
     """Test the creation of Operation objects."""
 
     def setUp(self):

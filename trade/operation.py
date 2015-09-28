@@ -27,7 +27,6 @@ from __future__ import division
 import math
 import copy
 
-from .tax_manager import TaxManager
 from .utils import (
     average_price, daytrade_condition, same_sign, find_purchase_and_sale
 )
@@ -109,6 +108,20 @@ class Operation:
                 [self.volume * value / 100  for value in \
                                                 self.commission_rates.values()]
             )
+
+class Exercise(Operation):
+    """An exercise operation.
+
+    Exercise operations are operations that involve more than one
+    asset, usually a derivative like a Option and an underlying asset.
+    """
+
+    def get_operations(self):
+        return self.asset.exercise(
+                    self.quantity,
+                    self.price,
+                    self.date
+                )
 
 
 class Daytrade:

@@ -23,8 +23,8 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from .asset import Asset
-from .operation import Operation, Daytrade
+from .asset import Asset, Option, Derivative
+from .operation import Operation, Daytrade, Exercise
 from .accumulator import Accumulator, Event
 from .tax_manager import TaxManager
 from .operation_container import OperationContainer

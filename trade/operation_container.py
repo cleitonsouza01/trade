@@ -88,16 +88,20 @@ class OperationContainer:
     def __init__(self,
                 date=None,
                 operations=None,
+                exercises=None,
                 fixed_commissions=None,
                 tax_manager=TaxManager()
             ):
         self.date = date
         if operations is None: operations=[]
+        if exercises is None: exercises=[]
         if fixed_commissions is None: fixed_commissions = {}
         self.operations = operations
+        self.exercises = exercises
         self.fixed_commissions = fixed_commissions
         self.daytrades = {}
         self.common_operations = {}
+        self.exercise_operations = {}
         self.tax_manager = tax_manager
 
     @property
@@ -143,9 +147,21 @@ class OperationContainer:
             and taxes to be applied to every purchase and sale
             operation of every daytrade.
         """
+        self.get_operations_from_exercises()
         self.identify_daytrades_and_common_operations()
         self.prorate_fixed_commissions()
         self.find_fees_for_positions()
+
+    def get_operations_from_exercises(self):
+        for exercise in self.exercises:
+            for operation in exercise.get_operations():
+                if operation.asset in self.exercise_operations.keys():
+                    self.merge_operations(
+                        self.exercise_operations[operation.asset],
+                        operation
+                    )
+                else:
+                    self.exercise_operations[operation.asset] = operation
 
     def prorate_fixed_commissions(self):
         """Prorates the container's commissions by its operations.

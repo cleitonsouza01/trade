@@ -8,3 +8,4 @@ from .test_tax_manager import *
 
 from .test_operation_container import *
 from .test_accumulator import *
+from .test_options import *
