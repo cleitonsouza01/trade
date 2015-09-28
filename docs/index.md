@@ -48,7 +48,7 @@ accumulator = trade.Accumulator(asset)
 
 
 print(accumulator.asset.name)
-#>> Some asset
+#>> Google Inc
 
 print(accumulator.quantity)
 #>> 0
