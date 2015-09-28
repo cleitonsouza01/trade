@@ -43,7 +43,7 @@ class TestTradeCreation(unittest.TestCase):
 
 
 class TestTrade_total_discounts(unittest.TestCase):
-    """Test the total_commission property of Operation objects."""
+    """Test the total_fixed_commissions property of Operation objects."""
 
     def setUp(self):
         self.asset = trade_tools.Asset(name='some asset')
@@ -56,7 +56,7 @@ class TestTrade_total_discounts(unittest.TestCase):
                 'some discount': 3
             }
         )
-        self.assertEqual(trade.total_commission, 3)
+        self.assertEqual(trade.total_fixed_commissions, 3)
 
     def test_trade_total_discounts_with_multiple_discounts_case_1(self):
         trade = trade_tools.Operation(
@@ -67,7 +67,7 @@ class TestTrade_total_discounts(unittest.TestCase):
                 'other discount': 1
             }
         )
-        self.assertEqual(trade.total_commission, 4)
+        self.assertEqual(trade.total_fixed_commissions, 4)
 
     def test_trade_total_discounts_with_multiple_discounts_case_2(self):
         trade = trade_tools.Operation(
@@ -79,7 +79,7 @@ class TestTrade_total_discounts(unittest.TestCase):
                 'more discounts': 2
             }
         )
-        self.assertEqual(trade.total_commission, 6)
+        self.assertEqual(trade.total_fixed_commissions, 6)
 
     def test_trade_total_discounts_with_multiple_discounts_case_3(self):
         trade = trade_tools.Operation(
@@ -91,7 +91,7 @@ class TestTrade_total_discounts(unittest.TestCase):
                 'negative discount': -1
             }
         )
-        self.assertEqual(trade.total_commission, 3)
+        self.assertEqual(trade.total_fixed_commissions, 3)
 
 
 class TestTrade_real_price(unittest.TestCase):

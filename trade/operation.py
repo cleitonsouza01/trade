@@ -83,15 +83,17 @@ class Operation:
         already deducted or added.
         """
         return self.price + math.copysign(
-                                self.total_commission / self.quantity,
+                                self.total_commissions / self.quantity,
                                 self.quantity
-                            ) + math.copysign(
-                                    self.total_rates_value / self.quantity,
-                                    self.quantity
-                                )
+                            )
 
     @property
-    def total_commission(self):
+    def total_commissions(self):
+        """Return the sum of all commissions included in this operation."""
+        return self.total_fixed_commissions + self.total_rates_value
+
+    @property
+    def total_fixed_commissions(self):
         """Return the sum of all commissions included in this operation."""
         return sum(self.fixed_commissions.values())
 
@@ -102,12 +104,11 @@ class Operation:
 
     @property
     def total_rates_value(self):
-        """Returns the total tax value for this operation."""
-        if self.commission_rates:
-            return sum(
-                [self.volume * value / 100  for value in self.commission_rates.values()]
+        """Returns the total commission rates value for this operation."""
+        return sum(
+                [self.volume * value / 100  for value in \
+                                                self.commission_rates.values()]
             )
-        return 0
 
 
 class Daytrade:
