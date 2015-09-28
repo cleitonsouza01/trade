@@ -2,10 +2,10 @@
 A container for operations.
 
 The OperationContainer was designed to execute tasks on groups of
-operations. Its common use is to:
+operations. Its common uses are:
 
 - To group all operations that happened on the same date
-- Identify the daytrades among the operations
+- To identify the daytrades among the operations
 - Prorate commissions and other costs by all the operations
 - Find the taxes to be applied to all the operations
 - To group all daytrades and common operations with the same asset on a single

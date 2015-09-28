@@ -20,7 +20,7 @@ With the trade module you can:
 
 
 ## Installation
-The trade module can be installated via pip:
+The trade module can be installed via pip:
 
 > pip install trade
 
@@ -107,7 +107,7 @@ The trade module is compatible with Python 2.7 and Python 3.x.
 
 
 ## Version
-The current version is 0.0.7-alpha.
+The current version is 0.0.8-alpha.
 
 
 ## License
