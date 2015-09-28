@@ -107,7 +107,7 @@ print(accumulator.results)
 #>> {'daytrades': 0, 'trades': 30.199999999999818}
 ```
 
-Operation objects may include taxes and commissions that are considered by the
+Operation objects may include rates and commissions that are considered by the
 accumulator when it calculates results and average prices.
 
 The Accumulator can also log the accumulated operations and their results.

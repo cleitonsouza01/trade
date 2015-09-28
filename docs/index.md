@@ -11,6 +11,7 @@ sales, daytrades, cost deduction, rates, options, option exercises
 and asset accumulation.
 
 With the trade module you can:
+
 * Identify daytrades in a group of operations
 * Prorate commissions and other costs by groups of operations  
 * Apply rates on operations
@@ -103,12 +104,12 @@ print(accumulator.results)
 #>> {'daytrades': 0, 'trades': 30.199999999999818}
 ```
 
-Operation objects may include taxes and commissions that are considered by the
+Operation objects may include rates and commissions that are considered by the
 accumulator when it calculates results and average prices.
 
 The Accumulator can also log the accumulated operations and their results.
 
-Check the API documentation for all the available features.
+Check the [API documentation](api) for all the available features.
 
 
 ## Compatibility
