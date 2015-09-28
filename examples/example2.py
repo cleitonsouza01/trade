@@ -9,7 +9,7 @@ comissions = {
     'some comission': 1,
     'other comission': 3,
 }
-container = trade.OperationContainer(operations=[operation], commissions=comissions)
+container = trade.OperationContainer(operations=[operation], fixed_commissions=comissions)
 
 # identify operations and prorate the comissions
 container.fetch_positions()

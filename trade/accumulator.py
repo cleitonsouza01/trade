@@ -154,7 +154,7 @@ class Accumulator:
                                 self.quantity,
                                 self.price,
                                 operation.quantity,
-                                operation.price
+                                operation.real_price
                             )
             else:
                 new_price = 0
@@ -174,7 +174,7 @@ class Accumulator:
             # sign of the old accumulated quantity then the
             # average price is now the price of the operation
             else:
-                new_price = operation.price
+                new_price = operation.real_price
 
             # check if we are trading more than what
             # we have on our portfolio; if yes,
@@ -193,13 +193,13 @@ class Accumulator:
             # calculate the result of this operation and add
             # the new result to the accumulated results
             operation.results['trades'] += \
-                result_quantity*self.price - result_quantity*operation.price
+                result_quantity*self.price - result_quantity*operation.real_price
 
         # If the accumulated quantity was zero then
         # there was no result and the new average price
         # is the price of the operation
         else:
-            new_price = operation.price
+            new_price = operation.real_price
 
         # update the accumulator quantity and average
         # price with the new values
