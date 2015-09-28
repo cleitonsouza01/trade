@@ -257,7 +257,7 @@ class TestTrade_volume(unittest.TestCase):
                 'some tax': 1.5,
                 'other tax': 1,
             },
-			taxes={
+			commission_rates={
                 'some tax': 0.005,
     			'some other tax': 0.0275
             }
@@ -283,7 +283,7 @@ class TestTrade_total_tax_value_Case_00(unittest.TestCase):
                 'some tax': 1.5,
                 'other tax': 1,
             },
-			taxes={
+			commission_rates={
                 'some tax': 0.005,
     			'some other tax': 0.0275
             }
@@ -317,10 +317,10 @@ class TestTrade_total_tax_value_Case_00(unittest.TestCase):
             'some tax': 0.005,
             'some other tax': 0.0275
         }
-        self.assertEqual(self.trade.taxes, taxes)
+        self.assertEqual(self.trade.commission_rates, taxes)
 
     def test_trade_total_tax_value(self):
-        self.assertEqual(round(self.trade.total_tax_value, 8), 0.03250000)
+        self.assertEqual(round(self.trade.total_rates_value, 8), 0.03250000)
 
     def test_trade_real_price(self):
         self.assertEqual(round(self.trade.real_price, 8), 10.45325000)

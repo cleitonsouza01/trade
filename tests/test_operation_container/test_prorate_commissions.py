@@ -164,7 +164,7 @@ class TestTradeContainer_prorate_discounts_by_common_trades_and_daytrades(
                                 )
         self.trade_container.identify_daytrades_and_common_operations()
         self.trade_container\
-            .prorate_commissions_by_daytrades_and_common_operations()
+            .prorate_fixed_commissions()
 
     def test_trade_container_should_exist(self):
         self.assertTrue(self.trade_container)

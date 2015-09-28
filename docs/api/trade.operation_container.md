@@ -37,7 +37,7 @@ execute this tasks behind the scenes:
 - Prorate a group of taxes proportionally for all daytrades and
   common operations, if any, by using the method:
 
-    * prorate_comissions_by_daytrades_and_common_operations()
+    * prorate_fixed_comissions()
 
 - Find the appliable taxes for the resulting positions by calling
   this method:
@@ -80,7 +80,7 @@ After this method:
 2. the container common_operations list is filled with all common operations of the container, with all information about comissions and taxes to be applied to each operation;  
 3. the container daytrades list is filled with all daytrades of the container, with all information about comissions and fees to be applied to every purchase and sale operation of every daytrade.  
 
-#### prorate_comissions_by_daytrades_and_common_operations(self):
+#### prorate_fixed_comissions(self):
 Prorates the container's comissions by its operations.
 
 This method sum the discounts in the comissions dict of the

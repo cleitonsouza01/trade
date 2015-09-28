@@ -46,10 +46,10 @@ class Operation:
         commissions: A dict of discounts. String keys and float values
             representing the name of the discounts and the values
             to be deducted from the operation.
-        taxes: A dict of taxes. string keys and float values
-            representing the name of the taxes and the values of the
-            taxes to be applied to the operation. Tax values are always
-            represented as a percentage. Taxes are applied based on the
+        commission_rates: A dict of rates. string keys and float values
+            representing the names of the rates and the values of the
+            rates to be applied to the operation. Rate values are always
+            represented as a percentage. Rates are applied based on the
             volume of the operation.
     """
 
@@ -57,7 +57,7 @@ class Operation:
                     date=None,
                     asset=None,
                     fixed_commissions=None,
-                    taxes=None,
+                    commission_rates=None,
                     results=None
                 ):
         self.date = date
@@ -65,9 +65,9 @@ class Operation:
         self.quantity = quantity
         self.price = price
         if fixed_commissions is None: fixed_commissions={}
-        if taxes is None: taxes={}
+        if commission_rates is None: commission_rates={}
         self.fixed_commissions = fixed_commissions
-        self.taxes = taxes
+        self.commission_rates = commission_rates
         self.results = results
 
     @property
@@ -86,7 +86,7 @@ class Operation:
                                 self.total_commission / self.quantity,
                                 self.quantity
                             ) + math.copysign(
-                                    self.total_tax_value / self.quantity,
+                                    self.total_rates_value / self.quantity,
                                     self.quantity
                                 )
 
@@ -101,11 +101,11 @@ class Operation:
         return abs(self.quantity) * self.price
 
     @property
-    def total_tax_value(self):
+    def total_rates_value(self):
         """Returns the total tax value for this operation."""
-        if self.taxes:
+        if self.commission_rates:
             return sum(
-                [self.volume * value / 100  for value in self.taxes.values()]
+                [self.volume * value / 100  for value in self.commission_rates.values()]
             )
         return 0
 

@@ -144,10 +144,10 @@ class OperationContainer:
             operation of every daytrade.
         """
         self.identify_daytrades_and_common_operations()
-        self.prorate_commissions_by_daytrades_and_common_operations()
+        self.prorate_fixed_commissions()
         self.find_fees_for_positions()
 
-    def prorate_commissions_by_daytrades_and_common_operations(self):
+    def prorate_fixed_commissions(self):
         """Prorates the container's commissions by its operations.
 
         This method sum the discounts in the commissions dict of the
@@ -264,10 +264,10 @@ class OperationContainer:
     def find_fees_for_positions(self):
         """Finds the taxess for all daytrades and common operations."""
         for asset, daytrade in self.daytrades.items():
-            daytrade.purchase.taxes = \
+            daytrade.purchase.commission_rates = \
                 self.tax_manager.get_fees_for_daytrade(daytrade.purchase)
-            daytrade.sale.taxes = \
+            daytrade.sale.commission_rates = \
                 self.tax_manager.get_fees_for_daytrade(daytrade.sale)
         for asset, operation in self.common_operations.items():
-            operation.taxes = \
+            operation.commission_rates = \
                 self.tax_manager.get_fees_for_operation(operation)

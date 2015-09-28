@@ -1,9 +1,9 @@
-# Comissions And Taxes
+# Comissions And Fees
 
-## Commissions
+## Fixed Commissions
 
-"Commissions" in the trade module refer to any kind of fixed cost related to an
-operation, like commissions charged by an brokerage company per operation,
+"Fixed Commissions" in the trade module refer to any kind of fixed cost related
+to an operation, like commissions charged by an brokerage company per operation,
 or any other cost associated with an operation or with a group of operations.
 
 For example, if your online broker charge you $4.50 per operation, you would
@@ -44,15 +44,15 @@ container.prorate_comissions_by_daytrades_and_common_operations()
 By default the method "prorate_commissions_by_daytrades_and_common_operations()"
 is called behind the scenes every time the fetch_positions() method is called.
 
-## Fees
+## Commission rates
 
-"Fees" in the trade module refer to trading fees that are calculated based
-on the trade value. For example, besides paying a brokerage commission, you
-might for some reason be charged 0.0325% by the operation volume for every
-operation you perform and be charged 0.0250% by every operation that configures
-a daytrade.
+"Commission rates" in the trade module refer to trading fees that are
+calculated based on the trade value. For example, besides paying a brokerage
+commission, you might for some reason be charged 0.0325% by the operation volume
+for every operation you perform and be charged 0.0250% by every operation that
+configures a daytrade.
 
-The trade module provides a standard, context-free way of dealing with
+The trade module provides a standard, context-free way of dealing with those
 fees, so your application may extend the trade module functionality to
 suit your needs.
 

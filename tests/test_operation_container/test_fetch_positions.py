@@ -417,7 +417,7 @@ class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):
             'registry': 0,
         }
         self.assertEqual(
-            self.container.daytrades[self.asset].purchase.taxes,
+            self.container.daytrades[self.asset].purchase.commission_rates,
             taxes
         )
 
@@ -427,7 +427,7 @@ class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):
             'liquidation': 0.02,
             'registry': 0,
         }
-        self.assertEqual(self.container.daytrades[self.asset].sale.taxes, taxes)
+        self.assertEqual(self.container.daytrades[self.asset].sale.commission_rates, taxes)
 
     def test_container_daytrade_operation_result(self):
         self.assertEqual(
