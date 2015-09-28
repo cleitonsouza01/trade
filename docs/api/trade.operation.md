@@ -30,20 +30,42 @@ An operation represents the purchase or the sale of an asset.
 
 ### Properties:
 
-#### real_value
-Returns the quantity * the real price of the operation.
+#### real_value(self):
+    """Returns the quantity * the real price of the operation.
 
-#### real_price
+#### real_price(self):
 Returns the real price of the operation.
 
-The real price is the price with all comissions and fees
+The real price is the price with all commissions and rates
 already deducted or added.
 
-#### total_comission
-Return the sum of all comissions included in this operation.
+#### total_commissions(self):
+Return the sum of all commissions and rates included in this operation.
 
-#### volume
+#### total_fixed_commissions(self):
+Return the sum of all commissions included in this operation.
+
+#### volume(self):
 Returns the quantity of the operation * its raw price.
+
+#### total_rates_value(self):
+Returns the total rate value for this operation.
+
+
+## trade.operation.Exercise(Operation):
+An exercise operation.
+
+Exercise operations are operations that involve more than one
+asset, usually a derivative like a Option and an underlying asset.
+
+### Methods:
+
+#### get_operations(self)
+Returns the operations created by this exercise.
+
+An exercise creates two operations:
+- One operation to consume the option that it being exercised
+- One operation to represent the sale or the purchase of the asset
 
 
 ## trade.operation.Daytrade

@@ -7,10 +7,14 @@ operations, daytrades, cost deduction, asset accumulation and taxes.
 ## Classes available:
 + [trade.Asset](trade.asset)  
   Representing assets.
++ [trade.Option](trade.asset)  
+  Representing calls and puts.
 + [trade.Operation](trade.operation)  
   Representing operations with assets.
 + [trade.Daytrade](trade.operation)  
   Representing daytrade operations.
++ [trade.Exercise](trade.operation)  
+  Representing option exercise operations.
 + [trade.OperationContainer](trade.operation_container)  
   To identify daytrades, prorate comissions and apply taxes to operations.
 + [trade.TaxManager](trade.tax_manager)  

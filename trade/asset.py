@@ -31,6 +31,8 @@ class Asset:
     Attributes:
         name: A string representing the name of the asset.
         symbol: A string representing the symbol of the asset.
+        expiration_date: A string 'YYYY-mm-dd' representing the
+            expiration date of the asset, if any.
     """
 
     def __init__(self, name=None, symbol=None, expiration_date=None):
@@ -43,19 +45,38 @@ class Asset:
 
 
 class Derivative(Asset):
+    """A derivative is a asset which derives from one or more assets.
+
+    Derivatives have all the asset attributes and can be traded like
+    normal assets.
+
+    This is a base class for derivatives.
+
+    Attributes:
+        name: A string representing the name of the asset.
+        symbol: A string representing the symbol of the asset.
+        expiration_date: A string 'YYYY-mm-dd' representing the
+            expiration date of the derivative, if any.
+        underlying_assets: A list of Asset objects representing the
+            underlying assets of this derivative.
+        ratio: By default the ratio is 1, so
+            1 derivative = 1 underlying asset.
+    """
 
     def __init__(
                 self,
                 name=None,
                 symbol=None,
                 expiration_date=None,
-                underlying_assets=None
+                underlying_assets=None,
+                ratio=1
             ):
         self.name = name
         self.symbol = symbol
         self.expiration_date = expiration_date
         if underlying_assets is None: underlying_assets = []
         self.underlying_assets = underlying_assets
+        self.ratio = ratio
 
 
 class Option(Derivative):
@@ -65,7 +86,14 @@ class Option(Derivative):
     """
 
     def exercise(self, quantity, price, date):
+        """Exercises the option.
 
+        Returns two operations:
+            - one operation with zero value representing the option being
+            consumed by the exercise;
+            - one operation representing the purchase or sale of the underlying
+            asset
+        """
         operations = []
 
         # Create an operation to consume
@@ -80,12 +108,17 @@ class Option(Derivative):
         )
 
         # FIXME what about the premium?
+        #       this is assuming the premium is already
+        #       considered in operation.price, but it would
+        #       be nice to be able to include the premium
+        #       automatically on the raw operation price, if
+        #       needed
         # Create an operation to represent
         # the purchase or sale of the
         # underlying asset
         operations.append(
             Operation(
-                quantity=quantity,
+                quantity=quantity * self.ratio,
                 price=price,
                 date=date,
                 asset=self.underlying_assets[0]

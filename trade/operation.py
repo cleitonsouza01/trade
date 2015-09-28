@@ -78,7 +78,7 @@ class Operation:
     def real_price(self):
         """Returns the real price of the operation.
 
-        The real price is the price with all commissions and taxes
+        The real price is the price with all commissions and rates
         already deducted or added.
         """
         return self.price + math.copysign(
@@ -103,7 +103,7 @@ class Operation:
 
     @property
     def total_rates_value(self):
-        """Returns the total commission rates value for this operation."""
+        """Returns the total rate value for this operation."""
         return sum(
                 [self.volume * value / 100  for value in \
                                                 self.commission_rates.values()]
@@ -117,6 +117,12 @@ class Exercise(Operation):
     """
 
     def get_operations(self):
+        """Returns the operations created by this exercise.
+
+        An exercise creates two operations:
+        - One operation to consume the option that it being exercised
+        - One operation to represent the sale or the purchase of the asset
+        """
         return self.asset.exercise(
                     self.quantity,
                     self.price,
