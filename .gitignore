@@ -1,6 +1,6 @@
 *.pyc
-.pypirc
 .DS_Store
+.gitconfig
 
 # Packages
 *.egg
