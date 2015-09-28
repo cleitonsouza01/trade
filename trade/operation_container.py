@@ -88,14 +88,14 @@ class OperationContainer:
     def __init__(self,
                 date=None,
                 operations=None,
-                commissions=None,
+                fixed_commissions=None,
                 tax_manager=TaxManager()
             ):
         self.date = date
         if operations is None: operations=[]
-        if commissions is None: commissions = {}
+        if fixed_commissions is None: fixed_commissions = {}
         self.operations = operations
-        self.commissions = commissions
+        self.fixed_commissions = fixed_commissions
         self.daytrades = {}
         self.common_operations = {}
         self.tax_manager = tax_manager
@@ -103,7 +103,7 @@ class OperationContainer:
     @property
     def total_commission_value(self):
         """Returns the sum of values of all commissions."""
-        return sum(self.commissions.values())
+        return sum(self.fixed_commissions.values())
 
     @property
     def volume(self):
@@ -167,8 +167,8 @@ class OperationContainer:
         the operation.
         """
         percent = operation.volume / self.volume * 100
-        for key, value in self.commissions.items():
-            operation.commissions[key] = value * percent / 100
+        for key, value in self.fixed_commissions.items():
+            operation.fixed_commissions[key] = value * percent / 100
 
     def identify_daytrades_and_common_operations(self):
         """Separates operations into daytrades and common operations.

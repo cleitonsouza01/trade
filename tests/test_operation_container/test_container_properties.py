@@ -17,7 +17,7 @@ class TestTradeContainer_total_discount_value_one_discount(
             'some discount': 1,
         }
         self.trade_container = trade_tools.OperationContainer(
-            commissions=discounts
+            fixed_commissions=discounts
         )
 
     def test_trade_container_should_exist(self):
@@ -27,7 +27,7 @@ class TestTradeContainer_total_discount_value_one_discount(
         expected_discounts = {
             'some discount': 1,
         }
-        self.assertEqual(self.trade_container.commissions, expected_discounts)
+        self.assertEqual(self.trade_container.fixed_commissions, expected_discounts)
 
     def test_trade_container_total_discount_value_should_be_one(self):
         self.assertEqual(self.trade_container.total_commission_value, 1)
@@ -43,7 +43,7 @@ class TestTradeContainer_total_discount_value_multiple_discounts(
             'other discount': 3,
         }
         self.trade_container = trade_tools.OperationContainer(
-            commissions=discounts
+            fixed_commissions=discounts
         )
 
     def test_trade_container_should_exist(self):
@@ -54,7 +54,7 @@ class TestTradeContainer_total_discount_value_multiple_discounts(
             'some discount': 1,
             'other discount': 3,
         }
-        self.assertEqual(self.trade_container.commissions, expected_discounts)
+        self.assertEqual(self.trade_container.fixed_commissions, expected_discounts)
 
     def test_trade_container_total_discount_value_should_be_4(self):
         self.assertEqual(self.trade_container.total_commission_value, 4)

@@ -56,7 +56,7 @@ class Operation:
     def __init__(self, quantity, price,
                     date=None,
                     asset=None,
-                    commissions=None,
+                    fixed_commissions=None,
                     taxes=None,
                     results=None
                 ):
@@ -64,9 +64,9 @@ class Operation:
         self.asset = asset
         self.quantity = quantity
         self.price = price
-        if commissions is None: commissions={}
+        if fixed_commissions is None: fixed_commissions={}
         if taxes is None: taxes={}
-        self.commissions = commissions
+        self.fixed_commissions = fixed_commissions
         self.taxes = taxes
         self.results = results
 
@@ -93,7 +93,7 @@ class Operation:
     @property
     def total_commission(self):
         """Return the sum of all commissions included in this operation."""
-        return sum(self.commissions.values())
+        return sum(self.fixed_commissions.values())
 
     @property
     def volume(self):
