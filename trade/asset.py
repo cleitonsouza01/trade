@@ -27,12 +27,12 @@ class Asset:
 
     Attributes:
         name: A string representing the name of the asset.
-        expiration_date: A string 'YYYY-mm-dd' representing the
-            expiration date of the asset, if any.
+        symbol: A string representing the symbol of the asset.
     """
 
-    def __init__(self, name='', expiration_date=None):
+    def __init__(self, name=None, symbol=None, expiration_date=None):
         self.name = name
+        self.symbol = symbol
         self.expiration_date = expiration_date
 
     def __deepcopy__(self, memo):

@@ -1,19 +1,14 @@
-#!/usr/bin/env python
-
-from __future__ import  print_function
-
 import trade
 
-
 # create the asset that we are going to trade
-asset = trade.Asset('Euro')
+asset = trade.Asset(name='Google Inc', symbol='GOOGL')
 
 # create the accumulator to accumulate trades with the asset
 accumulator = trade.Accumulator(asset)
 
 
 print(accumulator.asset.name)
-#>> Euro
+#>> Some asset
 
 print(accumulator.quantity)
 #>> 0
@@ -26,7 +21,12 @@ print(accumulator.results)
 
 
 # create a trade operation buying the asset
-purchase = trade.Operation(asset=asset, quantity=10, price=2, date='2015-09-22')
+purchase = trade.Operation(
+                asset=asset,
+                quantity=10,
+                price=650.73,
+                date='2015-09-23'
+            )
 
 # accumulate the trade
 accumulator.accumulate_operation(purchase)
@@ -36,14 +36,19 @@ print(accumulator.quantity)
 #>> 10
 
 print(accumulator.price)
-#>> 2.0
+#>> 650.73
 
 print(accumulator.results)
-#>> {'trades': 0}
+#>> {'daytrades': 0, 'trades': 30.199999999999818}
 
 
 # create a new trade operation selling the asset
-sale = trade.Operation(asset=asset, quantity=-5, price=3, date='2015-09-23')
+sale = trade.Operation(
+            asset=asset,
+            quantity=-5,
+            price=656.77,
+            date='2015-09-24'
+        )
 
 # accumulate the new trade
 accumulator.accumulate_operation(sale)
@@ -53,7 +58,7 @@ print(accumulator.quantity)
 #>> 5
 
 print(accumulator.price)
-#>> 2.0
+#>> 650.73
 
 print(accumulator.results)
 #>> {'trades': 5.0}
