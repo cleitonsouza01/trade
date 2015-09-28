@@ -22,10 +22,10 @@ An operation represents the purchase or the sale of an asset.
 + comissions: A dict of discounts. String keys and float values
   representing the name of the discounts and the values
   to be deducted from the operation.
-+ taxes: A dict of taxes. string keys and float values
-  representing the name of the taxes and the values of the
-  taxes to be applied to the operation. Tax values are always
-  represented as a percentage. Taxes are applied based on the
++ taxes: A dict of fees. string keys and float values
+  representing the names of the fees and the values of the
+  fees to be applied to the operation. Fee values are always
+  represented as a percentage. Fees are applied based on the
   volume of the operation.
 
 ### Properties:
@@ -36,7 +36,7 @@ Returns the quantity * the real price of the operation.
 #### real_price
 Returns the real price of the operation.
 
-The real price is the price with all comissions and taxes
+The real price is the price with all comissions and fees
 already deducted or added.
 
 #### total_comission

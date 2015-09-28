@@ -49,7 +49,7 @@ class OperationContainer:
 
     The resulting common operations and daytrades contains the
     OperationContiner commissions prorated by their volumes, and also
-    any taxes the OperationContainer TaxManager finds for them.
+    any fees the OperationContainer TaxManager finds for them.
 
     This is achieved by calling this method:
 
@@ -68,10 +68,10 @@ class OperationContainer:
 
         prorate_commissions_by_daytrades_and_common_operations()
 
-    - Find the appliable taxes for the resulting positions by calling
+    - Find the appliable fees for the resulting positions by calling
       this method:
 
-      find_taxes_for_positions()
+        find_fees_for_positions()
 
     Attributes:
         date: A string 'YYYY-mm-dd' representing the date of the
@@ -145,7 +145,7 @@ class OperationContainer:
         """
         self.identify_daytrades_and_common_operations()
         self.prorate_commissions_by_daytrades_and_common_operations()
-        self.find_taxes_for_positions()
+        self.find_fees_for_positions()
 
     def prorate_commissions_by_daytrades_and_common_operations(self):
         """Prorates the container's commissions by its operations.
@@ -261,13 +261,13 @@ class OperationContainer:
                                     )
         existing_operation.quantity += operation.quantity
 
-    def find_taxes_for_positions(self):
+    def find_fees_for_positions(self):
         """Finds the taxess for all daytrades and common operations."""
         for asset, daytrade in self.daytrades.items():
             daytrade.purchase.taxes = \
-                self.tax_manager.get_taxes_for_daytrade(daytrade.purchase)
+                self.tax_manager.get_fees_for_daytrade(daytrade.purchase)
             daytrade.sale.taxes = \
-                self.tax_manager.get_taxes_for_daytrade(daytrade.sale)
+                self.tax_manager.get_fees_for_daytrade(daytrade.sale)
         for asset, operation in self.common_operations.items():
             operation.taxes = \
-                self.tax_manager.get_taxes_for_operation(operation)
+                self.tax_manager.get_fees_for_operation(operation)

@@ -8,6 +8,18 @@ import trade as trade_tools
 # TODO more tests
 
 
+class TaxManagerForTests:
+    def get_fees_for_operation(self, operation):
+        return {}
+
+    def get_fees_for_daytrade(self, operation):
+        return {
+            'emoluments': 0.005,
+            'liquidation': 0.02,
+            'registry': 0,
+        }
+
+
 class TestTradeContainer_fetch_positions_case_00(unittest.TestCase):
 
     def setUp(self):
@@ -331,18 +343,6 @@ class TestTradeContainer_fetch_positions_case_01(
 
 
 
-
-
-class TaxManagerForTests:
-    def get_taxes_for_operation(self, operation):
-        return {}
-
-    def get_taxes_for_daytrade(self, operation):
-        return {
-            'emoluments': 0.005,
-            'liquidation': 0.02,
-            'registry': 0,
-        }
 
 
 

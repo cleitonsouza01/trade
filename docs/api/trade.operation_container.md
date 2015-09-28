@@ -42,7 +42,7 @@ execute this tasks behind the scenes:
 - Find the appliable taxes for the resulting positions by calling
   this method:
 
-  * find_taxes_for_positions()
+    * find_fees_for_positions()
 
 ### Attributes:
 + date: A string 'YYYY-mm-dd' representing the date of the operations on the container.
@@ -73,12 +73,12 @@ better documented. What happens is as follows:
 4. put all common operations in self.common_operations, a dict indexed by the operation's asset name;  
 5. put all daytrades in self.daytrades, a dict indexed by the daytrade's asset name;
 6. Prorate all comissions of the container for the common operations and the purchase and sale operation of every daytrade;  
-7. Find the taxes to be applied to every common operation and to every purchase and sale operation of every daytrade.  
+7. Find the fees to be applied to every common operation and to every purchase and sale operation of every daytrade.  
 
 After this method:  
 1. the raw operations list of the container remains untouched;  
 2. the container common_operations list is filled with all common operations of the container, with all information about comissions and taxes to be applied to each operation;  
-3. the container daytrades list is filled with all daytrades of the container, with all information about comissions and taxes to be applied to every purchase and sale operation of every daytrade.  
+3. the container daytrades list is filled with all daytrades of the container, with all information about comissions and fees to be applied to every purchase and sale operation of every daytrade.  
 
 #### prorate_comissions_by_daytrades_and_common_operations(self):
 Prorates the container's comissions by its operations.
@@ -127,7 +127,7 @@ Adds an operation to the common operations list.
 #### merge_operations(self, existing_operation, operation):
 Merges one operation with another operation.
 
-#### find_taxes_for_positions(self):
+#### find_fees_for_positions(self):
 Gets the taxes for every position on the container.
 
 
