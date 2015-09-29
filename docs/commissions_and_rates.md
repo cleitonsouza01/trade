@@ -111,10 +111,10 @@ common operation and 2% rate for every daytrade:
 ```python
 class MyTaxManager:
 
-    def get_fees_for_operation(self, operation):
+    def get_rates_for_operation(self, operation):
         return {'name of the rate': 1}
 
-    def get_fees_for_daytrade(self, operation):
+    def get_rates_for_daytrade(self, operation):
         return {'name of the daytrade rate': 2}
 ```
 
