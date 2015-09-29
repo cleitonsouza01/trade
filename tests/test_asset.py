@@ -15,9 +15,14 @@ class TestAssetCreation_Case_00(unittest.TestCase):
     """
 
     def setUp(self):
-        self.asset1 = trade.Asset(name='some stock')
+        self.asset1 = trade.Asset(
+            name='some stock'
+        )
         self.asset2 = trade.Asset()
-        self.asset3 = trade.Asset(name='other stock', symbol='AAAA')
+        self.asset3 = trade.Asset(
+            name='other stock',
+            symbol='AAAA'
+        )
         self.asset4 = trade.Asset(
             name='some stuff',
             symbol='STFF',

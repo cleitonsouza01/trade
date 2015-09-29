@@ -12,11 +12,15 @@ class TestOptionExercise_Case_00(unittest.TestCase):
 
         self.asset = trade.Asset(symbol='GOOGL')
         self.option = trade.Option(
-                        name='GOOG151002C00540000',
-                        expiration_date='2015-10-02',
-                        underlying_assets=[self.asset]
-                    )
-        self.operations = self.option.exercise(100,10,'2015-09-30')
+                            name='GOOG151002C00540000',
+                            expiration_date='2015-10-02',
+                            underlying_assets=[self.asset]
+                        )
+        self.operations = self.option.exercise(
+                            quantity=100,
+                            price=10,
+                            date='2015-09-30'
+                        )
 
     def test_operations_len(self):
         self.assertEqual(len(self.operations), 2)
@@ -44,11 +48,15 @@ class TestOptionExercise_Case_01(unittest.TestCase):
 
         self.asset = trade.Asset(symbol='GOOGL')
         self.option = trade.Option(
-                        name='GOOG151002C00540000',
-                        expiration_date='2015-10-02',
-                        underlying_assets=[self.asset]
-                    )
-        self.operations = self.option.exercise(-100,10,'2015-09-30')
+                            name='GOOG151002C00540000',
+                            expiration_date='2015-10-02',
+                            underlying_assets=[self.asset]
+                        )
+        self.operations = self.option.exercise(
+                            quantity=-100,
+                            price=10,
+                            date='2015-09-30'
+                        )
 
     def test_operations_len(self):
         self.assertEqual(len(self.operations), 2)

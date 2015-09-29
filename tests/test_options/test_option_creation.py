@@ -12,10 +12,10 @@ class TestOptionCreation_Case_00(unittest.TestCase):
 
         self.asset = trade.Asset(symbol='GOOGL')
         self.option = trade.Option(
-                        name='GOOG151002C00540000',
-                        expiration_date='2015-10-02',
-                        underlying_assets=[self.asset]
-                    )
+                            name='GOOG151002C00540000',
+                            expiration_date='2015-10-02',
+                            underlying_assets=[self.asset]
+                        )
     def test_option_should_exist(self):
         self.assertTrue(self.option)
 

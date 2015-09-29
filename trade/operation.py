@@ -143,7 +143,7 @@ class Daytrade:
         sale: A Operation object representing the sale of the asset.
     """
 
-    def __init__(self, date, asset, quantity, buy_price, sale_price):
+    def __init__(self, date, asset, quantity, purchase_price, sale_price):
         """Creates the daytrade object.
 
         Base on the informed values this method creates 2 operations:
@@ -161,7 +161,7 @@ class Daytrade:
             date=date,
             asset=asset,
             quantity=quantity,
-            price=buy_price
+            price=purchase_price
         )
         self.sale = Operation(
             date=date,

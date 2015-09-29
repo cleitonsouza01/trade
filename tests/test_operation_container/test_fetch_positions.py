@@ -4,11 +4,8 @@ import unittest
 import trade
 
 
-# TODO document this
-# TODO more tests
-
-
 class TaxManagerForTests:
+
     def get_rates_for_operation(self, operation):
         return {}
 
@@ -30,15 +27,27 @@ class TestTradeContainer_fetch_positions_case_00(unittest.TestCase):
         self.asset1 = trade.Asset('some asset')
         self.asset2 = trade.Asset('some other asset')
         operation1 = trade.Operation(
-                date='2015-09-21', asset=self.asset1, quantity=10, price=2)
+                        date='2015-09-21',
+                        asset=self.asset1,
+                        quantity=10,
+                        price=2
+                    )
         operation2 = trade.Operation(
-                date='2015-09-21', asset=self.asset1, quantity=-5, price=3)
+                        date='2015-09-21',
+                        asset=self.asset1,
+                        quantity=-5,
+                        price=3
+                    )
         operation3 = trade.Operation(
-                date='2015-09-21', asset=self.asset2, quantity=-5, price=7)
+                        date='2015-09-21',
+                        asset=self.asset2,
+                        quantity=-5,
+                        price=7
+                    )
         self.trade_container = trade.OperationContainer(
-                                            operations=[operation1,operation2,operation3],
-                                            commissions=discounts
-                                        )
+                                operations=[operation1,operation2,operation3],
+                                commissions=discounts
+                            )
         self.trade_container.fetch_positions()
 
     def test_trade_container_should_exist(self):
@@ -150,29 +159,71 @@ class TestTradeContainer_fetch_positions_case_01(
         self.asset2 = trade.Asset('some other asset')
         self.asset3 = trade.Asset('even other asset')
         operation1 = trade.Operation(
-            date='2015-09-21', asset=self.asset1, quantity=10, price=2)
+                        date='2015-09-21',
+                        asset=self.asset1,
+                        quantity=10,
+                        price=2
+                    )
         operation2 = trade.Operation(
-            date='2015-09-21', asset=self.asset1, quantity=-5, price=3)
+                        date='2015-09-21',
+                        asset=self.asset1,
+                        quantity=-5,
+                        price=3
+                    )
         operation3 = trade.Operation(
-            date='2015-09-21', asset=self.asset2, quantity=-5, price=7)
+                        date='2015-09-21',
+                        asset=self.asset2,
+                        quantity=-5,
+                        price=7
+                    )
         operation4 = trade.Operation(
-            date='2015-09-21', asset=self.asset2, quantity=5, price=10)
+                        date='2015-09-21',
+                        asset=self.asset2,
+                        quantity=5,
+                        price=10
+                    )
         operation5 = trade.Operation(
-            date='2015-09-21', asset=self.asset1, quantity=5, price=4)
-
+                        date='2015-09-21',
+                        asset=self.asset1,
+                        quantity=5,
+                        price=4
+                    )
         operation6 = trade.Operation(
-            date='2015-09-21', asset=self.asset3, quantity=5, price=4)
+                        date='2015-09-21',
+                        asset=self.asset3,
+                        quantity=5,
+                        price=4
+                    )
         operation7 = trade.Operation(
-            date='2015-09-21', asset=self.asset3, quantity=-5, price=2)
-
+                        date='2015-09-21',
+                        asset=self.asset3,
+                        quantity=-5,
+                        price=2
+                    )
         operation8 = trade.Operation(
-            date='2015-09-21', asset=self.asset3, quantity=5, price=4)
+                        date='2015-09-21',
+                        asset=self.asset3,
+                        quantity=5,
+                        price=4
+                    )
         operation9 = trade.Operation(
-            date='2015-09-21', asset=self.asset3, quantity=-5, price=4)
+                        date='2015-09-21',
+                        asset=self.asset3,
+                        quantity=-5,
+                        price=4
+                    )
 
         self.trade_container = trade.OperationContainer(
             operations=[
-                operation1,operation2,operation3,operation4,operation5,operation6,operation7,operation8,operation9
+                operation1,
+                operation2,
+                operation3,
+                operation4,
+                operation5,
+                operation6,
+                operation7,
+                operation8,
+                operation9
             ]
         )
         self.trade_container.fetch_positions()
@@ -306,7 +357,6 @@ class TestTradeContainer_fetch_positions_case_01(
             -15
         )
 
-
     def test_check_dayoperation2_asset(self):
         self.assertEqual(
             self.trade_container.daytrades[self.asset3].asset,
@@ -342,12 +392,6 @@ class TestTradeContainer_fetch_positions_case_01(
             self.trade_container.daytrades[self.asset3].sale.quantity,
             -10
         )
-
-
-
-
-
-
 
 
 class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):

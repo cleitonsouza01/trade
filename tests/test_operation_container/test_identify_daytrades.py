@@ -4,19 +4,23 @@ import unittest
 import trade as trade_tools
 
 
-# TODO document this
-# TODO more tests
-
-
 class TestTradeContainer_identify_daytrades_and_common_trades_case_00(
         unittest.TestCase):
 
     def setUp(self):
         self.asset = trade_tools.Asset('some asset')
         self.trade1 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset, quantity=10, price=2)
+                            date='2015-09-21',
+                            asset=self.asset,
+                            quantity=10,
+                            price=2
+                        )
         self.trade2 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset, quantity=-10, price=3)
+                            date='2015-09-21',
+                            asset=self.asset,
+                            quantity=-10,
+                            price=3
+                        )
         self.trade_container = trade_tools.OperationContainer(
             operations=[self.trade1,self.trade2])
         self.trade_container.identify_daytrades_and_common_operations()
@@ -94,9 +98,17 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_01(
     def setUp(self):
         self.asset = trade_tools.Asset('some asset')
         self.trade1 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset, quantity=10, price=2)
+                            date='2015-09-21',
+                            asset=self.asset,
+                            quantity=10,
+                            price=2
+                        )
         self.trade2 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset, quantity=-5, price=3)
+                            date='2015-09-21',
+                            asset=self.asset,
+                            quantity=-5,
+                            price=3
+                        )
         self.trade_container = trade_tools.OperationContainer(
             operations=[self.trade1,self.trade2])
         self.trade_container.identify_daytrades_and_common_operations()
@@ -193,11 +205,23 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_02(
         self.asset1 = trade_tools.Asset('some asset')
         self.asset2 = trade_tools.Asset('some other asset')
         trade1 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset1, quantity=10, price=2)
+                    date='2015-09-21',
+                    asset=self.asset1,
+                    quantity=10,
+                    price=2
+                )
         trade2 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset1, quantity=-5, price=3)
+                    date='2015-09-21',
+                    asset=self.asset1,
+                    quantity=-5,
+                    price=3
+                )
         trade3 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset2, quantity=-5, price=7)
+                    date='2015-09-21',
+                    asset=self.asset2,
+                    quantity=-5,
+                    price=7
+                )
         self.trade_container = trade_tools.OperationContainer(
             operations=[trade1,trade2,trade3])
         self.trade_container.identify_daytrades_and_common_operations()
@@ -312,13 +336,29 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_03(
         self.asset1 = trade_tools.Asset('some asset')
         self.asset2 = trade_tools.Asset('some other asset')
         trade1 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset1, quantity=10, price=2)
+                    date='2015-09-21',
+                    asset=self.asset1,
+                    quantity=10,
+                    price=2
+                )
         trade2 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset1, quantity=-5, price=3)
+                    date='2015-09-21',
+                    asset=self.asset1,
+                    quantity=-5,
+                    price=3
+                )
         trade3 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset2, quantity=-5, price=7)
+                    date='2015-09-21',
+                    asset=self.asset2,
+                    quantity=-5,
+                    price=7
+                )
         trade4 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset2, quantity=5, price=10)
+                    date='2015-09-21',
+                    asset=self.asset2,
+                    quantity=5,
+                    price=10
+                )
         self.trade_container = trade_tools.OperationContainer(
             operations=[trade1,trade2,trade3,trade4])
         self.trade_container.identify_daytrades_and_common_operations()
@@ -457,15 +497,35 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_04(
         self.asset1 = trade_tools.Asset('some asset')
         self.asset2 = trade_tools.Asset('some other asset')
         trade1 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset1, quantity=10, price=2)
+                    date='2015-09-21',
+                    asset=self.asset1,
+                    quantity=10,
+                    price=2
+                )
         trade2 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset1, quantity=-5, price=3)
+                    date='2015-09-21',
+                    asset=self.asset1,
+                    quantity=-5,
+                    price=3
+                )
         trade3 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset2, quantity=-5, price=7)
+                    date='2015-09-21',
+                    asset=self.asset2,
+                    quantity=-5,
+                    price=7
+                )
         trade4 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset2, quantity=5, price=10)
+                    date='2015-09-21',
+                    asset=self.asset2,
+                    quantity=5,
+                    price=10
+                )
         trade5 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset1, quantity=-5, price=3)
+                    date='2015-09-21',
+                    asset=self.asset1,
+                    quantity=-5,
+                    price=3
+                )
         self.trade_container = trade_tools.OperationContainer(
             operations=[trade1,trade2,trade3,trade4,trade5])
         self.trade_container.identify_daytrades_and_common_operations()
@@ -586,15 +646,35 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_05(
         self.asset1 = trade_tools.Asset('some asset')
         self.asset2 = trade_tools.Asset('some other asset')
         trade1 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset1, quantity=10, price=2)
+                    date='2015-09-21',
+                    asset=self.asset1,
+                    quantity=10,
+                    price=2
+                )
         trade2 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset1, quantity=-5, price=10)
+                    date='2015-09-21',
+                    asset=self.asset1,
+                    quantity=-5,
+                    price=10
+                )
         trade3 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset2, quantity=-5, price=7)
+                    date='2015-09-21',
+                    asset=self.asset2,
+                    quantity=-5,
+                    price=7
+                )
         trade4 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset2, quantity=5, price=10)
+                    date='2015-09-21',
+                    asset=self.asset2,
+                    quantity=5,
+                    price=10
+                )
         trade5 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset1, quantity=-5, price=20)
+                    date='2015-09-21',
+                    asset=self.asset1,
+                    quantity=-5,
+                    price=20
+                )
         self.trade_container = trade_tools.OperationContainer(
             operations=[trade1,trade2,trade3,trade4,trade5])
         self.trade_container.identify_daytrades_and_common_operations()
@@ -715,15 +795,35 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_06(
         self.asset1 = trade_tools.Asset('some asset')
         self.asset2 = trade_tools.Asset('some other asset')
         trade1 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset1, quantity=10, price=2)
+                    date='2015-09-21',
+                    asset=self.asset1,
+                    quantity=10,
+                    price=2
+                )
         trade2 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset1, quantity=-5, price=3)
+                    date='2015-09-21',
+                    asset=self.asset1,
+                    quantity=-5,
+                    price=3
+                )
         trade3 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset2, quantity=-5, price=7)
+                    date='2015-09-21',
+                    asset=self.asset2,
+                    quantity=-5,
+                    price=7
+                )
         trade4 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset2, quantity=5, price=10)
+                    date='2015-09-21',
+                    asset=self.asset2,
+                    quantity=5,
+                    price=10
+                )
         trade5 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset1, quantity=5, price=4)
+                    date='2015-09-21',
+                    asset=self.asset1,
+                    quantity=5,
+                    price=4
+                )
         self.trade_container = trade_tools.OperationContainer(
             operations=[trade1,trade2,trade3,trade4,trade5])
         self.trade_container.identify_daytrades_and_common_operations()
@@ -866,25 +966,60 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_07(
         self.asset2 = trade_tools.Asset('some other asset')
         self.asset3 = trade_tools.Asset('even other asset')
         trade1 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset1, quantity=10, price=2)
+                    date='2015-09-21',
+                    asset=self.asset1,
+                    quantity=10,
+                    price=2
+                )
         trade2 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset1, quantity=-5, price=3)
+                    date='2015-09-21',
+                    asset=self.asset1,
+                    quantity=-5,
+                    price=3
+                )
         trade3 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset2, quantity=-5, price=7)
+                    date='2015-09-21',
+                    asset=self.asset2,
+                    quantity=-5,
+                    price=7
+                )
         trade4 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset2, quantity=5, price=10)
+                    date='2015-09-21',
+                    asset=self.asset2,
+                    quantity=5,price=10
+                )
         trade5 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset1, quantity=5, price=4)
+                    date='2015-09-21',
+                    asset=self.asset1,
+                    quantity=5,
+                    price=4
+                )
 
         trade6 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset3, quantity=5, price=4)
+                    date='2015-09-21',
+                    asset=self.asset3,
+                    quantity=5,
+                    price=4
+                )
         trade7 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset3, quantity=-5, price=2)
+                    date='2015-09-21',
+                    asset=self.asset3,
+                    quantity=-5,
+                    price=2
+                )
 
         trade8 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset3, quantity=5, price=4)
+                    date='2015-09-21',
+                    asset=self.asset3,
+                    quantity=5,
+                    price=4
+                )
         trade9 = trade_tools.Operation(
-            date='2015-09-21', asset=self.asset3, quantity=-5, price=4)
+                    date='2015-09-21',
+                    asset=self.asset3,
+                    quantity=-5,
+                    price=4
+                )
 
         self.trade_container = trade_tools.OperationContainer(
             operations=[

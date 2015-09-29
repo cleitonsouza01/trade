@@ -6,10 +6,6 @@ import unittest
 from trade import Accumulator, Event, Asset
 
 
-# TODO document this
-# TODO more tests
-
-
 class StockSplit(Event):
 
     def __init__(self, asset, date, factor):

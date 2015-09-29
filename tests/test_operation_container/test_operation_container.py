@@ -4,10 +4,6 @@ import unittest
 import trade as trade_tools
 
 
-# TODO document this
-# TODO more tests
-
-
 class TestTradeContainerCreation_Case_00(unittest.TestCase):
 
     def setUp(self):
@@ -38,6 +34,7 @@ class TestTradeContainerCreation_Case_01(unittest.TestCase):
         }
         self.assertEqual(self.container.commissions, commissions)
 
+
 class TestTradeContainerDefaultTaxManager(unittest.TestCase):
 
     def setUp(self):
@@ -54,12 +51,20 @@ class TestTradeContainer_add_to_common_operations(unittest.TestCase):
     def setUp(self):
         self.asset = trade_tools.Asset('some asset')
         trade = trade_tools.Operation(
-                    date='2015-09-21', asset=self.asset, quantity=10, price=2)
+                    date='2015-09-21',
+                    asset=self.asset,
+                    quantity=10,
+                    price=2
+                )
         self.trade_container = \
                     trade_tools.OperationContainer(operations=[trade])
         self.trade_container.identify_daytrades_and_common_operations()
         trade = trade_tools.Operation(
-                    date='2015-09-21', asset=self.asset, quantity=10, price=4)
+                    date='2015-09-21',
+                    asset=self.asset,
+                    quantity=10,
+                    price=4
+                )
         self.trade_container.add_to_common_operations(trade)
 
     def test_common_trades_len_should_be_1(self):

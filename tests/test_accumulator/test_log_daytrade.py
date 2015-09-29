@@ -5,10 +5,6 @@ from trade import Accumulator as AssetAccumulator
 from trade import Asset, Daytrade
 
 
-# TODO document this
-# TODO more tests
-
-
 class TestLogDaytrade(unittest.TestCase):
 
     def setUp(self):
@@ -16,7 +12,13 @@ class TestLogDaytrade(unittest.TestCase):
         self.accumulator = AssetAccumulator(self.asset, logging=True)
 
     def test_log_first_operation(self):
-        daytrade = Daytrade('2015-01-01', self.asset, 100, 10, 20)
+        daytrade = Daytrade(
+                        date='2015-01-01',
+                        asset=self.asset,
+                        quantity=100,
+                        purchase_price=10,
+                        sale_price=20
+                    )
         self.accumulator.accumulate_daytrade(daytrade)
         expected_log = {
             '2015-01-01': {
@@ -30,7 +32,13 @@ class TestLogDaytrade(unittest.TestCase):
         self.assertEqual(self.accumulator.log, expected_log)
 
     def test_log_keys(self):
-        daytrade = Daytrade('2015-01-01', self.asset, 100, 10, 20)
+        daytrade = Daytrade(
+                        date='2015-01-01',
+                        asset=self.asset,
+                        quantity=100,
+                        purchase_price=10,
+                        sale_price=20
+                    )
         self.accumulator.accumulate_daytrade(daytrade)
         self.assertEqual(list(self.accumulator.log), ['2015-01-01'])
 

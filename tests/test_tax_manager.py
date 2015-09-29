@@ -5,10 +5,10 @@ import trade
 
 
 class TestTaxManager(unittest.TestCase):
-    """Test the default 'dummy' tax manager.
+    """Test the default dummy tax manager.
 
     The default tax manager should return a empty dict
-    for both daytrade and common operation taxes.
+    for both daytrade and common operation rates.
     """
     def setUp(self):
         self.tax_manager = trade.TaxManager()
@@ -18,18 +18,24 @@ class TestTaxManager(unittest.TestCase):
 
     def test_get_rates_for_operation_should_return_empty_dict(self):
         operation = trade.Operation(
-            asset=trade.Asset(),
-            quantity=10,
-            price=1,
-            date='2015-09-25'
-        )
+                        asset=trade.Asset(),
+                        quantity=10,
+                        price=1,
+                        date='2015-09-25'
+                    )
         self.assertEqual(
             self.tax_manager.get_rates_for_operation(operation),
             {}
         )
 
     def test_get_rates_for_daytrade_should_return_empty_dict(self):
-        daytrade = trade.Daytrade('2015-09-25', trade.Asset(), 100, 10, 20)
+        daytrade = trade.Daytrade(
+                        date='2015-09-25',
+                        asset=trade.Asset(),
+                        quantity=100,
+                        purchase_price=10,
+                        sale_price=20
+                    )
         self.assertEqual(
             self.tax_manager.get_rates_for_daytrade(daytrade),
             {}

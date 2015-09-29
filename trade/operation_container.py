@@ -63,15 +63,15 @@ class OperationContainer:
 
         identify_daytrades_and_common_operations()
 
-    - Prorate a group of taxes proportionally for all daytrades and
-      common operations, if any, by using the method:
+    - Prorate a group of commissions proportionally for all daytrades
+      and common operations, if any, by using the method:
 
-        prorate_commissions_by_daytrades_and_common_operations()
+        prorate_commissions()
 
-    - Find the appliable fees for the resulting positions by calling
+    - Find the appliable rates for the resulting positions by calling
       this method:
 
-        find_fees_for_positions()
+        find_rates_for_positions()
 
     Attributes:
         date: A string 'YYYY-mm-dd' representing the date of the
@@ -83,6 +83,16 @@ class OperationContainer:
             asset.
         common_operations: a dict of Operation objects, indexed by the
             operation asset.
+        fetch_positions_tasks: a list of OperationContainer methods.
+            The methods will be called in the order they are defined
+            in this list when fetch_positions() is called. The default
+            fetch_positions_tasks list is this:
+                [
+                    self.get_operations_from_exercises,
+                    self.identify_daytrades_and_common_operations,
+                    self.prorate_commissions,
+                    self.find_rates_for_positions,
+                ]
     """
 
     def __init__(self,
@@ -113,11 +123,13 @@ class OperationContainer:
         self.fetch_positions_tasks = [
 
             # This method get the resulting operations
-            # that happens when a option exercise occurs;
+            # that are created by an option exercise;
             self.get_operations_from_exercises,
 
             # This method separates daytrades from operations
             # that are not daytrades, and group them;
+            # Operations originated from exercises are by default
+            # not considered
             self.identify_daytrades_and_common_operations,
 
             # This method prorates all values on the
@@ -144,35 +156,9 @@ class OperationContainer:
     def fetch_positions(self):
         """Fetch the positions resulting from the operations.
 
-        Fetch the position is a complex process that needs to be
-        better documented. The default behavior is as follows:
-
-        - Separate all daytrades and common operations;
-        - Group all common operations with one asset into a single
-            Operation, so in the end you only have one operation
-            per asset (on self.common_operations);
-        - Group all daytrades with one asset into a single Daytrade,
-            so in the end you only have one daytrade per asset;
-        - put all common operations in self.common_operations, a dict
-            indexed by the operation's asset name;
-        - put all daytrades in self.daytrades, a dict indexed by the
-            daytrade's asset name;
-        - Prorate all commissions of the container for the common
-            operations and the purchase and sale operation of every
-            daytrade;
-        - Find the taxes to be applied to every common operation and to
-            every purchase and sale operation of every daytrade.
-
-        After this method:
-
-        - the raw operations list of the container remains untouched;
-        - the container common_operations list is filled with all
-            common operations of the container, with all information
-            about commissions and taxes to be applied to each operation;
-        - the container daytrades list is filled with all daytrades
-            of the container, with all information about commissions
-            and taxes to be applied to every purchase and sale
-            operation of every daytrade.
+        This method executes all the methods defined on the
+        fetch_positions_tasks attribute in the order they are
+        listed.
         """
         for task in self.fetch_positions_tasks:
             task()

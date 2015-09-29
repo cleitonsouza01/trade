@@ -12,16 +12,16 @@ class TestExercise_Case_00(unittest.TestCase):
 
         self.asset = trade.Asset(symbol='GOOGL')
         self.option = trade.Option(
-                        name='GOOG151002C00540000',
-                        expiration_date='2015-10-02',
-                        underlying_assets=[self.asset]
-                    )
+                            name='GOOG151002C00540000',
+                            expiration_date='2015-10-02',
+                            underlying_assets=[self.asset]
+                        )
         self.exercise = trade.Exercise(
-			date='2015-09-18',
-			asset=self.option,
-			quantity=100,
-			price=10
-        )
+                			date='2015-09-18',
+                			asset=self.option,
+                			quantity=100,
+                			price=10
+                        )
         self.operations = self.exercise.get_operations()
 
     def test_operations_len(self):
@@ -41,8 +41,6 @@ class TestExercise_Case_00(unittest.TestCase):
         self.assertEqual(self.operations[1].price, 10)
 
 
-
-
 class TestExercise_Case_01(unittest.TestCase):
     """Being exercised on a call.
     """
@@ -51,16 +49,16 @@ class TestExercise_Case_01(unittest.TestCase):
 
         self.asset = trade.Asset(symbol='GOOGL')
         self.option = trade.Option(
-                        name='GOOG151002C00540000',
-                        expiration_date='2015-10-02',
-                        underlying_assets=[self.asset]
-                    )
+                            name='GOOG151002C00540000',
+                            expiration_date='2015-10-02',
+                            underlying_assets=[self.asset]
+                        )
         self.exercise = trade.Exercise(
-			date='2015-09-18',
-			asset=self.option,
-			quantity=-100,
-			price=10
-        )
+                			date='2015-09-18',
+                			asset=self.option,
+                			quantity=-100,
+                			price=10
+                        )
         self.operations = self.exercise.get_operations()
 
     def test_operations_len(self):
