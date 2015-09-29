@@ -23,15 +23,27 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from .asset import Asset, Option, Derivative
-from .operation import Operation, Daytrade, Exercise
-from .accumulator import Accumulator
-from .event import Event
-from .tax_manager import TaxManager
-from .operation_container import OperationContainer
 
-from .utils import daytrade_condition, average_price, same_sign
+class Event:
+    """A portfolio-changing event.
 
+    Events can change the quantity, the price and the results stored in
+    the accumulator. This is a base class for Events; every event must
+    inherit from this class and have a method like this:
 
-__author__ = 'rocha.rafaelsilva@gmail.com'
-__version__ = '0.0.9'
+        update_portfolio(quantity, price, results)
+            # do stuff here...
+            return quantity, price
+
+    that implements the logic for the change in the portfolio.
+
+    Events must have an "asset" attribute with reference to an Asset
+    instance and a date 'YYYY-mm-dd' attribute.
+    """
+
+    def __init__(self, asset, date):
+        self.asset = asset
+        self.date = date
+
+    def update_portfolio(self, quantity, price, results):
+        return quantity, price

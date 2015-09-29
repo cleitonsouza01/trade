@@ -7,8 +7,10 @@ operations, daytrades, cost deduction, asset accumulation and taxes.
 ## Classes available:
 + [trade.Asset](trade.asset)  
   Representing assets.
++ [trade.Derivative](trade.asset)  
+  A base class for derivatives.
 + [trade.Option](trade.asset)  
-  Representing calls and puts.
+  Representing call and put options, a type of derivative.
 + [trade.Operation](trade.operation)  
   Representing operations with assets.
 + [trade.Daytrade](trade.operation)  
@@ -21,7 +23,7 @@ operations, daytrades, cost deduction, asset accumulation and taxes.
   To get the right taxes for the operations on the container.
 + [trade.Accumulator](trade.accumulator)  
   To accumulate the assets and calculate the result from the trades.
-+ [trade.Event](trade.accumulator)  
++ [trade.Event](trade.event)  
   To change the asset's quantity and price on the accumulator.
 
 ## Functions available:
@@ -74,9 +76,10 @@ print(accumulator.price * accumulator.quantity)
 Check each module doc for more information.
 
 ## Modules in this package:
-+ [trade.accumulator](trade.accumulator) (Accumulator, Event)
-+ [trade.asset](trade.asset) (Asset)
-+ [trade.operation](trade.operation) (Operation, Daytrade)
++ [trade.accumulator](trade.accumulator) (Accumulator)
++ [trade.event](trade.event) (Event)
++ [trade.asset](trade.asset) (Asset, Derivative, Option)
++ [trade.operation](trade.operation) (Operation, Daytrade, Exercise)
 + [trade.operation_container](trade.operation_container) (OperationContainer)
 + [trade.tax_manager](trade.tax_manager) (TaxManager)
 + [trade.utils](trade.utils) (all the functions)
