@@ -173,7 +173,8 @@ class Accumulator:
             # calculate the result of this operation and add
             # the new result to the accumulated results
             operation.results['trades'] += \
-                result_quantity*self.price - result_quantity*operation.real_price
+                result_quantity * self.price - \
+                    result_quantity * operation.real_price
 
         # If the accumulated quantity was zero then
         # there was no result and the new average price
