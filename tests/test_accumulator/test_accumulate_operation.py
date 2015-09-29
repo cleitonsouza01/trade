@@ -143,3 +143,41 @@ class Test_accumulate_operation_Case_04(unittest.TestCase):
 
     def test_accumulator_average_price(self):
         self.assertEqual(self.accumulator.quantity, 0)
+
+
+
+class Test_accumulate_operation_Case_05(unittest.TestCase):
+
+    def setUp(self):
+        asset = Asset('some asset')
+        operation = Operation(
+                        date='2015-09-18',
+                        asset=asset,
+                        quantity=0,
+                        price=0
+                    )
+        container = OperationContainer(
+                        operations=[operation]
+                    )
+        self.accumulator = AssetAccumulator(asset)
+        self.accumulator.accumulate_operation(operation)
+
+        operation2 = Operation(
+                        date='2015-09-19',
+                        asset=asset,
+                        quantity=0,
+                        price=0,
+                        results={
+                            'some result': 1000
+                        }
+                    )
+        self.accumulator.accumulate_operation(operation2)
+
+    def test_accumulator_average_price(self):
+        self.assertEqual(self.accumulator.price, 0)
+
+    def test_accumulator_average_price(self):
+        self.assertEqual(self.accumulator.quantity, 0)
+
+    def test_accumulator_results(self):
+        self.assertEqual(self.accumulator.results['some result'], 1000)
