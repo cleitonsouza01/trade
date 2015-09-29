@@ -83,16 +83,12 @@ class OperationContainer:
             asset.
         common_operations: a dict of Operation objects, indexed by the
             operation asset.
+        self.exercise_operations: a dict of Operation objects, indexed
+            by the operation asset. The operations are operations
+            created by option exercises.
         fetch_positions_tasks: a list of OperationContainer methods.
             The methods will be called in the order they are defined
-            in this list when fetch_positions() is called. The default
-            fetch_positions_tasks list is this:
-                [
-                    self.get_operations_from_exercises,
-                    self.identify_daytrades_and_common_operations,
-                    self.prorate_commissions,
-                    self.find_rates_for_positions,
-                ]
+            in this list when fetch_positions() is called.
     """
 
     def __init__(self,
@@ -114,34 +110,17 @@ class OperationContainer:
         self.exercise_operations = {}
         self.tax_manager = tax_manager
 
-        # Here we define the default methods to be
-        # executed when fetch_positions() is called,
-        # and also their order of execution; you may
-        # append other methods to this list, or
-        # re-create this list in a different order or
-        # with different methods to suit your needs.
+        self.fetch_positions_tasks = []
+        """Methods to be executed when fetch_positions() is called.
+
+        A default setup could look like this:
         self.fetch_positions_tasks = [
-
-            # This method get the resulting operations
-            # that are created by an option exercise;
             self.get_operations_from_exercises,
-
-            # This method separates daytrades from operations
-            # that are not daytrades, and group them;
-            # Operations originated from exercises are by default
-            # not considered
             self.identify_daytrades_and_common_operations,
-
-            # This method prorates all values on the
-            # container commissions dictionary by all the
-            # trades on the container, based on their volume
             self.prorate_commissions,
-
-            # This method should return any rates that
-            # need to be applied to the daytrades and
-            # common operations (aka the container positions)
             self.find_rates_for_positions,
         ]
+        """
 
     @property
     def total_commission_value(self):

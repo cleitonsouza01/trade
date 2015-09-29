@@ -63,14 +63,15 @@ new list of methods that you created to fit the needs of your application.
 + common_operations: a dict of Operation objects, indexed by the operation asset.
 + fetch_positions_tasks: a list of OperationContainer methods.  
   The methods will be called in the order they are defined in this list when
-  fetch_positions() is called. The default fetch_positions_tasks list is this:
+  fetch_positions() is called. A default setup could look like this:
+
   ```python
-    [
-        self.get_operations_from_exercises,
-        self.identify_daytrades_and_common_operations,
-        self.prorate_commissions,
-        self.find_rates_for_positions,
-    ]
+  self.fetch_positions_tasks = [
+      self.get_operations_from_exercises,
+      self.identify_daytrades_and_common_operations,
+      self.prorate_commissions,
+      self.find_rates_for_positions,
+  ]
   ```
 
 ### Properties

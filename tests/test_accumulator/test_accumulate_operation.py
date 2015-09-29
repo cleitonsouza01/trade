@@ -58,6 +58,12 @@ class Test_accumulate_operation_Case_02(unittest.TestCase):
                         operations=[operation],
                         commissions=comissions
                     )
+        container.fetch_positions_tasks = [
+            container.get_operations_from_exercises,
+            container.identify_daytrades_and_common_operations,
+            container.prorate_commissions,
+            container.find_rates_for_positions,
+        ]
         container.fetch_positions()
         self.accumulator = AssetAccumulator(asset)
         operation = container.common_operations[asset]

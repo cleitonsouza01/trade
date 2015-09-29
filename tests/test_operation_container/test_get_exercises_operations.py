@@ -20,6 +20,12 @@ class Test_get_exercises_operations_Case_00(unittest.TestCase):
             			price=10
                     )
         self.container = trade.OperationContainer(exercises=[self.exercise])
+        self.container.fetch_positions_tasks = [
+            self.container.get_operations_from_exercises,
+            self.container.identify_daytrades_and_common_operations,
+            self.container.prorate_commissions,
+            self.container.find_rates_for_positions,
+        ]
 
     def test_operation_container_should_exist(self):
         self.assertTrue(self.container)
@@ -81,6 +87,12 @@ class Test_get_exercises_operations_Case_00(unittest.TestCase):
         self.container = trade.OperationContainer(
                                 exercises=[self.exercise0, self.exercise1]
                             )
+        self.container.fetch_positions_tasks = [
+            self.container.get_operations_from_exercises,
+            self.container.identify_daytrades_and_common_operations,
+            self.container.prorate_commissions,
+            self.container.find_rates_for_positions,
+        ]
 
     def test_operation_container_should_exist(self):
         self.assertTrue(self.container)
