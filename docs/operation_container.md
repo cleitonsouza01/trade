@@ -17,7 +17,7 @@ The container prorates fixed commissions by its operations based on their volume
 ### How commissions work in the trade module
 text...
 
-Read more about this in [Commissions and Taxes](./commissions_and_fees).  
+Read more about this in [Commissions and Rates](./commissions_and_rates).  
 Read more about this in the [API docs](./api/trade.operation_container).
 
 
@@ -25,7 +25,7 @@ Read more about this in the [API docs](./api/trade.operation_container).
 By default all OperationContainer objects have a reference to a TaxManager
 object. This default tax manager will always return an empty dictionary.
 If you need to apply volume-based percentual fees to your operations, you must
-read this: [Commissions and Fees](./commissions_and_fees)
+read this: [Commissions and Rates](./commissions_and_rates)
 
 ### How rates work in the trade module
 text...
