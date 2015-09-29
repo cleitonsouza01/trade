@@ -6,6 +6,10 @@ Operations have a reference a to an Asset object, and also quantity and a price.
 The price represents the unitary price of the asset that is being traded.
 They may also have a date representing the date the operation occurred.
 
+Operation can include commissions and rates that will be considered on the total
+value of the operation and on the unitary price of the asset that is being
+traded.
+
 Creating Operation objects:
 ```python
 import trade

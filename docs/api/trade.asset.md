@@ -1,6 +1,6 @@
 # trade.asset
 
-This module contains the class definitions of Asset and Derivative.
+This module contains the class definitions of Asset, Derivative and Option.
 You can use them by just:
 
 ```python

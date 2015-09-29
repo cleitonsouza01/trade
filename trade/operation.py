@@ -55,18 +55,18 @@ class Operation:
     def __init__(self, quantity, price,
                     date=None,
                     asset=None,
-                    fixed_commissions=None,
-                    commission_rates=None,
+                    commissions=None,
+                    rates=None,
                     results=None
                 ):
         self.date = date
         self.asset = asset
         self.quantity = quantity
         self.price = price
-        if fixed_commissions is None: fixed_commissions={}
-        if commission_rates is None: commission_rates={}
-        self.fixed_commissions = fixed_commissions
-        self.commission_rates = commission_rates
+        if commissions is None: commissions={}
+        if rates is None: rates={}
+        self.commissions = commissions
+        self.rates = rates
         self.results = results
 
     @property
@@ -82,19 +82,19 @@ class Operation:
         already deducted or added.
         """
         return self.price + math.copysign(
-                                self.total_commissions / self.quantity,
-                                self.quantity
-                            )
+                            self.total_commissions_and_rates / self.quantity,
+                            self.quantity
+                        )
+
+    @property
+    def total_commissions_and_rates(self):
+        """Return the sum of all commissions included in this operation."""
+        return self.total_commissions + self.total_rates_value
 
     @property
     def total_commissions(self):
         """Return the sum of all commissions included in this operation."""
-        return self.total_fixed_commissions + self.total_rates_value
-
-    @property
-    def total_fixed_commissions(self):
-        """Return the sum of all commissions included in this operation."""
-        return sum(self.fixed_commissions.values())
+        return sum(self.commissions.values())
 
     @property
     def volume(self):
@@ -105,8 +105,7 @@ class Operation:
     def total_rates_value(self):
         """Returns the total rate value for this operation."""
         return sum(
-                [self.volume * value / 100  for value in \
-                                                self.commission_rates.values()]
+                [self.volume * value / 100  for value in self.rates.values()]
             )
 
 class Exercise(Operation):

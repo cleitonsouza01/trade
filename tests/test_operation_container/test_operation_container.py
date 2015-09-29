@@ -25,7 +25,7 @@ class TestTradeContainerCreation_Case_01(unittest.TestCase):
             'other': 1
         }
         self.container = trade_tools.OperationContainer(
-            fixed_commissions=commissions
+            commissions=commissions
         )
 
     def test_trade_container_should_exist(self):
@@ -36,7 +36,7 @@ class TestTradeContainerCreation_Case_01(unittest.TestCase):
             'brokerage': 2.3,
             'other': 1
         }
-        self.assertEqual(self.container.fixed_commissions, commissions)
+        self.assertEqual(self.container.commissions, commissions)
 
 class TestTradeContainerDefaultTaxManager(unittest.TestCase):
 

@@ -51,8 +51,8 @@ class TaxManager:
     for every operation and daytrade present on the container.
     """
 
-    def get_fees_for_operation(self, operation):
+    def get_rates_for_operation(self, operation):
         return {}
 
-    def get_fees_for_daytrade(self, operation):
+    def get_rates_for_daytrade(self, operation):
         return {}

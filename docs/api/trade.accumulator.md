@@ -25,7 +25,7 @@ accumulator (the current quantity and average price of the asset).
 Creates a instance of the accumulator.
 
 A initial status (quantity, average price and results) can be
-informed by passing a initial_status param like this:
+informed by passing a initial_status like this:
 ```python
     initial_status = {
         'date': 'YYYY-mm-dd'
@@ -37,15 +37,13 @@ informed by passing a initial_status param like this:
         }
     }
 ```
-The logging param is by default set to False; the accumulator
-will not log any operation, just accumulate the quantity and
-calculate the average price and results related to the asset
-after each call to accumulate_operation(),
-accumulate_daytrade() and accumulate_event().
+Logging by default is set to False; the accumulator will not log any operation,
+just accumulate the quantity and calculate the average price and results related
+to the asset after each call to accumulate_operation(), accumulate_daytrade()
+and accumulate_event().
 
-If logging is set to True the accumulator will log the data
-passed on every call to accumulate_operation(),
-accumulate_daytrade() and accumulate_event().
+If logging is set to True the accumulator will log the data passed on every call
+to accumulate_operation(), accumulate_daytrade() and accumulate_event().
 
 #### log_occurrence(self, occurrence):
 Log Operation, Daytrade and Event objects.
@@ -98,6 +96,7 @@ A portfolio-changing event.
 Events can change the quantity, the price and the results stored in
 the accumulator. This is a base class for Events; every event must
 inherit from this class and have a method like this:
+
 ```python
     update_portfolio(quantity, price, results)
         # do stuff here...

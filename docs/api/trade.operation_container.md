@@ -19,8 +19,8 @@ the same asset grouped into a single operation or a single
 daytrade.
 
 The resulting common operations and daytrades contains the
-OperationContiner comissions prorated by their volumes, and also
-any taxes the OperationContainer TaxManager finds for them.
+OperationContiner commissions prorated by their volumes, and also
+any rates the OperationContainer TaxManager finds for them.
 
 This is achieved by calling this method:
 
@@ -34,27 +34,27 @@ execute this tasks behind the scenes:
 
     * identify_daytrades_and_common_operations()
 
-- Prorate a group of taxes proportionally for all daytrades and
+- Prorate a group of commissions proportionally for all daytrades and
   common operations, if any, by using the method:
 
-    * prorate_fixed_comissions()
+    * prorate_comissions()
 
-- Find the appliable taxes for the resulting positions by calling
+- Find the appliable rates for the resulting positions by calling
   this method:
 
-    * find_fees_for_positions()
+    * find_rates_for_positions()
 
 ### Attributes:
 + date: A string 'YYYY-mm-dd' representing the date of the operations on the container.
 + operations: A list of Operation instances.
-+ comissions: A dict with discount names and values to be deducted from the operations.
++ commissions: A dict with discount names and values to be deducted from the operations.
 + daytrades: a dict of Daytrade objects, indexed by the daytrade asset.
 + common_operations: a dict of Operation objects, indexed by the operation asset.
 
 ### Properties
 
 #### total_comission_value(self):
-Returns the sum of values of all comissions.
+Returns the sum of values of all commissions.
 
 #### volume(self):
 Returns the total volume of the operations in the container.
@@ -72,23 +72,23 @@ better documented. What happens is as follows:
 3. Group all daytrades with one asset into a single Daytrade, so in the end you only have one daytrade per asset;  
 4. put all common operations in self.common_operations, a dict indexed by the operation's asset name;  
 5. put all daytrades in self.daytrades, a dict indexed by the daytrade's asset name;
-6. Prorate all comissions of the container for the common operations and the purchase and sale operation of every daytrade;  
-7. Find the fees to be applied to every common operation and to every purchase and sale operation of every daytrade.  
+6. Prorate all commissions of the container for the common operations and the purchase and sale operation of every daytrade;  
+7. Find the rates to be applied to every common operation and to every purchase and sale operation of every daytrade.  
 
 After this method:  
 1. the raw operations list of the container remains untouched;  
-2. the container common_operations list is filled with all common operations of the container, with all information about comissions and taxes to be applied to each operation;  
-3. the container daytrades list is filled with all daytrades of the container, with all information about comissions and fees to be applied to every purchase and sale operation of every daytrade.  
+2. the container common_operations list is filled with all common operations of the container, with all information about commissions and rates to be applied to each operation;  
+3. the container daytrades list is filled with all daytrades of the container, with all information about commissions and rates to be applied to every purchase and sale operation of every daytrade.  
 
-#### prorate_fixed_comissions(self):
-Prorates the container's comissions by its operations.
+#### prorate_comissions(self):
+Prorates the container's commissions by its operations.
 
-This method sum the discounts in the comissions dict of the
+This method sum the discounts in the commissions dict of the
 container. The total discount value is then prorated by the
 daytrades and common operations based on their volume.
 
 #### prorate_comissions_by_operation(self, operation):
-Prorates the comissions of the container for one operation.
+Prorates the commissions of the container for one operation.
 
 The ratio is based on the container volume and the volume of
 the operation.
@@ -127,8 +127,8 @@ Adds an operation to the common operations list.
 #### merge_operations(self, existing_operation, operation):
 Merges one operation with another operation.
 
-#### find_fees_for_positions(self):
-Gets the taxes for every position on the container.
+#### find_rates_for_positions(self):
+Gets the rates for every position on the container.
 
 
 Copyright (c) 2015 Rafael da Silva Rocha  

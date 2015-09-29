@@ -89,16 +89,16 @@ class OperationContainer:
                 date=None,
                 operations=None,
                 exercises=None,
-                fixed_commissions=None,
+                commissions=None,
                 tax_manager=TaxManager()
             ):
         self.date = date
         if operations is None: operations=[]
         if exercises is None: exercises=[]
-        if fixed_commissions is None: fixed_commissions = {}
+        if commissions is None: commissions = {}
         self.operations = operations
         self.exercises = exercises
-        self.fixed_commissions = fixed_commissions
+        self.commissions = commissions
         self.daytrades = {}
         self.common_operations = {}
         self.exercise_operations = {}
@@ -107,7 +107,7 @@ class OperationContainer:
     @property
     def total_commission_value(self):
         """Returns the sum of values of all commissions."""
-        return sum(self.fixed_commissions.values())
+        return sum(self.commissions.values())
 
     @property
     def volume(self):
@@ -149,8 +149,8 @@ class OperationContainer:
         """
         self.get_operations_from_exercises()
         self.identify_daytrades_and_common_operations()
-        self.prorate_fixed_commissions()
-        self.find_fees_for_positions()
+        self.prorate_commissions()
+        self.find_rates_for_positions()
 
     def get_operations_from_exercises(self):
         for exercise in self.exercises:
@@ -163,7 +163,7 @@ class OperationContainer:
                 else:
                     self.exercise_operations[operation.asset] = operation
 
-    def prorate_fixed_commissions(self):
+    def prorate_commissions(self):
         """Prorates the container's commissions by its operations.
 
         This method sum the discounts in the commissions dict of the
@@ -183,8 +183,8 @@ class OperationContainer:
         the operation.
         """
         percent = operation.volume / self.volume * 100
-        for key, value in self.fixed_commissions.items():
-            operation.fixed_commissions[key] = value * percent / 100
+        for key, value in self.commissions.items():
+            operation.commissions[key] = value * percent / 100
 
     def identify_daytrades_and_common_operations(self):
         """Separates operations into daytrades and common operations.
@@ -277,13 +277,13 @@ class OperationContainer:
                                     )
         existing_operation.quantity += operation.quantity
 
-    def find_fees_for_positions(self):
-        """Finds the taxess for all daytrades and common operations."""
+    def find_rates_for_positions(self):
+        """Finds the rates for all daytrades and common operations."""
         for asset, daytrade in self.daytrades.items():
-            daytrade.purchase.commission_rates = \
-                self.tax_manager.get_fees_for_daytrade(daytrade.purchase)
-            daytrade.sale.commission_rates = \
-                self.tax_manager.get_fees_for_daytrade(daytrade.sale)
+            daytrade.purchase.rates = \
+                self.tax_manager.get_rates_for_daytrade(daytrade.purchase)
+            daytrade.sale.rates = \
+                self.tax_manager.get_rates_for_daytrade(daytrade.sale)
         for asset, operation in self.common_operations.items():
-            operation.commission_rates = \
-                self.tax_manager.get_fees_for_operation(operation)
+            operation.rates = \
+                self.tax_manager.get_rates_for_operation(operation)

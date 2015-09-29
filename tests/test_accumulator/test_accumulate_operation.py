@@ -43,7 +43,7 @@ class Test_accumulate_operation_Case_02(unittest.TestCase):
             'some comission': 1,
             'other comission': 3,
         }
-        container = OperationContainer(operations=[operation], fixed_commissions=comissions)
+        container = OperationContainer(operations=[operation], commissions=comissions)
         container.fetch_positions()
         self.accumulator = AssetAccumulator(asset)
         operation = container.common_operations[asset]
