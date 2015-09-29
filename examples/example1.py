@@ -39,7 +39,7 @@ print(accumulator.price)
 #>> 650.73
 
 print(accumulator.results)
-#>> {'daytrades': 0, 'trades': 30.199999999999818}
+#>> {'daytrades': 0, 'trades': 0}
 
 
 # create a new trade operation selling the asset
@@ -61,4 +61,4 @@ print(accumulator.price)
 #>> 650.73
 
 print(accumulator.results)
-#>> {'trades': 5.0}
+#>> {'daytrades': 0, 'trades': 30.199999999999818}
