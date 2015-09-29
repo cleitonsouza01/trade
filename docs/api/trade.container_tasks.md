@@ -4,20 +4,20 @@ The default tasks (and their helper functions) provided by the trade module
 for the OperationContainer fetch_positions() method.
 
 
-## prorate_commissions(operation_container):
+## prorate_commissions(operation_container)
 Prorates the container's commissions by its operations.
 
 This method sum the discounts in the commissions dict of the
 container. The total discount value is then prorated by the
 daytrades and common operations based on their volume.
 
-## prorate_commissions_by_operation(operation_container, operation):
+## prorate_commissions_by_operation(operation_container, operation)
 Prorates the commissions of the container for one operation.
 
 The ratio is based on the container volume and the volume of
 the operation.
 
-## identify_daytrades_and_common_operations(operation_container):
+## identify_daytrades_and_common_operations(operation_container)
 Separates operations into daytrades and common operations.
 
 After this process, the attributes 'daytrades' and
@@ -25,7 +25,7 @@ After this process, the attributes 'daytrades' and
 and common operations found in the container operations list,
 if any. The original operations list remains untouched.
 
-## extract_daytrade(operation_container, operation_a, operation_b):
+## extract_daytrade(operation_container, operation_a, operation_b)
 Extracts the daytrade part of two operations.
 
 1. Find what is the purchase and what is the sale
@@ -45,14 +45,14 @@ with the daytrade in self.daytrades -
 in the end, there is only one daytrade per
 asset per OperationContainer.
 
-## add_to_common_operations(operation_container, operation):
+## add_to_common_operations(operation_container, operation)
 Adds an operation to the common operations list.
 
-## find_rates_for_positions(operation_container):
+## find_rates_for_positions(operation_container)
 Gets the rates for every position on the container.
 
-## get_operations_from_exercises(operation_container):
-
+## get_operations_from_exercises(operation_container)
+Get the operations created by exercises.
 
 
 Copyright (c) 2015 Rafael da Silva Rocha  

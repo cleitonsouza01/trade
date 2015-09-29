@@ -52,15 +52,12 @@ as long as it receives an OperationContainer instance as argument.
 + fetch_positions_tasks: a list of OperationContainer methods.  
   The methods will be called in the order they are defined in this list when
   fetch_positions() is called. A default setup could look like this:
-
-  ```python
-  self.fetch_positions_tasks = [
-      get_operations_from_exercises,
-      identify_daytrades_and_common_operations,
-      prorate_commissions,
-      find_rates_for_positions,
+  self.fetch_positions_tasks = [  
+      get_operations_from_exercises,  
+      identify_daytrades_and_common_operations,  
+      prorate_commissions,  
+      find_rates_for_positions,  
   ]
-  ```
 
 ### Properties
 
