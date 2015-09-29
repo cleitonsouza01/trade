@@ -49,10 +49,10 @@ class TestTradeContainer_fetch_positions_case_00(unittest.TestCase):
                                 commissions=discounts
                             )
         self.container.fetch_positions_tasks = [
-            self.container.get_operations_from_exercises,
-            self.container.identify_daytrades_and_common_operations,
-            self.container.prorate_commissions,
-            self.container.find_rates_for_positions,
+            trade.get_operations_from_exercises,
+            trade.identify_daytrades_and_common_operations,
+            trade.prorate_commissions,
+            trade.find_rates_for_positions,
         ]
         self.container.fetch_positions()
 
@@ -233,10 +233,10 @@ class TestTradeContainer_fetch_positions_case_01(
             ]
         )
         self.container.fetch_positions_tasks = [
-            self.container.get_operations_from_exercises,
-            self.container.identify_daytrades_and_common_operations,
-            self.container.prorate_commissions,
-            self.container.find_rates_for_positions,
+            trade.get_operations_from_exercises,
+            trade.identify_daytrades_and_common_operations,
+            trade.prorate_commissions,
+            trade.find_rates_for_positions,
         ]
         self.container.fetch_positions()
 
@@ -444,10 +444,10 @@ class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):
             commissions=commissions
         )
         self.container.fetch_positions_tasks = [
-            self.container.get_operations_from_exercises,
-            self.container.identify_daytrades_and_common_operations,
-            self.container.prorate_commissions,
-            self.container.find_rates_for_positions,
+            trade.get_operations_from_exercises,
+            trade.identify_daytrades_and_common_operations,
+            trade.prorate_commissions,
+            trade.find_rates_for_positions,
         ]
         self.container.tax_manager = TaxManagerForTests()
         self.container.fetch_positions()

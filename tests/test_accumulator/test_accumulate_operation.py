@@ -1,6 +1,8 @@
 from __future__ import absolute_import
 import unittest
 
+import trade
+
 from trade import Accumulator as AssetAccumulator, OperationContainer
 from trade import Asset, Operation
 
@@ -59,10 +61,10 @@ class Test_accumulate_operation_Case_02(unittest.TestCase):
                         commissions=comissions
                     )
         container.fetch_positions_tasks = [
-            container.get_operations_from_exercises,
-            container.identify_daytrades_and_common_operations,
-            container.prorate_commissions,
-            container.find_rates_for_positions,
+            trade.get_operations_from_exercises,
+            trade.identify_daytrades_and_common_operations,
+            trade.prorate_commissions,
+            trade.find_rates_for_positions,
         ]
         container.fetch_positions()
         self.accumulator = AssetAccumulator(asset)

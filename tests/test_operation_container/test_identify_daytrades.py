@@ -1,35 +1,35 @@
 from __future__ import absolute_import
 import unittest
 
-import trade as trade_tools
+import trade
 
 
 class TestTradeContainer_identify_daytrades_and_common_trades_case_00(
         unittest.TestCase):
 
     def setUp(self):
-        self.asset = trade_tools.Asset('some asset')
-        self.trade1 = trade_tools.Operation(
+        self.asset = trade.Asset('some asset')
+        self.trade1 = trade.Operation(
                             date='2015-09-21',
                             asset=self.asset,
                             quantity=10,
                             price=2
                         )
-        self.trade2 = trade_tools.Operation(
+        self.trade2 = trade.Operation(
                             date='2015-09-21',
                             asset=self.asset,
                             quantity=-10,
                             price=3
                         )
-        self.container = trade_tools.OperationContainer(
+        self.container = trade.OperationContainer(
             operations=[self.trade1,self.trade2])
         self.container.fetch_positions_tasks = [
-            self.container.get_operations_from_exercises,
-            self.container.identify_daytrades_and_common_operations,
-            self.container.prorate_commissions,
-            self.container.find_rates_for_positions,
+            trade.get_operations_from_exercises,
+            trade.identify_daytrades_and_common_operations,
+            trade.prorate_commissions,
+            trade.find_rates_for_positions,
         ]
-        self.container.identify_daytrades_and_common_operations()
+        trade.identify_daytrades_and_common_operations(self.container)
 
     def test_container_should_exist(self):
         self.assertTrue(self.container)
@@ -102,28 +102,28 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_01(
         unittest.TestCase):
 
     def setUp(self):
-        self.asset = trade_tools.Asset('some asset')
-        self.trade1 = trade_tools.Operation(
+        self.asset = trade.Asset('some asset')
+        self.trade1 = trade.Operation(
                             date='2015-09-21',
                             asset=self.asset,
                             quantity=10,
                             price=2
                         )
-        self.trade2 = trade_tools.Operation(
+        self.trade2 = trade.Operation(
                             date='2015-09-21',
                             asset=self.asset,
                             quantity=-5,
                             price=3
                         )
-        self.container = trade_tools.OperationContainer(
+        self.container = trade.OperationContainer(
             operations=[self.trade1,self.trade2])
         self.container.fetch_positions_tasks = [
-            self.container.get_operations_from_exercises,
-            self.container.identify_daytrades_and_common_operations,
-            self.container.prorate_commissions,
-            self.container.find_rates_for_positions,
+            trade.get_operations_from_exercises,
+            trade.identify_daytrades_and_common_operations,
+            trade.prorate_commissions,
+            trade.find_rates_for_positions,
         ]
-        self.container.identify_daytrades_and_common_operations()
+        trade.identify_daytrades_and_common_operations(self.container)
 
     def test_container_should_exist(self):
         self.assertTrue(self.container)
@@ -214,35 +214,35 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_02(
         unittest.TestCase):
 
     def setUp(self):
-        self.asset1 = trade_tools.Asset('some asset')
-        self.asset2 = trade_tools.Asset('some other asset')
-        trade1 = trade_tools.Operation(
+        self.asset1 = trade.Asset('some asset')
+        self.asset2 = trade.Asset('some other asset')
+        trade1 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset1,
                     quantity=10,
                     price=2
                 )
-        trade2 = trade_tools.Operation(
+        trade2 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset1,
                     quantity=-5,
                     price=3
                 )
-        trade3 = trade_tools.Operation(
+        trade3 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset2,
                     quantity=-5,
                     price=7
                 )
-        self.container = trade_tools.OperationContainer(
+        self.container = trade.OperationContainer(
             operations=[trade1,trade2,trade3])
         self.container.fetch_positions_tasks = [
-            self.container.get_operations_from_exercises,
-            self.container.identify_daytrades_and_common_operations,
-            self.container.prorate_commissions,
-            self.container.find_rates_for_positions,
+            trade.get_operations_from_exercises,
+            trade.identify_daytrades_and_common_operations,
+            trade.prorate_commissions,
+            trade.find_rates_for_positions,
         ]
-        self.container.identify_daytrades_and_common_operations()
+        trade.identify_daytrades_and_common_operations(self.container)
 
     def test_container_should_exist(self):
         self.assertTrue(self.container)
@@ -351,41 +351,41 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_03(
         unittest.TestCase):
 
     def setUp(self):
-        self.asset1 = trade_tools.Asset('some asset')
-        self.asset2 = trade_tools.Asset('some other asset')
-        trade1 = trade_tools.Operation(
+        self.asset1 = trade.Asset('some asset')
+        self.asset2 = trade.Asset('some other asset')
+        trade1 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset1,
                     quantity=10,
                     price=2
                 )
-        trade2 = trade_tools.Operation(
+        trade2 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset1,
                     quantity=-5,
                     price=3
                 )
-        trade3 = trade_tools.Operation(
+        trade3 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset2,
                     quantity=-5,
                     price=7
                 )
-        trade4 = trade_tools.Operation(
+        trade4 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset2,
                     quantity=5,
                     price=10
                 )
-        self.container = trade_tools.OperationContainer(
+        self.container = trade.OperationContainer(
             operations=[trade1,trade2,trade3,trade4])
         self.container.fetch_positions_tasks = [
-            self.container.get_operations_from_exercises,
-            self.container.identify_daytrades_and_common_operations,
-            self.container.prorate_commissions,
-            self.container.find_rates_for_positions,
+            trade.get_operations_from_exercises,
+            trade.identify_daytrades_and_common_operations,
+            trade.prorate_commissions,
+            trade.find_rates_for_positions,
         ]
-        self.container.identify_daytrades_and_common_operations()
+        trade.identify_daytrades_and_common_operations(self.container)
 
     def test_container_should_exist(self):
         self.assertTrue(self.container)
@@ -518,47 +518,47 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_04(
         unittest.TestCase):
 
     def setUp(self):
-        self.asset1 = trade_tools.Asset('some asset')
-        self.asset2 = trade_tools.Asset('some other asset')
-        trade1 = trade_tools.Operation(
+        self.asset1 = trade.Asset('some asset')
+        self.asset2 = trade.Asset('some other asset')
+        trade1 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset1,
                     quantity=10,
                     price=2
                 )
-        trade2 = trade_tools.Operation(
+        trade2 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset1,
                     quantity=-5,
                     price=3
                 )
-        trade3 = trade_tools.Operation(
+        trade3 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset2,
                     quantity=-5,
                     price=7
                 )
-        trade4 = trade_tools.Operation(
+        trade4 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset2,
                     quantity=5,
                     price=10
                 )
-        trade5 = trade_tools.Operation(
+        trade5 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset1,
                     quantity=-5,
                     price=3
                 )
-        self.container = trade_tools.OperationContainer(
+        self.container = trade.OperationContainer(
             operations=[trade1,trade2,trade3,trade4,trade5])
         self.container.fetch_positions_tasks = [
-            self.container.get_operations_from_exercises,
-            self.container.identify_daytrades_and_common_operations,
-            self.container.prorate_commissions,
-            self.container.find_rates_for_positions,
+            trade.get_operations_from_exercises,
+            trade.identify_daytrades_and_common_operations,
+            trade.prorate_commissions,
+            trade.find_rates_for_positions,
         ]
-        self.container.identify_daytrades_and_common_operations()
+        trade.identify_daytrades_and_common_operations(self.container)
 
     def test_container_should_exist(self):
         self.assertTrue(self.container)
@@ -673,47 +673,47 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_05(
         unittest.TestCase):
 
     def setUp(self):
-        self.asset1 = trade_tools.Asset('some asset')
-        self.asset2 = trade_tools.Asset('some other asset')
-        trade1 = trade_tools.Operation(
+        self.asset1 = trade.Asset('some asset')
+        self.asset2 = trade.Asset('some other asset')
+        trade1 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset1,
                     quantity=10,
                     price=2
                 )
-        trade2 = trade_tools.Operation(
+        trade2 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset1,
                     quantity=-5,
                     price=10
                 )
-        trade3 = trade_tools.Operation(
+        trade3 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset2,
                     quantity=-5,
                     price=7
                 )
-        trade4 = trade_tools.Operation(
+        trade4 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset2,
                     quantity=5,
                     price=10
                 )
-        trade5 = trade_tools.Operation(
+        trade5 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset1,
                     quantity=-5,
                     price=20
                 )
-        self.container = trade_tools.OperationContainer(
+        self.container = trade.OperationContainer(
             operations=[trade1,trade2,trade3,trade4,trade5])
         self.container.fetch_positions_tasks = [
-            self.container.get_operations_from_exercises,
-            self.container.identify_daytrades_and_common_operations,
-            self.container.prorate_commissions,
-            self.container.find_rates_for_positions,
+            trade.get_operations_from_exercises,
+            trade.identify_daytrades_and_common_operations,
+            trade.prorate_commissions,
+            trade.find_rates_for_positions,
         ]
-        self.container.identify_daytrades_and_common_operations()
+        trade.identify_daytrades_and_common_operations(self.container)
 
     def test_container_should_exist(self):
         self.assertTrue(self.container)
@@ -828,47 +828,47 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_06(
         unittest.TestCase):
 
     def setUp(self):
-        self.asset1 = trade_tools.Asset('some asset')
-        self.asset2 = trade_tools.Asset('some other asset')
-        trade1 = trade_tools.Operation(
+        self.asset1 = trade.Asset('some asset')
+        self.asset2 = trade.Asset('some other asset')
+        trade1 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset1,
                     quantity=10,
                     price=2
                 )
-        trade2 = trade_tools.Operation(
+        trade2 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset1,
                     quantity=-5,
                     price=3
                 )
-        trade3 = trade_tools.Operation(
+        trade3 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset2,
                     quantity=-5,
                     price=7
                 )
-        trade4 = trade_tools.Operation(
+        trade4 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset2,
                     quantity=5,
                     price=10
                 )
-        trade5 = trade_tools.Operation(
+        trade5 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset1,
                     quantity=5,
                     price=4
                 )
-        self.container = trade_tools.OperationContainer(
+        self.container = trade.OperationContainer(
             operations=[trade1,trade2,trade3,trade4,trade5])
         self.container.fetch_positions_tasks = [
-            self.container.get_operations_from_exercises,
-            self.container.identify_daytrades_and_common_operations,
-            self.container.prorate_commissions,
-            self.container.find_rates_for_positions,
+            trade.get_operations_from_exercises,
+            trade.identify_daytrades_and_common_operations,
+            trade.prorate_commissions,
+            trade.find_rates_for_positions,
         ]
-        self.container.identify_daytrades_and_common_operations()
+        trade.identify_daytrades_and_common_operations(self.container)
 
     def test_container_should_exist(self):
         self.assertTrue(self.container)
@@ -1004,77 +1004,77 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_07(
         unittest.TestCase):
 
     def setUp(self):
-        self.asset1 = trade_tools.Asset('some asset')
-        self.asset2 = trade_tools.Asset('some other asset')
-        self.asset3 = trade_tools.Asset('even other asset')
-        trade1 = trade_tools.Operation(
+        self.asset1 = trade.Asset('some asset')
+        self.asset2 = trade.Asset('some other asset')
+        self.asset3 = trade.Asset('even other asset')
+        trade1 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset1,
                     quantity=10,
                     price=2
                 )
-        trade2 = trade_tools.Operation(
+        trade2 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset1,
                     quantity=-5,
                     price=3
                 )
-        trade3 = trade_tools.Operation(
+        trade3 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset2,
                     quantity=-5,
                     price=7
                 )
-        trade4 = trade_tools.Operation(
+        trade4 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset2,
                     quantity=5,price=10
                 )
-        trade5 = trade_tools.Operation(
+        trade5 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset1,
                     quantity=5,
                     price=4
                 )
 
-        trade6 = trade_tools.Operation(
+        trade6 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset3,
                     quantity=5,
                     price=4
                 )
-        trade7 = trade_tools.Operation(
+        trade7 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset3,
                     quantity=-5,
                     price=2
                 )
 
-        trade8 = trade_tools.Operation(
+        trade8 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset3,
                     quantity=5,
                     price=4
                 )
-        trade9 = trade_tools.Operation(
+        trade9 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset3,
                     quantity=-5,
                     price=4
                 )
 
-        self.container = trade_tools.OperationContainer(
+        self.container = trade.OperationContainer(
             operations=[
                 trade1,trade2,trade3,trade4,trade5,trade6,trade7,trade8,trade9
             ]
         )
         self.container.fetch_positions_tasks = [
-            self.container.get_operations_from_exercises,
-            self.container.identify_daytrades_and_common_operations,
-            self.container.prorate_commissions,
-            self.container.find_rates_for_positions,
+            trade.get_operations_from_exercises,
+            trade.identify_daytrades_and_common_operations,
+            trade.prorate_commissions,
+            trade.find_rates_for_positions,
         ]
-        self.container.identify_daytrades_and_common_operations()
+        trade.identify_daytrades_and_common_operations(self.container)
 
     def test_container_should_exist(self):
         self.assertTrue(self.container)

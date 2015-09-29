@@ -29,6 +29,15 @@ from .accumulator import Accumulator
 from .event import Event
 from .tax_manager import TaxManager
 from .operation_container import OperationContainer
+from .container_tasks import (
+    get_operations_from_exercises,
+    identify_daytrades_and_common_operations,
+    prorate_commissions,
+    find_rates_for_positions,
+    prorate_commissions_by_operation,
+    add_to_common_operations,
+)
+
 
 from .utils import daytrade_condition, average_price, same_sign
 
