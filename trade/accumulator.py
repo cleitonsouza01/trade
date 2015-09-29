@@ -54,21 +54,8 @@ class Accumulator:
     accumulator (the current quantity and average price of the asset).
     """
 
-    def __init__(self, asset=None, initial_status=None, logging=False):
+    def __init__(self, asset=None, logging=False):
         """Creates a instance of the accumulator.
-
-        A initial status (quantity, average price and results) can be
-        informed by passing a initial_status like this:
-
-            initial_status = {
-                'date': 'YYYY-mm-dd'
-                'quantity': float
-                'price': float
-                'results': {
-                    'result name': float,
-                    ...
-                }
-            }
 
         Logging by default is set to False; the accumulator will not
         log any operation, just accumulate the quantity and calculate
@@ -81,19 +68,13 @@ class Accumulator:
         accumulate_daytrade() and accumulate_event().
         """
         self.asset = asset
-        if initial_status:
-            self.date = initial_status['date']
-            self.quantity = initial_status['quantity']
-            self.price = initial_status['price']
-            self.results = initial_status['results']
-        else:
-            self.date = None
-            self.quantity = 0
-            self.price = 0
-            self.results = {
-                'trades': 0,
-                'daytrades': 0
-            }
+        self.date = None
+        self.quantity = 0
+        self.price = 0
+        self.results = {
+            'trades': 0,
+            'daytrades': 0
+        }
         self.logging = logging
         self.log = {}
 

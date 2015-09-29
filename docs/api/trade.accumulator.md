@@ -19,24 +19,14 @@ Results are calculated by the accumulator according to the value
 of the operations informed and the current status of the
 accumulator (the current quantity and average price of the asset).
 
+A initial status (quantity, price and results) of the asset can be set on the
+accumulator by simply accumulating an Operation representing the status.
+
 ### Methods:
 
-#### init (self, asset, initial_status=None, logging=False):
+#### init (self, asset, logging=False):
 Creates a instance of the accumulator.
 
-A initial status (quantity, average price and results) can be
-informed by passing a initial_status like this:
-```python
-    initial_status = {
-        'date': 'YYYY-mm-dd'
-        'quantity': float
-        'price': float
-        'results': {
-            'result name': float,
-            ...
-        }
-    }
-```
 Logging by default is set to False; the accumulator will not log any operation,
 just accumulate the quantity and calculate the average price and results related
 to the asset after each call to accumulate_operation(), accumulate_daytrade()
