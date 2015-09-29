@@ -26,23 +26,34 @@ This is achieved by calling this method:
 
     * fetch_positions()
 
-Every time fetch_positions() is called the OperationContainer
-execute this tasks behind the scenes:
+The tasks executed on fetch_positions are defined on the attribute
+"fetch_positions_tasks", a list of OperatioContainer methods.
+
+The default behavior of fetch_positions() is this:
+
+- Get the operations that option exercises have created by calling the method:
+
+    * get_operations_from_exercises()
 
 - Separate the daytrades and the common operations of a group of
-  operations that occurred on the same date by using the method:
+  operations that occurred on the same date by calling the method:
 
     * identify_daytrades_and_common_operations()
 
 - Prorate a group of commissions proportionally for all daytrades and
-  common operations, if any, by using the method:
+  common operations, if any, by calling the method:
 
     * prorate_comissions()
 
-- Find the appliable rates for the resulting positions by calling
-  this method:
+- Find the the rates for the resulting positions, if needed, by calling
+  the method:
 
     * find_rates_for_positions()
+
+You can, however, append more methods to fetch_positions_tasks, so
+fetch_positions() will execute also any other method you want; you may
+also change the order the methods are executed, or even define a completely
+new list of methods that you created to fit the needs of your application.
 
 ### Attributes:
 + date: A string 'YYYY-mm-dd' representing the date of the operations on the container.
@@ -50,6 +61,17 @@ execute this tasks behind the scenes:
 + commissions: A dict with discount names and values to be deducted from the operations.
 + daytrades: a dict of Daytrade objects, indexed by the daytrade asset.
 + common_operations: a dict of Operation objects, indexed by the operation asset.
++ fetch_positions_tasks: a list of OperationContainer methods.  
+  The methods will be called in the order they are defined in this list when
+  fetch_positions() is called. The default fetch_positions_tasks list is this:
+  ```python
+    [
+        self.get_operations_from_exercises,
+        self.identify_daytrades_and_common_operations,
+        self.prorate_commissions,
+        self.find_rates_for_positions,
+    ]
+  ```
 
 ### Properties
 
@@ -64,21 +86,9 @@ Returns the total volume of the operations in the container.
 #### fetch_positions(self):
 Fetch the positions resulting from the operations.
 
-Fetch the position is a complex process that needs to be
-better documented. What happens is as follows:
-
-1. Separate all daytrades and common operations;  
-2. Group all common operations with one asset into a single Operation, so in the end you only have one operation per asset (on self.common_operations);  
-3. Group all daytrades with one asset into a single Daytrade, so in the end you only have one daytrade per asset;  
-4. put all common operations in self.common_operations, a dict indexed by the operation's asset name;  
-5. put all daytrades in self.daytrades, a dict indexed by the daytrade's asset name;
-6. Prorate all commissions of the container for the common operations and the purchase and sale operation of every daytrade;  
-7. Find the rates to be applied to every common operation and to every purchase and sale operation of every daytrade.  
-
-After this method:  
-1. the raw operations list of the container remains untouched;  
-2. the container common_operations list is filled with all common operations of the container, with all information about commissions and rates to be applied to each operation;  
-3. the container daytrades list is filled with all daytrades of the container, with all information about commissions and rates to be applied to every purchase and sale operation of every daytrade.  
+This method executes all the methods defined on the
+fetch_positions_tasks attribute in the order they are
+listed.
 
 #### prorate_comissions(self):
 Prorates the container's commissions by its operations.
