@@ -5,8 +5,8 @@ rocha.rafaelsilva@gmail.com
 http://rochars.github.io/trade/  
 http://trade.readthedocs.org  
 
-[![Travis CI](https://img.shields.io/travis/rochars/trade/master.svg)](https://travis-ci.org/rochars/trade)
-[![Coverage](https://img.shields.io/coveralls/rochars/trade.svg)](https://coveralls.io/github/rochars/trade)
+[![Travis CI](https://api.travis-ci.org/rochars/trade.svg)](https://travis-ci.org/rochars/trade)
+[![Coverage Status](https://coveralls.io/repos/rochars/trade/badge.svg?branch=master&service=github)](https://coveralls.io/github/rochars/trade?branch=master)
 [![Docs](https://readthedocs.org/projects/trade/badge/)](http://trade.readthedocs.org/en/latest/)
 
 
@@ -126,7 +126,7 @@ The trade module is compatible with Python 2.7 and Python 3.x.
 
 Version
 -------
-The current version is 0.0.9-alpha.
+The current version is 0.1.0-alpha.
 
 
 License
