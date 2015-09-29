@@ -5,6 +5,10 @@ rocha.rafaelsilva@gmail.com
 http://rochars.github.io/trade/  
 http://trade.readthedocs.org  
 
+[![Travis CI](https://img.shields.io/travis/rochars/trade/master.svg)](https://travis-ci.org/rochars/trade)
+[![Coverage](https://img.shields.io/coveralls/rochars/trade.svg)](https://coveralls.io/github/rochars/trade)
+[![Docs](https://readthedocs.org/projects/trade/badge/)](http://trade.readthedocs.org/en/latest/)
+
 
 What is it?
 -----------
