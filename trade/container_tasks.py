@@ -64,9 +64,10 @@ def prorate_commissions_by_operation(container, operation):
     The ratio is based on the container volume and the volume of
     the operation.
     """
-    percent = operation.volume / container.volume * 100
-    for key, value in container.commissions.items():
-        operation.commissions[key] = value * percent / 100
+    if operation.volume != 0:
+        percent = operation.volume / container.volume * 100
+        for key, value in container.commissions.items():
+            operation.commissions[key] = value * percent / 100
 
 def identify_daytrades_and_common_operations(container):
     """Separates operations into daytrades and common operations.
