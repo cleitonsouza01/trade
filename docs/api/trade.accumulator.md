@@ -71,11 +71,13 @@ the accumulator.
 
 The way it changes this information is up to the event object;
 each Event subclass must implement a method like this:
+
 ```python
-update_portfolio(quantity, price, results)
+update_portfolio(self, quantity, price, results)
     # do stuff here...
     return quantity, price
 ```
+
 that have the logic for the change in the accumulator's
 quantity, price and results.
 
@@ -88,12 +90,11 @@ the accumulator. This is a base class for Events; every event must
 inherit from this class and have a method like this:
 
 ```python
-    update_portfolio(quantity, price, results)
+    update_portfolio(self, quantity, price, results)
         # do stuff here...
         return quantity, price
 ```
 that implements the logic for the change in the portfolio.
-
 
 
 Copyright (c) 2015 Rafael da Silva Rocha  

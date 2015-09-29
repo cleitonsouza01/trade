@@ -5,7 +5,7 @@ stored in the accumulator. Every event must inherit from the
 accumulator.Event base class and have a method with this signature:
 
 ```python
-update_portfolio(quantity, price, results)
+update_portfolio(self, quantity, price, results)
     # do stuff here...
     return quantity, price
 ```
@@ -34,6 +34,7 @@ class StockSplit(Event):
         price = price / self.factor
         return quantity, price
 ```
+
 
 Copyright (c) 2015 Rafael da Silva Rocha  
 rocha.rafaelsilva@gmail.com  

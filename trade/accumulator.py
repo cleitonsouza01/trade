@@ -23,7 +23,6 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from abc import ABCMeta, abstractmethod
 import math
 
 from .utils import average_price, same_sign
@@ -227,9 +226,9 @@ class Accumulator:
         quantity, price and results.
         """
         self.quantity, self.price = event.update_portfolio(
-                                            self.quantity,
-                                            self.price,
-                                            self.results
+                                        self.quantity,
+                                        self.price,
+                                        self.results
                                     )
         if self.logging:
             self.log_occurrence(event)
@@ -252,12 +251,9 @@ class Event:
     instance and a date 'YYYY-mm-dd' attribute.
     """
 
-    __metaclass__ = ABCMeta
-
     def __init__(self, asset, date):
         self.asset = asset
         self.date = date
 
-    @abstractmethod
-    def update_portfolio(quantity, price, results):
+    def update_portfolio(self, quantity, price, results):
         return quantity, price
