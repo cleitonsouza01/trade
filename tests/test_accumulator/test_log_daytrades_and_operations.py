@@ -19,7 +19,8 @@ class TestLogDaytradesAndOperations_Case_00(unittest.TestCase):
                         purchase_price=10,
                         sale_price=20
                     )
-        self.accumulator.accumulate_daytrade(daytrade)
+        #self.accumulator.accumulate_daytrade(daytrade)
+        self.accumulator.accumulate_operation(daytrade)
 
         operation = Operation(100, 10, asset=self.asset, date='2015-01-01')
         self.accumulator.accumulate_operation(operation)
@@ -50,7 +51,8 @@ class TestLogDaytradesAndOperations_Case_01(unittest.TestCase):
                         purchase_price=10,
                         sale_price=20
                     )
-        self.accumulator.accumulate_daytrade(daytrade)
+        #self.accumulator.accumulate_daytrade(daytrade)
+        self.accumulator.accumulate_operation(daytrade)
 
         operation = Operation(100, 10, asset=self.asset, date='2015-01-02')
         self.accumulator.accumulate_operation(operation)
@@ -88,7 +90,8 @@ class TestLogDaytradesAndOperations_Case_02(unittest.TestCase):
                         purchase_price=10,
                         sale_price=20
                     )
-        self.accumulator.accumulate_daytrade(daytrade)
+        #self.accumulator.accumulate_daytrade(daytrade)
+        self.accumulator.accumulate_operation(daytrade)
 
         operation = Operation(
                         quantity=100,
@@ -105,7 +108,8 @@ class TestLogDaytradesAndOperations_Case_02(unittest.TestCase):
                         purchase_price=10,
                         sale_price=20
                     )
-        self.accumulator.accumulate_daytrade(daytrade2)
+        #self.accumulator.accumulate_daytrade(daytrade2)
+        self.accumulator.accumulate_operation(daytrade2)
 
         expected_log = {
             '2015-01-02': {

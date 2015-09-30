@@ -116,79 +116,82 @@ class Accumulator:
         present on the operation "results' attribute to the total
         results of the stock in the accumulator.
         """
-        new_quantity = self.quantity + operation.quantity
 
-        if operation.results is None:
-            operation.results = {'trades': 0}
+        if operation.update_position:
 
-        # if the quantity of the operation has the same sign
-        # of the accumulated quantity then we need to
-        # find out the new average price of the asset
-        if same_sign(self.quantity, operation.quantity):
+            new_quantity = self.quantity + operation.quantity
 
-            # if the new quantity is zero, then the new average
-            # price is also zero; otherwise, we need to calc the
-            # new average price
-            if new_quantity:
-                new_price = average_price(
-                                self.quantity,
-                                self.price,
-                                operation.quantity,
-                                operation.real_price
-                            )
-            else:
-                new_price = 0
+            if operation.results is None:
+                operation.results = {'trades': 0}
 
-        # If the traded quantity has an opposite sign of the
-        # asset's accumulated quantity and the accumulated
-        # quantity is not zero, then there was a result.
-        elif self.quantity != 0:
+            # if the quantity of the operation has the same sign
+            # of the accumulated quantity then we need to
+            # find out the new average price of the asset
+            if same_sign(self.quantity, operation.quantity):
 
-            # If the new accumulated quantity is of the same sign
-            # of the old accumulated quantity, the average of price
-            # will not change.
-            if same_sign(self.quantity, new_quantity):
-                new_price = self.price
+                # if the new quantity is zero, then the new average
+                # price is also zero; otherwise, we need to calc the
+                # new average price
+                if new_quantity:
+                    new_price = average_price(
+                                    self.quantity,
+                                    self.price,
+                                    operation.quantity,
+                                    operation.real_price
+                                )
+                else:
+                    new_price = 0
 
-            # If the new accumulated quantity is of different
-            # sign of the old accumulated quantity then the
-            # average price is now the price of the operation
+            # If the traded quantity has an opposite sign of the
+            # asset's accumulated quantity and the accumulated
+            # quantity is not zero, then there was a result.
+            elif self.quantity != 0:
+
+                # If the new accumulated quantity is of the same sign
+                # of the old accumulated quantity, the average of price
+                # will not change.
+                if same_sign(self.quantity, new_quantity):
+                    new_price = self.price
+
+                # If the new accumulated quantity is of different
+                # sign of the old accumulated quantity then the
+                # average price is now the price of the operation
+                else:
+                    new_price = operation.real_price
+
+                # check if we are trading more than what
+                # we have on our portfolio; if yes,
+                # the result will be calculated based
+                # only on what was traded (the rest create
+                # a new position)
+                if abs(operation.quantity) > abs(self.quantity):
+                        result_quantity = self.quantity * -1
+
+                # If we're not trading more than what we have,
+                # then use the operation quantity to calculate
+                # the result
+                else:
+                    result_quantity = operation.quantity
+
+                # calculate the result of this operation and add
+                # the new result to the accumulated results
+                operation.results['trades'] += \
+                    result_quantity * self.price - \
+                        result_quantity * operation.real_price
+
+            # If the accumulated quantity was zero then
+            # there was no result and the new average price
+            # is the price of the operation
             else:
                 new_price = operation.real_price
 
-            # check if we are trading more than what
-            # we have on our portfolio; if yes,
-            # the result will be calculated based
-            # only on what was traded (the rest create
-            # a new position)
-            if abs(operation.quantity) > abs(self.quantity):
-                    result_quantity = self.quantity * -1
-
-            # If we're not trading more than what we have,
-            # then use the operation quantity to calculate
-            # the result
+            # update the accumulator quantity and average
+            # price with the new values
+            self.quantity = new_quantity
+            if new_quantity:
+                self.price = new_price
             else:
-                result_quantity = operation.quantity
-
-            # calculate the result of this operation and add
-            # the new result to the accumulated results
-            operation.results['trades'] += \
-                result_quantity * self.price - \
-                    result_quantity * operation.real_price
-
-        # If the accumulated quantity was zero then
-        # there was no result and the new average price
-        # is the price of the operation
-        else:
-            new_price = operation.real_price
-
-        # update the accumulator quantity and average
-        # price with the new values
-        self.quantity = new_quantity
-        if new_quantity:
-            self.price = new_price
-        else:
-            self.price = 0
+                self.price = 0
 
         # add whatever result was informed with or generated
         # by this operation to the accumulator results dict
@@ -203,12 +206,14 @@ class Accumulator:
 
         return operation.results
 
+    '''
     def accumulate_daytrade(self, daytrade):
         """Accumulates a Daytrade operation."""
         self.results['daytrades'] += daytrade.result
         if self.logging:
             self.log_occurrence(daytrade)
         return daytrade.result
+    '''
 
     def accumulate_event(self, event):
         """Receives a Event subclass instance and lets it do its work.

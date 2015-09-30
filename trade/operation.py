@@ -69,6 +69,9 @@ class Operation:
         self.rates = rates
         self.results = results
 
+        self.update_position = True
+        """By default all Operations can update a portfolio position."""
+
         self.operations = []
         """An operation may contain multiple operations."""
 
@@ -151,6 +154,12 @@ class Daytrade(Operation):
         sale: A Operation object representing the sale of the asset.
     """
 
+    update_position = False
+    """Daytrades don't update the portfolio position.
+
+    Daytrades just create results.
+    """
+
     def __init__(self, date, asset, quantity, purchase_price, sale_price):
         """Creates the daytrade object.
 
@@ -181,6 +190,9 @@ class Daytrade(Operation):
                 price=sale_price
             )
         ]
+
+        # FIXME this name and result property
+        self.results = {'daytrades':self.result}
 
     @property
     def result(self):

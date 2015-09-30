@@ -19,7 +19,8 @@ class TestLogDaytrade(unittest.TestCase):
                         purchase_price=10,
                         sale_price=20
                     )
-        self.accumulator.accumulate_daytrade(daytrade)
+        #self.accumulator.accumulate_daytrade(daytrade)
+        self.accumulator.accumulate_operation(daytrade)
         expected_log = {
             '2015-01-01': {
                 'position': {
@@ -39,10 +40,12 @@ class TestLogDaytrade(unittest.TestCase):
                         purchase_price=10,
                         sale_price=20
                     )
-        self.accumulator.accumulate_daytrade(daytrade)
+        #self.accumulator.accumulate_daytrade(daytrade)
+        self.accumulator.accumulate_operation(daytrade)
         self.assertEqual(list(self.accumulator.log), ['2015-01-01'])
 
     def test_returned_result_should_be_1000(self):
         daytrade = Daytrade('2015-01-01', self.asset, 100, 10, 20)
-        result = self.accumulator.accumulate_daytrade(daytrade)
-        self.assertEqual(result, 1000)
+        #result = self.accumulator.accumulate_daytrade(daytrade)
+        result = self.accumulator.accumulate_operation(daytrade)
+        self.assertEqual(result, {'daytrades':1000})
