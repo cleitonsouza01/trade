@@ -117,9 +117,12 @@ class Exercise(Operation):
 
     Exercise operations are operations that involve more than one
     asset, usually a derivative like a Option and an underlying asset.
+
+    An exercise will change both the accumulted quantity of the
+    derivative and of the underlying asset.
     """
 
-    def get_operations(self):
+    def fetch_operations(self):
         """Returns the operations created by this exercise.
 
         An exercise creates two operations:
@@ -127,7 +130,7 @@ class Exercise(Operation):
         - One operation to represent the sale or the purchase of the
             asset
         """
-        return self.asset.exercise(
+        self.operations = self.asset.exercise(
                     self.quantity,
                     self.price,
                     self.date

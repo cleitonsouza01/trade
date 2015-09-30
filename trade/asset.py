@@ -94,35 +94,29 @@ class Option(Derivative):
             - one operation representing the purchase or sale of the
               underlying asset
         """
-        operations = []
-
-        # Create an operation to consume
-        # the option on the portfolio
-        operations.append(
+        operations = [
+            # Create an operation to consume
+            # the option on the portfolio
             Operation(
                 quantity=abs(quantity)*-1,
                 price=0,
                 date=date,
                 asset=self
-            )
-        )
-
-        # FIXME what about the premium?
-        #       this is assuming the premium is already
-        #       considered in operation.price, but it would
-        #       be nice to be able to include the premium
-        #       automatically on the raw operation price, if
-        #       needed
-        # Create an operation to represent
-        # the purchase or sale of the
-        # underlying asset
-        operations.append(
+            ),
+            # Create an operation to represent
+            # the purchase or sale of the
+            # underlying asset
+            # FIXME what about the premium?
+            #       this is assuming the premium is already
+            #       considered in operation.price, but it would
+            #       be nice to be able to include the premium
+            #       automatically on the raw operation price, if
+            #       needed
             Operation(
                 quantity=quantity * self.ratio,
                 price=price,
                 date=date,
                 asset=self.underlying_assets[0]
             )
-        )
-
+        ]
         return operations

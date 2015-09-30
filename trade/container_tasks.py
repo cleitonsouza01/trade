@@ -41,7 +41,8 @@ def get_operations_from_exercises(container):
         if isinstance(operation, Exercise):
             if 'exercises' not in container.positions:
                 container.positions['exercises'] = {}
-            for operation in operation.get_operations():
+            operation.fetch_operations()
+            for operation in operation.operations:
                 if operation.asset in container.positions['exercises'].keys():
                     container.merge_operations(
                         container.positions['exercises'][operation.asset],

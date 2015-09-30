@@ -22,23 +22,23 @@ class TestExercise_Case_00(unittest.TestCase):
                 			quantity=100,
                 			price=10
                         )
-        self.operations = self.exercise.get_operations()
+        self.operations = self.exercise.fetch_operations()
 
     def test_operations_len(self):
-        self.assertEqual(len(self.operations), 2)
+        self.assertEqual(len(self.exercise.operations), 2)
 
     def test_option_consuming_operation_quantity(self):
-        self.assertEqual(self.operations[0].quantity, -100)
+        self.assertEqual(self.exercise.operations[0].quantity, -100)
 
     def test_option_consuming_operation_price(self):
-        self.assertEqual(self.operations[0].price, 0)
+        self.assertEqual(self.exercise.operations[0].price, 0)
 
     def test_asset_purchase_operation_quantity(self):
-        self.assertEqual(self.operations[1].quantity, 100)
+        self.assertEqual(self.exercise.operations[1].quantity, 100)
 
     # FIXME premium!
     def test_asset_purchase_operation_price(self):
-        self.assertEqual(self.operations[1].price, 10)
+        self.assertEqual(self.exercise.operations[1].price, 10)
 
 
 class TestExercise_Case_01(unittest.TestCase):
@@ -59,20 +59,20 @@ class TestExercise_Case_01(unittest.TestCase):
                 			quantity=-100,
                 			price=10
                         )
-        self.operations = self.exercise.get_operations()
+        self.exercise.fetch_operations()
 
     def test_operations_len(self):
-        self.assertEqual(len(self.operations), 2)
+        self.assertEqual(len(self.exercise.operations), 2)
 
     def test_option_consuming_operation_quantity(self):
-        self.assertEqual(self.operations[0].quantity, -100)
+        self.assertEqual(self.exercise.operations[0].quantity, -100)
 
     def test_option_consuming_operation_price(self):
-        self.assertEqual(self.operations[0].price, 0)
+        self.assertEqual(self.exercise.operations[0].price, 0)
 
     def test_asset_purchase_operation_quantity(self):
-        self.assertEqual(self.operations[1].quantity, -100)
+        self.assertEqual(self.exercise.operations[1].quantity, -100)
 
     # FIXME premium!
     def test_asset_purchase_operation_price(self):
-        self.assertEqual(self.operations[1].price, 10)
+        self.assertEqual(self.exercise.operations[1].price, 10)
