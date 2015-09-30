@@ -150,15 +150,16 @@ class Daytrade:
         Base on the informed values this method creates 2 operations:
         - a purchase operation
         - a sale operation
+        and them appends them to the Daytrade object operations list.
 
-        Both operations (self.purchase and self.sale) can be treated
-        like any other operation when it comes to taxes and the prorate
-        of commissions.
+        Both operations can be treated like any other operation when it
+        comes to taxes and the prorate of commissions.
         """
         self.date = date
         self.asset = asset
         self.quantity = quantity
 
+        # Purchase is 0, Sale is 1
         self.operations = [
             Operation(
                 date=date,
@@ -173,20 +174,6 @@ class Daytrade:
                 price=sale_price
             )
         ]
-        '''
-        self.purchase = Operation(
-            date=date,
-            asset=asset,
-            quantity=quantity,
-            price=purchase_price
-        )
-        self.sale = Operation(
-            date=date,
-            asset=asset,
-            quantity=quantity*-1,
-            price=sale_price
-        )
-        '''
 
     @property
     def result(self):

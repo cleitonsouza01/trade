@@ -19,21 +19,24 @@ class Test_get_exercises_operations_Case_00(unittest.TestCase):
             			quantity=100,
             			price=10
                     )
-        container.container_tasks = trade.OperationContainer(
-                                        exercises=[self.exercise]
-                                    )
-        container.container_tasks.fetch_positions_tasks = [
-            trade.container_tasks.get_operations_from_exercises,
-            trade.container_tasks.identify_daytrades_and_common_operations,
-            trade.container_tasks.prorate_commissions,
-            trade.container_tasks.find_rates_for_positions,
+        self.container = trade.OperationContainer(
+                            exercises=[self.exercise]
+                        )
+        self.container.fetch_positions_tasks = [
+            trade.get_operations_from_exercises,
+            trade.identify_daytrades_and_common_operations,
+            trade.prorate_commissions,
+            trade.find_rates_for_positions,
         ]
+        self.container.fetch_positions()
 
     def test_operation_container_should_exist(self):
         self.assertTrue(self.container)
 
+    def test_operation_container_volume(self):
+        self.assertEqual(self.container.volume, 1000)
+
     def test_container_exercise_operations_len(self):
-        self.container.fetch_positions()
         self.assertEqual(
             len(self.container.positions['exercises'].values()),
             2
@@ -65,7 +68,7 @@ class Test_get_exercises_operations_Case_00(unittest.TestCase):
         )
 
 
-class Test_get_exercises_operations_Case_00(unittest.TestCase):
+class Test_get_exercises_operations_Case_01(unittest.TestCase):
 
     def setUp(self):
         self.asset = trade.Asset(symbol='GOOGL')

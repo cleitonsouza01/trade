@@ -81,13 +81,14 @@ def prorate_commissions(container):
     container. The total discount value is then prorated by the
     daytrades and common operations based on their volume.
     """
-    if 'common operations' in container.positions:
-        for operation in container.positions['common operations'].values():
-            prorate_commissions_by_operation(container, operation)
-    if 'daytrades' in container.positions:
-        for daytrade in container.positions['daytrades'].values():
-            prorate_commissions_by_operation(container, daytrade.operations[0])
-            prorate_commissions_by_operation(container, daytrade.operations[1])
+
+    for position_type, position_value in container.positions.items():
+        for position in position_value.values():
+            if hasattr(position, 'operations'): # FIXME
+                for operation in position.operations:
+                    prorate_commissions_by_operation(container, operation)
+            else:
+                prorate_commissions_by_operation(container, position)
 
 
 def find_rates_for_positions(container):
@@ -110,7 +111,7 @@ def prorate_commissions_by_operation(container, operation):
     The ratio is based on the container volume and the volume of
     the operation.
     """
-    if operation.volume != 0:
+    if operation.volume != 0 and container.volume != 0:
         percent = operation.volume / container.volume * 100
         for key, value in container.commissions.items():
             operation.commissions[key] = value * percent / 100

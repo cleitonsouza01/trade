@@ -126,7 +126,8 @@ class OperationContainer:
     @property
     def volume(self):
         """Returns the total volume of the operations in the container."""
-        return sum(operation.volume for operation in self.operations)
+        return sum(operation.volume for operation in self.operations) + \
+            sum(operation.volume for operation in self.exercises)
 
     def fetch_positions(self):
         """Fetch the positions resulting from the operations.
