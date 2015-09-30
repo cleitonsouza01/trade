@@ -64,7 +64,7 @@ class Test_accumulate_operation_Case_02(unittest.TestCase):
             trade.get_operations_from_exercises,
             trade.identify_daytrades_and_common_operations,
             trade.prorate_commissions,
-            trade.find_rates_for_positions,
+            #trade.find_rates_for_positions,
         ]
         container.fetch_positions()
         self.accumulator = AssetAccumulator(asset)
@@ -92,7 +92,7 @@ class Test_accumulate_operation_Case_03(unittest.TestCase):
             trade.get_operations_from_exercises,
             trade.identify_daytrades_and_common_operations,
             trade.prorate_commissions,
-            trade.find_rates_for_positions,
+            #trade.find_rates_for_positions,
         ]
         container.fetch_positions()
         self.accumulator = AssetAccumulator(asset)
@@ -123,7 +123,7 @@ class Test_accumulate_operation_Case_04(unittest.TestCase):
             trade.get_operations_from_exercises,
             trade.identify_daytrades_and_common_operations,
             trade.prorate_commissions,
-            trade.find_rates_for_positions,
+            #trade.find_rates_for_positions,
         ]
         container.fetch_positions()
         self.accumulator = AssetAccumulator(asset)

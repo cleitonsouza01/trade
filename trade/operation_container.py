@@ -89,15 +89,13 @@ class OperationContainer:
     def __init__(self,
                 date=None,
                 operations=None,
-                commissions=None,
-                tax_manager=TaxManager
+                commissions=None
             ):
         self.date = date
         if operations is None: operations=[]
         if commissions is None: commissions = {}
         self.operations = operations
         self.commissions = commissions
-        self.tax_manager = tax_manager
         self.positions = {}
 
         self.fetch_positions_tasks = []

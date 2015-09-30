@@ -6,7 +6,8 @@ import trade
 
 class TaxManagerForTests:
 
-    def get_rates_for_operation(self, operation, operation_type):
+    @staticmethod
+    def get_rates_for_operation(operation, operation_type):
         if operation_type == 'daytrades':
             return {
                 'emoluments': 0.005,
@@ -51,7 +52,7 @@ class TestTradeContainer_fetch_positions_case_00(unittest.TestCase):
             trade.get_operations_from_exercises,
             trade.identify_daytrades_and_common_operations,
             trade.prorate_commissions,
-            trade.find_rates_for_positions,
+            #trade.find_rates_for_positions,
         ]
         self.container.fetch_positions()
 
@@ -235,7 +236,7 @@ class TestTradeContainer_fetch_positions_case_01(
             trade.get_operations_from_exercises,
             trade.identify_daytrades_and_common_operations,
             trade.prorate_commissions,
-            trade.find_rates_for_positions,
+            #trade.find_rates_for_positions,
         ]
         self.container.fetch_positions()
 
@@ -448,7 +449,7 @@ class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):
             trade.prorate_commissions,
             trade.find_rates_for_positions,
         ]
-        self.container.tax_manager = TaxManagerForTests()
+        self.container.tax_manager = TaxManagerForTests
         self.container.fetch_positions()
 
     def test_container_daytrade_buy_operation_discounts(self):

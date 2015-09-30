@@ -26,7 +26,7 @@ class Test_get_exercises_operations_Case_00(unittest.TestCase):
             trade.get_operations_from_exercises,
             trade.identify_daytrades_and_common_operations,
             trade.prorate_commissions,
-            trade.find_rates_for_positions,
+            ##trade.find_rates_for_positions,
         ]
         self.container.fetch_positions()
 
@@ -96,7 +96,7 @@ class Test_get_exercises_operations_Case_01(unittest.TestCase):
             trade.get_operations_from_exercises,
             trade.identify_daytrades_and_common_operations,
             trade.prorate_commissions,
-            trade.find_rates_for_positions,
+            #trade.find_rates_for_positions,
         ]
 
     def test_operation_container_should_exist(self):
