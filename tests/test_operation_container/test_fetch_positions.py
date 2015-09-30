@@ -6,15 +6,14 @@ import trade
 
 class TaxManagerForTests:
 
-    def get_rates_for_operation(self, operation):
+    def get_rates_for_operation(self, operation, operation_type):
+        if operation_type == 'daytrades':
+            return {
+                'emoluments': 0.005,
+                'liquidation': 0.02,
+                'registry': 0,
+            }
         return {}
-
-    def get_rates_for_daytrade(self, operation):
-        return {
-            'emoluments': 0.005,
-            'liquidation': 0.02,
-            'registry': 0,
-        }
 
 
 class TestTradeContainer_fetch_positions_case_00(unittest.TestCase):

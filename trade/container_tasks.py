@@ -93,16 +93,17 @@ def prorate_commissions(container):
 
 def find_rates_for_positions(container):
     """Finds the rates for all daytrades and common operations."""
-    if 'daytrades' in container.positions:
-        for asset, daytrade in container.positions['daytrades'].items():
-            daytrade.operations[0].rates = \
-                container.tax_manager.get_rates_for_daytrade(daytrade.operations[0])
-            daytrade.operations[1].rates = \
-                container.tax_manager.get_rates_for_daytrade(daytrade.operations[1])
-    if 'common operations' in container.positions:
-        for asset, operation in container.positions['common operations'].items():
-            operation.rates = \
-                container.tax_manager.get_rates_for_operation(operation)
+    for position_type, position_value in container.positions.items():
+        for position in position_value.values():
+            if hasattr(position, 'operations'): # FIXME
+                for operation in position.operations:
+                    operation.rates = \
+                        container.tax_manager.get_rates_for_operation(
+                                                    operation, position_type)
+            else:
+                position.rates = \
+                    container.tax_manager.get_rates_for_operation(
+                                                    position, position_type)
 
 
 def prorate_commissions_by_operation(container, operation):
@@ -164,7 +165,8 @@ def extract_daytrade(container, operation_a, operation_b):
             container.positions['daytrades'][daytrade.asset].operations[1],
             daytrade.operations[1]
         )
-        container.positions['daytrades'][daytrade.asset].quantity += daytrade.quantity
+        container.positions['daytrades'][daytrade.asset].quantity += \
+                                                            daytrade.quantity
     else:
         container.positions['daytrades'][daytrade.asset] = daytrade
 

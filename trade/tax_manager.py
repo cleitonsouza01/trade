@@ -45,14 +45,10 @@ class TaxManager:
     fetch_positions() is called. Behind the scenes the container
     calls this methods from the TaxManager object:
 
-        tax_manager.get_fees_for_operation(operation)
-        tax_manager.get_fees_for_daytrade(operation)
+        tax_manager.get_fees_for_operation(operation, operation_type)
 
     for every operation and daytrade present on the container.
     """
 
-    def get_rates_for_operation(self, operation):
-        return {}
-
-    def get_rates_for_daytrade(self, operation):
+    def get_rates_for_operation(self, operation, operation_type):
         return {}

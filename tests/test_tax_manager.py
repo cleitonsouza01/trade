@@ -24,7 +24,7 @@ class TestTaxManager(unittest.TestCase):
                         date='2015-09-25'
                     )
         self.assertEqual(
-            self.tax_manager.get_rates_for_operation(operation),
+            self.tax_manager.get_rates_for_operation(operation,'common operations'),
             {}
         )
 
@@ -37,6 +37,6 @@ class TestTaxManager(unittest.TestCase):
                         sale_price=20
                     )
         self.assertEqual(
-            self.tax_manager.get_rates_for_daytrade(daytrade),
+            self.tax_manager.get_rates_for_operation(daytrade,'daytrades'),
             {}
         )
