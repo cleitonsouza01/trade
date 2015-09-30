@@ -104,13 +104,9 @@ class Accumulator:
 
         return operation.results
 
-
     def update_position(self, operation):
         if operation.asset == self.asset and operation.update_position:
             new_quantity = self.quantity + operation.quantity
-
-            if operation.results is None:
-                operation.results = {'trades': 0}
 
             # if the quantity of the operation has the same sign
             # of the accumulated quantity then we need to
