@@ -86,18 +86,18 @@ def prorate_commissions(container):
             prorate_commissions_by_operation(container, operation)
     if 'daytrades' in container.positions:
         for daytrade in container.positions['daytrades'].values():
-            prorate_commissions_by_operation(container, daytrade.purchase)
-            prorate_commissions_by_operation(container, daytrade.sale)
+            prorate_commissions_by_operation(container, daytrade.operations[0])
+            prorate_commissions_by_operation(container, daytrade.operations[1])
 
 
 def find_rates_for_positions(container):
     """Finds the rates for all daytrades and common operations."""
     if 'daytrades' in container.positions:
         for asset, daytrade in container.positions['daytrades'].items():
-            daytrade.purchase.rates = \
-                container.tax_manager.get_rates_for_daytrade(daytrade.purchase)
-            daytrade.sale.rates = \
-                container.tax_manager.get_rates_for_daytrade(daytrade.sale)
+            daytrade.operations[0].rates = \
+                container.tax_manager.get_rates_for_daytrade(daytrade.operations[0])
+            daytrade.operations[1].rates = \
+                container.tax_manager.get_rates_for_daytrade(daytrade.operations[1])
     if 'common operations' in container.positions:
         for asset, operation in container.positions['common operations'].items():
             operation.rates = \
@@ -156,12 +156,12 @@ def extract_daytrade(container, operation_a, operation_b):
         container.positions['daytrades'] = {}
     if daytrade.asset in container.positions['daytrades']:
         container.merge_operations(
-            container.positions['daytrades'][daytrade.asset].purchase,
-            daytrade.purchase
+            container.positions['daytrades'][daytrade.asset].operations[0],
+            daytrade.operations[0]
         )
         container.merge_operations(
-            container.positions['daytrades'][daytrade.asset].sale,
-            daytrade.sale
+            container.positions['daytrades'][daytrade.asset].operations[1],
+            daytrade.operations[1]
         )
         container.positions['daytrades'][daytrade.asset].quantity += daytrade.quantity
     else:

@@ -218,24 +218,24 @@ class TestTradeContainer_prorate_discounts_by_common_trades_and_daytrades(
     def test_check_daytrade0_buy_discounts(self):
         self.assertEqual(
             round(self.container.positions['daytrades'][self.asset1].\
-                    purchase.commissions['some discount'], 2),
+                    operations[0].commissions['some discount'], 2),
             0.14
         )
         self.assertEqual(
             round(self.container.positions['daytrades'][self.asset1].\
-                    purchase.commissions['other discount'], 2),
+                    operations[0].commissions['other discount'], 2),
             0.43
         )
 
     def test_check_daytrade0_sale_discounts(self):
         self.assertEqual(
             round(self.container.positions['daytrades'][self.asset1].\
-                    sale.commissions['some discount'], 2),
+                    operations[1].commissions['some discount'], 2),
             0.21
         )
         self.assertEqual(
             round(self.container.positions['daytrades'][self.asset1].\
-                    sale.commissions['other discount'], 2),
+                    operations[1].commissions['other discount'], 2),
             0.64
         )
 

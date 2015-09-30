@@ -65,24 +65,24 @@ class TestTradeContainer_fetch_positions_case_00(unittest.TestCase):
     def test_check_daytrade0_buy_discounts(self):
         self.assertEqual(
             round(self.container.positions['daytrades'][self.asset1].\
-                    purchase.commissions['some discount'], 2),
+                    operations[0].commissions['some discount'], 2),
             0.14
         )
         self.assertEqual(
             round(self.container.positions['daytrades'][self.asset1].\
-                    purchase.commissions['other discount'], 2),
+                    operations[0].commissions['other discount'], 2),
             0.43
         )
 
     def test_check_daytrade0_sale_discounts(self):
         self.assertEqual(
             round(self.container.positions['daytrades'][self.asset1].\
-                    sale.commissions['some discount'], 2),
+                    operations[1].commissions['some discount'], 2),
             0.21
         )
         self.assertEqual(
             round(self.container.positions['daytrades'][self.asset1].\
-                    sale.commissions['other discount'], 2),
+                    operations[1].commissions['other discount'], 2),
             0.64
         )
 
@@ -299,25 +299,25 @@ class TestTradeContainer_fetch_positions_case_01(
 
     def test_daytrade0_buy_price_should_be_2(self):
         self.assertEqual(
-            self.container.positions['daytrades'][self.asset1].purchase.price,
+            self.container.positions['daytrades'][self.asset1].operations[0].price,
             2
         )
 
     def test_daytrade0_buy_quantity_should_be_5(self):
         self.assertEqual(
-            self.container.positions['daytrades'][self.asset1].purchase.quantity,
+            self.container.positions['daytrades'][self.asset1].operations[0].quantity,
             5
         )
 
     def test_daytrade0_sale_price_should_be_3(self):
         self.assertEqual(
-            self.container.positions['daytrades'][self.asset1].sale.price,
+            self.container.positions['daytrades'][self.asset1].operations[1].price,
             3
         )
 
     def test_daytrade0_sale_quantity_should_be_minus_5(self):
         self.assertEqual(
-            self.container.positions['daytrades'][self.asset1].sale.quantity,
+            self.container.positions['daytrades'][self.asset1].operations[1].quantity,
             -5
         )
 
@@ -341,25 +341,25 @@ class TestTradeContainer_fetch_positions_case_01(
 
     def test_daytrade1_buy_price_should_be_10(self):
         self.assertEqual(
-            self.container.positions['daytrades'][self.asset2].purchase.price,
+            self.container.positions['daytrades'][self.asset2].operations[0].price,
             10
         )
 
     def test_daytrade1_buy_quantity_should_be_5(self):
         self.assertEqual(
-            self.container.positions['daytrades'][self.asset2].purchase.quantity,
+            self.container.positions['daytrades'][self.asset2].operations[0].quantity,
             5
         )
 
     def test_daytrade1_sale_price_should_be_7(self):
         self.assertEqual(
-            self.container.positions['daytrades'][self.asset2].sale.price,
+            self.container.positions['daytrades'][self.asset2].operations[1].price,
             7
         )
 
     def test_daytrade1_sale_quantity_should_be_minus_5(self):
         self.assertEqual(
-            self.container.positions['daytrades'][self.asset2].sale.quantity,
+            self.container.positions['daytrades'][self.asset2].operations[1].quantity,
             -5
         )
 
@@ -383,25 +383,25 @@ class TestTradeContainer_fetch_positions_case_01(
 
     def test_daytrade2_buy_price_should_be_10(self):
         self.assertEqual(
-            self.container.positions['daytrades'][self.asset3].purchase.price,
+            self.container.positions['daytrades'][self.asset3].operations[0].price,
             4
         )
 
     def test_daytrade2_buy_quantity_should_be_10(self):
         self.assertEqual(
-            self.container.positions['daytrades'][self.asset3].purchase.quantity,
+            self.container.positions['daytrades'][self.asset3].operations[0].quantity,
             10
         )
 
     def test_daytrade2_sale_price_should_be_3(self):
         self.assertEqual(
-            self.container.positions['daytrades'][self.asset3].sale.price,
+            self.container.positions['daytrades'][self.asset3].operations[1].price,
             3
         )
 
     def test_daytrade2_sale_quantity_should_be_minus_5(self):
         self.assertEqual(
-            self.container.positions['daytrades'][self.asset3].sale.quantity,
+            self.container.positions['daytrades'][self.asset3].operations[1].quantity,
             -10
         )
 
@@ -459,7 +459,7 @@ class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):
             'outros': 0.5,
         }
         self.assertEqual(
-            self.container.positions['daytrades'][self.asset].purchase.commissions,
+            self.container.positions['daytrades'][self.asset].operations[0].commissions,
             discounts
         )
 
@@ -470,7 +470,7 @@ class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):
             'outros': 0.5,
         }
         self.assertEqual(
-            self.container.positions['daytrades'][self.asset].sale.commissions,
+            self.container.positions['daytrades'][self.asset].operations[1].commissions,
             discounts
         )
 
@@ -481,7 +481,7 @@ class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):
             'registry': 0,
         }
         self.assertEqual(
-            self.container.positions['daytrades'][self.asset].purchase.rates,
+            self.container.positions['daytrades'][self.asset].operations[0].rates,
             taxes
         )
 
@@ -491,7 +491,7 @@ class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):
             'liquidation': 0.02,
             'registry': 0,
         }
-        self.assertEqual(self.container.positions['daytrades'][self.asset].sale.rates, taxes)
+        self.assertEqual(self.container.positions['daytrades'][self.asset].operations[1].rates, taxes)
 
     def test_container_daytrade_operation_result(self):
         self.assertEqual(
@@ -504,24 +504,24 @@ class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):
 
     def test_container_daytrade_buy_operation_real_price(self):
         self.assertEqual(
-            round(self.container.positions['daytrades'][self.asset].purchase.real_price,8),
+            round(self.container.positions['daytrades'][self.asset].operations[0].real_price,8),
             10.22750000
         )
 
     def test_container_daytrade_sale_operation_real_price(self):
         self.assertEqual(
-            round(self.container.positions['daytrades'][self.asset].sale.real_price,8),
+            round(self.container.positions['daytrades'][self.asset].operations[1].real_price,8),
             9.77250000
         )
 
     def test_container_daytrade_buy_operation_real_value(self):
         self.assertEqual(
-            round(self.container.positions['daytrades'][self.asset].purchase.real_value,8),
+            round(self.container.positions['daytrades'][self.asset].operations[0].real_value,8),
             102.27500000
         )
 
     def test_container_daytrade_sale_operation_real_value(self):
         self.assertEqual(
-            round(self.container.positions['daytrades'][self.asset].sale.real_value,8),
+            round(self.container.positions['daytrades'][self.asset].operations[1].real_value,8),
             -97.72500000
         )
