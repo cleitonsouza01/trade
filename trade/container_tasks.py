@@ -86,7 +86,7 @@ def prorate_commissions(container):
 
     for position_type, position_value in container.positions.items():
         for position in position_value.values():
-            if hasattr(position, 'operations'): # FIXME
+            if position.operations:
                 for operation in position.operations:
                     prorate_commissions_by_operation(container, operation)
             else:
@@ -97,7 +97,7 @@ def find_rates_for_positions(container):
     """Finds the rates for all daytrades and common operations."""
     for position_type, position_value in container.positions.items():
         for position in position_value.values():
-            if hasattr(position, 'operations'): # FIXME
+            if position.operations:
                 for operation in position.operations:
                     operation.rates = \
                         container.tax_manager.get_rates_for_operation(
@@ -177,7 +177,6 @@ def add_to_common_operations(container, operation):
     """Adds an operation to the common operations list."""
     if 'common operations' not in container.positions:
         container.positions['common operations'] = {}
-
 
     if operation.asset in container.positions['common operations']:
         container.merge_operations(

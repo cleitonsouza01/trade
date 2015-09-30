@@ -69,6 +69,9 @@ class Operation:
         self.rates = rates
         self.results = results
 
+        self.operations = []
+        """An operation may contain multiple operations."""
+
     @property
     def real_value(self):
         """Returns the quantity * the real price of the operation."""
@@ -131,7 +134,7 @@ class Exercise(Operation):
                 )
 
 
-class Daytrade:
+class Daytrade(Operation):
     """A daytrade operation.
 
     Daytrades are operations of purchase and sale of an Asset on
