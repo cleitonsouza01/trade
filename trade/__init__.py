@@ -26,7 +26,7 @@ from __future__ import absolute_import
 from .asset import Asset, Option, Derivative
 from .operation import Operation, Daytrade, Exercise
 from .accumulator import Accumulator
-from .event import Event
+from .event import Event, StockSplit, ReverseStockSplit
 from .tax_manager import TaxManager
 from .operation_container import OperationContainer
 from .container_tasks import (

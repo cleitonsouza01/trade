@@ -47,3 +47,31 @@ class Event:
 
     def update_portfolio(self, quantity, price, results):
         return quantity, price
+
+
+class StockSplit(Event):
+    """A stock split."""
+
+    def __init__(self, asset, date, factor):
+        self.factor = factor
+        self.asset = asset
+        self.date = date
+
+    def update_portfolio(self, quantity, price, results):
+        quantity = quantity * self.factor
+        price = price / self.factor
+        return quantity, price
+
+
+class ReverseStockSplit(Event):
+    """ A reverse stock split."""
+
+    def __init__(self, asset, date, factor):
+        self.factor = factor
+        self.asset = asset
+        self.date = date
+
+    def update_portfolio(self, quantity, price, results):
+        quantity = quantity / self.factor
+        price = price * self.factor
+        return quantity, price

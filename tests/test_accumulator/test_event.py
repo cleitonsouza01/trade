@@ -3,20 +3,7 @@ from __future__ import division
 
 import unittest
 
-from trade import Accumulator, Event, Asset
-
-
-class StockSplit(Event):
-
-    def __init__(self, asset, date, factor):
-        self.factor = factor
-        self.asset = asset
-        self.date = date
-
-    def update_portfolio(self, quantity, price, results):
-        quantity = quantity * self.factor
-        price = price / self.factor
-        return quantity, price
+from trade import Accumulator, Event, Asset, StockSplit
 
 
 class EventThatChangeResults(Event):
@@ -51,17 +38,29 @@ class TestEvent_AssetSplit_case_00(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {'trades': 1200})
 
     def test_check_quantity_after_split(self):
-        event = StockSplit(self.asset, '2015-09-27', 2)
+        event = StockSplit(
+                    asset=self.asset,
+                    date='2015-09-27',
+                    factor=2
+                )
         self.accumulator.accumulate_event(event)
         self.assertEqual(self.accumulator.quantity, 200)
 
     def test_check_price_after_split(self):
-        event = StockSplit(self.asset, '2015-09-27', 2)
+        event = StockSplit(
+                    asset=self.asset,
+                    date='2015-09-27',
+                    factor=2
+                )
         self.accumulator.accumulate_event(event)
         self.assertEqual(self.accumulator.price, 5)
 
     def test_check_results_after_split(self):
-        event = StockSplit(self.asset, '2015-09-27', 2)
+        event = StockSplit(
+                    asset=self.asset,
+                    date='2015-09-27',
+                    factor=2
+                )
         self.accumulator.accumulate_event(event)
         self.assertEqual(self.accumulator.results, {'trades': 1200})
 

@@ -19,7 +19,7 @@ this information to correctly apply the event.
 Events are passed to trade.Accumulator objects by the accumulate_event
 method.
 
-An event subclass representing a stock split could look like this:
+The event subclass StockSplit in the trade module looks like this:
 
 ```python
 class StockSplit(Event):
@@ -34,6 +34,16 @@ class StockSplit(Event):
         price = price / self.factor
         return quantity, price
 ```
+
+
+## Default Events
+The trade module provides some default events. They are:
+
+### StockSplit
+Represents a stock split.
+
+### ReverseStockSplit
+Represents a reverse stock split.
 
 
 Copyright (c) 2015 Rafael da Silva Rocha  

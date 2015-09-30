@@ -3,20 +3,7 @@ from __future__ import division
 
 import unittest
 
-from trade import Accumulator, Event, Asset
-
-
-class StockSplit(Event):
-
-    def __init__(self, date, asset,  factor):
-        self.factor = factor
-        self.asset = asset
-        self.date = date
-
-    def update_portfolio(self, quantity, price, results):
-        quantity = quantity * self.factor
-        price = price / self.factor
-        return quantity, price
+from trade import Accumulator, Event, Asset, StockSplit
 
 
 class DummyEvent(Event):
@@ -48,22 +35,38 @@ class TestEvent_log_event_Case_00(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {'trades': 1200})
 
     def test_check_quantity_after_split(self):
-        event = StockSplit('2015-09-24', self.asset, 2)
+        event = StockSplit(
+                    asset=self.asset,
+                    date='2015-09-24',
+                    factor=2
+                )
         self.accumulator.accumulate_event(event)
         self.assertEqual(self.accumulator.quantity, 200)
 
     def test_check_price_after_split(self):
-        event = StockSplit('2015-09-24', self.asset, 2)
+        event = StockSplit(
+                    asset=self.asset,
+                    date='2015-09-24',
+                    factor=2
+                )
         self.accumulator.accumulate_event(event)
         self.assertEqual(self.accumulator.price, 5)
 
-    def test_check_quantity_after_split(self):
-        event = StockSplit('2015-09-24', self.asset, 2)
+    def test_check_results_after_split(self):
+        event = StockSplit(
+                    asset=self.asset,
+                    date='2015-09-24',
+                    factor=2
+                )
         self.accumulator.accumulate_event(event)
         self.assertEqual(self.accumulator.results, {'trades': 1200})
 
     def test_check_log_case_00(self):
-        self.event = StockSplit('2015-09-24', self.asset, 2)
+        self.event = StockSplit(
+                        asset=self.asset,
+                        date='2015-09-24',
+                        factor=2
+                    )
         self.accumulator.accumulate_event(self.event)
         expected_log = {
             '2015-09-24': {
@@ -77,7 +80,11 @@ class TestEvent_log_event_Case_00(unittest.TestCase):
         self.assertEqual(self.accumulator.log, expected_log)
 
     def test_check_log_case_01(self):
-        self.event0 = StockSplit('2015-09-24', self.asset, 2)
+        self.event0 = StockSplit(
+                            asset=self.asset,
+                            date='2015-09-24',
+                            factor=2
+                        )
         self.accumulator.accumulate_event(self.event0)
         self.event1 = DummyEvent('2015-09-25', self.asset)
         self.accumulator.accumulate_event(self.event1)
@@ -100,7 +107,11 @@ class TestEvent_log_event_Case_00(unittest.TestCase):
         self.assertEqual(self.accumulator.log, expected_log)
 
     def test_check_log_case_02(self):
-        self.event0 = StockSplit('2015-09-24', self.asset, 2)
+        self.event0 = StockSplit(
+                            asset=self.asset,
+                            date='2015-09-24',
+                            factor=2
+                        )
         self.accumulator.accumulate_event(self.event0)
         self.event1 = DummyEvent('2015-09-24', self.asset)
         self.accumulator.accumulate_event(self.event1)

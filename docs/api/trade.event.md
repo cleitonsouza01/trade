@@ -16,6 +16,13 @@ inherit from this class and have a method like this:
 that implements the logic for the change in the portfolio.
 
 
+## StockSplit(Event):
+Represents a stock split.
+
+## ReverseStockSplit(Event):
+Represents a reverse stock split.
+
+
 Copyright (c) 2015 Rafael da Silva Rocha
 rocha.rafaelsilva@gmail.com
 http://github.com/rochars/trade
