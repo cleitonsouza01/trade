@@ -50,5 +50,6 @@ class TaxManager:
     for every operation and daytrade present on the container.
     """
 
-    def get_rates_for_operation(self, operation, operation_type):
+    @staticmethod
+    def get_rates_for_operation(operation, operation_type):
         return {}

@@ -90,7 +90,7 @@ class OperationContainer:
                 date=None,
                 operations=None,
                 commissions=None,
-                tax_manager=TaxManager()
+                tax_manager=TaxManager
             ):
         self.date = date
         if operations is None: operations=[]
