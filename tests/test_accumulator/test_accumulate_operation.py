@@ -3,50 +3,71 @@ import unittest
 
 import trade
 
-from trade import Accumulator as AssetAccumulator, OperationContainer
-from trade import Asset, Operation
-
 
 class Test_accumulate_operation_Case_00(unittest.TestCase):
 
     def setUp(self):
-        self.asset = Asset()
-        self.operation = Operation(
+        self.asset = trade.Asset()
+        self.operation = trade.Operation(
                             quantity=100,
                             price=10,
                             asset=self.asset,
                             date='2015-01-01'
                         )
-        self.accumulator = AssetAccumulator(self.asset, logging=True)
+        self.accumulator = trade.Accumulator(self.asset)
         self.result = self.accumulator.accumulate_operation(self.operation)
 
     def test_returned_result(self):
         self.assertEqual(self.result, {'trades': 0})
+
+    def test_accumulator_price(self):
+        self.assertEqual(self.accumulator.price, 10)
+
+    def test_accumulator_quantity(self):
+        self.assertEqual(self.accumulator.quantity, 100)
+
+    def test_accumulator_results(self):
+        self.assertEqual(
+            self.accumulator.results,
+            {'daytrades': 0, 'trades': 0}
+        )
 
 
 class Test_accumulate_operation_Case_01(unittest.TestCase):
 
     def setUp(self):
-        self.asset0 = Asset()
-        self.asset1 = Asset('other')
-        self.operation = Operation(
-                            quantity=100,
+        self.asset0 = trade.Asset()
+        self.asset1 = trade.Asset('other')
+        self.operation = trade.Operation(
+                            quantity=-100,
                             price=10,
                             asset=self.asset0,
                             date='2015-01-01'
                         )
-        self.accumulator = AssetAccumulator(self.asset1, logging=True)
+        self.accumulator = trade.Accumulator(self.asset1)
         self.result = self.accumulator.accumulate_operation(self.operation)
 
     def test_returned_result(self):
         self.assertEqual(self.result, {'trades': 0})
 
+    def test_accumulator_price(self):
+        self.assertEqual(self.accumulator.price, 10)
+
+    def test_accumulator_quantity(self):
+        self.assertEqual(self.accumulator.quantity, -100)
+
+    def test_accumulator_results(self):
+        self.assertEqual(
+            self.accumulator.results,
+            {'daytrades': 0, 'trades': 0}
+        )
+
 
 class Test_accumulate_operation_Case_02(unittest.TestCase):
 
     def setUp(self):
-        asset = Asset('some asset')
-        operation = Operation(
+        asset = trade.Asset('some asset')
+        operation = trade.Operation(
                         date='2015-09-18',
                         asset=asset,
                         quantity=20,
@@ -56,7 +77,7 @@ class Test_accumulate_operation_Case_02(unittest.TestCase):
             'some comission': 1,
             'other comission': 3,
         }
-        container = OperationContainer(
+        container = trade.OperationContainer(
                         operations=[operation],
                         commissions=comissions
                     )
@@ -64,73 +85,87 @@ class Test_accumulate_operation_Case_02(unittest.TestCase):
             trade.get_operations_from_exercises,
             trade.identify_daytrades_and_common_operations,
             trade.prorate_commissions,
-            #trade.find_rates_for_positions,
         ]
         container.fetch_positions()
-        self.accumulator = AssetAccumulator(asset)
+        self.accumulator = trade.Accumulator(asset)
         operation = container.positions['common operations'][asset]
         self.accumulator.accumulate_operation(operation)
 
-    def test_accumulator_average_price(self):
+    def test_accumulator_price(self):
         self.assertEqual(self.accumulator.price, 10.2)
+
+    def test_accumulator_quantity(self):
+        self.assertEqual(self.accumulator.quantity, 20)
+
+    def test_accumulator_results(self):
+        self.assertEqual(
+            self.accumulator.results,
+            {'daytrades': 0, 'trades': 0}
+        )
 
 
 class Test_accumulate_operation_Case_03(unittest.TestCase):
 
     def setUp(self):
-        asset = Asset('some asset')
-        operation = Operation(
+        asset = trade.Asset('some asset')
+        operation = trade.Operation(
                         date='2015-09-18',
                         asset=asset,
                         quantity=20,
                         price=0
                     )
-        container = OperationContainer(
+        container = trade.OperationContainer(
                         operations=[operation]
                     )
         container.fetch_positions_tasks = [
             trade.get_operations_from_exercises,
             trade.identify_daytrades_and_common_operations,
             trade.prorate_commissions,
-            #trade.find_rates_for_positions,
         ]
         container.fetch_positions()
-        self.accumulator = AssetAccumulator(asset)
+        self.accumulator = trade.Accumulator(asset)
         operation = container.positions['common operations'][asset]
         self.accumulator.accumulate_operation(operation)
 
     def test_accumulator_average_price(self):
         self.assertEqual(self.accumulator.price, 0)
 
-    def test_accumulator_average_price(self):
+    def test_accumulator_quantity(self):
         self.assertEqual(self.accumulator.quantity, 20)
+
+    def test_accumulator_results(self):
+        self.assertEqual(
+            self.accumulator.results,
+            {'daytrades': 0, 'trades': 0}
+        )
 
 
 class Test_accumulate_operation_Case_04(unittest.TestCase):
 
     def setUp(self):
-        asset = Asset('some asset')
-        operation = Operation(
+        asset = trade.Asset('some asset')
+        operation = trade.Operation(
                         date='2015-09-18',
                         asset=asset,
                         quantity=20,
                         price=10
                     )
-        container = OperationContainer(
+        container = trade.OperationContainer(
                         operations=[operation]
                     )
         container.fetch_positions_tasks = [
             trade.get_operations_from_exercises,
             trade.identify_daytrades_and_common_operations,
             trade.prorate_commissions,
-            #trade.find_rates_for_positions,
         ]
         container.fetch_positions()
-        self.accumulator = AssetAccumulator(asset)
-        operation = container.positions['common operations'][asset]
-        self.accumulator.accumulate_operation(operation)
+        self.accumulator = trade.Accumulator(asset)
 
-        operation2 = Operation(
+        self.accumulator.accumulate_operation(
+            container.positions['common operations'][asset]
+        )
+
+        operation2 = trade.Operation(
                         date='2015-09-19',
                         asset=asset,
                         quantity=-20,
@@ -138,31 +173,36 @@ class Test_accumulate_operation_Case_04(unittest.TestCase):
                     )
         self.accumulator.accumulate_operation(operation2)
 
-    def test_accumulator_average_price(self):
+    def test_accumulator_price(self):
         self.assertEqual(self.accumulator.price, 0)
 
-    def test_accumulator_average_price(self):
+    def test_accumulator_quantity(self):
         self.assertEqual(self.accumulator.quantity, 0)
 
+    def test_accumulator_results(self):
+        self.assertEqual(
+            self.accumulator.results,
+            {'daytrades': 0, 'trades': -200}
+        )
 
 
 class Test_accumulate_operation_Case_05(unittest.TestCase):
 
     def setUp(self):
-        asset = Asset('some asset')
-        operation = Operation(
+        asset = trade.Asset('some asset')
+        operation = trade.Operation(
                         date='2015-09-18',
                         asset=asset,
                         quantity=0,
                         price=0
                     )
-        container = OperationContainer(
+        container = trade.OperationContainer(
                         operations=[operation]
                     )
-        self.accumulator = AssetAccumulator(asset)
+        self.accumulator = trade.Accumulator(asset)
         self.accumulator.accumulate_operation(operation)
 
-        operation2 = Operation(
+        operation2 = trade.Operation(
                         date='2015-09-19',
                         asset=asset,
                         quantity=0,
@@ -173,10 +213,10 @@ class Test_accumulate_operation_Case_05(unittest.TestCase):
                     )
         self.accumulator.accumulate_operation(operation2)
 
-    def test_accumulator_average_price(self):
+    def test_accumulator_price(self):
         self.assertEqual(self.accumulator.price, 0)
 
-    def test_accumulator_average_price(self):
+    def test_accumulator_quantity(self):
         self.assertEqual(self.accumulator.quantity, 0)
 
     def test_accumulator_results(self):
