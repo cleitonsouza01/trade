@@ -3,11 +3,15 @@ trade: Tools For Stock Trading Applications.
 Copyright (c) 2015 Rafael da Silva Rocha  
 rocha.rafaelsilva@gmail.com  
 http://rochars.github.io/trade/  
-http://trade.readthedocs.org  
+http://trade.readthedocs.org
 
-[![Travis CI](https://api.travis-ci.org/rochars/trade.svg)](https://travis-ci.org/rochars/trade)
+---
+
+[![Build](https://api.travis-ci.org/rochars/trade.svg)](https://travis-ci.org/rochars/trade)
 [![Coverage Status](https://coveralls.io/repos/rochars/trade/badge.svg?branch=master&service=github)](https://coveralls.io/github/rochars/trade?branch=master)
-[![Docs](https://readthedocs.org/projects/trade/badge/)](http://trade.readthedocs.org/en/latest/)
+[![Documentation](https://readthedocs.org/projects/trade/badge/)](http://trade.readthedocs.org/en/latest/)
+[![License](https://img.shields.io/pypi/l/trade.svg)](https://opensource.org/licenses/MIT)
+![Python Versions](https://img.shields.io/pypi/pyversions/trade.svg)
 
 
 What is it?
@@ -24,8 +28,8 @@ With the trade module you can:
 * Calculate profits or losses relative to an asset, considering all rates and costs involved on its operations
 
 
-How do I install the trade module?
-----------------------------------
+Installation
+------------
 The trade module can be installed with pip:
 
 > pip install trade
@@ -40,8 +44,8 @@ print(asset.name)
 ```
 
 
-How can I use it?
------------------
+Example
+-------
 A basic example of the trade module in action:
 
 ```python
@@ -119,9 +123,9 @@ The Accumulator can also log the accumulated operations and their results.
 Check the [documentation](http://trade.readthedocs.org) for all the available features.
 
 
-What about compatibility?
+Compatibility
 -------------------------
-The trade module is compatible with Python 2.7 and Python 3.x.
+trade is compatible with Python 2.7, 3.3, 3.4 and 3.5.
 
 
 Version

@@ -52,6 +52,8 @@ class Operation:
             volume of the operation.
     """
 
+    accumulate_underlying_operations = False
+
     def __init__(self, quantity, price,
                     date=None,
                     asset=None,
@@ -65,6 +67,7 @@ class Operation:
         self.price = price
         if commissions is None: commissions={}
         if rates is None: rates={}
+        if results is None: results={'trades': 0} #FIXME compatibility
         self.commissions = commissions
         self.rates = rates
         self.results = results
@@ -74,6 +77,7 @@ class Operation:
 
         self.operations = []
         """An operation may contain multiple operations."""
+
 
     @property
     def real_value(self):
@@ -124,6 +128,8 @@ class Exercise(Operation):
     An exercise will change both the accumulted quantity of the
     derivative and of the underlying asset.
     """
+
+    accumulate_underlying_operations = True
 
     def fetch_operations(self):
         """Returns the operations created by this exercise.

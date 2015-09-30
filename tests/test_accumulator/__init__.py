@@ -10,3 +10,4 @@ from .test_results_purchase import *
 from .test_event import *
 from .test_accumulate_operation import *
 from .test_accumulate_event import *
+from .test_accumulate_exercise import *

@@ -34,6 +34,8 @@ class Test_accumulate_operation_Case_00(unittest.TestCase):
 
 
 class Test_accumulate_operation_Case_01(unittest.TestCase):
+    """Attempt to accumulate a Operation with a different asset.
+    """
 
     def setUp(self):
         self.asset0 = trade.Asset()
@@ -51,10 +53,10 @@ class Test_accumulate_operation_Case_01(unittest.TestCase):
         self.assertEqual(self.result, {'trades': 0})
 
     def test_accumulator_price(self):
-        self.assertEqual(self.accumulator.price, 10)
+        self.assertEqual(self.accumulator.price, 0)
 
     def test_accumulator_quantity(self):
-        self.assertEqual(self.accumulator.quantity, -100)
+        self.assertEqual(self.accumulator.quantity, 0)
 
     def test_accumulator_results(self):
         self.assertEqual(

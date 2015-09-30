@@ -77,38 +77,6 @@ class Accumulator:
         self.logging = logging
         self.log = {}
 
-    def log_occurrence(self, operation):
-        """Log Operation, Daytrade and Event objects.
-
-        If logging, this method is called behind the scenes every
-        time the method accumulate() is called. The occurrences are
-        logged like this:
-
-            self.log = {
-                '2017-09-19': {
-                    'position': {
-                        'quantity': float
-                        'price': float
-                    }
-                    'occurrences': [Operation, ...],
-                },
-                ...
-            }
-        """
-
-        # If the date is not present in the dict keys,
-        # a new key created.
-        if operation.date not in self.log:
-            self.log[operation.date] = {'occurrences': []}
-
-        # Log the accumulator status and operation data
-        self.log[operation.date]['position'] = {
-            'quantity': self.quantity,
-            'price': self.price,
-        }
-
-        self.log[operation.date]['occurrences'].append(operation)
-
     def accumulate_operation(self, operation):
         """Accumulates operation data to the existing position.
 
@@ -117,8 +85,28 @@ class Accumulator:
         results of the stock in the accumulator.
         """
 
-        if operation.update_position:
+        if operation.accumulate_underlying_operations:
+            for underlying_operation in operation.operations:
+                self.update_position(underlying_operation)
+        else:
+            self.update_position(operation)
 
+        # add whatever result was informed with or generated
+        # by this operation to the accumulator results dict
+        for key, value in operation.results.items():
+            if key not in self.results:
+                self.results[key] = 0
+            self.results[key] += value
+
+        # log the operation, if logging
+        if self.logging:
+            self.log_occurrence(operation)
+
+        return operation.results
+
+
+    def update_position(self, operation):
+        if operation.asset == self.asset and operation.update_position:
             new_quantity = self.quantity + operation.quantity
 
             if operation.results is None:
@@ -193,28 +181,6 @@ class Accumulator:
             else:
                 self.price = 0
 
-        # add whatever result was informed with or generated
-        # by this operation to the accumulator results dict
-        for key, value in operation.results.items():
-            if key not in self.results:
-                self.results[key] = 0
-            self.results[key] += value
-
-        # log the operation, if logging
-        if self.logging:
-            self.log_occurrence(operation)
-
-        return operation.results
-
-    '''
-    def accumulate_daytrade(self, daytrade):
-        """Accumulates a Daytrade operation."""
-        self.results['daytrades'] += daytrade.result
-        if self.logging:
-            self.log_occurrence(daytrade)
-        return daytrade.result
-    '''
-
     def accumulate_event(self, event):
         """Receives a Event subclass instance and lets it do its work.
 
@@ -238,3 +204,35 @@ class Accumulator:
                                     )
         if self.logging:
             self.log_occurrence(event)
+
+    def log_occurrence(self, operation):
+        """Log Operation, Daytrade and Event objects.
+
+        If logging, this method is called behind the scenes every
+        time the method accumulate() is called. The occurrences are
+        logged like this:
+
+            self.log = {
+                '2017-09-19': {
+                    'position': {
+                        'quantity': float
+                        'price': float
+                    }
+                    'occurrences': [Operation, ...],
+                },
+                ...
+            }
+        """
+
+        # If the date is not present in the dict keys,
+        # a new key created.
+        if operation.date not in self.log:
+            self.log[operation.date] = {'occurrences': []}
+
+        # Log the accumulator status and operation data
+        self.log[operation.date]['position'] = {
+            'quantity': self.quantity,
+            'price': self.price,
+        }
+
+        self.log[operation.date]['occurrences'].append(operation)
