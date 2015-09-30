@@ -19,7 +19,9 @@ class Test_get_exercises_operations_Case_00(unittest.TestCase):
             			quantity=100,
             			price=10
                     )
-        container.container_tasks = trade.OperationContainer(exercises=[self.exercise])
+        container.container_tasks = trade.OperationContainer(
+                                        exercises=[self.exercise]
+                                    )
         container.container_tasks.fetch_positions_tasks = [
             trade.container_tasks.get_operations_from_exercises,
             trade.container_tasks.identify_daytrades_and_common_operations,

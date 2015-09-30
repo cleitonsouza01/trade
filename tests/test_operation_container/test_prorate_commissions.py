@@ -53,7 +53,10 @@ class TestTradeContainer_rate_discounts_by_trade_case_01(unittest.TestCase):
                             price=2
                         )
         self.container = trade.OperationContainer(
-                                    operations=[self.operation1,self.operation2],
+                                    operations=[
+                                        self.operation1,
+                                        self.operation2
+                                    ],
                                     commissions=discounts
                                 )
 
@@ -95,7 +98,10 @@ class TestTradeContainer_rate_discounts_by_trade_case_02(unittest.TestCase):
                             price=2
                         )
         self.container = trade.OperationContainer(
-                                    operations=[self.operation1,self.operation2],
+                                    operations=[
+                                        self.operation1,
+                                        self.operation2
+                                    ],
                                     commissions=discounts
                                 )
 
