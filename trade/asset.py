@@ -89,10 +89,10 @@ class Option(Derivative):
         """Exercises the option.
 
         Returns two operations:
-            - one operation with zero value representing the option being
-            consumed by the exercise;
-            - one operation representing the purchase or sale of the underlying
-            asset
+            - one operation with zero value representing the option
+              being consumed by the exercise;
+            - one operation representing the purchase or sale of the
+              underlying asset
         """
         operations = []
 
