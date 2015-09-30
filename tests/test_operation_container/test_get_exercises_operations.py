@@ -20,7 +20,7 @@ class Test_get_exercises_operations_Case_00(unittest.TestCase):
             			price=10
                     )
         self.container = trade.OperationContainer(
-                            exercises=[self.exercise]
+                            operations=[self.exercise]
                         )
         self.container.fetch_positions_tasks = [
             trade.get_operations_from_exercises,
@@ -90,7 +90,7 @@ class Test_get_exercises_operations_Case_01(unittest.TestCase):
                 			price=3
                         )
         self.container = trade.OperationContainer(
-                                exercises=[self.exercise0, self.exercise1]
+                                operations=[self.exercise0, self.exercise1]
                             )
         self.container.fetch_positions_tasks = [
             trade.get_operations_from_exercises,

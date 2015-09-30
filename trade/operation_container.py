@@ -73,13 +73,14 @@ class OperationContainer:
         operations: A list of Operation instances.
         commissions: A dict with discount names and values to be
             deducted from the operations.
-        daytrades: a dict of Daytrade objects, indexed by the daytrade
-            asset.
-        common_operations: a dict of Operation objects, indexed by the
-            operation asset.
-        self.exercise_operations: a dict of Operation objects, indexed
-            by the operation asset. The operations are operations
-            created by option exercises.
+        positions: a dict of positions with this format:
+            self.positions = {
+                'position type': {
+                    Asset: Operation,
+                    ...
+                },
+                ...
+            }
         fetch_positions_tasks: a list of OperationContainer methods.
             The methods will be called in the order they are defined
             in this list when fetch_positions() is called.
@@ -88,22 +89,15 @@ class OperationContainer:
     def __init__(self,
                 date=None,
                 operations=None,
-                exercises=None,
                 commissions=None,
                 tax_manager=TaxManager()
             ):
         self.date = date
         if operations is None: operations=[]
-        if exercises is None: exercises=[]
         if commissions is None: commissions = {}
         self.operations = operations
-        self.exercises = exercises
         self.commissions = commissions
-        #self.daytrades = {}
-        #self.common_operations = {}
-        #self.exercise_operations = {}
         self.tax_manager = tax_manager
-
         self.positions = {}
 
         self.fetch_positions_tasks = []
@@ -126,8 +120,7 @@ class OperationContainer:
     @property
     def volume(self):
         """Returns the total volume of the operations in the container."""
-        return sum(operation.volume for operation in self.operations) + \
-            sum(operation.volume for operation in self.exercises)
+        return sum(operation.volume for operation in self.operations)
 
     def fetch_positions(self):
         """Fetch the positions resulting from the operations.

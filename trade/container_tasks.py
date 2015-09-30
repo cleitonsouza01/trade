@@ -27,7 +27,7 @@ from __future__ import division
 import math
 import copy
 
-from .operation import Daytrade, Operation
+from .operation import Daytrade, Operation, Exercise
 from .tax_manager import TaxManager
 from .utils import (
     average_price, daytrade_condition, find_purchase_and_sale
@@ -37,17 +37,18 @@ from .utils import (
 # container tasks
 
 def get_operations_from_exercises(container):
-    for exercise in container.exercises:
-        for operation in exercise.get_operations():
-            if 'exercises' not in container.positions:
-                container.positions['exercises'] = {}
-            if operation.asset in container.positions['exercises'].keys():
-                container.merge_operations(
-                    container.positions['exercises'][operation.asset],
-                    operation
-                )
-            else:
-                container.positions['exercises'][operation.asset] = operation
+    for operation in container.operations:
+        if isinstance(operation, Exercise):
+            for operation in operation.get_operations():
+                if 'exercises' not in container.positions:
+                    container.positions['exercises'] = {}
+                if operation.asset in container.positions['exercises'].keys():
+                    container.merge_operations(
+                        container.positions['exercises'][operation.asset],
+                        operation
+                    )
+                else:
+                    container.positions['exercises'][operation.asset] = operation
 
 
 def identify_daytrades_and_common_operations(container):
