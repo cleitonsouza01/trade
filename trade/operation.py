@@ -107,6 +107,7 @@ class Operation:
         return sum(
                 [self.volume * value / 100  for value in self.rates.values()]
             )
+            
 
 class Exercise(Operation):
     """An exercise operation.

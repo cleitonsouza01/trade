@@ -69,19 +69,19 @@ class TestTradeContainer_add_to_common_operations(unittest.TestCase):
         trade.add_to_common_operations(self.container, operation2)
 
     def test_common_trades_len_should_be_1(self):
-        self.assertEqual(len(self.container.common_operations.keys()), 1)
+        self.assertEqual(len(self.container.positions['common operations'].keys()), 1)
 
-    def test_daytrades_len_should_be_zero(self):
-        self.assertEqual(len(self.container.daytrades.keys()), 0)
+    def test_there_should_be_no_daytrades(self):
+        self.assertEqual(len(self.container.positions), 1)
 
     def test_common_trades0_quantity_should_be_20(self):
         self.assertEqual(
-            self.container.common_operations[self.asset].quantity,
+            self.container.positions['common operations'][self.asset].quantity,
             20
         )
 
     def test_common_trades0_price_should_be_3(self):
         self.assertEqual(
-            self.container.common_operations[self.asset].price,
+            self.container.positions['common operations'][self.asset].price,
             3
         )

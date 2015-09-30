@@ -99,10 +99,12 @@ class OperationContainer:
         self.operations = operations
         self.exercises = exercises
         self.commissions = commissions
-        self.daytrades = {}
-        self.common_operations = {}
-        self.exercise_operations = {}
+        #self.daytrades = {}
+        #self.common_operations = {}
+        #self.exercise_operations = {}
         self.tax_manager = tax_manager
+
+        self.positions = {}
 
         self.fetch_positions_tasks = []
         """Methods to be executed when fetch_positions() is called.

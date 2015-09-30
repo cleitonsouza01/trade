@@ -34,40 +34,21 @@ from .utils import (
 )
 
 
+# container tasks
+
 def get_operations_from_exercises(container):
     for exercise in container.exercises:
         for operation in exercise.get_operations():
-            if operation.asset in container.exercise_operations.keys():
+            if 'exercises' not in container.positions:
+                container.positions['exercises'] = {}
+            if operation.asset in container.positions['exercises'].keys():
                 container.merge_operations(
-                    container.exercise_operations[operation.asset],
+                    container.positions['exercises'][operation.asset],
                     operation
                 )
             else:
-                container.exercise_operations[operation.asset] = operation
+                container.positions['exercises'][operation.asset] = operation
 
-def prorate_commissions(container):
-    """Prorates the container's commissions by its operations.
-
-    This method sum the discounts in the commissions dict of the
-    container. The total discount value is then prorated by the
-    daytrades and common operations based on their volume.
-    """
-    for operation in container.common_operations.values():
-        prorate_commissions_by_operation(container, operation)
-    for daytrade in container.daytrades.values():
-        prorate_commissions_by_operation(container, daytrade.purchase)
-        prorate_commissions_by_operation(container, daytrade.sale)
-
-def prorate_commissions_by_operation(container, operation):
-    """Prorates the commissions of the container for one operation.
-
-    The ratio is based on the container volume and the volume of
-    the operation.
-    """
-    if operation.volume != 0:
-        percent = operation.volume / container.volume * 100
-        for key, value in container.commissions.items():
-            operation.commissions[key] = value * percent / 100
 
 def identify_daytrades_and_common_operations(container):
     """Separates operations into daytrades and common operations.
@@ -91,6 +72,49 @@ def identify_daytrades_and_common_operations(container):
 
         if operation_a.quantity != 0:
             add_to_common_operations(container, operation_a)
+
+
+def prorate_commissions(container):
+    """Prorates the container's commissions by its operations.
+
+    This method sum the discounts in the commissions dict of the
+    container. The total discount value is then prorated by the
+    daytrades and common operations based on their volume.
+    """
+    if 'common operations' in container.positions:
+        for operation in container.positions['common operations'].values():
+            prorate_commissions_by_operation(container, operation)
+    if 'daytrades' in container.positions:
+        for daytrade in container.positions['daytrades'].values():
+            prorate_commissions_by_operation(container, daytrade.purchase)
+            prorate_commissions_by_operation(container, daytrade.sale)
+
+
+def find_rates_for_positions(container):
+    """Finds the rates for all daytrades and common operations."""
+    if 'daytrades' in container.positions:
+        for asset, daytrade in container.positions['daytrades'].items():
+            daytrade.purchase.rates = \
+                container.tax_manager.get_rates_for_daytrade(daytrade.purchase)
+            daytrade.sale.rates = \
+                container.tax_manager.get_rates_for_daytrade(daytrade.sale)
+    if 'common operations' in container.positions:
+        for asset, operation in container.positions['common operations'].items():
+            operation.rates = \
+                container.tax_manager.get_rates_for_operation(operation)
+
+
+def prorate_commissions_by_operation(container, operation):
+    """Prorates the commissions of the container for one operation.
+
+    The ratio is based on the container volume and the volume of
+    the operation.
+    """
+    if operation.volume != 0:
+        percent = operation.volume / container.volume * 100
+        for key, value in container.commissions.items():
+            operation.commissions[key] = value * percent / 100
+
 
 def extract_daytrade(container, operation_a, operation_b):
     """Extracts the daytrade part of two operations."""
@@ -127,38 +151,33 @@ def extract_daytrade(container, operation_a, operation_b):
     # with the daytrade in self.daytrades -
     # in the end, there is only one daytrade per
     # asset per OperationContainer.
-    if daytrade.asset in container.daytrades:
+
+    if 'daytrades' not in container.positions:
+        container.positions['daytrades'] = {}
+    if daytrade.asset in container.positions['daytrades']:
         container.merge_operations(
-            container.daytrades[daytrade.asset].purchase,
+            container.positions['daytrades'][daytrade.asset].purchase,
             daytrade.purchase
         )
         container.merge_operations(
-            container.daytrades[daytrade.asset].sale,
+            container.positions['daytrades'][daytrade.asset].sale,
             daytrade.sale
         )
-        container.daytrades[daytrade.asset].quantity += daytrade.quantity
+        container.positions['daytrades'][daytrade.asset].quantity += daytrade.quantity
     else:
-        container.daytrades[daytrade.asset] = daytrade
+        container.positions['daytrades'][daytrade.asset] = daytrade
+
 
 def add_to_common_operations(container, operation):
     """Adds an operation to the common operations list."""
-    if operation.asset in container.common_operations:
+    if 'common operations' not in container.positions:
+        container.positions['common operations'] = {}
+
+
+    if operation.asset in container.positions['common operations']:
         container.merge_operations(
-            container.common_operations[operation.asset],
+            container.positions['common operations'][operation.asset],
             operation
         )
     else:
-        container.common_operations[operation.asset] = operation
-
-
-
-def find_rates_for_positions(container):
-    """Finds the rates for all daytrades and common operations."""
-    for asset, daytrade in container.daytrades.items():
-        daytrade.purchase.rates = \
-            container.tax_manager.get_rates_for_daytrade(daytrade.purchase)
-        daytrade.sale.rates = \
-            container.tax_manager.get_rates_for_daytrade(daytrade.sale)
-    for asset, operation in container.common_operations.items():
-        operation.rates = \
-            container.tax_manager.get_rates_for_operation(operation)
+        container.positions['common operations'][operation.asset] = operation
