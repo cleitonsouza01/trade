@@ -39,16 +39,17 @@ from .utils import (
 def get_operations_from_exercises(container):
     for operation in container.operations:
         if isinstance(operation, Exercise):
+            if 'exercises' not in container.positions:
+                container.positions['exercises'] = {}
             for operation in operation.get_operations():
-                if 'exercises' not in container.positions:
-                    container.positions['exercises'] = {}
                 if operation.asset in container.positions['exercises'].keys():
                     container.merge_operations(
                         container.positions['exercises'][operation.asset],
                         operation
                     )
                 else:
-                    container.positions['exercises'][operation.asset] = operation
+                    container.positions['exercises'][operation.asset] = \
+                                                                    operation
 
 
 def identify_daytrades_and_common_operations(container):

@@ -29,6 +29,7 @@ from .accumulator import Accumulator
 from .event import Event, StockSplit, ReverseStockSplit
 from .tax_manager import TaxManager
 from .operation_container import OperationContainer
+from .utils import daytrade_condition, average_price, same_sign
 from .container_tasks import (
     get_operations_from_exercises,
     identify_daytrades_and_common_operations,
@@ -37,9 +38,6 @@ from .container_tasks import (
     prorate_commissions_by_operation,
     add_to_common_operations,
 )
-
-
-from .utils import daytrade_condition, average_price, same_sign
 
 
 __author__ = 'rocha.rafaelsilva@gmail.com'

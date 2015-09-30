@@ -88,12 +88,12 @@ class Operation:
 
     @property
     def total_commissions_and_rates(self):
-        """Return the sum of all commissions of this operation."""
+        """Returns the sum of all commissions and rates."""
         return self.total_commissions + self.total_rates_value
 
     @property
     def total_commissions(self):
-        """Return the sum of all commissions included in this operation."""
+        """Return the sum of all commissions of this operation."""
         return sum(self.commissions.values())
 
     @property
@@ -121,7 +121,8 @@ class Exercise(Operation):
 
         An exercise creates two operations:
         - One operation to consume the option that it being exercised
-        - One operation to represent the sale or the purchase of the asset
+        - One operation to represent the sale or the purchase of the
+            asset
         """
         return self.asset.exercise(
                     self.quantity,
