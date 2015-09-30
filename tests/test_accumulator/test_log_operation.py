@@ -40,7 +40,7 @@ class TestLogOperation(unittest.TestCase):
         self.accumulator.accumulate_operation(operation)
         self.assertEqual(list(self.accumulator.log), ['2015-01-01'])
 
-    def test_returned_result_should(self):
+    def test_returned_result(self):
         operation = Operation(
                         quantity=100,
                         price=10,

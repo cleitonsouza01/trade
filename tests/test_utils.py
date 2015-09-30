@@ -8,6 +8,11 @@ from trade import Asset, Operation
 
 
 class Test_same_sign(unittest.TestCase):
+    """Test the same_sign() function.
+
+    This function should return True if the two values
+    have opposite signs, and False otherwise.
+    """
 
     def test_same_sign_same_signs(self):
         self.assertTrue(same_sign(-1, -4))
@@ -20,6 +25,11 @@ class Test_same_sign(unittest.TestCase):
 
 
 class Test_average_price(unittest.TestCase):
+    """Test the function average_price.
+
+    This function receives two quantity values, both with a
+    price associeated to it, and returns the average price.
+    """
 
     def setUp(self):
         pass
@@ -38,6 +48,12 @@ class Test_average_price(unittest.TestCase):
 
 
 class Test_daytrade_condition(unittest.TestCase):
+    """Tests the function daytrade_condition().
+
+    The daytrade_condition function receives two operations and
+    shoul return True if the two operations configure a daytrade,
+    False otherwise.
+    """
 
     def setUp(self):
         self.asset1 = Asset()
@@ -179,6 +195,13 @@ class Test_daytrade_condition(unittest.TestCase):
 
 
 class Test_find_purchase_and_sale(unittest.TestCase):
+    """Test the find_purchase_and_sale() function.
+
+    This function receives two operations an is expected to
+    return a tuple with the two operations: the purchase operation
+    first as the first element and the sale operation as the second
+    element.
+    """
 
     def setUp(self):
         self.asset = Asset()

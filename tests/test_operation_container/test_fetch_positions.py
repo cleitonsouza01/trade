@@ -327,79 +327,79 @@ class TestTradeContainer_fetch_positions_case_01(
             5
         )
 
-    def test_check_dayoperation1_asset(self):
+    def test_check_daytrade1_asset(self):
         self.assertEqual(
             self.container.daytrades[self.asset2].asset,
             self.asset2
         )
 
-    def test_dayoperation1_quantity_should_be_5(self):
+    def test_daytrade1_quantity_should_be_5(self):
         self.assertEqual(
             self.container.daytrades[self.asset2].quantity,
             5
         )
 
-    def test_dayoperation1_buy_price_should_be_10(self):
+    def test_daytrade1_buy_price_should_be_10(self):
         self.assertEqual(
             self.container.daytrades[self.asset2].purchase.price,
             10
         )
 
-    def test_dayoperation1_buy_quantity_should_be_5(self):
+    def test_daytrade1_buy_quantity_should_be_5(self):
         self.assertEqual(
             self.container.daytrades[self.asset2].purchase.quantity,
             5
         )
 
-    def test_dayoperation1_sale_price_should_be_7(self):
+    def test_daytrade1_sale_price_should_be_7(self):
         self.assertEqual(
             self.container.daytrades[self.asset2].sale.price,
             7
         )
 
-    def test_dayoperation1_sale_quantity_should_be_minus_5(self):
+    def test_daytrade1_sale_quantity_should_be_minus_5(self):
         self.assertEqual(
             self.container.daytrades[self.asset2].sale.quantity,
             -5
         )
 
-    def test_dayoperation1_result_should_be_5(self):
+    def test_daytrade1_result_should_be_5(self):
         self.assertEqual(
             self.container.daytrades[self.asset2].result,
             -15
         )
 
-    def test_check_dayoperation2_asset(self):
+    def test_check_daytrade2_asset(self):
         self.assertEqual(
             self.container.daytrades[self.asset3].asset,
             self.asset3
         )
 
-    def test_dayoperation2_quantity_should_be_10(self):
+    def test_daytrade2_quantity_should_be_10(self):
         self.assertEqual(
             self.container.daytrades[self.asset3].quantity,
             10
         )
 
-    def test_dayoperation2_buy_price_should_be_10(self):
+    def test_daytrade2_buy_price_should_be_10(self):
         self.assertEqual(
             self.container.daytrades[self.asset3].purchase.price,
             4
         )
 
-    def test_dayoperation2_buy_quantity_should_be_10(self):
+    def test_daytrade2_buy_quantity_should_be_10(self):
         self.assertEqual(
             self.container.daytrades[self.asset3].purchase.quantity,
             10
         )
 
-    def test_dayoperation2_sale_price_should_be_3(self):
+    def test_daytrade2_sale_price_should_be_3(self):
         self.assertEqual(
             self.container.daytrades[self.asset3].sale.price,
             3
         )
 
-    def test_dayoperation2_sale_quantity_should_be_minus_5(self):
+    def test_daytrade2_sale_quantity_should_be_minus_5(self):
         self.assertEqual(
             self.container.daytrades[self.asset3].sale.quantity,
             -10

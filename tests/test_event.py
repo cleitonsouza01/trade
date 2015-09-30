@@ -28,6 +28,8 @@ class TestBaseEventBehavior(unittest.TestCase):
 
 
 class TestBaseEventAccumulation(unittest.TestCase):
+    """The the accumulation of an Event object by the Accumulator.
+    """
 
     def setUp(self):
         self.asset = trade.Asset()
@@ -64,6 +66,8 @@ class TestBaseEventAccumulation(unittest.TestCase):
 
 
 class TestStockSplitEvent_Case_00(unittest.TestCase):
+    """Test the accumulation of a StockSplit event by the Accumulator.
+    """
 
     def setUp(self):
         self.asset = trade.Asset()
@@ -89,6 +93,8 @@ class TestStockSplitEvent_Case_00(unittest.TestCase):
 
 
 class TestReverseStockSplitEvent_Case_00(unittest.TestCase):
+    """Test the accumulation of a ReverseStockSplit event.
+    """
 
     def setUp(self):
         self.asset = trade.Asset()

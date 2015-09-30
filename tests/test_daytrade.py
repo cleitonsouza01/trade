@@ -5,6 +5,12 @@ import trade
 
 
 class TestDaytradeCreation(unittest.TestCase):
+    """Tests the creation of daytrade objects.
+
+    Daytrade objects should create two operations, the
+    purchase_operation and the sale_operation based on the
+    values informed during its cretion.
+    """
 
     def setUp(self):
         self.asset = trade.Asset(name='some stock')
@@ -51,6 +57,11 @@ class TestDaytradeCreation(unittest.TestCase):
 
 
 class TestDaytradeResult_case_00(unittest.TestCase):
+    """Tests the results of a Daytrade operation.
+
+    Daytrade results are based on the prices of the sale
+    and purchase operations.
+    """
 
     def setUp(self):
         self.daytrade = trade.Daytrade(
@@ -69,6 +80,11 @@ class TestDaytradeResult_case_00(unittest.TestCase):
 
 
 class TestDaytradeResult_case_01(unittest.TestCase):
+    """Tests the results of a Daytrade operation.
+
+    Daytrade results are based on the prices of the sale
+    and purchase operations.
+    """
 
     def setUp(self):
         self.daytrade = trade.Daytrade(
