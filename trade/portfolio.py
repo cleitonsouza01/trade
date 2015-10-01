@@ -23,23 +23,30 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from .asset import Asset, Option, Derivative
-from .operation import Operation, Daytrade, Exercise
 from .accumulator import Accumulator
-from .event import Event, StockSplit, ReverseStockSplit
-from .tax_manager import TaxManager
-from .operation_container import OperationContainer
-from .portfolio import Portfolio
-from .utils import daytrade_condition, average_price, same_sign
-from .container_tasks import (
-    get_operations_from_exercises,
-    identify_daytrades_and_common_operations,
-    prorate_commissions,
-    find_rates_for_positions,
-    prorate_commissions_by_operation,
-    add_to_common_operations,
-)
 
 
-__author__ = 'rocha.rafaelsilva@gmail.com'
-__version__ = '0.1.0'
+class Portfolio:
+    """A portfolio of assets.
+
+    A portfolio is a collection of Accumulator objects.
+    It can receive Operation objects and update the corresponding
+    accumulators.
+    """
+
+    def __init__(self):
+
+        self.assets = {}
+        """A dict {Asset: Accumulator}"""
+
+    def accumulate(self, operation):
+        """Accumulate an operation on its corresponding accumulator."""
+
+        if operation.accumulate_underlying_operations:
+            operation.fetch_operations()
+            for underlying_operation in operation.operations:
+                self.accumulate(underlying_operation)
+        else:
+            if operation.asset not in self.assets:
+                self.assets[operation.asset] = Accumulator(operation.asset)
+            self.assets[operation.asset].accumulate_operation(operation)
