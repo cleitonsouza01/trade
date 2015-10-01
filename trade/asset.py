@@ -85,6 +85,43 @@ class Option(Derivative):
     This class represents both calls and puts.
     """
 
+    def exercise_with_premium(self, quantity, price, date, premium):
+        """Exercises the option.
+
+        Returns two operations:
+            - one operation with zero value representing the option
+              being consumed by the exercise;
+            - one operation representing the purchase or sale of the
+              underlying asset
+        """
+        operations = [
+            # Create an operation to consume
+            # the option on the portfolio
+            Operation(
+                quantity=abs(quantity)*-1,
+                price=0,
+                date=date,
+                asset=self
+            ),
+            # Create an operation to represent
+            # the purchase or sale of the
+            # underlying asset
+            # FIXME what about the premium?
+            #       this is assuming the premium is already
+            #       considered in operation.price, but it would
+            #       be nice to be able to include the premium
+            #       automatically on the raw operation price, if
+            #       needed
+            Operation(
+                quantity=quantity * self.ratio,
+                price=price + premium,
+                date=date,
+                asset=self.underlying_assets[0]
+            )
+        ]
+        return operations
+
+
     def exercise(self, quantity, price, date):
         """Exercises the option.
 

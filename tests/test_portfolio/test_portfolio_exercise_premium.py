@@ -3,16 +3,16 @@ import unittest
 
 import trade
 
-def get_exercise_no_premium(operation, portfolio):
+def get_exercise_premium(operation, portfolio):
     if isinstance(operation, trade.Exercise):
-        operation.fetch_operations()
+        operation.fetch_operations_with_portfolio(portfolio)
 
-class TestPortfolioUnderlyingAssetAccumulation_Case_00(unittest.TestCase):
+class TestPortfolioExercisePremium_Case_00(unittest.TestCase):
     """Test the accumulation of one operation with underlying assets."""
 
     def setUp(self):
         self.portfolio = trade.Portfolio()
-        self.portfolio.accumulate_tasks = [get_exercise_no_premium]
+        self.portfolio.accumulate_tasks = [get_exercise_premium]
 
         # Create an asset and a call
         self.asset = trade.Asset(name='some asset')
@@ -41,7 +41,7 @@ class TestPortfolioUnderlyingAssetAccumulation_Case_00(unittest.TestCase):
                             asset=self.option,
                             date='2015-10-04',
                             quantity=10,
-                            price=10
+                            price=5
                         )
         self.portfolio.accumulate(self.exercise)
 
@@ -58,7 +58,8 @@ class TestPortfolioUnderlyingAssetAccumulation_Case_00(unittest.TestCase):
         self.assertEqual(self.portfolio.assets[self.asset].quantity, 20)
 
     def test_asset_accumulator_price(self):
-        self.assertEqual(self.portfolio.assets[self.asset].price, 7.5)
+        """Should have the premium included on the price"""
+        self.assertEqual(self.portfolio.assets[self.asset].price, 5.5)
 
 
     def test_option_accumulator(self):
@@ -74,14 +75,12 @@ class TestPortfolioUnderlyingAssetAccumulation_Case_00(unittest.TestCase):
         self.assertEqual(self.portfolio.assets[self.option].price, 0)
 
 
-
-
-class TestPortfolioUnderlyingAssetAccumulation_Case_01(unittest.TestCase):
+class TestPortfolioExercisePremium_Case_01(unittest.TestCase):
     """Test the accumulation of one operation with underlying assets."""
 
     def setUp(self):
         self.portfolio = trade.Portfolio()
-        self.portfolio.accumulate_tasks = [get_exercise_no_premium]
+        self.portfolio.accumulate_tasks = [get_exercise_premium]
 
         # Create an asset and a call
         self.asset = trade.Asset(name='some asset')
@@ -100,7 +99,7 @@ class TestPortfolioUnderlyingAssetAccumulation_Case_01(unittest.TestCase):
         self.option_operation = trade.Operation(
                             asset=self.option,
                             date='2015-10-02',
-                            quantity=10,
+                            quantity=20,
                             price=1
                         )
         self.portfolio.accumulate(self.option_operation)
@@ -110,19 +109,9 @@ class TestPortfolioUnderlyingAssetAccumulation_Case_01(unittest.TestCase):
                             asset=self.option,
                             date='2015-10-04',
                             quantity=10,
-                            price=10
+                            price=5
                         )
         self.portfolio.accumulate(self.exercise)
-
-
-        # Buy the asset again
-        self.operation = trade.Operation(
-                            asset=self.asset,
-                            date='2015-10-05',
-                            quantity=10,
-                            price=7.5
-                        )
-        self.portfolio.accumulate(self.operation)
 
     def test_portfolio_asset_keys(self):
         self.assertEqual(len(self.portfolio.assets.keys()), 2)
@@ -134,10 +123,11 @@ class TestPortfolioUnderlyingAssetAccumulation_Case_01(unittest.TestCase):
         self.assertEqual(self.portfolio.assets[self.asset].asset, self.asset)
 
     def test_asset_accumulator_quantity(self):
-        self.assertEqual(self.portfolio.assets[self.asset].quantity, 30)
+        self.assertEqual(self.portfolio.assets[self.asset].quantity, 20)
 
     def test_asset_accumulator_price(self):
-        self.assertEqual(self.portfolio.assets[self.asset].price, 7.5)
+        """Should have the premium included on the price"""
+        self.assertEqual(self.portfolio.assets[self.asset].price, 5.5)
 
 
     def test_option_accumulator(self):
@@ -147,7 +137,7 @@ class TestPortfolioUnderlyingAssetAccumulation_Case_01(unittest.TestCase):
         self.assertEqual(self.portfolio.assets[self.option].asset, self.option)
 
     def test_option_accumulator_quantity(self):
-        self.assertEqual(self.portfolio.assets[self.option].quantity, 0)
+        self.assertEqual(self.portfolio.assets[self.option].quantity, 10)
 
     def test_option_accumulator_price(self):
-        self.assertEqual(self.portfolio.assets[self.option].price, 0)
+        self.assertEqual(self.portfolio.assets[self.option].price, 1)

@@ -39,14 +39,30 @@ class Portfolio:
         self.assets = {}
         """A dict {Asset: Accumulator}"""
 
+        self.accumulate_tasks = []
+
     def accumulate(self, operation):
         """Accumulate an operation on its corresponding accumulator."""
 
         if operation.accumulate_underlying_operations:
-            operation.fetch_operations()
+
+            #print(operation.operations)
+
+            self.execute_accumulate_tasks(operation)
+            #operation.fetch_operations()
+
+            #print(operation.operations)
+
             for underlying_operation in operation.operations:
                 self.accumulate(underlying_operation)
         else:
             if operation.asset not in self.assets:
                 self.assets[operation.asset] = Accumulator(operation.asset)
+
+            self.execute_accumulate_tasks(operation)
+
             self.assets[operation.asset].accumulate_operation(operation)
+
+    def execute_accumulate_tasks(self, operation):
+        for task in self.accumulate_tasks:
+            task(operation, self)
