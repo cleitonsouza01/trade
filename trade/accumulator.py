@@ -78,16 +78,25 @@ class Accumulator:
         self.log = {}
 
     def accumulate_operation(self, operation):
-        """Accumulates operation data to the existing position.
+        """Accumulates operation data to the existing position."""
 
-        The accumulator takes care of adding any custom results already
-        present on the operation "results' attribute to the total
-        results of the stock in the accumulator.
-        """
-
+        # Operations may update the posions themselves,
+        # or maybe its their underlying operations that
+        # should update the position. This is determined
+        # by the accumulate_underlying_operations
+        # attribute on the Operation object.
         if operation.accumulate_underlying_operations:
+
+            # If its the underlying operations that should
+            # update the position, then we iterate through
+            # all underlying operations and let each one
+            # of them update the accumulator's position.
             for underlying_operation in operation.operations:
                 self.update_position(underlying_operation)
+
+        # If its not the underlying_operations that should
+        # update the position, them we try to use the operation
+        # itself to update the accumulator's position.
         else:
             self.update_position(operation)
 
@@ -105,43 +114,39 @@ class Accumulator:
         return operation.results
 
     def update_position(self, operation):
-        if operation.asset == self.asset and operation.update_position:
+        """Update the position of the accumulator with an Operation."""
+
+        # Here we check if the operation asset is the same
+        # asset of this Accumulator object; the accumulator
+        # only accumulates operations that trade its asset.
+        # We also check if the operation should update the
+        # position; if all this conditions are met, then
+        # the position is updated.
+        update_position_condition = (
+            operation.asset == self.asset and
+            operation.update_position and
+            operation.quantity
+        )
+        if update_position_condition:
+
+            # Define the new accumualtor quantity
             new_quantity = self.quantity + operation.quantity
 
             # if the quantity of the operation has the same sign
             # of the accumulated quantity then we need to
             # find out the new average price of the asset
             if same_sign(self.quantity, operation.quantity):
-
-                # if the new quantity is zero, then the new average
-                # price is also zero; otherwise, we need to calc the
-                # new average price
-                if new_quantity:
-                    new_price = average_price(
-                                    self.quantity,
-                                    self.price,
-                                    operation.quantity,
-                                    operation.real_price
-                                )
-                else:
-                    new_price = 0
+                self.price = average_price(
+                                self.quantity,
+                                self.price,
+                                operation.quantity,
+                                operation.real_price
+                            )
 
             # If the traded quantity has an opposite sign of the
             # asset's accumulated quantity and the accumulated
             # quantity is not zero, then there was a result.
             elif self.quantity != 0:
-
-                # If the new accumulated quantity is of the same sign
-                # of the old accumulated quantity, the average of price
-                # will not change.
-                if same_sign(self.quantity, new_quantity):
-                    new_price = self.price
-
-                # If the new accumulated quantity is of different
-                # sign of the old accumulated quantity then the
-                # average price is now the price of the operation
-                else:
-                    new_price = operation.real_price
 
                 # check if we are trading more than what
                 # we have on our portfolio; if yes,
@@ -159,23 +164,36 @@ class Accumulator:
 
                 # calculate the result of this operation and add
                 # the new result to the accumulated results
-                operation.results['trades'] += \
-                    result_quantity * self.price - \
-                        result_quantity * operation.real_price
+                operation.results['trades'] += result_quantity * self.price - \
+                                        result_quantity * operation.real_price
+
+                # If the new accumulated quantity is of the same sign
+                # of the old accumulated quantity, the average of price
+                # will not change.
+                if same_sign(self.quantity, new_quantity):
+                    self.price = self.price
+
+                # If the new accumulated quantity is of different
+                # sign of the old accumulated quantity then the
+                # average price is now the price of the operation
+                else:
+                    self.price = operation.real_price
 
             # If the accumulated quantity was zero then
             # there was no result and the new average price
             # is the price of the operation
             else:
-                new_price = operation.real_price
+                self.price = operation.real_price
 
-            # update the accumulator quantity and average
-            # price with the new values
+            # update the accumulator quantity
+            # with the new quantity
             self.quantity = new_quantity
-            if new_quantity:
-                self.price = new_price
-            else:
+
+            # If the accumulator is empty
+            # the price is set back to zero
+            if not self.quantity:
                 self.price = 0
+
 
     def accumulate_event(self, event):
         """Receives a Event subclass instance and lets it do its work.
