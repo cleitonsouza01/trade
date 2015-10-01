@@ -9,7 +9,7 @@ comissions = {
     'some comission': 1,
     'other comission': 3,
 }
-container = trade.OperationContainer(operations=[operation], fixed_commissions=comissions)
+container = trade.OperationContainer(operations=[operation], commissions=comissions)
 
 # identify operations and prorate the comissions
 container.fetch_positions()
@@ -18,8 +18,9 @@ container.fetch_positions()
 accumulator = trade.Accumulator(asset)
 
 # accumulate the operation
-operation = container.common_operations[asset]
-accumulator.accumulate_operation(operation)
+accumulator.accumulate_operation(
+    container.positions['common operations'][asset]
+)
 
 print(accumulator.quantity)
 #>>20
