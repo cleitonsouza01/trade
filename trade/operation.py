@@ -119,44 +119,6 @@ class Operation:
             )
 
 
-class Exercise(Operation):
-    """An exercise operation.
-
-    Exercise operations are operations that involve more than one
-    asset, usually a derivative like a Option and an underlying asset.
-
-    An exercise will change both the accumulted quantity of the
-    derivative and of the underlying asset.
-    """
-
-    accumulate_underlying_operations = True
-
-    def fetch_operations(self, portfolio=None):
-        """Returns the operations created by this exercise.
-
-        If a portfolio is informed, then the premium of the option
-        will be considered.
-
-        An exercise creates two operations:
-        - One operation to consume the option that it being exercised
-        - One operation to represent the sale or the purchase of the
-            asset
-        """
-        if portfolio:
-            self.operations = self.asset.exercise(
-                        self.quantity,
-                        self.price,
-                        self.date,
-                        portfolio.assets[self.asset].price
-                    )
-        else:
-            self.operations = self.asset.exercise(
-                        self.quantity,
-                        self.price,
-                        self.date
-                    )
-
-
 class Daytrade(Operation):
     """A daytrade operation.
 
