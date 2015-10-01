@@ -26,7 +26,8 @@ Check the [API docs](api) for more on this.
 
 
 ## Options
-Options are represente by the class trade.Options.
+The trade module comes with a plugin for Options, which are a subclass
+of Derivative.
 
 Check the [API docs](api) for more on this.
 

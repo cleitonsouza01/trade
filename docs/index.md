@@ -19,7 +19,7 @@ With the trade module you can:
 * Calculate profits or losses relative to an asset, considering all rates and costs involved on its operations
 
 
-## How do I install the trade module?
+## Installation
 The trade module can be installed with pip:
 
 > pip install trade
@@ -113,7 +113,7 @@ Check the [API documentation](api) for all the available features.
 
 
 ## Compatibility
-The trade module is compatible with Python 2.7 and Python 3.x.
+The trade module is compatible with Python 2.7, 3.3, 3.4 and 3.5.
 
 
 ## Version

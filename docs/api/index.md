@@ -6,6 +6,7 @@ operations, daytrades, cost deduction, asset accumulation and taxes.
 
 
 ## Classes available:
+
 + [trade.Asset](trade.asset)  
   Representing assets.
 + [trade.Derivative](trade.asset)  
@@ -29,6 +30,22 @@ operations, daytrades, cost deduction, asset accumulation and taxes.
 ### Utils:
 + [trade.average_price(quantity_1, price_1, quantity_2, price_2)](trade.utils)
 + [trade.same_sign(x, y)](trade.utils)
+
+
+## Default plugins:
+
+The trade module comes pre-packed with some plugins that add
+functionalities related to common exchange market operations.
+
+You may use this plugins in your project or use them as a base
+to create your own plugins.
+
++ [trade.plugins.options](plugins/trade.plugins.options)
+  with classes for Options and Exercises and tasks for the
+  OperationContainer and Portfolio.
++ [trade.plugins.daytrades](plugins/trade.plugins.daytrades)
+  with the Daytrade class, a task for the OperationContainer
+  and some helper functions.
 
 
 ## Basic example
@@ -95,6 +112,7 @@ Check each module doc for more information.
 + [trade.operation_container](trade.operation_container) (OperationContainer)
 + [trade.tax_manager](trade.tax_manager) (TaxManager)
 + [trade.utils](trade.utils) (all the functions)
++ [trade.plugins](plugins) (the default plugins: daytrades, options)
 
 
 Copyright (c) 2015 Rafael da Silva Rocha  

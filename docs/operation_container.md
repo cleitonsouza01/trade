@@ -1,15 +1,17 @@
 # The Operation Container
 A container for operations.
 
-The OperationContainer was designed to execute tasks on groups of
-operations. Its common uses are:
+The OperationContainer was designed to fetch the positions resulting from a
+group of operations. The operations are informed "raw", and the container is
+then used to perform tasks like identify daytrades, prorate commissions and
+so on.
 
-- To group all operations that happened on the same date
-- To identify the daytrades among the operations
-- Prorate commissions and other costs by all the operations
-- Find rates for the operations, if needed
-- To group all daytrades and common operations with the same asset on a single
-operation, if any, and on a single daytrade, if any.
+After the OperationContainer performs its tasks, its operations are ready
+to be accumulated on the Portfolio.
+
+The OperationContainer behavior can be changed via plugins. The trade module
+provides plugins for daytrade identification and option exercises.
+
 
 ## Commissions
 The container prorates fixed commissions by its operations based on their volume.

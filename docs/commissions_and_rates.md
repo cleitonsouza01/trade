@@ -48,8 +48,8 @@ container = trade.OperationContainer(commissions=commissions)
 container.prorate_comissions()
 ```
 
-By default the method "prorate_commissions()"
-is called behind the scenes every time the fetch_positions() method is called.
+By default the method "prorate_commissions()" is called behind the
+scenes every time fetch_positions() is called.
 
 ## Rates
 
@@ -68,37 +68,30 @@ section of the documentation and leave everything the way it is. If your
 application need to calculate taxes for your operations, this will be
 interesting to you.
 
-Fees may vary greatly from one context to another, both in value and in
+Rates may vary greatly from one context to another, both in value and in
 form of application. The trade lib provides a dummy TaxManager object
 that can be extended to implement the right fees for your context.
 
 
 ### The Defaults
 
-By default every OperationContainer object have a reference to an instance of
-the dummy TaxManager object. As mentioned above, this object does not implement
+By default every OperationContainer object have a reference to the default
+TaxManager class. As mentioned above, this class does not implement
 any rates; it just returns a empty set of rates every time it is called.
 
 So, when you call fetch_positions() on your OperationContainer, what happens
-by default is this for every common operation inside the
-OperationContainer:
+by default is this for every operation inside the OperationContainer
+positions dictionary:
 
 ```python
-operation.taxes = tax_manager.get_fees_for_operation(operation)
-```
-
-And this for every daytrade inside the container:
-
-```python
-daytrade.purchase.rates = tax_manager.get_rates_for_daytrade(daytrade.purchase)
-daytrade.sale.rates = tax_manager.get_rates_for_daytrade(daytrade.sale)
+operation.taxes = tax_manager.get_rates_for_operation(operation)
 ```
 
 Where the tax_manager is returning {} in all the cases. If your application
 doesn't need to calculate rates, you may just leave everything the way it is.
 
 
-### Your own fees
+### Your own rates
 
 To change the default behavior, you need to create your own TaxManager
 class. While this may sound like a daunting task, it can be actually
@@ -120,21 +113,20 @@ class MyTaxManager:
 
 You may include multiple rates on dictionaries those methods return.
 
-Now all you need is to change the tax manager object in the OperationContainer
+Now all you need is to change the tax manager reference in the OperationContainer
 for your own tax manager:
 
 ```python
 my_container = OperationContainer()
 
-my_tax_manager = MyTaxManager()
-my_container.tax_manager = my_tax_manager
+my_container.tax_manager = MyTaxManager
 ```
 
 And now all your daytrades will be taxed by 2%, while all your common
 operations will be taxed by 1%.
 
 
-Check the API docs for more on this.
+Check the [API docs](api) for more on this.
 
 
 Copyright (c) 2015 Rafael da Silva Rocha  
