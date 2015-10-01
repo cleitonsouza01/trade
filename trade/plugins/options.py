@@ -73,8 +73,8 @@ class Exercise(Operation):
     Exercise operations are operations that involve more than one
     asset, usually a derivative like a Option and an underlying asset.
 
-    An exercise will change both the accumulted quantity of the
-    derivative and of the underlying asset.
+    An exercise will change the accumulated quantity of both the
+    derivative and the underlying asset.
     """
 
     accumulate_underlying_operations = True
@@ -105,7 +105,12 @@ class Exercise(Operation):
                     )
 
 
-def get_operations_from_exercises(container):
+def fetch_exercises(container):
+    """OperationContainer task.
+
+    After this task, all operations created by Exercise objects
+    will be on the container positions under the key 'exercises'.
+    """
     for operation in container.operations:
         if isinstance(operation, Exercise):
             if 'exercises' not in container.positions:

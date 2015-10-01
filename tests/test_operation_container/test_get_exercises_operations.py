@@ -23,8 +23,8 @@ class Test_get_exercises_operations_Case_00(unittest.TestCase):
                             operations=[self.exercise]
                         )
         self.container.fetch_positions_tasks = [
-            trade.get_operations_from_exercises,
-            trade.identify_daytrades_and_common_operations,
+            trade.fetch_exercises,
+            trade.fetch_daytrades,
             ##trade.prorate_commissions
             ##trade.find_rates_for_positions,
         ]
@@ -93,8 +93,8 @@ class Test_get_exercises_operations_Case_01(unittest.TestCase):
                                 operations=[self.exercise0, self.exercise1]
                             )
         self.container.fetch_positions_tasks = [
-            trade.get_operations_from_exercises,
-            trade.identify_daytrades_and_common_operations,
+            trade.fetch_exercises,
+            trade.fetch_daytrades,
             #trade.prorate_commissions
             #trade.find_rates_for_positions,
         ]

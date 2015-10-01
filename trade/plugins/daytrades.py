@@ -39,13 +39,11 @@ class Daytrade(Operation):
         purchase: A Operation object representing the purchase of the
             asset.
         sale: A Operation object representing the sale of the asset.
+        update_position: Set to False, as daytrades don't change the
+            portfolio position; they just create results.
     """
 
     update_position = False
-    """Daytrades don't update the portfolio position.
-
-    Daytrades just create results.
-    """
 
     def __init__(self, date, asset, quantity, purchase_price, sale_price):
         """Creates the daytrade object.
@@ -88,23 +86,11 @@ class Daytrade(Operation):
                                         abs(self.operations[0].real_value)
 
 
-def daytrade_condition(operation_a, operation_b):
-    """Checks if the operations are day trades."""
-    return (
-        operation_a.asset == operation_b.asset and
-        not same_sign(operation_a.quantity, operation_b.quantity) and
-        operation_a.quantity != 0 and
-        operation_b.quantity != 0
-    )
+def fetch_daytrades(container):
+    """Fetch the daytrades from the OperationContainer operations.
 
-
-def identify_daytrades_and_common_operations(container):
-    """Separates operations into daytrades and common operations.
-
-    After this process, the attributes 'daytrades' and
-    'common_operations'  will be filled with the daytrades
-    and common operations found in the container operations list,
-    if any. The original operations list remains untouched.
+    The daytrades are placed on the container positions under the
+    'daytrades' key.
     """
     for i, operation_a in enumerate(container.operations):
         for operation_b in \
@@ -115,6 +101,16 @@ def identify_daytrades_and_common_operations(container):
                 ]:
             if operation_b.quantity != 0 and operation_a.quantity != 0:
                 extract_daytrade(container, operation_a, operation_b)
+
+
+def daytrade_condition(operation_a, operation_b):
+    """Checks if the operations are day trades."""
+    return (
+        operation_a.asset == operation_b.asset and
+        not same_sign(operation_a.quantity, operation_b.quantity) and
+        operation_a.quantity != 0 and
+        operation_b.quantity != 0
+    )
 
 
 def extract_daytrade(container, operation_a, operation_b):
