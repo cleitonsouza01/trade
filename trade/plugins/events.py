@@ -1,4 +1,16 @@
-"""trade: Tools For Stock Trading Applications.
+"""events: A default set of events for the trade module.
+
+This plugin provides a standard set of events for the trade module.
+Events are passed to Accumulator objects to change their position.
+
+It contains the definitions of:
+- StockSplit
+- ReverseStockSplit
+
+You may use the default events in your application or use them as a
+base to create your own events.
+
+-----------------------------------------------------------------------
 
 Copyright (c) 2015 Rafael da Silva Rocha
 
@@ -23,27 +35,32 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
+from ..event import Event
 
-class Event:
-    """A portfolio-changing event.
 
-    Events can change the quantity, the price and the results stored in
-    the accumulator. This is a base class for Events; every event must
-    inherit from this class and have a method like this:
+class StockSplit(Event):
+    """A stock split."""
 
-        update_portfolio(quantity, price, results)
-            # do stuff here...
-            return quantity, price
-
-    that implements the logic for the change in the portfolio.
-
-    Events must have an "asset" attribute with reference to an Asset
-    instance and a date 'YYYY-mm-dd' attribute.
-    """
-
-    def __init__(self, asset, date):
+    def __init__(self, asset, date, factor):
+        self.factor = factor
         self.asset = asset
         self.date = date
 
     def update_portfolio(self, quantity, price, results):
+        quantity = quantity * self.factor
+        price = price / self.factor
+        return quantity, price
+
+
+class ReverseStockSplit(Event):
+    """ A reverse stock split."""
+
+    def __init__(self, asset, date, factor):
+        self.factor = factor
+        self.asset = asset
+        self.date = date
+
+    def update_portfolio(self, quantity, price, results):
+        quantity = quantity / self.factor
+        price = price * self.factor
         return quantity, price

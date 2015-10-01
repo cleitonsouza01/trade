@@ -24,6 +24,10 @@ The default plugins are:
   provides the Daytrade class, a subtype of operation.Operation
   provides the fetch_daytrades() task to the OperationContainer
 
+- events
+  provides the StockSplit class, a subtype of event.Event
+  provides the ReverseStockSplit class, a subtype of event.Event
+
 You may add the default plugins to your application or use them as a
 base to create your own plugins.
 
@@ -52,6 +56,7 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
+from .events import StockSplit, ReverseStockSplit
 from .options import Option, Exercise, fetch_exercises
 from .daytrades import (
     Daytrade,
