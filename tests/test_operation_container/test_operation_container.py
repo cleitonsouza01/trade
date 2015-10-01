@@ -26,8 +26,8 @@ class TestTradeContainerCreation_Case_01(unittest.TestCase):
         self.container.fetch_positions_tasks = [
             trade.get_operations_from_exercises,
             trade.identify_daytrades_and_common_operations,
-            trade.prorate_commissions,
-            trade.find_rates_for_positions,
+            #trade.prorate_commissions,
+            #trade.find_rates_for_positions,
         ]
 
     def test_container_should_exist(self):
@@ -56,17 +56,18 @@ class TestTradeContainer_add_to_common_operations(unittest.TestCase):
         self.container.fetch_positions_tasks = [
             trade.get_operations_from_exercises,
             trade.identify_daytrades_and_common_operations,
-            trade.prorate_commissions,
-            trade.find_rates_for_positions,
+            #trade.prorate_commissions,
+            #trade.find_rates_for_positions,
         ]
-        trade.identify_daytrades_and_common_operations(self.container)
+        #trade.identify_daytrades_and_common_operations(self.container)
+        self.container.fetch_positions()
         operation2 = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset,
                     quantity=10,
                     price=4
                 )
-        trade.add_to_common_operations(self.container, operation2)
+        self.container.add_to_common_operations(operation2)
 
     def test_common_trades_len_should_be_1(self):
         self.assertEqual(len(self.container.positions['common operations'].keys()), 1)

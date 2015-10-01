@@ -1,10 +1,8 @@
 from __future__ import absolute_import
 import unittest
 
-from trade.utils import (
-    average_price, same_sign, daytrade_condition, find_purchase_and_sale
-)
-from trade import Asset, Operation
+from trade.utils import average_price, same_sign
+from trade import Asset, Operation, daytrade_condition, find_purchase_and_sale
 
 
 class Test_same_sign(unittest.TestCase):

@@ -29,7 +29,7 @@ class TestTradeContainer_rate_discounts_by_trade_case_00(unittest.TestCase):
         expected_discounts = {
             'some discount': 1,
         }
-        trade.prorate_commissions_by_operation(self.container, self.operation)
+        self.container.prorate_commissions_by_operation(self.operation)
         self.assertEqual(self.operation.commissions, expected_discounts)
 
 
@@ -67,14 +67,14 @@ class TestTradeContainer_rate_discounts_by_trade_case_01(unittest.TestCase):
         expected_discounts = {
             'some discount': 0.5,
         }
-        trade.prorate_commissions_by_operation(self.container, self.operation1)
+        self.container.prorate_commissions_by_operation(self.operation1)
         self.assertEqual(self.operation1.commissions, expected_discounts)
 
     def test_check_trade2_discount(self):
         expected_discounts = {
             'some discount': 0.5,
         }
-        trade.prorate_commissions_by_operation(self.container, self.operation2)
+        self.container.prorate_commissions_by_operation(self.operation2)
         self.assertEqual(self.operation2.commissions, expected_discounts)
 
 
@@ -109,14 +109,14 @@ class TestTradeContainer_rate_discounts_by_trade_case_02(unittest.TestCase):
         self.assertTrue(self.container)
 
     def test_check_trade1_discount(self):
-        trade.prorate_commissions_by_operation(self.container, self.operation1)
+        self.container.prorate_commissions_by_operation(self.operation1)
         self.assertEqual(
             round(self.operation1.commissions['some discount'], 8),
             0.33333333
         )
 
     def test_check_trade2_discount(self):
-        trade.prorate_commissions_by_operation(self.container, self.operation2)
+        self.container.prorate_commissions_by_operation(self.operation2)
         self.assertEqual(
             round(self.operation2.commissions['some discount'], 8),
             0.66666667
@@ -162,15 +162,15 @@ class TestTradeContainer_rate_discounts_by_trade_case_03(unittest.TestCase):
         self.assertTrue(self.container)
 
     def test_check_trade1_discount(self):
-        trade.prorate_commissions_by_operation(self.container, self.operation1)
+        self.container.prorate_commissions_by_operation(self.operation1)
         self.assertEqual(self.operation1.commissions['some discount'], 1)
 
     def test_check_trade2_discount(self):
-        trade.prorate_commissions_by_operation(self.container, self.operation2)
+        self.container.prorate_commissions_by_operation(self.operation2)
         self.assertEqual(self.operation2.commissions['some discount'], 2)
 
     def test_check_trade3_discount(self):
-        trade.prorate_commissions_by_operation(self.container, self.operation3)
+        self.container.prorate_commissions_by_operation(self.operation3)
         self.assertEqual(self.operation3.commissions['some discount'], 1)
 
 
@@ -207,7 +207,7 @@ class TestTradeContainer_prorate_discounts_by_common_trades_and_daytrades(
                                     commissions=discounts
                                 )
         trade.identify_daytrades_and_common_operations(self.container)
-        trade.prorate_commissions(self.container)
+        self.container.fetch_positions()
 
     def test_trade_container_should_exist(self):
         self.assertTrue(self.container)

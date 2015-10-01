@@ -24,4 +24,4 @@ THE SOFTWARE.
 from __future__ import absolute_import
 
 from .options import *
-#from .daytrades import *
+from .daytrades import *

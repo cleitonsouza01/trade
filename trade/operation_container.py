@@ -24,6 +24,8 @@ THE SOFTWARE.
 from __future__ import absolute_import
 from __future__ import division
 
+import copy
+
 from .tax_manager import TaxManager
 from .utils import average_price
 
@@ -98,6 +100,10 @@ class OperationContainer:
         self.commissions = commissions
         self.positions = {}
 
+        self.tax_manager = TaxManager
+
+        self.raw_operations = copy.deepcopy(self.operations)
+
         self.fetch_positions_tasks = []
         """Methods to be executed when fetch_positions() is called.
 
@@ -118,7 +124,7 @@ class OperationContainer:
     @property
     def volume(self):
         """Returns the total volume of the operations in the container."""
-        return sum(operation.volume for operation in self.operations)
+        return sum(operation.volume for operation in self.raw_operations)
 
     def fetch_positions(self):
         """Fetch the positions resulting from the operations.
@@ -127,8 +133,22 @@ class OperationContainer:
         fetch_positions_tasks attribute in the order they are
         listed.
         """
+
+        # Execute all defined tasks
         for task in self.fetch_positions_tasks:
             task(self)
+
+        # fetch the positions from the remaining operations
+        for operation in self.operations:
+            if operation.quantity != 0:
+                self.add_to_common_operations(operation)
+
+        # FIXME should be configurable
+        # prorate any commission for the operations
+        self.prorate_commissions()
+
+        # FIXME should be configurable
+        self.find_rates_for_positions()
 
     def merge_operations(container, existing_operation, operation):
         """Merges one operation with another operation."""
@@ -139,3 +159,59 @@ class OperationContainer:
                                         operation.price
                                     )
         existing_operation.quantity += operation.quantity
+
+    def add_to_common_operations(self, operation):
+        """Adds an operation to the common operations list."""
+        if 'common operations' not in self.positions:
+            self.positions['common operations'] = {}
+
+        if operation.asset in self.positions['common operations']:
+            self.merge_operations(
+                self.positions['common operations'][operation.asset],
+                operation
+            )
+        else:
+            self.positions['common operations'][operation.asset] = operation
+
+
+
+    def prorate_commissions_by_operation(self, operation):
+        """Prorates the commissions of the container for one operation.
+
+        The ratio is based on the container volume and the volume of
+        the operation.
+        """
+        if operation.volume != 0 and self.volume != 0:
+            percent = operation.volume / self.volume * 100
+            for key, value in self.commissions.items():
+                operation.commissions[key] = value * percent / 100
+
+    def prorate_commissions(self):
+        """Prorates the container's commissions by its operations.
+
+        This method sum the discounts in the commissions dict of the
+        container. The total discount value is then prorated by the
+        daytrades and common operations based on their volume.
+        """
+
+        for position_type, position_value in self.positions.items():
+            for position in position_value.values():
+                if position.operations:
+                    for operation in position.operations:
+                        self.prorate_commissions_by_operation(operation)
+                else:
+                    self.prorate_commissions_by_operation(position)
+
+    def find_rates_for_positions(self):
+        """Finds the rates for all daytrades and common operations."""
+        for position_type, position_value in self.positions.items():
+            for position in position_value.values():
+                if position.operations:
+                    for operation in position.operations:
+                        operation.rates = \
+                            self.tax_manager.get_rates_for_operation(
+                                                        operation, position_type)
+                else:
+                    position.rates = \
+                        self.tax_manager.get_rates_for_operation(
+                                                        position, position_type)

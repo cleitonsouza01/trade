@@ -25,16 +25,6 @@ from __future__ import absolute_import
 from __future__ import division
 
 
-def daytrade_condition(operation_a, operation_b):
-    """Checks if the operations are day trades."""
-    return (
-        operation_a.asset == operation_b.asset and
-        not same_sign(operation_a.quantity, operation_b.quantity) and
-        operation_a.quantity != 0 and
-        operation_b.quantity != 0
-    )
-
-
 def average_price(quantity_1, price_1, quantity_2, price_2):
     """Calculates the average price between two positions.
 
@@ -50,13 +40,3 @@ def same_sign(x, y):
         return (int(x) >= 0) ^ (int(y) < 0)
     except:
         return None
-
-
-# TODO document this better
-def find_purchase_and_sale(operation_a, operation_b):
-    """Find which is a purchase and which is a sale."""
-    if same_sign(operation_a.quantity, operation_b.quantity):
-        return None
-    if operation_a.quantity > operation_b.quantity:
-        return operation_a, operation_b
-    return operation_b, operation_a
