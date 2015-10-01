@@ -1,6 +1,6 @@
 """daytrades: Daytrades plugin for the trade module.
 
-This plugin provides the Daytrade class, a subtype of Operation, and
+This plugin provides the Daytrade class, a subclass of Operation, and
 the fetch_daytrades() task for the OperationContainer.
 
 With this plugin the trade module can:
@@ -8,7 +8,7 @@ With this plugin the trade module can:
 - Separate daytrades from other operations on the OperationContainer
 
 It provides:
-- Daytrade, a subtype of operation.Operation
+- Daytrade, a subclass of operation.Operation
 - the fetch_daytrades() task to the OperationContainer
 
 Daytrades can be accumulated just like any other Operation object.

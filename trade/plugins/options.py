@@ -8,8 +8,8 @@ With this plugin you can:
   asset position on the portfolio
 
 It provides:
-- Option, a subtype of asset.Derivative
-- Exercise, a subtype of operation.Operation
+- Option, a subclass of asset.Derivative
+- Exercise, a subclass of operation.Operation
 - the fetch_exercises() task to the OperationContainer
 - the get_exercise_premium() task to the Portfolio
 

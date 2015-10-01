@@ -15,6 +15,12 @@ A reverse stock split.
 #### update_portfolio(self, quantity, price, results)
 
 
+### class BonusShares(Event)
+Bonus shares.
+
+#### update_portfolio(self, quantity, price, results)
+
+
 Copyright (c) 2015 Rafael da Silva Rocha  
 rocha.rafaelsilva@gmail.com  
 http://github.com/rochars/trade  

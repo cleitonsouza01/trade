@@ -15,18 +15,18 @@ Plugins are used to extend the trade module functionality. They can:
 The default plugins are:
 
 - options
-  provides the Option class, a subtype of asset.Derivative
-  provides the Exercise class, a subtype of operation.Operation
+  provides the Option class, a subclass of asset.Derivative
+  provides the Exercise class, a subclass of operation.Operation
   provides the fetch_exercises() task to the OperationContainer
   provides the get_exercise_premium() task to the Portfolio
 
 - daytrades
-  provides the Daytrade class, a subtype of operation.Operation
+  provides the Daytrade class, a subclass of operation.Operation
   provides the fetch_daytrades() task to the OperationContainer
 
 - events
-  provides the StockSplit class, a subtype of event.Event
-  provides the ReverseStockSplit class, a subtype of event.Event
+  provides the StockSplit class, a subclass of event.Event
+  provides the ReverseStockSplit class, a subclass of event.Event
 
 You may add the default plugins to your application or use them as a
 base to create your own plugins.
@@ -56,7 +56,7 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from .events import StockSplit, ReverseStockSplit
+from .events import StockSplit, ReverseStockSplit, BonusShares
 from .options import Option, Exercise, fetch_exercises
 from .daytrades import (
     Daytrade,

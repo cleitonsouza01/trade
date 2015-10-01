@@ -36,7 +36,7 @@ THE SOFTWARE.
 from __future__ import absolute_import
 
 from ..event import Event
-
+from ..utils import average_price
 
 class StockSplit(Event):
     """A stock split."""
@@ -63,4 +63,19 @@ class ReverseStockSplit(Event):
     def update_portfolio(self, quantity, price, results):
         quantity = quantity / self.factor
         price = price * self.factor
+        return quantity, price
+
+
+class BonusShares(Event):
+    """Bonus shares.
+    """
+    def __init__(self, asset, date, factor):
+        self.factor = factor
+        self.asset = asset
+        self.date = date
+
+    def update_portfolio(self, quantity, price, results):
+        new_quantity = quantity * self.factor
+        price = average_price (quantity, price, new_quantity, 0)
+        quantity += new_quantity
         return quantity, price

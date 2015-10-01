@@ -16,7 +16,8 @@ to create your own plugins.
   with the Daytrade class, a task for the OperationContainer
   and some helper functions.
 + [trade.plugins.events](trade.plugins.events)
-  with classes representing stock splits and reverse stock splits.
+  with classes representing stock splits, reverse stock splits and
+  bonus shares.
 
 
 Copyright (c) 2015 Rafael da Silva Rocha  
