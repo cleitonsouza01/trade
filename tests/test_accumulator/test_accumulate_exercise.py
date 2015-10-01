@@ -130,15 +130,26 @@ class Test_accumulate_exercise_Case_02(unittest.TestCase):
         self.option_accumulator = trade.Accumulator(self.option)
         self.asset_accumulator = trade.Accumulator(self.asset)
 
-        # Accumulate a option operation
-        self.operation = trade.Operation(
+        # create and accumulate a operation
+        # with the Asset
+        self.operation0 = trade.Operation(
+                            quantity=100,
+                            price=5,
+                            asset=self.asset,
+                            date='2015-01-01'
+                        )
+        self.asset_accumulator.accumulate_operation(self.operation0)
+
+
+        # Accumulate and accumulate an operation
+        # with the Option
+        self.operation1 = trade.Operation(
                             quantity=100,
                             price=10,
                             asset=self.option,
                             date='2015-01-01'
                         )
-
-        self.option_accumulator.accumulate_operation(self.operation)
+        self.option_accumulator.accumulate_operation(self.operation1)
 
         # Accumulate a exercise operation on the asset accumulator
         # and on the option accumulator
@@ -156,10 +167,10 @@ class Test_accumulate_exercise_Case_02(unittest.TestCase):
 
 
     def test_asset_accumulator_price(self):
-        self.assertEqual(self.asset_accumulator.price, 10)
+        self.assertEqual(self.asset_accumulator.price, 7.5)
 
     def test_asset_accumulator_quantity(self):
-        self.assertEqual(self.asset_accumulator.quantity, 100)
+        self.assertEqual(self.asset_accumulator.quantity, 200)
 
     def test_asset_accumulator_results(self):
         self.assertEqual(
