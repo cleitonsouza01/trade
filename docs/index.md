@@ -117,7 +117,7 @@ The trade module is compatible with Python 2.7, 3.3, 3.4 and 3.5.
 
 
 ## Version
-The current version is 0.1.0-alpha.
+The current version is 0.1.1-alpha.
 
 
 ## License
