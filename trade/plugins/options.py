@@ -143,7 +143,12 @@ def fetch_exercises(container):
                                                                     operation
 
 
-# TODO document better this Portfolio task
 def get_exercise_premium(operation, portfolio):
-    if isinstance(operation, trade.Exercise):
+    """Get the premium of the option that is being exercised.
+
+    It searchs on the Portfolio object for an Accumulator of the option
+    and then use the accumulator price as the premium to be included
+    on the exercise operation price.
+    """
+    if isinstance(operation, Exercise):
         operation.fetch_operations(portfolio)

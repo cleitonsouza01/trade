@@ -3,16 +3,12 @@ import unittest
 
 import trade
 
-def get_exercise_premium(operation, portfolio):
-    if isinstance(operation, trade.Exercise):
-        operation.fetch_operations(portfolio)
-
 class TestPortfolioExercisePremium_Case_00(unittest.TestCase):
     """Test the accumulation of one operation with underlying assets."""
 
     def setUp(self):
         self.portfolio = trade.Portfolio()
-        self.portfolio.tasks = [get_exercise_premium]
+        self.portfolio.tasks = [trade.get_exercise_premium]
 
         # Create an asset and a call
         self.asset = trade.Asset(name='some asset')
@@ -80,7 +76,7 @@ class TestPortfolioExercisePremium_Case_01(unittest.TestCase):
 
     def setUp(self):
         self.portfolio = trade.Portfolio()
-        self.portfolio.tasks = [get_exercise_premium]
+        self.portfolio.tasks = [trade.get_exercise_premium]
 
         # Create an asset and a call
         self.asset = trade.Asset(name='some asset')
