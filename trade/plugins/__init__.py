@@ -1,5 +1,34 @@
 """trade: Tools For Stock Trading Applications.
 
+trade.plugins
+-----------------------------------------------------------------------
+This module provides the default plugins for the trade module.
+
+Plugins are used to extend the trade module functionality. They can:
+
+- Create new types of assets
+- Create new types of operations
+- Create new types of events
+- Add functionalities to the OperationContainer
+- Add functionalities to the Portfolio
+
+The default plugins are:
+
+- options
+  provides the Option class, a subtype of asset.Derivative
+  provides the Exercise class, a subtype of operation.Operation
+  provides the fetch_exercises() task to the OperationContainer
+  provides the get_exercise_premium() task to the Portfolio
+
+- daytrades
+  provides the Daytrade class, a subtype of operation.Operation
+  provides the fetch_daytrades() task to the OperationContainer
+
+You may add the default plugins to your application or use them as a
+base to create your own plugins.
+
+-----------------------------------------------------------------------
+
 Copyright (c) 2015 Rafael da Silva Rocha
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,5 +52,11 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from .options import *
-from .daytrades import *
+from .options import Option, Exercise, fetch_exercises
+from .daytrades import (
+    Daytrade,
+    fetch_daytrades,
+    daytrade_condition,
+    extract_daytrade,
+    find_purchase_and_sale,
+)

@@ -1,4 +1,21 @@
-"""trade: Tools For Stock Trading Applications.
+"""daytrades: Daytrades plugin for the trade module.
+
+This plugin provides the Daytrade class, a subtype of Operation, and
+the fetch_daytrades() task for the OperationContainer.
+
+With this plugin the trade module can:
+- Identify daytrades in a group of operations
+- Separate daytrades from other operations on the OperationContainer
+
+It provides:
+- Daytrade, a subtype of operation.Operation
+- the fetch_daytrades() task to the OperationContainer
+
+Daytrades can be accumulated just like any other Operation object.
+They will update the accumulator results, but will not change the
+quantity or the price of the asset on the Portfolio.
+
+-----------------------------------------------------------------------
 
 Copyright (c) 2015 Rafael da Silva Rocha
 

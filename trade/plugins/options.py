@@ -1,4 +1,19 @@
-"""trade: Tools For Stock Trading Applications.
+"""options: Options plugin for the trade module.
+
+This plugin provides Options functionalities to the trade module.
+
+With this plugin you can:
+- Create option assets that points to other (underlying) assets
+- Create exercise operations that change both the option and underlying
+  asset position on the portfolio
+
+It provides:
+- Option, a subtype of asset.Derivative
+- Exercise, a subtype of operation.Operation
+- the fetch_exercises() task to the OperationContainer
+- the get_exercise_premium() task to the Portfolio
+
+-----------------------------------------------------------------------
 
 Copyright (c) 2015 Rafael da Silva Rocha
 
@@ -105,6 +120,7 @@ class Exercise(Operation):
                     )
 
 
+# TODO document better this OperationContainer task
 def fetch_exercises(container):
     """OperationContainer task.
 
@@ -125,3 +141,9 @@ def fetch_exercises(container):
                 else:
                     container.positions['exercises'][operation.asset] = \
                                                                     operation
+
+
+# TODO document better this Portfolio task
+def get_exercise_premium(operation, portfolio):
+    if isinstance(operation, trade.Exercise):
+        operation.fetch_operations(portfolio)
