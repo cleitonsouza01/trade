@@ -45,7 +45,7 @@ class OperationContainer:
 
     The resulting common operations and daytrades contains the
     OperationContiner commissions prorated by their volumes, and also
-    any fees the OperationContainer TaxManager finds for them.
+    any rates the OperationContainer TaxManager finds for them.
 
     This is achieved by calling this method:
 
@@ -54,18 +54,17 @@ class OperationContainer:
     Every time fetch_positions() is called the OperationContainer
     execute this tasks behind the scenes:
 
-    - Separate the daytrades and the common operations of a group of
-      operations that occurred on the same date by using the method:
+    - Execute all tasks defined in self.fetch_positions_tasks.
 
-        identify_daytrades_and_common_operations()
+    - Create positions in self.positions for all operations in
+      self.operations.
 
-    - Prorate a group of commissions proportionally for all daytrades
-      and common operations, if any, by using the method:
+    - Prorate the commissions, if any, proportionally for all positions
+      by calling:
 
         prorate_commissions()
 
-    - Find the appliable rates for the resulting positions by calling
-      this method:
+    - Find the rates, if any, for the resulting positions by calling:
 
         find_rates_for_positions()
 
@@ -83,9 +82,17 @@ class OperationContainer:
                 },
                 ...
             }
-        fetch_positions_tasks: a list of OperationContainer methods.
-            The methods will be called in the order they are defined
-            in this list when fetch_positions() is called.
+        fetch_positions_tasks: a list of functions. The functions will
+            be called in the order they are defined in this list when
+            fetch_positions() is called. Every listed function must
+            receive a OperationContainer object. They are like this:
+
+                def some_task(container):
+                    #do some stuff with container...
+
+            The functions may change the Operation objects in
+            self.operations, if needed (like when you separate
+            daytrades from other operations).
     """
 
     def __init__(self,
@@ -143,11 +150,11 @@ class OperationContainer:
             if operation.quantity != 0:
                 self.add_to_common_operations(operation)
 
-        # FIXME should be configurable
+        # TODO should be configurable
         # prorate any commission for the operations
         self.prorate_commissions()
 
-        # FIXME should be configurable
+        # TODO should be configurable
         self.find_rates_for_positions()
 
     def merge_operations(container, existing_operation, operation):
@@ -173,8 +180,6 @@ class OperationContainer:
         else:
             self.positions['common operations'][operation.asset] = operation
 
-
-
     def prorate_commissions_by_operation(self, operation):
         """Prorates the commissions of the container for one operation.
 
@@ -193,7 +198,6 @@ class OperationContainer:
         container. The total discount value is then prorated by the
         daytrades and common operations based on their volume.
         """
-
         for position_type, position_value in self.positions.items():
             for position in position_value.values():
                 if position.operations:
@@ -202,6 +206,7 @@ class OperationContainer:
                 else:
                     self.prorate_commissions_by_operation(position)
 
+    # FIXME
     def find_rates_for_positions(self):
         """Finds the rates for all daytrades and common operations."""
         for position_type, position_value in self.positions.items():
@@ -210,8 +215,9 @@ class OperationContainer:
                     for operation in position.operations:
                         operation.rates = \
                             self.tax_manager.get_rates_for_operation(
-                                                        operation, position_type)
+                                operation, position_type
+                            )
                 else:
-                    position.rates = \
-                        self.tax_manager.get_rates_for_operation(
-                                                        position, position_type)
+                    position.rates = self.tax_manager.get_rates_for_operation(
+                                            position, position_type
+                                        )

@@ -11,53 +11,59 @@ A container for operations.
 An OperationContainer is used to group operations, like operations
 that occurred on the same date, and then perform tasks on them.
 
+The main task task that the OperationContainer can perform is to
+identify the resulting positions from a group of operations. The
+resulting positions are all operations separated as daytrades and
+common operations, with all common operations and daytrades with
+the same asset grouped into a single operation or a single
+daytrade.
+
+The resulting common operations and daytrades contains the
+OperationContiner commissions prorated by their volumes, and also
+any rates the OperationContainer TaxManager finds for them.
+
 This is achieved by calling this method:
 
-    * fetch_positions()
+    fetch_positions()
 
-The tasks executed on fetch_positions are defined on the attribute
-"fetch_positions_tasks", a list of functions that receive a OperationContainer
-instance as argument.
+Every time fetch_positions() is called the OperationContainer
+execute this tasks behind the scenes:
 
-The default tasks the trade module provides for fetch_positions() are:
+- Execute all tasks defined in self.fetch_positions_tasks.
 
-- Get the operations that option exercises have created by calling the method:
+- Create positions in self.positions for all operations in
+  self.operations.
 
-    * get_operations_from_exercises(container)
+- Prorate the commissions, if any, proportionally for all positions
+  by calling:
 
-- Separate the daytrades and the common operations of a group of
-  operations that occurred on the same date by calling the method:
+    prorate_commissions()
 
-    * identify_daytrades_and_common_operations(container)
+- Find the rates, if any, for the resulting positions by calling:
 
-- Prorate a group of commissions proportionally for all daytrades and
-  common operations, if any, by calling the method:
-
-    * prorate_comissions(container)
-
-- Find the the rates for the resulting positions, if needed, by calling
-  the method:
-
-    * find_rates_for_positions(container)
-
-You can append any function to the OperationContainer fetch_positions_tasks
-as long as it receives an OperationContainer instance as argument.
+    find_rates_for_positions()
 
 ### Attributes:
 + date: A string 'YYYY-mm-dd' representing the date of the operations on the container.
 + operations: A list of Operation instances.
 + commissions: A dict with discount names and values to be deducted from the operations.
-+ daytrades: a dict of Daytrade objects, indexed by the daytrade asset.
-+ common_operations: a dict of Operation objects, indexed by the operation asset.
-+ fetch_positions_tasks: a list of OperationContainer methods.  
-  The methods will be called in the order they are defined in this list when
-  fetch_positions() is called. A default setup could look like this:
-  self.fetch_positions_tasks = [  
-      get_operations_from_exercises,  
-      identify_daytrades_and_common_operations,  
-      prorate_commissions,  
-      find_rates_for_positions,  
-  ]
++ positions: a dict of positions with this format:
+  self.positions = {  
+      'position type': {  
+          Asset: Operation,  
+          ...  
+      },  
+      ...  
+  }
++ fetch_positions_tasks: a list of functions. The functions will
+  be called in the order they are defined in this list when
+  fetch_positions() is called. Every listed function must
+  receive a OperationContainer object. They are like this:
+  def some_task(container):  
+      #do some stuff with container...  
+  The functions may change the Operation objects in
+  self.operations, if needed (like when you separate
+  daytrades from other operations).
 
 ### Properties
 
@@ -78,6 +84,25 @@ listed.
 
 #### merge_operations(self, existing_operation, operation):
 Merges one operation with another operation.
+
+#### add_to_common_operations(self, operation):
+Adds an operation to the common operations list.
+
+#### prorate_commissions_by_operation(self, operation):
+Prorates the commissions of the container for one operation.
+
+The ratio is based on the container volume and the volume of
+the operation.
+
+#### prorate_commissions(self):
+Prorates the container's commissions by its operations.
+
+This method sum the discounts in the commissions dict of the
+container. The total discount value is then prorated by the
+daytrades and common operations based on their volume.
+
+#### find_rates_for_positions(self):
+Finds the rates for all daytrades and common operations.
 
 
 Copyright (c) 2015 Rafael da Silva Rocha  

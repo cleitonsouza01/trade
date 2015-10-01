@@ -28,26 +28,25 @@ class TaxManager:
     """The base TaxManager.
 
     A TaxManager object reads an operation and returns the
-    correspondent percentual fees for that operation. Since fees
-    (and also the way they are applied) may vary greatly from one
-    context to another, this class just implements a dummy interface
-    for the fee discovery process, always returning a empty dictionary
-    of taxes.
+    correspondent rates for that operation. Since rates (and also the
+    way they are applied) may vary greatly from one context to another,
+    this class just implements a dummy interface for the rate discovery
+    process, always returning a empty dictionary of rates.
 
-    Every OperationContainer object has a reference to an instance
-    of this TaxManager. If your app need to apply fees to your
-    Operation objects, then you should extend this class and inform
-    the new TaxManager to your OperationContainer by
+    Every OperationContainer object has a reference to this class.
+    If your app need to apply fees to your Operation objects, then you
+    should extend this class and inform the new TaxManager to your
+    OperationContainer:
 
         operation_container_object.tax_manger = your_tax_manager_object
 
-    The OperationContainer always access his TaxManager object when
+    The OperationContainer always access his TaxManager class when
     fetch_positions() is called. Behind the scenes the container
-    calls this methods from the TaxManager object:
+    calls this method from the TaxManager class:
 
-        tax_manager.get_fees_for_operation(operation, operation_type)
+        tax_manager.get_rates_for_operation(operation, operation_type)
 
-    for every operation and daytrade present on the container.
+    After identifying the positions for every position present on the container.
     """
 
     @staticmethod

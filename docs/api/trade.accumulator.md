@@ -29,14 +29,13 @@ Creates a instance of the accumulator.
 
 Logging by default is set to False; the accumulator will not log any operation,
 just accumulate the quantity and calculate the average price and results related
-to the asset after each call to accumulate_operation(), accumulate_daytrade()
-and accumulate_event().
+to the asset after each call to accumulate_operation() and accumulate_event().
 
 If logging is set to True the accumulator will log the data passed on every call
-to accumulate_operation(), accumulate_daytrade() and accumulate_event().
+to accumulate_operation() and accumulate_event().
 
 #### log_occurrence(self, occurrence):
-Log Operation, Daytrade and Event objects.
+Log Operation and Event objects.
 
 If logging, this method is called behind the scenes every
 time the method accumulate() is called. The occurrences are
@@ -57,11 +56,8 @@ logged like this:
 Accumulates operation data to the existing position.
 
 The accumulator takes care of adding any custom results already
-present on the operation "results' attribute to the total
+present on the operation results attribute to the total
 results of the stock in the accumulator.
-
-#### accumulate_daytrade(self, daytrade):
-Accumulates a Daytrade operation.
 
 #### accumulate_event(self, event):
 Receives a Event subclass instance and lets it do its work.

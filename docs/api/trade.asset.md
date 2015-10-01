@@ -42,20 +42,6 @@ This is a base class for derivatives.
 + ratio: By default the ratio is 1, so 1 derivative = 1 underlying asset.
 
 
-## trade.asset.Option(Derivative):
-Represents an Option.
-This class represents both calls and puts.
-
-### Methods:
-
-#### exercise(self, quantity, price, date):
-Exercises the option.
-
-Returns two operations:
-- one operation with zero value representing the option being consumed by the exercise;
-- one operation representing the purchase or sale of the underlying asset
-
-
 Copyright (c) 2015 Rafael da Silva Rocha  
 rocha.rafaelsilva@gmail.com  
 http://github.com/rochars/trade  

@@ -25,7 +25,6 @@ from __future__ import absolute_import
 from __future__ import division
 
 import math
-import copy
 
 
 class Operation:
@@ -73,7 +72,6 @@ class Operation:
 
         self.operations = []
         """An operation may contain multiple operations."""
-
 
     @property
     def real_value(self):
