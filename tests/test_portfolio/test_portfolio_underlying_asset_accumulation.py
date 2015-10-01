@@ -12,7 +12,7 @@ class TestPortfolioUnderlyingAssetAccumulation_Case_00(unittest.TestCase):
 
     def setUp(self):
         self.portfolio = trade.Portfolio()
-        self.portfolio.accumulate_tasks = [get_exercise_no_premium]
+        self.portfolio.tasks = [get_exercise_no_premium]
 
         # Create an asset and a call
         self.asset = trade.Asset(name='some asset')
@@ -81,7 +81,7 @@ class TestPortfolioUnderlyingAssetAccumulation_Case_01(unittest.TestCase):
 
     def setUp(self):
         self.portfolio = trade.Portfolio()
-        self.portfolio.accumulate_tasks = [get_exercise_no_premium]
+        self.portfolio.tasks = [get_exercise_no_premium]
 
         # Create an asset and a call
         self.asset = trade.Asset(name='some asset')

@@ -32,37 +32,32 @@ class Portfolio:
     A portfolio is a collection of Accumulator objects.
     It can receive Operation objects and update the corresponding
     accumulators.
+
+    Attributes:
+        assets: A dict {Asset: Accumulator}.
+        tasks: The tasks the portfolio will execute when accumulating.
     """
 
     def __init__(self):
-
         self.assets = {}
-        """A dict {Asset: Accumulator}"""
-
-        self.accumulate_tasks = []
+        self.tasks = []
 
     def accumulate(self, operation):
         """Accumulate an operation on its corresponding accumulator."""
-
+        self.run_tasks(operation)
         if operation.accumulate_underlying_operations:
-
-            #print(operation.operations)
-
-            self.execute_accumulate_tasks(operation)
-            #operation.fetch_operations()
-
-            #print(operation.operations)
-
             for underlying_operation in operation.operations:
                 self.accumulate(underlying_operation)
         else:
             if operation.asset not in self.assets:
                 self.assets[operation.asset] = Accumulator(operation.asset)
-
-            self.execute_accumulate_tasks(operation)
-
             self.assets[operation.asset].accumulate_operation(operation)
 
-    def execute_accumulate_tasks(self, operation):
-        for task in self.accumulate_tasks:
+    def run_tasks(self, operation):
+        """Execute the defined tasks on the Operation.
+
+        Any function defined in self.tasks will be executed.
+        This runs before the call to Accumulator.accumulate().
+        """
+        for task in self.tasks:
             task(operation, self)

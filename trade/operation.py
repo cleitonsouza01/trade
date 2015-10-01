@@ -131,34 +131,30 @@ class Exercise(Operation):
 
     accumulate_underlying_operations = True
 
-    def fetch_operations_with_portfolio(self, portfolio):
+    def fetch_operations(self, portfolio=None):
         """Returns the operations created by this exercise.
+
+        If a portfolio is informed, then the premium of the option
+        will be considered.
 
         An exercise creates two operations:
         - One operation to consume the option that it being exercised
         - One operation to represent the sale or the purchase of the
             asset
         """
-        self.operations = self.asset.exercise_with_premium(
-                    self.quantity,
-                    self.price,
-                    self.date,
-                    portfolio.assets[self.asset].price
-                )
-
-    def fetch_operations(self):
-        """Returns the operations created by this exercise.
-
-        An exercise creates two operations:
-        - One operation to consume the option that it being exercised
-        - One operation to represent the sale or the purchase of the
-            asset
-        """
-        self.operations = self.asset.exercise(
-                    self.quantity,
-                    self.price,
-                    self.date
-                )
+        if portfolio:
+            self.operations = self.asset.exercise(
+                        self.quantity,
+                        self.price,
+                        self.date,
+                        portfolio.assets[self.asset].price
+                    )
+        else:
+            self.operations = self.asset.exercise(
+                        self.quantity,
+                        self.price,
+                        self.date
+                    )
 
 
 class Daytrade(Operation):
