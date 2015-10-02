@@ -82,7 +82,7 @@ class OperationContainer:
                 },
                 ...
             }
-        fetch_positions_tasks: a list of functions. The functions will
+        tasks: a list of functions. The functions will
             be called in the order they are defined in this list when
             fetch_positions() is called. Every listed function must
             receive a OperationContainer object. They are like this:
@@ -111,7 +111,7 @@ class OperationContainer:
 
         self.raw_operations = copy.deepcopy(self.operations)
 
-        self.fetch_positions_tasks = []
+        self.tasks = []
         """Methods to be executed when fetch_positions() is called.
 
         A default setup could look like this:
@@ -142,7 +142,7 @@ class OperationContainer:
         """
 
         # Execute all defined tasks
-        for task in self.fetch_positions_tasks:
+        for task in self.tasks:
             task(self)
 
         # fetch the positions from the remaining operations

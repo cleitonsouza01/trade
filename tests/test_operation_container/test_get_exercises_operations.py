@@ -22,7 +22,7 @@ class Test_get_exercises_operations_Case_00(unittest.TestCase):
         self.container = trade.OperationContainer(
                             operations=[self.exercise]
                         )
-        self.container.fetch_positions_tasks = [
+        self.container.tasks = [
             trade.fetch_exercises,
             trade.fetch_daytrades,
             ##trade.prorate_commissions
@@ -92,7 +92,7 @@ class Test_get_exercises_operations_Case_01(unittest.TestCase):
         self.container = trade.OperationContainer(
                                 operations=[self.exercise0, self.exercise1]
                             )
-        self.container.fetch_positions_tasks = [
+        self.container.tasks = [
             trade.fetch_exercises,
             trade.fetch_daytrades,
             #trade.prorate_commissions

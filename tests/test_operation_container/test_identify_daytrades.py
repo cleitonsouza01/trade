@@ -23,7 +23,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_00(
                         )
         self.container = trade.OperationContainer(
             operations=[self.trade1,self.trade2])
-        self.container.fetch_positions_tasks = [
+        self.container.tasks = [
             trade.fetch_exercises,
             trade.fetch_daytrades,
             #trade.prorate_commissions,
@@ -127,7 +127,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_01(
                         )
         self.container = trade.OperationContainer(
             operations=[self.trade1,self.trade2])
-        self.container.fetch_positions_tasks = [
+        self.container.tasks = [
             trade.fetch_exercises,
             trade.fetch_daytrades,
             #trade.prorate_commissions,
@@ -262,7 +262,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_02(
                 )
         self.container = trade.OperationContainer(
             operations=[trade1,trade2,trade3])
-        self.container.fetch_positions_tasks = [
+        self.container.tasks = [
             trade.fetch_exercises,
             trade.fetch_daytrades,
             #trade.prorate_commissions,
@@ -427,7 +427,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_03(
                 )
         self.container = trade.OperationContainer(
             operations=[trade1,trade2,trade3,trade4])
-        self.container.fetch_positions_tasks = [
+        self.container.tasks = [
             trade.fetch_exercises,
             trade.fetch_daytrades,
             #trade.prorate_commissions,
@@ -623,7 +623,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_04(
                 )
         self.container = trade.OperationContainer(
             operations=[trade1,trade2,trade3,trade4,trade5])
-        self.container.fetch_positions_tasks = [
+        self.container.tasks = [
             trade.fetch_exercises,
             trade.fetch_daytrades,
             #trade.prorate_commissions,
@@ -795,7 +795,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_05(
                 )
         self.container = trade.OperationContainer(
             operations=[trade1,trade2,trade3,trade4,trade5])
-        self.container.fetch_positions_tasks = [
+        self.container.tasks = [
             trade.fetch_exercises,
             trade.fetch_daytrades,
             #trade.prorate_commissions,
@@ -967,7 +967,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_06(
                 )
         self.container = trade.OperationContainer(
             operations=[trade1,trade2,trade3,trade4,trade5])
-        self.container.fetch_positions_tasks = [
+        self.container.tasks = [
             trade.fetch_exercises,
             trade.fetch_daytrades,
             #trade.prorate_commissions,
@@ -1196,7 +1196,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_07(
                 trade1,trade2,trade3,trade4,trade5,trade6,trade7,trade8,trade9
             ]
         )
-        self.container.fetch_positions_tasks = [
+        self.container.tasks = [
             trade.fetch_exercises,
             trade.fetch_daytrades,
             #trade.prorate_commissions,
