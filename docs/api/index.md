@@ -1,35 +1,36 @@
 # trade
+http://github.com/rochars/trade  
+http://trade.readthedocs.org  
 
 trade is a Python module with functions and classes for the development
-of investment applications in Python. It provides basic notions of assets,
-operations, daytrades, cost deduction, asset accumulation and taxes.
+of investment applications in Python. It provides notions of assets,
+operations, daytrades, cost deduction, asset accumulation, rates and more.
 
 
 ## Classes available:
 
-+ [trade.Asset](trade.asset)  
++ [trade.Asset](trade)  
   Representing assets.
-+ [trade.Derivative](trade.asset)  
++ [trade.Derivative](trade)  
   A base class for derivatives.
-+ [trade.Operation](trade.operation)  
++ [trade.Operation](trade)  
   Representing operations with assets.
-+ [trade.OperationContainer](trade.operation_container)  
++ [trade.OperationContainer](trade)  
   To identify daytrades, prorate comissions and apply taxes to operations.
-+ [trade.Portfolio](trade.portfolio)  
++ [trade.Portfolio](trade)  
   To represent a portfolio of assets using a series of Accumulator objects.
-+ [trade.TaxManager](trade.tax_manager)  
++ [trade.TaxManager](trade)  
   To get the right taxes for the operations on the container.
-+ [trade.Accumulator](trade.accumulator)  
++ [trade.Accumulator](trade)  
   To accumulate the assets and calculate the result from the trades.
-+ [trade.Event](trade.event)  
++ [trade.Event](trade)  
   To change the asset's quantity and price on the accumulator.
 
 
 ## Functions available:
 
-### Utils:
-+ [trade.average_price(quantity_1, price_1, quantity_2, price_2)](trade.utils)
-+ [trade.same_sign(x, y)](trade.utils)
++ [trade.average_price()](trade)
++ [trade.same_sign()](trade)
 
 
 ## Default plugins:
@@ -100,25 +101,32 @@ print(accumulator.price * accumulator.quantity)
 # 200 from the raw operation
 # (20 quantity * 10 unitary price)
 # + 4 from the total commissions
-
 ```
-
-Check each module doc for more information.
 
 
 ## Modules in this package:
 
-+ [trade.accumulator](trade.accumulator) (Accumulator)
-+ [trade.event](trade.event) (Event)
-+ [trade.asset](trade.asset) (Asset, Derivative)
-+ [trade.operation](trade.operation) (Operation)
-+ [trade.operation_container](trade.operation_container) (OperationContainer)
-+ [trade.tax_manager](trade.tax_manager) (TaxManager)
-+ [trade.utils](trade.utils) (all the functions)
-+ [trade.plugins](plugins) (the default plugins: daytrades, options, events)
++ [trade.trade](trade)
++ [trade.plugins](plugins)
 
 
-Copyright (c) 2015 Rafael da Silva Rocha  
-rocha.rafaelsilva@gmail.com  
-http://github.com/rochars/trade  
-http://trade.readthedocs.org  
+## License
+Copyright (c) 2015 Rafael da Silva Rocha
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.

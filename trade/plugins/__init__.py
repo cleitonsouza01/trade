@@ -1,9 +1,6 @@
-"""trade: Tools For Stock Trading Applications.
+"""A default set of plugins fot the trade module.
 
-trade.plugins
------------------------------------------------------------------------
 This module provides the default plugins for the trade module.
-
 Plugins are used to extend the trade module functionality. They can:
 
 - Create new types of assets
@@ -15,23 +12,26 @@ Plugins are used to extend the trade module functionality. They can:
 The default plugins are:
 
 - options
-  provides the Option class, a subclass of asset.Derivative
-  provides the Exercise class, a subclass of operation.Operation
+  provides the Option class, a subtype of trade.Derivative
+  provides the Exercise class, a subclass of trade.Operation
   provides the fetch_exercises() task to the OperationContainer
   provides the get_exercise_premium() task to the Portfolio
 
 - daytrades
-  provides the Daytrade class, a subclass of operation.Operation
+  provides the Daytrade class, a subclass of trade.Operation
   provides the fetch_daytrades() task to the OperationContainer
 
 - events
-  provides the StockSplit class, a subclass of event.Event
+  provides the StockSplit class, a subclass of trade.Event
   provides the ReverseStockSplit class, a subclass of event.Event
+  provides the BonusShares class, a subclass of event.Event
 
-You may add the default plugins to your application or use them as a
+You may add this default plugins to your application or use them as a
 base to create your own plugins.
 
------------------------------------------------------------------------
+http://trade.readthedocs.org/
+https://github.com/rochars/trade
+License: MIT
 
 Copyright (c) 2015 Rafael da Silva Rocha
 

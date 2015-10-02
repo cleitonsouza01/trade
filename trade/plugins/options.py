@@ -13,7 +13,9 @@ It provides:
 - the fetch_exercises() task to the OperationContainer
 - the get_exercise_premium() task to the Portfolio
 
------------------------------------------------------------------------
+License: MIT
+http://trade.readthedocs.org/
+https://github.com/rochars/trade
 
 Copyright (c) 2015 Rafael da Silva Rocha
 
@@ -38,8 +40,7 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from ..asset import Derivative
-from ..operation import Operation
+from ..trade import Derivative, Operation
 
 
 class Option(Derivative):
@@ -137,13 +138,14 @@ def fetch_exercise_operation(container, operation):
         container.positions['exercises'] = {}
     operation.fetch_operations()
     for operation in operation.operations:
-        if operation.asset.symbol in container.positions['exercises'].keys():
+        symbol = operation.asset.symbol
+        if symbol in container.positions['exercises'].keys():
             container.merge_operations(
-                container.positions['exercises'][operation.asset.symbol],
+                container.positions['exercises'][symbol],
                 operation
             )
         else:
-            container.positions['exercises'][operation.asset.symbol] = operation
+            container.positions['exercises'][symbol] = operation
 
 
 def get_exercise_premium(operation, portfolio):

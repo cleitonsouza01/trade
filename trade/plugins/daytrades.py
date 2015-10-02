@@ -15,7 +15,9 @@ Daytrades can be accumulated just like any other Operation object.
 They will update the accumulator results, but will not change the
 quantity or the price of the asset on the Portfolio.
 
------------------------------------------------------------------------
+License: MIT
+http://trade.readthedocs.org/
+https://github.com/rochars/trade
 
 Copyright (c) 2015 Rafael da Silva Rocha
 
@@ -40,8 +42,7 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from ..operation import Operation
-from ..utils import average_price, same_sign
+from ..trade import Operation, average_price, same_sign
 
 
 class Daytrade(Operation):
@@ -110,14 +111,12 @@ def fetch_daytrades(container):
     'daytrades' key, inexed by the Daytrade asset's symbol.
     """
     for i, operation_a in enumerate(container.operations):
-        for operation_b in \
-                [
-                    op for op in container.operations[i:] if daytrade_condition(
-                                                        op, operation_a
-                                                    )
-                ]:
-            if operation_b.quantity != 0 and operation_a.quantity != 0:
-                extract_daytrade(container, operation_a, operation_b)
+        for operation_b in container.operations[i:]:
+            if daytrade_condition(operation_a, operation_b):
+                append_daytrade_to_container_positions(
+                    extract_daytrade(operation_a, operation_b),
+                    container
+                )
 
 
 def daytrade_condition(operation_a, operation_b):
@@ -130,7 +129,7 @@ def daytrade_condition(operation_a, operation_b):
     )
 
 
-def extract_daytrade(container, operation_a, operation_b):
+def extract_daytrade(operation_a, operation_b):
     """Extracts the daytrade part of two operations."""
 
     # Find what is the purchase and what is the sale
@@ -152,37 +151,31 @@ def extract_daytrade(container, operation_a, operation_b):
 
     # Now that we know everything we need to know
     # about the daytrade, we create the Daytrade object
-    daytrade = Daytrade(
-        container.date,
+    return Daytrade(
+        purchase.date,
         purchase.asset,
         daytrade_quantity,
         purchase.price,
         sale.price
     )
 
-    # If this container already have a Daytrade
-    # with this asset, we merge this daytrade
-    # with the daytrade in self.daytrades -
-    # in the end, there is only one daytrade per
-    # asset per OperationContainer.
 
+def append_daytrade_to_container_positions(daytrade, container):
     if 'daytrades' not in container.positions:
         container.positions['daytrades'] = {}
-    if daytrade.asset.symbol in container.positions['daytrades']:
+    symbol = daytrade.asset.symbol
+    if symbol in container.positions['daytrades']:
         container.merge_operations(
-            container.positions['daytrades'][daytrade.asset.symbol].\
-                operations[0],
+            container.positions['daytrades'][symbol].operations[0],
             daytrade.operations[0]
         )
         container.merge_operations(
-            container.positions['daytrades'][daytrade.asset.symbol].\
-                operations[1],
+            container.positions['daytrades'][symbol].operations[1],
             daytrade.operations[1]
         )
-        container.positions['daytrades'][daytrade.asset.symbol].quantity += \
-                                                            daytrade.quantity
+        container.positions['daytrades'][symbol].quantity += daytrade.quantity
     else:
-        container.positions['daytrades'][daytrade.asset.symbol] = daytrade
+        container.positions['daytrades'][symbol] = daytrade
 
 
 def find_purchase_and_sale(operation_a, operation_b):

@@ -4,7 +4,7 @@ import unittest
 import trade
 
 def get_exercise_no_premium(operation, portfolio):
-    if isinstance(operation, trade.Exercise):
+    if isinstance(operation, trade.plugins.Exercise):
         operation.fetch_operations()
 
 class TestPortfolioUnderlyingAssetAccumulation_Case_00(unittest.TestCase):
@@ -16,7 +16,7 @@ class TestPortfolioUnderlyingAssetAccumulation_Case_00(unittest.TestCase):
 
         # Create an asset and a call
         self.asset = trade.Asset(symbol='some asset')
-        self.option = trade.Option(symbol='some option', underlying_assets=[self.asset])
+        self.option = trade.plugins.Option(symbol='some option', underlying_assets=[self.asset])
 
         # Buy the asset
         self.operation = trade.Operation(
@@ -37,7 +37,7 @@ class TestPortfolioUnderlyingAssetAccumulation_Case_00(unittest.TestCase):
         self.portfolio.accumulate(self.option_operation)
 
         # Exercise the call
-        self.exercise = trade.Exercise(
+        self.exercise = trade.plugins.Exercise(
                             asset=self.option,
                             date='2015-10-04',
                             quantity=10,
@@ -85,7 +85,7 @@ class TestPortfolioUnderlyingAssetAccumulation_Case_01(unittest.TestCase):
 
         # Create an asset and a call
         self.asset = trade.Asset(symbol='some asset')
-        self.option = trade.Option(symbol='some option', underlying_assets=[self.asset])
+        self.option = trade.plugins.Option(symbol='some option', underlying_assets=[self.asset])
 
         # Buy the asset
         self.operation = trade.Operation(
@@ -106,7 +106,7 @@ class TestPortfolioUnderlyingAssetAccumulation_Case_01(unittest.TestCase):
         self.portfolio.accumulate(self.option_operation)
 
         # Exercise the call
-        self.exercise = trade.Exercise(
+        self.exercise = trade.plugins.Exercise(
                             asset=self.option,
                             date='2015-10-04',
                             quantity=10,

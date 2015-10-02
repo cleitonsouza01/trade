@@ -1,4 +1,8 @@
-"""trade: Tools For Stock Trading Applications.
+"""Utility functions for the trade module.
+
+License: MIT
+http://trade.readthedocs.org/
+https://github.com/rochars/trade
 
 Copyright (c) 2015 Rafael da Silva Rocha
 
@@ -21,7 +25,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
 
-from __future__ import absolute_import
 from __future__ import division
 
 

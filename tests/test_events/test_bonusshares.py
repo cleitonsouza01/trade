@@ -13,7 +13,7 @@ class TestBonusSharesEvent_Case_00(unittest.TestCase):
         self.accumulator.quantity = 100
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}
-        event = trade.BonusShares(
+        event = trade.plugins.BonusShares(
                     asset=self.asset,
                     date='2015-09-24',
                     factor=1
@@ -39,7 +39,7 @@ class TestBonusSharesEvent_Case_01(unittest.TestCase):
         self.accumulator.quantity = 100
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}
-        event = trade.BonusShares(
+        event = trade.plugins.BonusShares(
                     asset=self.asset,
                     date='2015-09-24',
                     factor=2
@@ -65,7 +65,7 @@ class TestBonusSharesEvent_Case_02(unittest.TestCase):
         self.accumulator.quantity = 100
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}
-        event = trade.BonusShares(
+        event = trade.plugins.BonusShares(
                     asset=self.asset,
                     date='2015-09-24',
                     factor=0.5

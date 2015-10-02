@@ -15,7 +15,6 @@ class TaxManagerForTests:
             return {'rate': 1}
 
 
-
 class Test_find_rates_for_positions_case_00(unittest.TestCase):
 
     def setUp(self):
@@ -44,7 +43,7 @@ class Test_find_rates_for_positions_case_00(unittest.TestCase):
                             )
         self.container.tax_manager = TaxManagerForTests
         self.container.tasks = [
-            trade.fetch_daytrades,
+            trade.plugins.fetch_daytrades,
             #trade.find_rates_for_positions,
         ]
         self.container.fetch_positions()

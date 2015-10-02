@@ -14,7 +14,7 @@ class TestDaytradeCreation(unittest.TestCase):
 
     def setUp(self):
         self.asset = trade.Asset(name='some stock')
-        self.daytrade = trade.Daytrade(
+        self.daytrade = trade.plugins.Daytrade(
                             date='2015-09-20',
                             asset=self.asset,
                             quantity=10,
@@ -64,7 +64,7 @@ class TestDaytradeResult_case_00(unittest.TestCase):
     """
 
     def setUp(self):
-        self.daytrade = trade.Daytrade(
+        self.daytrade = trade.plugins.Daytrade(
                             date='2015-09-20',
                             asset=trade.Asset(),
                             quantity=10,
@@ -87,7 +87,7 @@ class TestDaytradeResult_case_01(unittest.TestCase):
     """
 
     def setUp(self):
-        self.daytrade = trade.Daytrade(
+        self.daytrade = trade.plugins.Daytrade(
                             date='2015-09-20',
                             asset=trade.Asset(),
                             quantity=10,

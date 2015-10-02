@@ -84,8 +84,8 @@ class Test_accumulate_operation_Case_02(unittest.TestCase):
                         commissions=comissions
                     )
         container.tasks = [
-            trade.fetch_exercises,
-            trade.fetch_daytrades,
+            trade.plugins.fetch_exercises,
+            trade.plugins.fetch_daytrades,
             #trade.prorate_commissions
         ]
         container.fetch_positions()
@@ -120,8 +120,8 @@ class Test_accumulate_operation_Case_03(unittest.TestCase):
                         operations=[operation]
                     )
         container.tasks = [
-            trade.fetch_exercises,
-            trade.fetch_daytrades,
+            trade.plugins.fetch_exercises,
+            trade.plugins.fetch_daytrades,
             #trade.prorate_commissions
         ]
         container.fetch_positions()
@@ -156,8 +156,8 @@ class Test_accumulate_operation_Case_04(unittest.TestCase):
                         operations=[operation]
                     )
         container.tasks = [
-            trade.fetch_exercises,
-            trade.fetch_daytrades,
+            trade.plugins.fetch_exercises,
+            trade.plugins.fetch_daytrades,
             #trade.prorate_commissions
         ]
         container.fetch_positions()

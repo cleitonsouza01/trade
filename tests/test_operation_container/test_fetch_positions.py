@@ -49,8 +49,8 @@ class TestTradeContainer_fetch_positions_case_00(unittest.TestCase):
                                 commissions=discounts
                             )
         self.container.tasks = [
-            trade.fetch_exercises,
-            trade.fetch_daytrades,
+            trade.plugins.fetch_exercises,
+            trade.plugins.fetch_daytrades,
             #trade.prorate_commissions,
             #trade.find_rates_for_positions,
         ]
@@ -233,8 +233,8 @@ class TestTradeContainer_fetch_positions_case_01(
             ]
         )
         self.container.tasks = [
-            trade.fetch_exercises,
-            trade.fetch_daytrades,
+            trade.plugins.fetch_exercises,
+            trade.plugins.fetch_daytrades,
             #trade.prorate_commissions,
             #trade.find_rates_for_positions,
         ]
@@ -445,8 +445,8 @@ class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):
             commissions=commissions
         )
         self.container.tasks = [
-            trade.fetch_exercises,
-            trade.fetch_daytrades,
+            trade.plugins.fetch_exercises,
+            trade.plugins.fetch_daytrades,
             #trade.prorate_commissions,
             #trade.find_rates_for_positions,
         ]

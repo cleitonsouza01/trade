@@ -29,7 +29,7 @@ class TestTaxManager(unittest.TestCase):
         )
 
     def test_get_rates_for_daytrade_should_return_empty_dict(self):
-        daytrade = trade.Daytrade(
+        daytrade = trade.plugins.Daytrade(
                         date='2015-09-25',
                         asset=trade.Asset(),
                         quantity=100,

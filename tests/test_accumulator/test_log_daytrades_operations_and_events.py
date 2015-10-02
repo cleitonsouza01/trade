@@ -1,8 +1,9 @@
 from __future__ import absolute_import
 import unittest
 
-from trade import Accumulator as AssetAccumulator, Event
-from trade import Asset, Operation, Daytrade
+from trade import Accumulator, Event, Asset, Operation
+from trade.plugins import Daytrade
+
 
 class TestEvent(Event):
     def update_portfolio(self, quantity, price, results):
@@ -12,7 +13,7 @@ class TestLogDaytradesOperationsAndEvents_Case_00(unittest.TestCase):
     """Test logging events, operations and daytrades on the same date."""
     def setUp(self):
         self.asset = Asset()
-        self.accumulator = AssetAccumulator(self.asset, logging=True)
+        self.accumulator = Accumulator(self.asset, logging=True)
 
     def test_log_first_operation(self):
         daytrade = Daytrade(
@@ -52,7 +53,7 @@ class TestLogDaytradesOperationsAndEvents_Case_01(unittest.TestCase):
     """Test logging all objects on the different dates."""
     def setUp(self):
         self.asset = Asset()
-        self.accumulator = AssetAccumulator(self.asset, logging=True)
+        self.accumulator = Accumulator(self.asset, logging=True)
 
     def test_log_first_operation(self):
         daytrade = Daytrade(
@@ -106,7 +107,7 @@ class TestLogDaytradesOperationsAndEvents_Case_02(unittest.TestCase):
     """Test logging objects on the different dates."""
     def setUp(self):
         self.asset = Asset()
-        self.accumulator = AssetAccumulator(self.asset, logging=True)
+        self.accumulator = Accumulator(self.asset, logging=True)
 
     def test_log_daytrades_operations_and_events(self):
         daytrade = Daytrade(

@@ -11,12 +11,12 @@ class TestExercise_Case_00(unittest.TestCase):
     def setUp(self):
 
         self.asset = trade.Asset(symbol='GOOGL')
-        self.option = trade.Option(
+        self.option = trade.plugins.Option(
                             name='GOOG151002C00540000',
                             expiration_date='2015-10-02',
                             underlying_assets=[self.asset]
                         )
-        self.exercise = trade.Exercise(
+        self.exercise = trade.plugins.Exercise(
                 			date='2015-09-18',
                 			asset=self.option,
                 			quantity=100,
@@ -48,12 +48,12 @@ class TestExercise_Case_01(unittest.TestCase):
     def setUp(self):
 
         self.asset = trade.Asset(symbol='GOOGL')
-        self.option = trade.Option(
+        self.option = trade.plugins.Option(
                             name='GOOG151002C00540000',
                             expiration_date='2015-10-02',
                             underlying_assets=[self.asset]
                         )
-        self.exercise = trade.Exercise(
+        self.exercise = trade.plugins.Exercise(
                 			date='2015-09-18',
                 			asset=self.option,
                 			quantity=-100,

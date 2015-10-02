@@ -206,7 +206,7 @@ class TestTradeContainer_prorate_discounts_by_common_trades_and_daytrades(
                                     operations=[trade1,trade2,trade3],
                                     commissions=discounts
                                 )
-        trade.fetch_daytrades(self.container)
+        trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
 
     def test_trade_container_should_exist(self):

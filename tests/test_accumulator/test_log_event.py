@@ -3,8 +3,8 @@ from __future__ import division
 
 import unittest
 
-from trade import Accumulator, Event, Asset, StockSplit
-
+from trade import Accumulator, Asset, Event
+from trade.plugins import StockSplit
 
 class DummyEvent(Event):
 

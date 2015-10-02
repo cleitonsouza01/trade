@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 import unittest
 
-from trade import Accumulator as AssetAccumulator
+from trade import Accumulator
 from trade import Asset, Operation
 
 
@@ -11,7 +11,7 @@ class TestAccumulatorResults_purchase_case_00(unittest.TestCase):
 
     def setUp(self):
         self.asset = Asset()
-        self.accumulator = AssetAccumulator(self.asset, logging=True)
+        self.accumulator = Accumulator(self.asset, logging=True)
 
         self.operation0 = Operation(
                                 quantity=-100,
@@ -61,7 +61,7 @@ class TestAccumulatorResults_purchase_case_01(unittest.TestCase):
 
     def setUp(self):
         self.asset = Asset()
-        self.accumulator = AssetAccumulator(self.asset, logging=True)
+        self.accumulator = Accumulator(self.asset, logging=True)
 
         self.operation0 = Operation(
                                 quantity=-100,
@@ -152,7 +152,7 @@ class TestAccumulatorResults_purchase_case_02(unittest.TestCase):
 
     def setUp(self):
         self.asset = Asset()
-        self.accumulator = AssetAccumulator(self.asset, logging=True)
+        self.accumulator = Accumulator(self.asset, logging=True)
 
         self.operation0 = Operation(
                                 quantity=-100,
@@ -232,7 +232,7 @@ class TestAccumulatorResults_purchase_case_03(unittest.TestCase):
 
     def setUp(self):
         self.asset = Asset()
-        self.accumulator = AssetAccumulator(self.asset, logging=True)
+        self.accumulator = Accumulator(self.asset, logging=True)
 
         self.operation0 = Operation(
                                 quantity=-100,
@@ -327,7 +327,7 @@ class TestAccumulatorResults_purchase_case_04(unittest.TestCase):
 
     def setUp(self):
         self.asset = Asset()
-        self.accumulator = AssetAccumulator(self.asset, logging=True)
+        self.accumulator = Accumulator(self.asset, logging=True)
 
         self.operation0 = Operation(
                                 quantity=-100,
@@ -437,7 +437,7 @@ class TestAccumulatorResults_purchase_case_05(unittest.TestCase):
 
     def setUp(self):
         self.asset = Asset()
-        self.accumulator = AssetAccumulator(self.asset, logging=True)
+        self.accumulator = Accumulator(self.asset, logging=True)
 
         self.operation0 = Operation(
                                 quantity=-100,
@@ -547,7 +547,7 @@ class TestAccumulatorResults_purchase_case_06(unittest.TestCase):
 
     def setUp(self):
         self.asset = Asset()
-        self.accumulator = AssetAccumulator(self.asset, logging=True)
+        self.accumulator = Accumulator(self.asset, logging=True)
 
         self.operation0 = Operation(
                                 quantity=-100,
@@ -598,7 +598,7 @@ class TestAccumulatorResults_purchase_case_07(unittest.TestCase):
 
     def setUp(self):
         self.asset = Asset()
-        self.accumulator = AssetAccumulator(self.asset, logging=True)
+        self.accumulator = Accumulator(self.asset, logging=True)
 
         self.operation0 = Operation(
                                 quantity=-50,

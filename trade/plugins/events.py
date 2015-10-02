@@ -10,7 +10,9 @@ It contains the definitions of:
 You may use the default events in your application or use them as a
 base to create your own events.
 
------------------------------------------------------------------------
+License: MIT
+http://trade.readthedocs.org/
+https://github.com/rochars/trade
 
 Copyright (c) 2015 Rafael da Silva Rocha
 
@@ -35,8 +37,8 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from ..event import Event
-from ..utils import average_price
+from ..trade import Event, average_price
+
 
 class StockSplit(Event):
     """A stock split."""
@@ -67,8 +69,8 @@ class ReverseStockSplit(Event):
 
 
 class BonusShares(Event):
-    """Bonus shares.
-    """
+    """Bonus shares."""
+
     def __init__(self, asset, date, factor):
         self.factor = factor
         self.asset = asset

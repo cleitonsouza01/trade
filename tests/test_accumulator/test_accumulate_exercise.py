@@ -10,7 +10,7 @@ class Test_accumulate_exercise_Case_00(unittest.TestCase):
 
     def setUp(self):
         self.asset = trade.Asset(name='Main')
-        self.option = trade.Option(
+        self.option = trade.plugins.Option(
                     name='Option',
                     expiration_date='2015-12-31',
                     underlying_assets=[self.asset],
@@ -51,7 +51,7 @@ class Test_accumulate_exercise_Case_01(unittest.TestCase):
 
         # create a option and a underlying asset
         self.asset = trade.Asset(name='Main')
-        self.option = trade.Option(
+        self.option = trade.plugins.Option(
                     name='Option',
                     expiration_date='2015-12-31',
                     underlying_assets=[self.asset],
@@ -76,7 +76,7 @@ class Test_accumulate_exercise_Case_01(unittest.TestCase):
         # and on the option accumulator
         # When accumulating operations, the Operation object should
         # be passed to the accumulator of all its assets
-        self.exercise = trade.Exercise(
+        self.exercise = trade.plugins.Exercise(
                             quantity=100,
                             price=10,
                             asset=self.option,
@@ -119,7 +119,7 @@ class Test_accumulate_exercise_Case_02(unittest.TestCase):
 
         # create a option and a underlying asset
         self.asset = trade.Asset(name='Main')
-        self.option = trade.Option(
+        self.option = trade.plugins.Option(
                     name='Option',
                     expiration_date='2015-12-31',
                     underlying_assets=[self.asset],
@@ -155,7 +155,7 @@ class Test_accumulate_exercise_Case_02(unittest.TestCase):
         # and on the option accumulator
         # When accumulating operations, the Operation object should
         # be passed to the accumulator of all its assets
-        self.exercise = trade.Exercise(
+        self.exercise = trade.plugins.Exercise(
                             quantity=100,
                             price=10,
                             asset=self.option,

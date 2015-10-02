@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 import unittest
 
-from trade import Accumulator as AssetAccumulator
+from trade import Accumulator
 from trade import Asset, Operation
 
 
@@ -9,7 +9,7 @@ class TestLogOperation(unittest.TestCase):
 
     def setUp(self):
         self.asset = Asset()
-        self.accumulator = AssetAccumulator(self.asset, logging=True)
+        self.accumulator = Accumulator(self.asset, logging=True)
 
     def test_log_first_operation(self):
         operation = Operation(

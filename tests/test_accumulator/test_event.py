@@ -3,10 +3,10 @@ from __future__ import division
 
 import unittest
 
-from trade import Accumulator, Event, Asset, StockSplit
+import trade
 
 
-class EventThatChangeResults(Event):
+class EventThatChangeResults(trade.Event):
 
     def __init__(self, asset, date, some_value):
         self.something = some_value
@@ -22,8 +22,8 @@ class EventThatChangeResults(Event):
 class TestEvent_AssetSplit_case_00(unittest.TestCase):
 
     def setUp(self):
-        self.asset = Asset()
-        self.accumulator = Accumulator(self.asset)
+        self.asset = trade.Asset()
+        self.accumulator = trade.Accumulator(self.asset)
         self.accumulator.quantity = 100
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}
@@ -38,7 +38,7 @@ class TestEvent_AssetSplit_case_00(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {'trades': 1200})
 
     def test_check_quantity_after_split(self):
-        event = StockSplit(
+        event = trade.plugins.StockSplit(
                     asset=self.asset,
                     date='2015-09-27',
                     factor=2
@@ -47,7 +47,7 @@ class TestEvent_AssetSplit_case_00(unittest.TestCase):
         self.assertEqual(self.accumulator.quantity, 200)
 
     def test_check_price_after_split(self):
-        event = StockSplit(
+        event = trade.plugins.StockSplit(
                     asset=self.asset,
                     date='2015-09-27',
                     factor=2
@@ -56,7 +56,7 @@ class TestEvent_AssetSplit_case_00(unittest.TestCase):
         self.assertEqual(self.accumulator.price, 5)
 
     def test_check_results_after_split(self):
-        event = StockSplit(
+        event = trade.plugins.StockSplit(
                     asset=self.asset,
                     date='2015-09-27',
                     factor=2
@@ -68,8 +68,8 @@ class TestEvent_AssetSplit_case_00(unittest.TestCase):
 class TestEvent_EventThatChangeResults_case_00(unittest.TestCase):
 
     def setUp(self):
-        self.asset = Asset()
-        self.accumulator = Accumulator(self.asset)
+        self.asset = trade.Asset()
+        self.accumulator = trade.Accumulator(self.asset)
         self.accumulator.quantity = 100
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}

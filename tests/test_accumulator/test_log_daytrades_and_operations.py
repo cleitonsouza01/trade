@@ -1,18 +1,17 @@
 from __future__ import absolute_import
 import unittest
 
-from trade import Accumulator as AssetAccumulator
-from trade import Asset, Operation, Daytrade
+import trade
 
 
 class TestLogDaytradesAndOperations_Case_00(unittest.TestCase):
 
     def setUp(self):
-        self.asset = Asset()
-        self.accumulator = AssetAccumulator(self.asset, logging=True)
+        self.asset = trade.Asset()
+        self.accumulator = trade.Accumulator(self.asset, logging=True)
 
     def test_log_occurrences(self):
-        daytrade = Daytrade(
+        daytrade = trade.plugins.Daytrade(
                         date='2015-01-01',
                         asset=self.asset,
                         quantity=100,
@@ -22,7 +21,7 @@ class TestLogDaytradesAndOperations_Case_00(unittest.TestCase):
         #self.accumulator.accumulate_daytrade(daytrade)
         self.accumulator.accumulate_operation(daytrade)
 
-        operation = Operation(100, 10, asset=self.asset, date='2015-01-01')
+        operation = trade.Operation(100, 10, asset=self.asset, date='2015-01-01')
         self.accumulator.accumulate_operation(operation)
 
         expected_log = {
@@ -40,11 +39,11 @@ class TestLogDaytradesAndOperations_Case_00(unittest.TestCase):
 class TestLogDaytradesAndOperations_Case_01(unittest.TestCase):
 
     def setUp(self):
-        self.asset = Asset()
-        self.accumulator = AssetAccumulator(self.asset, logging=True)
+        self.asset = trade.Asset()
+        self.accumulator = trade.Accumulator(self.asset, logging=True)
 
     def test_log_occurrences(self):
-        daytrade = Daytrade(
+        daytrade = trade.plugins.Daytrade(
                         date='2015-01-01',
                         asset=self.asset,
                         quantity=100,
@@ -54,7 +53,7 @@ class TestLogDaytradesAndOperations_Case_01(unittest.TestCase):
         #self.accumulator.accumulate_daytrade(daytrade)
         self.accumulator.accumulate_operation(daytrade)
 
-        operation = Operation(100, 10, asset=self.asset, date='2015-01-02')
+        operation = trade.Operation(100, 10, asset=self.asset, date='2015-01-02')
         self.accumulator.accumulate_operation(operation)
 
         expected_log = {
@@ -79,11 +78,11 @@ class TestLogDaytradesAndOperations_Case_01(unittest.TestCase):
 class TestLogDaytradesAndOperations_Case_02(unittest.TestCase):
 
     def setUp(self):
-        self.asset = Asset()
-        self.accumulator = AssetAccumulator(self.asset, logging=True)
+        self.asset = trade.Asset()
+        self.accumulator = trade.Accumulator(self.asset, logging=True)
 
     def test_log_occurrences(self):
-        daytrade = Daytrade(
+        daytrade = trade.plugins.Daytrade(
                         date='2015-01-01',
                         asset=self.asset,
                         quantity=100,
@@ -93,7 +92,7 @@ class TestLogDaytradesAndOperations_Case_02(unittest.TestCase):
         #self.accumulator.accumulate_daytrade(daytrade)
         self.accumulator.accumulate_operation(daytrade)
 
-        operation = Operation(
+        operation = trade.Operation(
                         quantity=100,
                         price=10,
                         asset=self.asset,
@@ -101,7 +100,7 @@ class TestLogDaytradesAndOperations_Case_02(unittest.TestCase):
                     )
         self.accumulator.accumulate_operation(operation)
 
-        daytrade2 = Daytrade(
+        daytrade2 = trade.plugins.Daytrade(
                         date='2015-01-02',
                         asset=self.asset,
                         quantity=100,

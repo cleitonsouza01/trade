@@ -24,8 +24,8 @@ class TestTradeContainerCreation_Case_01(unittest.TestCase):
             commissions=commissions
         )
         self.container.fetch_positions_tasks = [
-            trade.fetch_exercises,
-            trade.fetch_daytrades,
+            trade.plugins.fetch_exercises,
+            trade.plugins.fetch_daytrades,
             #trade.prorate_commissions,
             #trade.find_rates_for_positions,
         ]
@@ -54,12 +54,12 @@ class TestTradeContainer_add_to_common_operations(unittest.TestCase):
         self.container = \
                     trade.OperationContainer(operations=[operation])
         self.container.fetch_positions_tasks = [
-            trade.fetch_exercises,
-            trade.fetch_daytrades,
+            trade.plugins.fetch_exercises,
+            trade.plugins.fetch_daytrades,
             #trade.prorate_commissions,
             #trade.find_rates_for_positions,
         ]
-        #trade.fetch_daytrades(self.container)
+        #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
         operation2 = trade.Operation(
                     date='2015-09-21',

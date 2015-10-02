@@ -8,12 +8,12 @@ class Test_get_exercises_operations_Case_00(unittest.TestCase):
 
     def setUp(self):
         self.asset = trade.Asset(symbol='GOOGL')
-        self.option = trade.Option(
-                        name='GOOG151002C00540000',
+        self.option = trade.plugins.Option(
+                        symbol='GOOG151002C00540000',
                         expiration_date='2015-10-02',
                         underlying_assets=[self.asset]
                     )
-        self.exercise = trade.Exercise(
+        self.exercise = trade.plugins.Exercise(
             			date='2015-09-18',
             			asset=self.option,
             			quantity=100,
@@ -23,15 +23,10 @@ class Test_get_exercises_operations_Case_00(unittest.TestCase):
                             operations=[self.exercise]
                         )
         self.container.tasks = [
-            trade.fetch_exercises,
-            trade.fetch_daytrades,
-            ##trade.prorate_commissions
-            ##trade.find_rates_for_positions,
+            trade.plugins.fetch_exercises,
+            trade.plugins.fetch_daytrades,
         ]
         self.container.fetch_positions()
-
-    def test_operation_container_should_exist(self):
-        self.assertTrue(self.container)
 
     def test_operation_container_volume(self):
         self.assertEqual(self.container.volume, 1000)
@@ -72,18 +67,18 @@ class Test_get_exercises_operations_Case_01(unittest.TestCase):
 
     def setUp(self):
         self.asset = trade.Asset(symbol='GOOGL')
-        self.option = trade.Option(
-                            name='GOOG151002C00540000',
+        self.option = trade.plugins.Option(
+                            symbol='GOOG151002C00540000',
                             expiration_date='2015-10-02',
                             underlying_assets=[self.asset]
                         )
-        self.exercise0 = trade.Exercise(
+        self.exercise0 = trade.plugins.Exercise(
                 			date='2015-09-18',
                 			asset=self.option,
                 			quantity=100,
                 			price=1
                         )
-        self.exercise1 = trade.Exercise(
+        self.exercise1 = trade.plugins.Exercise(
                 			date='2015-09-18',
                 			asset=self.option,
                 			quantity=100,
@@ -93,14 +88,9 @@ class Test_get_exercises_operations_Case_01(unittest.TestCase):
                                 operations=[self.exercise0, self.exercise1]
                             )
         self.container.tasks = [
-            trade.fetch_exercises,
-            trade.fetch_daytrades,
-            #trade.prorate_commissions
-            #trade.find_rates_for_positions,
+            trade.plugins.fetch_exercises,
+            trade.plugins.fetch_daytrades,
         ]
-
-    def test_operation_container_should_exist(self):
-        self.assertTrue(self.container)
 
     def test_container_exercise_operations_len(self):
         self.container.fetch_positions()
