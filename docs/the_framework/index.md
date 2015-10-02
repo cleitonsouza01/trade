@@ -1,6 +1,6 @@
 # trade: Tools For Stock Trading Applications.
 
-Check the API documentation for all the available features.
+Check the [API docs](../api) for all the available features.
 
 
 Copyright (c) 2015 Rafael da Silva Rocha

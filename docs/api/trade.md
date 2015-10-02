@@ -11,7 +11,7 @@ asset = trade.Asset(symbol='GOOGL')
 ```
 
 
-## trade.asset.Asset
+## trade.Asset
 An asset represents anything that can be traded.
 
 ### Attributes:
@@ -28,7 +28,7 @@ Assets always return a reference to themselves when being copied, so they
 are never really copied.
 
 
-## trade.asset.Derivative(Asset):
+## trade.Derivative(Asset):
 A derivative is a asset which derives from one or more assets.
 
 Derivatives have all the asset attributes and can be traded like
@@ -44,7 +44,7 @@ This is a base class for derivatives.
 + ratio: By default the ratio is 1, so 1 derivative = 1 underlying asset.
 
 
-## trade.event.Event
+## trade.Event
 A portfolio-changing event.
 
 Events can change the quantity, the price and the results stored in
@@ -60,7 +60,7 @@ inherit from this class and have a method like this:
 that implements the logic for the change in the portfolio.
 
 
-## trade.operation.Operation
+## trade.Operation
 An operation represents the purchase or the sale of an asset.
 
 ### Attributes:  
@@ -103,7 +103,7 @@ Returns the quantity of the operation * its raw price.
 Returns the total rate value for this operation.
 
 
-## trade.operation_container.OperationContainer
+## trade.OperationContainer
 A container for operations.
 
 An OperationContainer is used to group operations, like operations
@@ -206,7 +206,7 @@ Finds the rates for all daytrades and common operations.
 
 
 
-## trade.accumulator.Accumulator
+## trade.Accumulator
 An accumulator of quantity @ some average price.
 
 ### Attributes:
@@ -285,7 +285,7 @@ quantity, price and results.
 
 
 
-## trade.portfolio.Portfolio
+## trade.Portfolio
 A portfolio of assets.
 
 A portfolio is a collection of Accumulator objects.
@@ -309,7 +309,7 @@ This runs before the call to Accumulator.accumulate().
 
 
 
-## trade.tax_manager.TaxManager
+## trade.TaxManager
 The base TaxManager.
 
 A TaxManager object reads an operation and returns the correspondent rates for

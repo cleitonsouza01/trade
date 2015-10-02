@@ -21,7 +21,7 @@ operation = trade.Operation(
 )
 ```
 
-Check the API docs for more on this.
+Check the [API docs](../api) for more on this.
 
 
 Copyright (c) 2015 Rafael da Silva Rocha  

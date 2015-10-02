@@ -21,7 +21,7 @@ The container prorates fixed commissions by its operations based on their volume
 Commissions have their raw value deducted or added to Operations.
 
 Read more about this in [Commissions and Rates](./commissions_and_rates).  
-Read more about this in the [API docs](../api/trade.operation_container).
+Read more about this in the [API docs](../api).
 
 
 ## Rates
@@ -35,7 +35,7 @@ Rates are represented as percentages, and their actual value is calculated
 based on the operation volume (quantity * price).
 
 Read more about this in [Commissions and Rates](./commissions_and_rates).  
-Read more about this in the [API docs](../api/trade.operation_container).
+Read more about this in the [API docs](../api).
 
 
 Copyright (c) 2015 Rafael da Silva Rocha  
