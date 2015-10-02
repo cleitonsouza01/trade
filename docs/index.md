@@ -116,7 +116,7 @@ accumulator when it calculates results and average prices.
 
 The Accumulator can also log the accumulated operations and their results.
 
-Check the [API documentation](api) for all the available features.
+Check the [API docs](api) for all the available features.
 
 
 ## Compatibility

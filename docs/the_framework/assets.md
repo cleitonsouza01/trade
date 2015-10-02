@@ -22,14 +22,14 @@ even_other_asset = trade.Asset(name='even other asset', expiration_date='2015-12
 real_world_asset = trade.Asset(name='Apple Inc', symbol='AAPL')
 ```
 
-Check the [API docs](api) for more on this.
+Check the [API docs](../api) for more on this.
 
 
 ## Options
 The trade module comes with a plugin for Options, which are a subclass
 of Derivative.
 
-Check the [API docs](api) for more on this.
+Check the [API docs](../api) for more on this.
 
 
 Copyright (c) 2015 Rafael da Silva Rocha  

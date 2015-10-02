@@ -126,7 +126,7 @@ And now all your daytrades will be taxed by 2%, while all your common
 operations will be taxed by 1%.
 
 
-Check the [API docs](api) for more on this.
+Check the [API docs](../api) for more on this.
 
 
 Copyright (c) 2015 Rafael da Silva Rocha  

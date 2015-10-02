@@ -1,7 +1,6 @@
-# The Accumulator
-An accumulator of quantity @ some average price.
+# The Portfolio
 
-Check the [API docs](api) for more on this.
+Check the [API docs](../api) for more on this.
 
 
 Copyright (c) 2015 Rafael da Silva Rocha  
