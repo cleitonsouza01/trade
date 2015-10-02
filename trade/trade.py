@@ -4,9 +4,9 @@ trade is Python framework to ease the development of investment
 management applications. It is focused in, but not limited to,
 stock exchange markets.
 
-License: MIT
 http://trade.readthedocs.org/
 https://github.com/rochars/trade
+License: MIT
 
 Copyright (c) 2015 Rafael da Silva Rocha
 

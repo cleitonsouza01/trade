@@ -1,8 +1,8 @@
 """Utility functions for the trade module.
 
-License: MIT
 http://trade.readthedocs.org/
 https://github.com/rochars/trade
+License: MIT
 
 Copyright (c) 2015 Rafael da Silva Rocha
 

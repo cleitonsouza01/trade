@@ -8,14 +8,14 @@ With this plugin you can:
   asset position on the portfolio
 
 It provides:
-- Option, a subclass of asset.Derivative
-- Exercise, a subclass of operation.Operation
+- Option, a subclass of trade.Derivative
+- Exercise, a subclass of trade.Operation
 - the fetch_exercises() task to the OperationContainer
 - the get_exercise_premium() task to the Portfolio
 
-License: MIT
 http://trade.readthedocs.org/
 https://github.com/rochars/trade
+License: MIT
 
 Copyright (c) 2015 Rafael da Silva Rocha
 

@@ -8,16 +8,16 @@ With this plugin the trade module can:
 - Separate daytrades from other operations on the OperationContainer
 
 It provides:
-- Daytrade, a subclass of operation.Operation
+- Daytrade, a subclass of trade.Operation
 - the fetch_daytrades() task to the OperationContainer
 
 Daytrades can be accumulated just like any other Operation object.
 They will update the accumulator results, but will not change the
 quantity or the price of the asset on the Portfolio.
 
-License: MIT
 http://trade.readthedocs.org/
 https://github.com/rochars/trade
+License: MIT
 
 Copyright (c) 2015 Rafael da Silva Rocha
 

@@ -2,7 +2,7 @@ import trade
 import trade.plugins
 
 # create some assets
-asset = trade.Asset(symbol='GOOGL')
+asset = trade.Asset(symbol='ATVI')
 
 purchase = trade.Operation(
                 asset=asset,
@@ -29,7 +29,7 @@ container.operations.append(purchase)
 container.operations.append(sale)
 
 # Run the container default method to fetch the positions
-# resulting from this opeations:
+# resulting from this operations:
 container.fetch_positions()
 
 # create the portfolio
@@ -41,4 +41,5 @@ for position in container.positions['common operations'].values():
 for position in container.positions['daytrades'].values():
     portfolio.accumulate(position)
 
-print(portfolio.assets['GOOGL'].results)
+print(portfolio.assets['ATVI'].results)
+#> {'daytrades': 9.949999999999989, 'trades': 0}

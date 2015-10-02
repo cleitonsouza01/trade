@@ -145,13 +145,13 @@ trade module you just have to append a task to the operation container:
 
 ```python
 import trade
-
+import trade.plugins
 
 # Create the operation container
 container = trade.OperationContainer()
 
 # Append the new task
-container.tasks.append(trade.fetch_daytrades)
+container.tasks.append(trade.plugins.fetch_daytrades)
 ```
 
 And now your container will identify all daytrades among your operations.
@@ -164,6 +164,7 @@ Using the previous example it would look like this:
 
 ```python
 import trade
+import trade.plugins
 
 # create some assets
 asset = trade.Asset(symbol='ATVI')
@@ -185,7 +186,7 @@ sale = trade.Operation(
 # Create the operation container and append
 # the task to identify daytrades
 container = trade.OperationContainer()
-container.tasks.append(trade.fetch_daytrades)
+container.tasks.append(trade.plugins.fetch_daytrades)
 
 # Append all operations on the OperationContainer
 # operations attribute, which is a list.

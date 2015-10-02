@@ -6,13 +6,14 @@ Events are passed to Accumulator objects to change their position.
 It contains the definitions of:
 - StockSplit
 - ReverseStockSplit
+- BonusShares
 
 You may use the default events in your application or use them as a
 base to create your own events.
 
-License: MIT
 http://trade.readthedocs.org/
 https://github.com/rochars/trade
+License: MIT
 
 Copyright (c) 2015 Rafael da Silva Rocha
 
