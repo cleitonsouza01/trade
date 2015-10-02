@@ -9,17 +9,17 @@ with assets and then calculate the result of those operations, automatically
 creating a portfolio of the assets you trade.
 
 
-### [Installing](part0.md)
+### [Installing](part_0)
 This part of the tutorial shows how to install the trade framework.
 If your already have trade installed you can skip this part.
 
 
-### [Part 1: Creating operations](part01.md)
+### [Part 1: Creating operations](part_1)
 This part of the tutorial shows how to create simple purchase and
 sale operations.
 
 
-### [Part 2: Accumulating assets](part02.md)
+### [Part 2: Accumulating assets](part_2)
 Now that we can create operations, let's create a series of operations
 and let the trade module calculate the resulting position of the asset.
 
@@ -27,7 +27,7 @@ We will use the Portfolio class to accumulate the operations and create
 our portfolio.
 
 
-### [Part 3: Pre-processing operations: The Operation Container](part03.md)
+### [Part 3: Pre-processing operations: The Operation Container](part_3)
 Now that we can create operations and accumulate their results on our
 portfolio, let's do some pre-processing on the operations before we
 accumulate them.
@@ -37,7 +37,7 @@ some tasks on them, and then accumulate the changed operations on our
 portfolio.
 
 
-### [Part 4: Pre-processing operations: Daytrades](part04.md)
+### [Part 4: Pre-processing operations: Daytrades](part_4)
 Now that we understand how to pre-process operations before accumulating
 them on our portfolio, lets pre-process the operations to identify some
 daytrades.

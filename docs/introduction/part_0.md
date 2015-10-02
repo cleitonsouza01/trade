@@ -22,8 +22,7 @@ print(asset.name)
 ```
 
 Now that you have trade installed, you can move on to the next part of the
-tutorial: [Part 1: Creating operations](part01.md).
-
+tutorial: [Part 1: Creating operations](part_1).
 
 
 Copyright (c) 2015 Rafael da Silva Rocha

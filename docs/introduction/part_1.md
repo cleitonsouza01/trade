@@ -56,7 +56,7 @@ Notice the negative value on the quantity. Negative quantity values are used
 to represent a sale operation.
 
 Now that you can create purchase and sale operations, you can move on to
-the next part of the tutorial: [Part 2: Accumulating assets](part02.md).
+the next part of the tutorial: [Part 2: Accumulating assets](part_2).
 
 
 Copyright (c) 2015 Rafael da Silva Rocha

@@ -111,7 +111,7 @@ print(portfolio.assets[asset].results)
 
 Now that you can create operations and keep your assets on a portfolio, you can
 move on to the next part of the tutorial:
-[Part 3: Pre-processing operations](part03.md).
+[Part 3: Pre-processing operations](part_3).
 
 
 Copyright (c) 2015 Rafael da Silva Rocha

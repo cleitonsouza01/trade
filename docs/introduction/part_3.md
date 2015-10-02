@@ -153,7 +153,7 @@ which is the next part of this tutorial.
 
 Now that we can pre-process operations before accumulating them, we can move
 on to the next part of this tutorial:
-[Pre-processing operations: Daytrades](part04.md).
+[Pre-processing operations: Daytrades](part_4).
 
 
 Copyright (c) 2015 Rafael da Silva Rocha
