@@ -11,7 +11,7 @@ http://trade.readthedocs.org
 [![Coverage Status](https://coveralls.io/repos/rochars/trade/badge.svg?branch=master&service=github)](https://coveralls.io/github/rochars/trade?branch=master)
 [![Documentation](https://readthedocs.org/projects/trade/badge/)](http://trade.readthedocs.org/en/latest/)
 [![License](https://img.shields.io/pypi/l/trade.svg)](https://opensource.org/licenses/MIT)
-![Python Versions](https://img.shields.io/pypi/pyversions/trade.svg)
+[![Python Versions](https://img.shields.io/pypi/pyversions/trade.svg)](https://pypi.python.org/pypi/trade/)
 
 
 What is it?
