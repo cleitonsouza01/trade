@@ -20,8 +20,8 @@ on your portfolio like this:
 import trade
 
 # create some assets
-asset = trade.Asset(name='some asset')
-other_asset = trade.Asset(name='other asset')
+asset = trade.Asset(symbol='AAPL')
+other_asset = trade.Asset(name='GOOGL')
 
 # create the purchase operation buying 10 stocks
 purchase = trade.Operation(
@@ -67,6 +67,7 @@ portfolio = trade.Portfolio()
 # Attribute
 for position in container.positions['common operations'].values():
     portfolio.accumulate(position)
+
 ```
 
 But this is a simple case; real world operations can be much more complex than
@@ -79,7 +80,7 @@ day. So this would be a daytrade:
 import trade
 
 # create the asset
-asset = trade.Asset(name='some asset')
+asset = trade.Asset(symbol='ATVI')
 
 # create the purchase operation buying 10 stocks
 purchase = trade.Operation(
@@ -107,7 +108,7 @@ To make things more complicated, this is also a daytrade in some contexts:
 import trade
 
 # create the asset
-asset = trade.Asset(name='some asset')
+asset = trade.Asset(symbol='ATVI')
 
 # create the purchase operation buying 10 stocks
 purchase = trade.Operation(
@@ -165,7 +166,7 @@ Using the previous example it would look like this:
 import trade
 
 # create some assets
-asset = trade.Asset(name='some asset')
+asset = trade.Asset(symbol='ATVI')
 
 purchase = trade.Operation(
                 asset=asset,
@@ -204,7 +205,7 @@ for position in container.positions['common operations'].values():
 for position in container.positions['daytrades'].values():
     portfolio.accumulate(position)
 
-print(portfolio.assets[asset].results)
+print(portfolio.assets['ATVI'].results)
 #> {'daytrades': 9.949999999999989, 'trades': 0}
 ```
 

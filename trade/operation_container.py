@@ -77,7 +77,7 @@ class OperationContainer:
         positions: a dict of positions with this format:
             self.positions = {
                 'position type': {
-                    Asset: Operation,
+                    Asset.symbol: Operation,
                     ...
                 },
                 ...
@@ -177,7 +177,8 @@ class OperationContainer:
                 operation
             )
         else:
-            self.positions['common operations'][operation.asset.symbol] = operation
+            self.positions['common operations'][operation.asset.symbol] = \
+                                                                    operation
 
     def prorate_commissions_by_operation(self, operation):
         """Prorates the commissions of the container for one operation.

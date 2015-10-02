@@ -50,7 +50,8 @@ class Portfolio:
                 self.accumulate(underlying_operation)
         else:
             if operation.asset.symbol not in self.assets:
-                self.assets[operation.asset.symbol] = Accumulator(operation.asset)
+                self.assets[operation.asset.symbol] =\
+                                                Accumulator(operation.asset)
             self.assets[operation.asset.symbol].accumulate_operation(operation)
 
     def run_tasks(self, operation):

@@ -1,8 +1,8 @@
 import trade
 
 # create some assets
-asset = trade.Asset(name='some asset')
-other_asset = trade.Asset(name='other asset')
+asset = trade.Asset(symbol='GOOGL')
+other_asset = trade.Asset(symbol='AAPL')
 
 # create the purchase operation buying 10 stocks
 purchase = trade.Operation(
@@ -45,10 +45,10 @@ container.fetch_positions()
 print(container.positions)
 
 # Check each position
-print(container.positions['common operations'][asset].asset.name)
-print(container.positions['common operations'][asset].quantity)
-print(container.positions['common operations'][asset].price)
+print(container.positions['common operations']['GOOGL'].asset.symbol)
+print(container.positions['common operations']['GOOGL'].quantity)
+print(container.positions['common operations']['GOOGL'].price)
 
-print(container.positions['common operations'][other_asset].asset.name)
-print(container.positions['common operations'][other_asset].quantity)
-print(container.positions['common operations'][other_asset].price)
+print(container.positions['common operations']['AAPL'].asset.symbol)
+print(container.positions['common operations']['AAPL'].quantity)
+print(container.positions['common operations']['AAPL'].price)

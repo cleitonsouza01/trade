@@ -5,7 +5,7 @@ You can use them by just:
 
 ```python
 import trade
-trade.average_price(x,y)
+trade.average_price(quantity_x, price_x, quantity_y, price_y)
 ```
 
 and so on.

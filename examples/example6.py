@@ -1,7 +1,7 @@
 import trade
 
 # create some assets
-asset = trade.Asset(name='some asset')
+asset = trade.Asset(symbol='GOOGL')
 
 purchase = trade.Operation(
                 asset=asset,
@@ -40,4 +40,4 @@ for position in container.positions['common operations'].values():
 for position in container.positions['daytrades'].values():
     portfolio.accumulate(position)
 
-print(portfolio.assets[asset].results)
+print(portfolio.assets['GOOGL'].results)

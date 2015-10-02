@@ -107,7 +107,7 @@ def fetch_daytrades(container):
     """Fetch the daytrades from the OperationContainer operations.
 
     The daytrades are placed on the container positions under the
-    'daytrades' key.
+    'daytrades' key, inexed by the Daytrade asset's symbol.
     """
     for i, operation_a in enumerate(container.operations):
         for operation_b in \
@@ -170,11 +170,13 @@ def extract_daytrade(container, operation_a, operation_b):
         container.positions['daytrades'] = {}
     if daytrade.asset.symbol in container.positions['daytrades']:
         container.merge_operations(
-            container.positions['daytrades'][daytrade.asset.symbol].operations[0],
+            container.positions['daytrades'][daytrade.asset.symbol].\
+                operations[0],
             daytrade.operations[0]
         )
         container.merge_operations(
-            container.positions['daytrades'][daytrade.asset.symbol].operations[1],
+            container.positions['daytrades'][daytrade.asset.symbol].\
+                operations[1],
             daytrade.operations[1]
         )
         container.positions['daytrades'][daytrade.asset.symbol].quantity += \

@@ -38,9 +38,9 @@ To check if everything went OK, open the Python console and import the module:
 
 ```python
 import trade
-asset = trade.Asset(name='some asset')
-print(asset.name)
-#>> some asset
+asset = trade.Asset(symbol='AAPL')
+print(asset.symbol)
+#>> AAPL
 ```
 
 

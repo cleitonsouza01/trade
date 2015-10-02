@@ -14,7 +14,7 @@ Creating Operation objects:
 ```python
 import trade
 operation = trade.Operation(
-    asset=trade.Asset('some asset')
+    asset=trade.Asset(symbol='GOOG')
     quantity=10
     price=1.4
     date='2015-09-25'

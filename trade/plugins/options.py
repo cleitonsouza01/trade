@@ -129,18 +129,21 @@ def fetch_exercises(container):
     """
     for operation in container.operations:
         if isinstance(operation, Exercise):
-            if 'exercises' not in container.positions:
-                container.positions['exercises'] = {}
-            operation.fetch_operations()
-            for operation in operation.operations:
-                if operation.asset.symbol in container.positions['exercises'].keys():
-                    container.merge_operations(
-                        container.positions['exercises'][operation.asset.symbol],
-                        operation
-                    )
-                else:
-                    container.positions['exercises'][operation.asset.symbol] = \
-                                                                    operation
+            fetch_exercise_operation(container, operation)
+
+
+def fetch_exercise_operation(container, operation):
+    if 'exercises' not in container.positions:
+        container.positions['exercises'] = {}
+    operation.fetch_operations()
+    for operation in operation.operations:
+        if operation.asset.symbol in container.positions['exercises'].keys():
+            container.merge_operations(
+                container.positions['exercises'][operation.asset.symbol],
+                operation
+            )
+        else:
+            container.positions['exercises'][operation.asset.symbol] = operation
 
 
 def get_exercise_premium(operation, portfolio):

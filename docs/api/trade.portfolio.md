@@ -9,7 +9,7 @@ It can receive Operation objects and update the corresponding
 accumulators.
 
 ### Attributes:
-    assets: A dict {Asset: Accumulator}.
+    assets: A dict {Asset.symbol: Accumulator}.
     tasks: The tasks the portfolio will execute when accumulating.
 
 ### Methods

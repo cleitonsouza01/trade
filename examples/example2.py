@@ -1,7 +1,7 @@
 import trade
 
 # create the asset and the operation
-asset = trade.Asset('some asset')
+asset = trade.Asset(symbol='AAPL')
 operation = trade.Operation(date='2015-09-18', asset=asset, quantity=20, price=10)
 
 # create a container with some comissions associated with it
@@ -19,7 +19,7 @@ accumulator = trade.Accumulator(asset)
 
 # accumulate the operation
 accumulator.accumulate_operation(
-    container.positions['common operations'][asset]
+    container.positions['common operations'][asset.symbol]
 )
 
 print(accumulator.quantity)

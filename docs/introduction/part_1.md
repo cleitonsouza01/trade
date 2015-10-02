@@ -8,7 +8,7 @@ So now you have the trade module installed, and you can create assets:
 
 ```python
 import trade
-asset = trade.Asset(name='some asset')
+asset = trade.Asset(symbol='GOOGL')
 ```
 
 Assets are the base of the trade module. Everything will revolve around them;
@@ -22,7 +22,7 @@ can be created like this:
 import trade
 
 # create the asset
-asset = trade.Asset(name='some asset')
+asset = trade.Asset(symbol='GOOGL')
 
 # create the operation
 operation = trade.Operation(
@@ -41,7 +41,7 @@ A sale operation would look like this:
 import trade
 
 # create the asset
-asset = trade.Asset(name='some asset')
+asset = trade.Asset(symbol='GOOGL')
 
 # create the operation
 operation = trade.Operation(

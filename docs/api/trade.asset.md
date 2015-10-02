@@ -5,7 +5,7 @@ You can use them by just:
 
 ```python
 import trade
-asset = trade.Asset()
+asset = trade.Asset(symbol='GOOGL')
 ```
 
 

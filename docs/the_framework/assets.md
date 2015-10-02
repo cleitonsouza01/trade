@@ -9,17 +9,9 @@ Creating Asset objects:
 ```python
 import trade
 
-# A empty asset
-asset = trade.Asset()
-
-# An asset with a name
-other_asset = trade.Asset(name='other asset')
-
-# An asset with a name and a expiration date
-even_other_asset = trade.Asset(name='even other asset', expiration_date='2015-12-31')
-
 # A real-world stock traded on NASDAQ
 real_world_asset = trade.Asset(name='Apple Inc', symbol='AAPL')
+
 ```
 
 Check the [API docs](../api) for more on this.

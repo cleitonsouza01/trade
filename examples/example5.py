@@ -1,8 +1,8 @@
 import trade
 
 # create some assets
-asset = trade.Asset(name='some asset')
-other_asset = trade.Asset(name='other asset')
+asset = trade.Asset(symbol='GOOG')
+other_asset = trade.Asset(symbol='AAPL')
 
 # create the purchase operation buying 10 stocks
 purchase = trade.Operation(

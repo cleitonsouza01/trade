@@ -50,7 +50,7 @@ execute this tasks behind the scenes:
 + positions: a dict of positions with this format:
   self.positions = {  
       'position type': {  
-          Asset: Operation,  
+          Asset.symbol: Operation,  
           ...  
       },  
       ...  
@@ -62,7 +62,7 @@ execute this tasks behind the scenes:
 
   def some_task(container):  
       #do some stuff with container...  
-  
+
   The functions may change the Operation objects in
   self.operations, if needed (like when you separate
   daytrades from other operations).

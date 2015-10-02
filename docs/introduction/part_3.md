@@ -15,7 +15,7 @@ So now we can create operations and accumulate then on a Portfolio like this:
 import trade
 
 # create the asset
-asset = trade.Asset(name='some asset')
+asset = trade.Asset(symbol='GOOGL')
 
 # create the purchase operation buying 10 stocks
 purchase = trade.Operation(
@@ -60,8 +60,8 @@ It would look like this:
 import trade
 
 # create some assets
-asset = trade.Asset(name='some asset')
-other_asset = trade.Asset(name='other asset')
+asset = trade.Asset(symbol='GOOGL')
+other_asset = trade.Asset(symbol='AAPL')
 
 # create the purchase operation buying 10 stocks
 purchase = trade.Operation(
@@ -120,7 +120,7 @@ Operation with an Asset. It is something like this:
 
 {
     'common operations':  {
-        <Asset>: <Operation>,
+        <Asset.symbol>: <Operation>,
         ...
     }
 }
@@ -131,18 +131,18 @@ check our OperationContainer object positions we would see this:
 ```python
 
 # Check each position
-print(container.positions['common operations'][asset].asset.name)
-#> some asset
-print(container.positions['common operations'][asset].quantity)
+print(container.positions['common operations']['GOOGL'].asset.symbol)
+#> GOOGL
+print(container.positions['common operations']['GOOGL'].quantity)
 #> 20
-print(container.positions['common operations'][asset].price)
+print(container.positions['common operations']['GOOGL'].price)
 #> 15
 
-print(container.positions['common operations'][other_asset].asset.name)
-#> other asset
-print(container.positions['common operations'][other_asset].quantity)
+print(container.positions['common operations']['AAPL'].asset.symbol)
+#> AAPL
+print(container.positions['common operations']['AAPL'].quantity)
 #> 10
-print(container.positions['common operations'][other_asset].price)
+print(container.positions['common operations']['AAPL'].price)
 #> 10
 ```
 
