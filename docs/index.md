@@ -18,6 +18,9 @@ With the trade module you can:
 * Calculate the average price of an asset after a series of operations
 * Calculate profits or losses relative to an asset, considering all rates and costs involved on its operations
 
+Check the tutorials on [Introduction](introduction) to get started using
+the trade framework.
+
 
 ## Installation
 The trade module can be installed with pip:
@@ -28,13 +31,17 @@ To check if everything went OK, open the Python console and import the module:
 
 ```python
 import trade
-asset = trade.Asset('some asset')
+asset = trade.Asset(name='some asset')
 print(asset.name)
 #>> some asset
 ```
 
 
 ## Quickstart
+
+Check the tutorials on [Introduction](introduction) to get started using
+the trade framework.
+
 A basic example of the trade module in action:
 
 ```python

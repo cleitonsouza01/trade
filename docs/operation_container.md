@@ -10,7 +10,8 @@ After the OperationContainer performs its tasks, its operations are ready
 to be accumulated on the Portfolio.
 
 The OperationContainer behavior can be changed via plugins. The trade module
-provides plugins for daytrade identification and option exercises.
+provides plugins for daytrade identification and option exercises, among other
+things.
 
 
 ## Commissions

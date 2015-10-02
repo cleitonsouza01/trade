@@ -29,7 +29,7 @@ This is achieved by calling this method:
 Every time fetch_positions() is called the OperationContainer
 execute this tasks behind the scenes:
 
-- Execute all tasks defined in self.fetch_positions_tasks.
+- Execute all tasks defined in self.tasks.
 
 - Create positions in self.positions for all operations in
   self.operations.
@@ -55,12 +55,14 @@ execute this tasks behind the scenes:
       },  
       ...  
   }
-+ fetch_positions_tasks: a list of functions. The functions will
++ tasks: a list of functions. The functions will
   be called in the order they are defined in this list when
   fetch_positions() is called. Every listed function must
   receive a OperationContainer object. They are like this:
+
   def some_task(container):  
       #do some stuff with container...  
+  
   The functions may change the Operation objects in
   self.operations, if needed (like when you separate
   daytrades from other operations).
@@ -79,7 +81,7 @@ Returns the total volume of the operations in the container.
 Fetch the positions resulting from the operations.
 
 This method executes all the methods defined on the
-fetch_positions_tasks attribute in the order they are
+tasks attribute in the order they are
 listed.
 
 #### merge_operations(self, existing_operation, operation):

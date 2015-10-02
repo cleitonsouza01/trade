@@ -54,7 +54,7 @@ class OperationContainer:
     Every time fetch_positions() is called the OperationContainer
     execute this tasks behind the scenes:
 
-    - Execute all tasks defined in self.fetch_positions_tasks.
+    - Execute all tasks defined in self.tasks.
 
     - Create positions in self.positions for all operations in
       self.operations.
@@ -115,7 +115,7 @@ class OperationContainer:
         """Methods to be executed when fetch_positions() is called.
 
         A default setup could look like this:
-        self.fetch_positions_tasks = [
+        self.tasks = [
             self.get_operations_from_exercises,
             self.identify_daytrades_and_common_operations,
             self.prorate_commissions,
@@ -136,9 +136,8 @@ class OperationContainer:
     def fetch_positions(self):
         """Fetch the positions resulting from the operations.
 
-        This method executes all the methods defined on the
-        fetch_positions_tasks attribute in the order they are
-        listed.
+        This method executes all the methods defined on the tasks
+        attribute in the order they are listed.
         """
 
         # Execute all defined tasks
