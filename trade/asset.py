@@ -40,9 +40,10 @@ class Asset:
         self.symbol = symbol
         self.expiration_date = expiration_date
 
+    '''
     def __deepcopy__(self, memo):
         return self
-
+    '''
 
 class Derivative(Asset):
     """A derivative is a asset which derives from one or more assets.

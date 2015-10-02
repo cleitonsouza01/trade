@@ -19,8 +19,8 @@ class TaxManagerForTests:
 class Test_find_rates_for_positions_case_00(unittest.TestCase):
 
     def setUp(self):
-        self.asset1 = trade.Asset('some asset')
-        self.asset2 = trade.Asset('some other asset')
+        self.asset1 = trade.Asset(symbol='some asset')
+        self.asset2 = trade.Asset(symbol='some other asset')
         operation1 = trade.Operation(
                         date='2015-09-21',
                         asset=self.asset1,
@@ -60,7 +60,7 @@ class Test_find_rates_for_positions_case_00(unittest.TestCase):
             'rate': 0.005,
         }
         self.assertEqual(
-            self.container.positions['daytrades'][self.asset1].operations[0].rates,
+            self.container.positions['daytrades'][self.asset1.symbol].operations[0].rates,
             taxes
         )
 
@@ -69,20 +69,20 @@ class Test_find_rates_for_positions_case_00(unittest.TestCase):
             'rate': 0.005,
         }
         self.assertEqual(
-            self.container.positions['daytrades'][self.asset1].operations[0].rates,
+            self.container.positions['daytrades'][self.asset1.symbol].operations[0].rates,
             taxes
         )
 
     def test_container_common_operation0_taxes(self):
         taxes = {'rate':1}
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1].rates,
+            self.container.positions['common operations'][self.asset1.symbol].rates,
             taxes
         )
 
     def test_container_common_operation1_taxes(self):
         taxes = {'rate':1}
         self.assertEqual(
-            self.container.positions['common operations'][self.asset2].rates,
+            self.container.positions['common operations'][self.asset2.symbol].rates,
             taxes
         )

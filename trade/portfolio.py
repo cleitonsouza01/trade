@@ -34,7 +34,7 @@ class Portfolio:
     accumulators.
 
     Attributes:
-        assets: A dict {Asset: Accumulator}.
+        assets: A dict {Asset.symbol: Accumulator}.
         tasks: The tasks the portfolio will execute when accumulating.
     """
 
@@ -49,9 +49,9 @@ class Portfolio:
             for underlying_operation in operation.operations:
                 self.accumulate(underlying_operation)
         else:
-            if operation.asset not in self.assets:
-                self.assets[operation.asset] = Accumulator(operation.asset)
-            self.assets[operation.asset].accumulate_operation(operation)
+            if operation.asset.symbol not in self.assets:
+                self.assets[operation.asset.symbol] = Accumulator(operation.asset)
+            self.assets[operation.asset.symbol].accumulate_operation(operation)
 
     def run_tasks(self, operation):
         """Execute the defined tasks on the Operation.

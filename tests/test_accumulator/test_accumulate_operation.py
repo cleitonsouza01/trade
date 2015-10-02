@@ -39,7 +39,7 @@ class Test_accumulate_operation_Case_01(unittest.TestCase):
 
     def setUp(self):
         self.asset0 = trade.Asset()
-        self.asset1 = trade.Asset('other')
+        self.asset1 = trade.Asset(symbol='other')
         self.operation = trade.Operation(
                             quantity=-100,
                             price=10,
@@ -68,7 +68,7 @@ class Test_accumulate_operation_Case_01(unittest.TestCase):
 class Test_accumulate_operation_Case_02(unittest.TestCase):
 
     def setUp(self):
-        asset = trade.Asset('some asset')
+        asset = trade.Asset(symbol='some asset')
         operation = trade.Operation(
                         date='2015-09-18',
                         asset=asset,
@@ -83,14 +83,14 @@ class Test_accumulate_operation_Case_02(unittest.TestCase):
                         operations=[operation],
                         commissions=comissions
                     )
-        container.fetch_positions_tasks = [
+        container.tasks = [
             trade.fetch_exercises,
             trade.fetch_daytrades,
             #trade.prorate_commissions
         ]
         container.fetch_positions()
         self.accumulator = trade.Accumulator(asset)
-        operation = container.positions['common operations'][asset]
+        operation = container.positions['common operations'][asset.symbol]
         self.accumulator.accumulate_operation(operation)
 
     def test_accumulator_price(self):
@@ -109,7 +109,7 @@ class Test_accumulate_operation_Case_02(unittest.TestCase):
 class Test_accumulate_operation_Case_03(unittest.TestCase):
 
     def setUp(self):
-        asset = trade.Asset('some asset')
+        asset = trade.Asset(symbol='some asset')
         operation = trade.Operation(
                         date='2015-09-18',
                         asset=asset,
@@ -119,14 +119,14 @@ class Test_accumulate_operation_Case_03(unittest.TestCase):
         container = trade.OperationContainer(
                         operations=[operation]
                     )
-        container.fetch_positions_tasks = [
+        container.tasks = [
             trade.fetch_exercises,
             trade.fetch_daytrades,
             #trade.prorate_commissions
         ]
         container.fetch_positions()
         self.accumulator = trade.Accumulator(asset)
-        operation = container.positions['common operations'][asset]
+        operation = container.positions['common operations'][asset.symbol]
         self.accumulator.accumulate_operation(operation)
 
     def test_accumulator_average_price(self):
@@ -145,7 +145,7 @@ class Test_accumulate_operation_Case_03(unittest.TestCase):
 class Test_accumulate_operation_Case_04(unittest.TestCase):
 
     def setUp(self):
-        asset = trade.Asset('some asset')
+        asset = trade.Asset(symbol='some asset')
         operation = trade.Operation(
                         date='2015-09-18',
                         asset=asset,
@@ -155,7 +155,7 @@ class Test_accumulate_operation_Case_04(unittest.TestCase):
         container = trade.OperationContainer(
                         operations=[operation]
                     )
-        container.fetch_positions_tasks = [
+        container.tasks = [
             trade.fetch_exercises,
             trade.fetch_daytrades,
             #trade.prorate_commissions
@@ -164,7 +164,7 @@ class Test_accumulate_operation_Case_04(unittest.TestCase):
         self.accumulator = trade.Accumulator(asset)
 
         self.accumulator.accumulate_operation(
-            container.positions['common operations'][asset]
+            container.positions['common operations'][asset.symbol]
         )
 
         operation2 = trade.Operation(
@@ -191,7 +191,7 @@ class Test_accumulate_operation_Case_04(unittest.TestCase):
 class Test_accumulate_operation_Case_05(unittest.TestCase):
 
     def setUp(self):
-        asset = trade.Asset('some asset')
+        asset = trade.Asset(symbol='some asset')
         operation = trade.Operation(
                         date='2015-09-18',
                         asset=asset,

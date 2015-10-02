@@ -110,7 +110,7 @@ class Exercise(Operation):
                         self.quantity,
                         self.price,
                         self.date,
-                        portfolio.assets[self.asset].price
+                        portfolio.assets[self.asset.symbol].price
                     )
         else:
             self.operations = self.asset.exercise(
@@ -133,13 +133,13 @@ def fetch_exercises(container):
                 container.positions['exercises'] = {}
             operation.fetch_operations()
             for operation in operation.operations:
-                if operation.asset in container.positions['exercises'].keys():
+                if operation.asset.symbol in container.positions['exercises'].keys():
                     container.merge_operations(
-                        container.positions['exercises'][operation.asset],
+                        container.positions['exercises'][operation.asset.symbol],
                         operation
                     )
                 else:
-                    container.positions['exercises'][operation.asset] = \
+                    container.positions['exercises'][operation.asset.symbol] = \
                                                                     operation
 
 

@@ -44,7 +44,7 @@ class TestTradeContainerCreation_Case_01(unittest.TestCase):
 class TestTradeContainer_add_to_common_operations(unittest.TestCase):
 
     def setUp(self):
-        self.asset = trade.Asset('some asset')
+        self.asset = trade.Asset(symbol='some asset')
         operation = trade.Operation(
                     date='2015-09-21',
                     asset=self.asset,
@@ -77,12 +77,12 @@ class TestTradeContainer_add_to_common_operations(unittest.TestCase):
 
     def test_common_trades0_quantity_should_be_20(self):
         self.assertEqual(
-            self.container.positions['common operations'][self.asset].quantity,
+            self.container.positions['common operations'][self.asset.symbol].quantity,
             20
         )
 
     def test_common_trades0_price_should_be_3(self):
         self.assertEqual(
-            self.container.positions['common operations'][self.asset].price,
+            self.container.positions['common operations'][self.asset.symbol].price,
             3
         )

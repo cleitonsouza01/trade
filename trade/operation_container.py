@@ -171,13 +171,13 @@ class OperationContainer:
         if 'common operations' not in self.positions:
             self.positions['common operations'] = {}
 
-        if operation.asset in self.positions['common operations']:
+        if operation.asset.symbol in self.positions['common operations']:
             self.merge_operations(
-                self.positions['common operations'][operation.asset],
+                self.positions['common operations'][operation.asset.symbol],
                 operation
             )
         else:
-            self.positions['common operations'][operation.asset] = operation
+            self.positions['common operations'][operation.asset.symbol] = operation
 
     def prorate_commissions_by_operation(self, operation):
         """Prorates the commissions of the container for one operation.
@@ -205,7 +205,6 @@ class OperationContainer:
                 else:
                     self.prorate_commissions_by_operation(position)
 
-    # FIXME
     def find_rates_for_positions(self):
         """Finds the rates for all daytrades and common operations."""
         for position_type, position_value in self.positions.items():

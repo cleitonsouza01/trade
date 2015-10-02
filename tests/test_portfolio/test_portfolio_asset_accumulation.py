@@ -9,7 +9,7 @@ class TestPortfolioAssetAccumulation_Case_00(unittest.TestCase):
 
     def setUp(self):
         self.portfolio = trade.Portfolio()
-        self.asset = trade.Asset(name='some asset')
+        self.asset = trade.Asset(symbol='some asset')
         self.operation = trade.Operation(
                             asset=self.asset,
                             date='2015-10-01',
@@ -25,16 +25,16 @@ class TestPortfolioAssetAccumulation_Case_00(unittest.TestCase):
         self.assertEqual(len(self.portfolio.assets.keys()), 1)
 
     def test_portfolio_asset_accumulator(self):
-        self.assertTrue(isinstance(self.portfolio.assets[self.asset], trade.Accumulator))
+        self.assertTrue(isinstance(self.portfolio.assets[self.asset.symbol], trade.Accumulator))
 
     def test_portfolio_asset_accumulator_asset(self):
-        self.assertEqual(self.portfolio.assets[self.asset].asset, self.asset)
+        self.assertEqual(self.portfolio.assets[self.asset.symbol].asset.symbol, self.asset.symbol)
 
     def test_accumulator_quantity(self):
-        self.assertEqual(self.portfolio.assets[self.asset].quantity, 10)
+        self.assertEqual(self.portfolio.assets[self.asset.symbol].quantity, 10)
 
     def test_accumulator_price(self):
-        self.assertEqual(self.portfolio.assets[self.asset].price, 1)
+        self.assertEqual(self.portfolio.assets[self.asset.symbol].price, 1)
 
 
 class TestPortfolioAssetAccumulation_Case_01(unittest.TestCase):
@@ -42,7 +42,7 @@ class TestPortfolioAssetAccumulation_Case_01(unittest.TestCase):
 
     def setUp(self):
         self.portfolio = trade.Portfolio()
-        self.asset = trade.Asset(name='some asset')
+        self.asset = trade.Asset(symbol='some asset')
         self.operation0 = trade.Operation(
                             asset=self.asset,
                             date='2015-10-01',
@@ -62,16 +62,16 @@ class TestPortfolioAssetAccumulation_Case_01(unittest.TestCase):
         self.assertEqual(len(self.portfolio.assets.keys()), 1)
 
     def test_portfolio_asset_accumulator(self):
-        self.assertTrue(isinstance(self.portfolio.assets[self.asset], trade.Accumulator))
+        self.assertTrue(isinstance(self.portfolio.assets[self.asset.symbol], trade.Accumulator))
 
     def test_portfolio_asset_accumulator_asset(self):
-        self.assertEqual(self.portfolio.assets[self.asset].asset, self.asset)
+        self.assertEqual(self.portfolio.assets[self.asset.symbol].asset.symbol, self.asset.symbol)
 
     def test_accumulator_quantity(self):
-        self.assertEqual(self.portfolio.assets[self.asset].quantity, 20)
+        self.assertEqual(self.portfolio.assets[self.asset.symbol].quantity, 20)
 
     def test_accumulator_price(self):
-        self.assertEqual(self.portfolio.assets[self.asset].price, 1.5)
+        self.assertEqual(self.portfolio.assets[self.asset.symbol].price, 1.5)
 
 
 class TestPortfolioAssetAccumulation_Case_02(unittest.TestCase):
@@ -79,8 +79,8 @@ class TestPortfolioAssetAccumulation_Case_02(unittest.TestCase):
 
     def setUp(self):
         self.portfolio = trade.Portfolio()
-        self.asset0 = trade.Asset(name='some asset')
-        self.asset1 = trade.Asset(name='other asset')
+        self.asset0 = trade.Asset(symbol='some asset')
+        self.asset1 = trade.Asset(symbol='other asset')
         self.operation0 = trade.Operation(
                             asset=self.asset0,
                             date='2015-10-01',
@@ -100,29 +100,29 @@ class TestPortfolioAssetAccumulation_Case_02(unittest.TestCase):
         self.assertEqual(len(self.portfolio.assets.keys()), 2)
 
     def test_accumulator0(self):
-        self.assertTrue(isinstance(self.portfolio.assets[self.asset0], trade.Accumulator))
+        self.assertTrue(isinstance(self.portfolio.assets[self.asset0.symbol], trade.Accumulator))
 
     def test_accumulator0_asset(self):
-        self.assertEqual(self.portfolio.assets[self.asset0].asset, self.asset0)
+        self.assertEqual(self.portfolio.assets[self.asset0.symbol].asset.symbol, self.asset0.symbol)
 
     def test_accumulator0_quantity(self):
-        self.assertEqual(self.portfolio.assets[self.asset0].quantity, 10)
+        self.assertEqual(self.portfolio.assets[self.asset0.symbol].quantity, 10)
 
     def test_accumulator0_price(self):
-        self.assertEqual(self.portfolio.assets[self.asset0].price, 1)
+        self.assertEqual(self.portfolio.assets[self.asset0.symbol].price, 1)
 
 
     def test_accumulator0(self):
-        self.assertTrue(isinstance(self.portfolio.assets[self.asset1], trade.Accumulator))
+        self.assertTrue(isinstance(self.portfolio.assets[self.asset1.symbol], trade.Accumulator))
 
     def test_accumulator0_asset(self):
-        self.assertEqual(self.portfolio.assets[self.asset1].asset, self.asset1)
+        self.assertEqual(self.portfolio.assets[self.asset1.symbol].asset.symbol, self.asset1.symbol)
 
     def test_accumulator0_quantity(self):
-        self.assertEqual(self.portfolio.assets[self.asset1].quantity, 20)
+        self.assertEqual(self.portfolio.assets[self.asset1.symbol].quantity, 20)
 
     def test_accumulator0_price(self):
-        self.assertEqual(self.portfolio.assets[self.asset1].price, 2)
+        self.assertEqual(self.portfolio.assets[self.asset1.symbol].price, 2)
 
 
 class TestPortfolioAssetAccumulation_Case_03(unittest.TestCase):
@@ -130,8 +130,8 @@ class TestPortfolioAssetAccumulation_Case_03(unittest.TestCase):
 
     def setUp(self):
         self.portfolio = trade.Portfolio()
-        self.asset0 = trade.Asset(name='some asset')
-        self.asset1 = trade.Asset(name='other asset')
+        self.asset0 = trade.Asset(symbol='some asset')
+        self.asset1 = trade.Asset(symbol='other asset')
         self.operation0 = trade.Operation(
                             asset=self.asset0,
                             date='2015-10-01',
@@ -158,29 +158,29 @@ class TestPortfolioAssetAccumulation_Case_03(unittest.TestCase):
         self.assertEqual(len(self.portfolio.assets.keys()), 2)
 
     def test_accumulator0(self):
-        self.assertTrue(isinstance(self.portfolio.assets[self.asset0], trade.Accumulator))
+        self.assertTrue(isinstance(self.portfolio.assets[self.asset0.symbol], trade.Accumulator))
 
     def test_accumulator0_asset(self):
-        self.assertEqual(self.portfolio.assets[self.asset0].asset, self.asset0)
+        self.assertEqual(self.portfolio.assets[self.asset0.symbol].asset.symbol, self.asset0.symbol)
 
     def test_accumulator0_quantity(self):
-        self.assertEqual(self.portfolio.assets[self.asset0].quantity, 10)
+        self.assertEqual(self.portfolio.assets[self.asset0.symbol].quantity, 10)
 
     def test_accumulator0_price(self):
-        self.assertEqual(self.portfolio.assets[self.asset0].price, 1)
+        self.assertEqual(self.portfolio.assets[self.asset0.symbol].price, 1)
 
 
     def test_accumulator0(self):
-        self.assertTrue(isinstance(self.portfolio.assets[self.asset1], trade.Accumulator))
+        self.assertTrue(isinstance(self.portfolio.assets[self.asset1.symbol], trade.Accumulator))
 
     def test_accumulator0_asset(self):
-        self.assertEqual(self.portfolio.assets[self.asset1].asset, self.asset1)
+        self.assertEqual(self.portfolio.assets[self.asset1.symbol].asset.symbol, self.asset1.symbol)
 
     def test_accumulator0_quantity(self):
-        self.assertEqual(self.portfolio.assets[self.asset1].quantity, 40)
+        self.assertEqual(self.portfolio.assets[self.asset1.symbol].quantity, 40)
 
     def test_accumulator0_price(self):
-        self.assertEqual(self.portfolio.assets[self.asset1].price, 3)
+        self.assertEqual(self.portfolio.assets[self.asset1.symbol].price, 3)
 
 
 
@@ -190,8 +190,8 @@ class TestPortfolioAssetAccumulation_Case_04(unittest.TestCase):
 
     def setUp(self):
         self.portfolio = trade.Portfolio()
-        self.asset0 = trade.Asset(name='some asset')
-        self.asset1 = trade.Asset(name='other asset')
+        self.asset0 = trade.Asset(symbol='some asset')
+        self.asset1 = trade.Asset(symbol='other asset')
         self.operation0 = trade.Operation(
                             asset=self.asset0,
                             date='2015-10-01',
@@ -225,29 +225,29 @@ class TestPortfolioAssetAccumulation_Case_04(unittest.TestCase):
         self.assertEqual(len(self.portfolio.assets.keys()), 2)
 
     def test_accumulator0(self):
-        self.assertTrue(isinstance(self.portfolio.assets[self.asset0], trade.Accumulator))
+        self.assertTrue(isinstance(self.portfolio.assets[self.asset0.symbol], trade.Accumulator))
 
     def test_accumulator0_asset(self):
-        self.assertEqual(self.portfolio.assets[self.asset0].asset, self.asset0)
+        self.assertEqual(self.portfolio.assets[self.asset0.symbol].asset.symbol, self.asset0.symbol)
 
     def test_accumulator0_quantity(self):
-        self.assertEqual(self.portfolio.assets[self.asset0].quantity, 10)
+        self.assertEqual(self.portfolio.assets[self.asset0.symbol].quantity, 10)
 
     def test_accumulator0_price(self):
-        self.assertEqual(self.portfolio.assets[self.asset0].price, 1)
+        self.assertEqual(self.portfolio.assets[self.asset0.symbol].price, 1)
 
 
     def test_accumulator0(self):
-        self.assertTrue(isinstance(self.portfolio.assets[self.asset1], trade.Accumulator))
+        self.assertTrue(isinstance(self.portfolio.assets[self.asset1.symbol], trade.Accumulator))
 
     def test_accumulator0_asset(self):
-        self.assertEqual(self.portfolio.assets[self.asset1].asset, self.asset1)
+        self.assertEqual(self.portfolio.assets[self.asset1.symbol].asset.symbol, self.asset1.symbol)
 
     def test_accumulator0_quantity(self):
-        self.assertEqual(self.portfolio.assets[self.asset1].quantity, 60)
+        self.assertEqual(self.portfolio.assets[self.asset1.symbol].quantity, 60)
 
     def test_accumulator0_price(self):
-        self.assertEqual(self.portfolio.assets[self.asset1].price, 3)
+        self.assertEqual(self.portfolio.assets[self.asset1.symbol].price, 3)
 
 
 
@@ -256,8 +256,8 @@ class TestPortfolioAssetAccumulation_Case_05(unittest.TestCase):
 
     def setUp(self):
         self.portfolio = trade.Portfolio()
-        self.asset0 = trade.Asset(name='some asset')
-        self.asset1 = trade.Asset(name='other asset')
+        self.asset0 = trade.Asset(symbol='some asset')
+        self.asset1 = trade.Asset(symbol='other asset')
         self.operation0 = trade.Operation(
                             asset=self.asset0,
                             date='2015-10-01',
@@ -298,26 +298,26 @@ class TestPortfolioAssetAccumulation_Case_05(unittest.TestCase):
         self.assertEqual(len(self.portfolio.assets.keys()), 2)
 
     def test_accumulator0(self):
-        self.assertTrue(isinstance(self.portfolio.assets[self.asset0], trade.Accumulator))
+        self.assertTrue(isinstance(self.portfolio.assets[self.asset0.symbol], trade.Accumulator))
 
     def test_accumulator0_asset(self):
-        self.assertEqual(self.portfolio.assets[self.asset0].asset, self.asset0)
+        self.assertEqual(self.portfolio.assets[self.asset0.symbol].asset.symbol, self.asset0.symbol)
 
     def test_accumulator0_quantity(self):
-        self.assertEqual(self.portfolio.assets[self.asset0].quantity, 20)
+        self.assertEqual(self.portfolio.assets[self.asset0.symbol].quantity, 20)
 
     def test_accumulator0_price(self):
-        self.assertEqual(self.portfolio.assets[self.asset0].price, 1.5)
+        self.assertEqual(self.portfolio.assets[self.asset0.symbol].price, 1.5)
 
 
     def test_accumulator0(self):
-        self.assertTrue(isinstance(self.portfolio.assets[self.asset1], trade.Accumulator))
+        self.assertTrue(isinstance(self.portfolio.assets[self.asset1.symbol], trade.Accumulator))
 
     def test_accumulator0_asset(self):
-        self.assertEqual(self.portfolio.assets[self.asset1].asset, self.asset1)
+        self.assertEqual(self.portfolio.assets[self.asset1.symbol].asset.symbol, self.asset1.symbol)
 
     def test_accumulator0_quantity(self):
-        self.assertEqual(self.portfolio.assets[self.asset1].quantity, 60)
+        self.assertEqual(self.portfolio.assets[self.asset1.symbol].quantity, 60)
 
     def test_accumulator0_price(self):
-        self.assertEqual(self.portfolio.assets[self.asset1].price, 3)
+        self.assertEqual(self.portfolio.assets[self.asset1.symbol].price, 3)

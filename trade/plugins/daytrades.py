@@ -123,7 +123,7 @@ def fetch_daytrades(container):
 def daytrade_condition(operation_a, operation_b):
     """Checks if the operations are day trades."""
     return (
-        operation_a.asset == operation_b.asset and
+        operation_a.asset.symbol == operation_b.asset.symbol and
         not same_sign(operation_a.quantity, operation_b.quantity) and
         operation_a.quantity != 0 and
         operation_b.quantity != 0
@@ -168,19 +168,19 @@ def extract_daytrade(container, operation_a, operation_b):
 
     if 'daytrades' not in container.positions:
         container.positions['daytrades'] = {}
-    if daytrade.asset in container.positions['daytrades']:
+    if daytrade.asset.symbol in container.positions['daytrades']:
         container.merge_operations(
-            container.positions['daytrades'][daytrade.asset].operations[0],
+            container.positions['daytrades'][daytrade.asset.symbol].operations[0],
             daytrade.operations[0]
         )
         container.merge_operations(
-            container.positions['daytrades'][daytrade.asset].operations[1],
+            container.positions['daytrades'][daytrade.asset.symbol].operations[1],
             daytrade.operations[1]
         )
-        container.positions['daytrades'][daytrade.asset].quantity += \
+        container.positions['daytrades'][daytrade.asset.symbol].quantity += \
                                                             daytrade.quantity
     else:
-        container.positions['daytrades'][daytrade.asset] = daytrade
+        container.positions['daytrades'][daytrade.asset.symbol] = daytrade
 
 
 def find_purchase_and_sale(operation_a, operation_b):
