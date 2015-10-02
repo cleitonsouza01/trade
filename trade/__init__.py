@@ -34,4 +34,4 @@ from .utils import average_price, same_sign
 from .plugins import *
 
 __author__ = 'rocha.rafaelsilva@gmail.com'
-__version__ = '0.1.1'
+__version__ = '0.1.2'
