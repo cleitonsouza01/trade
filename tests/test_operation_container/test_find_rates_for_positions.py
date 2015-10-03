@@ -75,13 +75,13 @@ class Test_find_rates_for_positions_case_00(unittest.TestCase):
     def test_container_common_operation0_taxes(self):
         taxes = {'rate':1}
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1.symbol].rates,
+            self.container.positions['operations'][self.asset1.symbol].rates,
             taxes
         )
 
     def test_container_common_operation1_taxes(self):
         taxes = {'rate':1}
         self.assertEqual(
-            self.container.positions['common operations'][self.asset2.symbol].rates,
+            self.container.positions['operations'][self.asset2.symbol].rates,
             taxes
         )

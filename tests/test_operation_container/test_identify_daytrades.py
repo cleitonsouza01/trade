@@ -52,7 +52,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_00(
     def test_common_trades_len_should_be_0(self):
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
-        self.assertTrue('common operations' not in self.container.positions)
+        self.assertTrue('operations' not in self.container.positions)
 
     def test_daytrades_len_should_be_1(self):
         trade.plugins.fetch_daytrades(self.container)
@@ -156,13 +156,13 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_01(
     def test_common_trades_len_should_be_1(self):
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
-        self.assertEqual(len(self.container.positions['common operations'].keys()), 1)
+        self.assertEqual(len(self.container.positions['operations'].keys()), 1)
 
     def test_check_common_trades0_asset(self):
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
         self.assertEqual(
-            self.container.positions['common operations'][self.asset.symbol].asset.symbol,
+            self.container.positions['operations'][self.asset.symbol].asset.symbol,
             self.asset.symbol
         )
 
@@ -170,7 +170,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_01(
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
         self.assertEqual(
-            self.container.positions['common operations'][self.asset.symbol].quantity,
+            self.container.positions['operations'][self.asset.symbol].quantity,
             5
         )
 
@@ -178,7 +178,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_01(
         #trade.plugins.fetch_daytrades(self.container)]
         self.container.fetch_positions()
         self.assertEqual(
-            self.container.positions['common operations'][self.asset.symbol].price,
+            self.container.positions['operations'][self.asset.symbol].price,
             2
         )
 
@@ -291,13 +291,13 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_02(
     def test_common_trades_len_should_be_2(self):
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
-        self.assertEqual(len(self.container.positions['common operations'].keys()), 2)
+        self.assertEqual(len(self.container.positions['operations'].keys()), 2)
 
     def test_check_common_trades0_asset(self):
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1.symbol].asset.symbol,
+            self.container.positions['operations'][self.asset1.symbol].asset.symbol,
             self.asset1.symbol
         )
 
@@ -305,7 +305,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_02(
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1.symbol].quantity,
+            self.container.positions['operations'][self.asset1.symbol].quantity,
             5
         )
 
@@ -313,7 +313,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_02(
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1.symbol].price,
+            self.container.positions['operations'][self.asset1.symbol].price,
             2
         )
 
@@ -321,7 +321,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_02(
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
         self.assertEqual(
-            self.container.positions['common operations'][self.asset2.symbol].asset.symbol,
+            self.container.positions['operations'][self.asset2.symbol].asset.symbol,
             self.asset2.symbol
         )
 
@@ -329,7 +329,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_02(
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
         self.assertEqual(
-            self.container.positions['common operations'][self.asset2.symbol].quantity,
+            self.container.positions['operations'][self.asset2.symbol].quantity,
             -5
         )
 
@@ -337,7 +337,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_02(
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
         self.assertEqual(
-            self.container.positions['common operations'][self.asset2.symbol].price,
+            self.container.positions['operations'][self.asset2.symbol].price,
             7
         )
 
@@ -456,13 +456,13 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_03(
     def test_common_trades_len_should_be_1(self):
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
-        self.assertEqual(len(self.container.positions['common operations'].keys()), 1)
+        self.assertEqual(len(self.container.positions['operations'].keys()), 1)
 
     def test_check_common_trades0_asset(self):
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1.symbol].asset.symbol,
+            self.container.positions['operations'][self.asset1.symbol].asset.symbol,
             self.asset1.symbol
         )
 
@@ -470,7 +470,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_03(
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1.symbol].quantity,
+            self.container.positions['operations'][self.asset1.symbol].quantity,
             5
         )
 
@@ -478,7 +478,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_03(
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1.symbol].price,
+            self.container.positions['operations'][self.asset1.symbol].price,
             2
         )
 
@@ -652,7 +652,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_04(
     def test_there_should_be_no_common_trades(self):
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
-        self.assertTrue('common operations' not in self.container.positions)
+        self.assertTrue('operations' not in self.container.positions)
 
     def test_daytrades_len_should_be_2(self):
         trade.plugins.fetch_daytrades(self.container)
@@ -824,7 +824,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_05(
     def test_there_should_be_no_common_trades(self):
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
-        self.assertTrue('common operations' not in self.container.positions)
+        self.assertTrue('operations' not in self.container.positions)
 
     def test_daytrades_len_should_be_2(self):
         trade.plugins.fetch_daytrades(self.container)
@@ -996,13 +996,13 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_06(
     def test_common_trades_len_should_be_1(self):
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
-        self.assertEqual(len(self.container.positions['common operations'].keys()), 1)
+        self.assertEqual(len(self.container.positions['operations'].keys()), 1)
 
     def test_check_common_trades0_asset(self):
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1.symbol].asset.symbol,
+            self.container.positions['operations'][self.asset1.symbol].asset.symbol,
             self.asset1.symbol
         )
 
@@ -1010,7 +1010,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_06(
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1.symbol].quantity,
+            self.container.positions['operations'][self.asset1.symbol].quantity,
             10
         )
 
@@ -1018,7 +1018,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_06(
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1.symbol].price,
+            self.container.positions['operations'][self.asset1.symbol].price,
             3
         )
 
@@ -1225,13 +1225,13 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_07(
     def test_common_trades_len_should_be_1(self):
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
-        self.assertEqual(len(self.container.positions['common operations'].keys()), 1)
+        self.assertEqual(len(self.container.positions['operations'].keys()), 1)
 
     def test_check_common_trades0_asset(self):
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1.symbol].asset.symbol,
+            self.container.positions['operations'][self.asset1.symbol].asset.symbol,
             self.asset1.symbol
         )
 
@@ -1239,7 +1239,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_07(
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1.symbol].quantity,
+            self.container.positions['operations'][self.asset1.symbol].quantity,
             10
         )
 
@@ -1247,7 +1247,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_07(
         #trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1.symbol].price,
+            self.container.positions['operations'][self.asset1.symbol].price,
             3
         )
 

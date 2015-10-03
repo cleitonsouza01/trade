@@ -106,20 +106,24 @@ class Operation:
             to be deducted added to the the operation value.
         rates: A dict of rates. string keys and float values
             representing the names of the rates and the values of the
-            rates to be applied to the operation. Rate values are always
-            represented as a percentage. Rates are applied based on the
-            volume of the operation.
+            rates to be applied to the operation. Rate values are
+            always represented as a percentage. Rates are applied
+            based on the volume of the operation.
+        update_position: A boolean indication if the operation should
+            update the asset position or not.
+        accumulate_underlying_operations: A boolean indicating if the
+            operation's underlying operations should be accumulated
+            or ignored by the Accumulator.
+        Operations: A list of underlying operations that the operation
+            may have.
     """
 
-    # TODO document this better
     update_position = True
     """By default all Operations can update a portfolio position."""
 
-    # TODO document this better
     accumulate_underlying_operations = False
-    """The underlying operations, if any, should not be accumulated."""
+    """By default underlying operations should not be accumulated."""
 
-    # TODO document this better
     operations = None
     """An operation may contain multiple underlying operations."""
 
@@ -328,7 +332,7 @@ class OperationContainer:
         # fetch the positions from the remaining operations
         for operation in self.operations:
             if operation.quantity != 0:
-                self.add_to_common_operations(operation)
+                self.add_to_position_operations(operation)
 
         # prorate the commission for the operations
         self.prorate_commissions()
@@ -346,18 +350,17 @@ class OperationContainer:
                                     )
         existing_operation.quantity += operation.quantity
 
-    def add_to_common_operations(self, operation):
+    def add_to_position_operations(self, operation):
         """Adds an operation to the common operations list."""
-        if 'common operations' not in self.positions:
-            self.positions['common operations'] = {}
-        if operation.asset.symbol in self.positions['common operations']:
+        if 'operations' not in self.positions:
+            self.positions['operations'] = {}
+        if operation.asset.symbol in self.positions['operations']:
             self.merge_operations(
-                self.positions['common operations'][operation.asset.symbol],
+                self.positions['operations'][operation.asset.symbol],
                 operation
             )
         else:
-            self.positions['common operations'][operation.asset.symbol] = \
-                                                                    operation
+            self.positions['operations'][operation.asset.symbol] = operation
 
     def prorate_commissions(self):
         """Prorates the container's commissions by its operations.

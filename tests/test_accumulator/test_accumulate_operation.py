@@ -90,7 +90,7 @@ class Test_accumulate_operation_Case_02(unittest.TestCase):
         ]
         container.fetch_positions()
         self.accumulator = trade.Accumulator(asset)
-        operation = container.positions['common operations'][asset.symbol]
+        operation = container.positions['operations'][asset.symbol]
         self.accumulator.accumulate_operation(operation)
 
     def test_accumulator_price(self):
@@ -126,7 +126,7 @@ class Test_accumulate_operation_Case_03(unittest.TestCase):
         ]
         container.fetch_positions()
         self.accumulator = trade.Accumulator(asset)
-        operation = container.positions['common operations'][asset.symbol]
+        operation = container.positions['operations'][asset.symbol]
         self.accumulator.accumulate_operation(operation)
 
     def test_accumulator_average_price(self):
@@ -164,7 +164,7 @@ class Test_accumulate_operation_Case_04(unittest.TestCase):
         self.accumulator = trade.Accumulator(asset)
 
         self.accumulator.accumulate_operation(
-            container.positions['common operations'][asset.symbol]
+            container.positions['operations'][asset.symbol]
         )
 
         operation2 = trade.Operation(

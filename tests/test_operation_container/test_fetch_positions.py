@@ -88,61 +88,61 @@ class TestTradeContainer_fetch_positions_case_00(unittest.TestCase):
 
     def test_check_common_trades0_asset(self):
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1.symbol].asset,
+            self.container.positions['operations'][self.asset1.symbol].asset,
             self.asset1
         )
 
     def test_common_trades0_quantity_should_be_5(self):
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1.symbol].quantity,
+            self.container.positions['operations'][self.asset1.symbol].quantity,
             5
         )
 
     def test_common_trades0_price_should_be_2(self):
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1.symbol].price,
+            self.container.positions['operations'][self.asset1.symbol].price,
             2
         )
 
     def test_common_trades0_volume_should_be_35(self):
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1.symbol].volume,
+            self.container.positions['operations'][self.asset1.symbol].volume,
             10
         )
 
     def test_check_common_trades0_discounts(self):
         self.assertEqual(
-            round(self.container.positions['common operations'][self.asset1.symbol].\
+            round(self.container.positions['operations'][self.asset1.symbol].\
                     commissions['some discount'],2),
             0.14
         )
         self.assertEqual(
-            round(self.container.positions['common operations'][self.asset1.symbol].\
+            round(self.container.positions['operations'][self.asset1.symbol].\
                     commissions['other discount'], 2),
             0.43
         )
 
     def test_check_common_trades1_asset(self):
         self.assertEqual(
-            self.container.positions['common operations'][self.asset2.symbol].asset,
+            self.container.positions['operations'][self.asset2.symbol].asset,
             self.asset2
         )
 
     def test_common_trades1_quantity_should_be_minus_5(self):
         self.assertEqual(
-            self.container.positions['common operations'][self.asset2.symbol].quantity,
+            self.container.positions['operations'][self.asset2.symbol].quantity,
             -5
         )
 
     def test_common_trades1_price_should_be_7(self):
         self.assertEqual(
-            self.container.positions['common operations'][self.asset2.symbol].price,
+            self.container.positions['operations'][self.asset2.symbol].price,
             7
         )
 
     def test_common_trades1_volume_should_be_35(self):
         self.assertEqual(
-            self.container.positions['common operations'][self.asset2.symbol].volume,
+            self.container.positions['operations'][self.asset2.symbol].volume,
             35
         )
 
@@ -152,7 +152,7 @@ class TestTradeContainer_fetch_positions_case_00(unittest.TestCase):
             'other discount': 1.5
         }
         self.assertEqual(
-            self.container.positions['common operations'][self.asset2.symbol].commissions,
+            self.container.positions['operations'][self.asset2.symbol].commissions,
             expected_discounts
         )
 
@@ -260,23 +260,23 @@ class TestTradeContainer_fetch_positions_case_01(
     #    self.assertEqual(self.container.operations[1].price, 3)
 
     def test_common_trades_len_should_be_1(self):
-        self.assertEqual(len(self.container.positions['common operations'].keys()), 1)
+        self.assertEqual(len(self.container.positions['operations'].keys()), 1)
 
     def test_check_common_trades0_asset(self):
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1.symbol].asset,
+            self.container.positions['operations'][self.asset1.symbol].asset,
             self.asset1
         )
 
     def test_common_trades0_quantity_should_be_10(self):
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1.symbol].quantity,
+            self.container.positions['operations'][self.asset1.symbol].quantity,
             10
         )
 
     def test_common_trades0_price_should_be_3(self):
         self.assertEqual(
-            self.container.positions['common operations'][self.asset1.symbol].price,
+            self.container.positions['operations'][self.asset1.symbol].price,
             3
         )
 
