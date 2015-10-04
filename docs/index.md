@@ -69,11 +69,11 @@ print(accumulator.results)
 
 # create a trade operation buying the asset
 purchase = trade.Operation(
-                asset=asset,
-                quantity=10,
-                price=650.73,
-                date='2015-09-23'
-            )
+    asset=asset,
+    quantity=10,
+    price=650.73,
+    date='2015-09-23'
+)
 
 # accumulate the trade
 accumulator.accumulate_operation(purchase)
@@ -91,11 +91,11 @@ print(accumulator.results)
 
 # create a new trade operation selling the asset
 sale = trade.Operation(
-            asset=asset,
-            quantity=-5,
-            price=656.77,
-            date='2015-09-24'
-        )
+    asset=asset,
+    quantity=-5,
+    price=656.77,
+    date='2015-09-24'
+)
 
 # accumulate the new trade
 accumulator.accumulate_operation(sale)
@@ -108,7 +108,7 @@ print(accumulator.price)
 #>> 650.73
 
 print(accumulator.results)
-#>> {'daytrades': 0, 'trades': 30.199999999999818}
+#>> {'trades': 30.199999999999818}
 ```
 
 Operation objects may include rates and commissions that are considered by the
@@ -124,7 +124,7 @@ The trade module is compatible with Python 2.7, 3.3, 3.4 and 3.5.
 
 
 ## Version
-The current version is 0.1.3 alpha.
+The current version is 0.1.4 alpha.
 
 
 ## License

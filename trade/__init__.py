@@ -44,4 +44,4 @@ from .utils import average_price, same_sign, merge_operations
 
 
 __author__ = 'rocha.rafaelsilva@gmail.com'
-__version__ = '0.1.3'
+__version__ = '0.1.4'
