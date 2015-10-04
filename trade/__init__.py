@@ -39,7 +39,7 @@ from .trade import (
     Event,
     OperationContainer,
     Portfolio,
-    TaxManager
+    TradingFees
 )
 from .utils import average_price, same_sign
 

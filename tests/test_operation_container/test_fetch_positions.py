@@ -450,7 +450,7 @@ class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):
             #trade.prorate_commissions,
             #trade.find_rates_for_positions,
         ]
-        self.container.tax_manager = TaxManagerForTests
+        self.container.trading_fees = TaxManagerForTests
         self.container.fetch_positions()
 
     def test_container_daytrade_buy_operation_discounts(self):

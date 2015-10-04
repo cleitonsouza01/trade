@@ -284,9 +284,7 @@ class OperationContainer:
         self.operations = operations
         self.commissions = commissions
         self.positions = {}
-        self.tax_manager = TaxManager
-
-        # FIXME
+        self.trading_fees = TradingFees
         self.raw_operations = copy.deepcopy(self.operations)
 
         self.tasks = []
@@ -338,7 +336,7 @@ class OperationContainer:
         self.prorate_commissions()
 
         # Add rates to the operations
-        self.find_rates_for_positions()
+        self.find_trading_fees_for_positions()
 
     def merge_operations(self, existing_operation, operation):
         """Merges one operation with another operation."""
@@ -388,18 +386,18 @@ class OperationContainer:
             for key, value in self.commissions.items():
                 operation.commissions[key] = value * percent / 100
 
-    def find_rates_for_positions(self):
+    def find_trading_fees_for_positions(self):
         """Finds the rates for all daytrades and common operations."""
         for position_type, position_value in self.positions.items():
             for position in position_value.values():
                 if position.operations:
                     for operation in position.operations:
                         operation.rates = \
-                            self.tax_manager.get_rates_for_operation(
+                            self.trading_fees.get_rates_for_operation(
                                 operation, position_type
                             )
                 else:
-                    position.rates = self.tax_manager.get_rates_for_operation(
+                    position.rates = self.trading_fees.get_rates_for_operation(
                                             position, position_type
                                         )
 
@@ -642,7 +640,7 @@ class Accumulator:
         self.log[operation.date]['occurrences'].append(operation)
 
 
-class TaxManager:
+class TradingFees:
     """The base tax manager.
 
     A TaxManager returns the correspondent percentual rate for an

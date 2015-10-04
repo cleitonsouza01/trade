@@ -11,7 +11,7 @@ class TestTaxManager(unittest.TestCase):
     for both daytrade and common operation rates.
     """
     def setUp(self):
-        self.tax_manager = trade.TaxManager
+        self.tax_manager = trade.TradingFees
 
     def test_assert_tax_manager_exists(self):
         self.assertTrue(self.tax_manager)

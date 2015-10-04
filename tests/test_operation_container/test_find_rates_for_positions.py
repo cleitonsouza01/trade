@@ -41,7 +41,7 @@ class Test_find_rates_for_positions_case_00(unittest.TestCase):
         self.container = trade.OperationContainer(
                                 operations=[operation1,operation2,operation3]
                             )
-        self.container.tax_manager = TaxManagerForTests
+        self.container.trading_fees = TaxManagerForTests
         self.container.tasks = [
             trade.plugins.fetch_daytrades,
             #trade.find_rates_for_positions,
