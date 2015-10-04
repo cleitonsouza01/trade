@@ -142,7 +142,7 @@ class Operation:
         self.price = price
         if commissions is None: commissions={}
         if rates is None: rates={}
-        if results is None: results={'trades': 0} #FIXME compatibility
+        if results is None: results={}
         self.commissions = commissions
         self.rates = rates
         self.results = results
@@ -479,10 +479,7 @@ class Accumulator:
         self.date = None
         self.quantity = 0
         self.price = 0
-        self.results = {
-            'trades': 0,
-            'daytrades': 0  # FIXME compatibility
-        }
+        self.results = {}
         self.logging = logging
         self.log = {}
 
@@ -573,9 +570,11 @@ class Accumulator:
 
                 # calculate the result of this operation and add
                 # the new result to the accumulated results
-                operation.results['trades'] += \
+                results = \
                     result_quantity * self.price - \
                     result_quantity * operation.real_price
+                if results:
+                    operation.results['trades'] = results
 
                 # If the new accumulated quantity has a different
                 # sign of the old accumulated quantity then the

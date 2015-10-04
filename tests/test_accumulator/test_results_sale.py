@@ -49,9 +49,7 @@ class TestAccumulatorResults_sale_case_00(unittest.TestCase):
         self.assertEqual(self.accumulator.log, expected_log)
 
     def test_accumulated_result(self):
-        expected_log = {
-            'daytrades':0, 'trades': 0
-        }
+        expected_log = {}
         self.assertEqual(self.accumulator.results, expected_log)
 
 
@@ -114,9 +112,7 @@ class TestAccumulatorResults_sale_case_01(unittest.TestCase):
         self.assertEqual(self.accumulator.log, expected_log)
 
     def test_accumulated_result(self):
-        expected_log = {
-            'daytrades':0, 'trades': 0
-        }
+        expected_log = {}
         self.assertEqual(self.accumulator.results, expected_log)
 
 
@@ -194,9 +190,7 @@ class TestAccumulatorResults_sale_case_02(unittest.TestCase):
         self.assertEqual(self.accumulator.log, expected_log)
 
     def test_accumulated_result(self):
-        expected_log = {
-            'daytrades':0, 'trades': 1000
-        }
+        expected_log = {'trades': 1000}
         self.assertEqual(self.accumulator.results, expected_log)
 
 
@@ -260,9 +254,7 @@ class TestAccumulatorResults_sale_case_01(unittest.TestCase):
         self.assertEqual(self.accumulator.log, expected_log)
 
     def test_accumulated_result(self):
-        expected_log = {
-            'daytrades':0, 'trades': 0
-        }
+        expected_log = {}
         self.assertEqual(self.accumulator.results, expected_log)
 
 
@@ -355,9 +347,7 @@ class TestAccumulatorResults_sale_case_03(unittest.TestCase):
         self.assertEqual(self.accumulator.log, expected_log)
 
     def test_accumulated_result(self):
-        expected_log = {
-            'daytrades':0, 'trades': 1000
-        }
+        expected_log = {'trades': 1000}
         self.assertEqual(self.accumulator.results, expected_log)
 
 
@@ -466,9 +456,7 @@ class TestAccumulatorResults_sale_case_04(unittest.TestCase):
         self.assertEqual(self.accumulator.log, expected_log)
 
     def test_accumulated_result(self):
-        expected_log = {
-            'daytrades':0, 'trades': 3000
-        }
+        expected_log = {'trades': 3000}
         self.assertEqual(self.accumulator.results, expected_log)
 
 
@@ -576,9 +564,7 @@ class TestAccumulatorResults_sale_case_05(unittest.TestCase):
         self.assertEqual(self.accumulator.log, expected_log)
 
     def test_accumulated_result(self):
-        expected_log = {
-            'daytrades':0, 'trades': 2000
-        }
+        expected_log = {'trades': 2000}
         self.assertEqual(self.accumulator.results, expected_log)
 
 
@@ -627,7 +613,5 @@ class TestAccumulatorResults_sale_case_06(unittest.TestCase):
         self.assertEqual(self.accumulator.log, expected_log)
 
     def test_accumulated_result(self):
-        expected_log = {
-            'daytrades':0, 'trades': 500
-        }
+        expected_log = {'trades': 500}
         self.assertEqual(self.accumulator.results, expected_log)

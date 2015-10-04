@@ -48,4 +48,4 @@ class TestLogOperation(unittest.TestCase):
                         date='2015-01-01'
                     )
         result = self.accumulator.accumulate_operation(operation)
-        self.assertEqual(result, {'trades': 0})
+        self.assertEqual(result, {})

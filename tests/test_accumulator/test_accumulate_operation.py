@@ -18,7 +18,7 @@ class Test_accumulate_operation_Case_00(unittest.TestCase):
         self.result = self.accumulator.accumulate_operation(self.operation)
 
     def test_returned_result(self):
-        self.assertEqual(self.result, {'trades': 0})
+        self.assertEqual(self.result, {})
 
     def test_accumulator_price(self):
         self.assertEqual(self.accumulator.price, 10)
@@ -27,10 +27,7 @@ class Test_accumulate_operation_Case_00(unittest.TestCase):
         self.assertEqual(self.accumulator.quantity, 100)
 
     def test_accumulator_results(self):
-        self.assertEqual(
-            self.accumulator.results,
-            {'daytrades': 0, 'trades': 0}
-        )
+        self.assertEqual(self.accumulator.results, {})
 
 
 class Test_accumulate_operation_Case_01(unittest.TestCase):
@@ -50,7 +47,7 @@ class Test_accumulate_operation_Case_01(unittest.TestCase):
         self.result = self.accumulator.accumulate_operation(self.operation)
 
     def test_returned_result(self):
-        self.assertEqual(self.result, {'trades': 0})
+        self.assertEqual(self.result, {})
 
     def test_accumulator_price(self):
         self.assertEqual(self.accumulator.price, 0)
@@ -59,10 +56,7 @@ class Test_accumulate_operation_Case_01(unittest.TestCase):
         self.assertEqual(self.accumulator.quantity, 0)
 
     def test_accumulator_results(self):
-        self.assertEqual(
-            self.accumulator.results,
-            {'daytrades': 0, 'trades': 0}
-        )
+        self.assertEqual(self.accumulator.results, {})
 
 
 class Test_accumulate_operation_Case_02(unittest.TestCase):
@@ -100,10 +94,7 @@ class Test_accumulate_operation_Case_02(unittest.TestCase):
         self.assertEqual(self.accumulator.quantity, 20)
 
     def test_accumulator_results(self):
-        self.assertEqual(
-            self.accumulator.results,
-            {'daytrades': 0, 'trades': 0}
-        )
+        self.assertEqual(self.accumulator.results, {})
 
 
 class Test_accumulate_operation_Case_03(unittest.TestCase):
@@ -136,10 +127,7 @@ class Test_accumulate_operation_Case_03(unittest.TestCase):
         self.assertEqual(self.accumulator.quantity, 20)
 
     def test_accumulator_results(self):
-        self.assertEqual(
-            self.accumulator.results,
-            {'daytrades': 0, 'trades': 0}
-        )
+        self.assertEqual(self.accumulator.results, {})
 
 
 class Test_accumulate_operation_Case_04(unittest.TestCase):
@@ -184,7 +172,7 @@ class Test_accumulate_operation_Case_04(unittest.TestCase):
     def test_accumulator_results(self):
         self.assertEqual(
             self.accumulator.results,
-            {'daytrades': 0, 'trades': -200}
+            {'trades': -200}
         )
 
 
