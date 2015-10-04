@@ -7,7 +7,7 @@ import trade
 class TaxManagerForTests:
 
     @staticmethod
-    def get_rates_for_operation(operation, operation_type):
+    def get_fees(operation, operation_type):
         if operation_type == 'daytrades':
             return {
                 'emoluments': 0.005,
@@ -482,7 +482,7 @@ class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):
             'registry': 0,
         }
         self.assertEqual(
-            self.container.positions['daytrades'][self.asset.symbol].operations[0].rates,
+            self.container.positions['daytrades'][self.asset.symbol].operations[0].fees,
             taxes
         )
 
@@ -492,7 +492,7 @@ class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):
             'liquidation': 0.02,
             'registry': 0,
         }
-        self.assertEqual(self.container.positions['daytrades'][self.asset.symbol].operations[1].rates, taxes)
+        self.assertEqual(self.container.positions['daytrades'][self.asset.symbol].operations[1].fees, taxes)
 
     def test_container_daytrade_operation_result(self):
         self.assertEqual(

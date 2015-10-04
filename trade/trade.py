@@ -53,7 +53,7 @@ class Asset:
         self.symbol = symbol
         self.expiration_date = expiration_date
 
-# TODO document ratio attr better
+
 class Derivative(Asset):
     """A derivative is an asset which derives from one or more assets.
 
@@ -71,9 +71,10 @@ class Derivative(Asset):
             expiration date of the derivative, if any.
         underlying_assets: A list of Asset objects representing the
             underlying assets of this derivative.
-        ratio: By default the ratio is 1, so
-            1 derivative = 1 underlying asset.
-            If ratio was 2, then 1 derivative = 2 underlying assets.
+        ratio: The ratio to which the derivate relates to its
+            underlying assets. For example:
+                If ratio is 1, then 1 derivative = 1 underlying asset
+                If ratio is 2, then 1 derivative = 2 underlying asset
     """
 
     def __init__(self,
@@ -104,10 +105,10 @@ class Operation:
         commissions: A dict of discounts. String keys and float values
             representing the name of the discounts and the values
             to be deducted added to the the operation value.
-        rates: A dict of rates. string keys and float values
-            representing the names of the rates and the values of the
-            rates to be applied to the operation. Rate values are
-            always represented as a percentage. Rates are applied
+        fees: A dict of fees. string keys and float values
+            representing the names of the fees and the values of the
+            fees to be applied to the operation. Fee values are
+            always represented as a percentage. Fees are applied
             based on the volume of the operation.
         update_position: A boolean indication if the operation should
             update the asset position or not.
@@ -133,7 +134,7 @@ class Operation:
                 date=None,
                 asset=None,
                 commissions=None,
-                rates=None,
+                fees=None,
                 results=None
             ):
         self.date = date
@@ -141,10 +142,10 @@ class Operation:
         self.quantity = quantity
         self.price = price
         if commissions is None: commissions={}
-        if rates is None: rates={}
+        if fees is None: fees={}
         if results is None: results={}
         self.commissions = commissions
-        self.rates = rates
+        self.fees = fees
         self.results = results
 
     @property
@@ -156,18 +157,18 @@ class Operation:
     def real_price(self):
         """Returns the real price of the operation.
 
-        The real price is the price with all commissions and rates
+        The real price is the price with all commissions and fees
         already deducted or added.
         """
         return self.price + math.copysign(
-                            self.total_commissions_and_rates / self.quantity,
+                            self.total_commissions_and_fees / self.quantity,
                             self.quantity
                         )
 
     @property
-    def total_commissions_and_rates(self):
-        """Returns the sum of all commissions and rates."""
-        return self.total_commissions + self.total_rates_value
+    def total_commissions_and_fees(self):
+        """Returns the sum of all commissions and fees."""
+        return self.total_commissions + self.total_fees_value
 
     @property
     def total_commissions(self):
@@ -180,10 +181,10 @@ class Operation:
         return abs(self.quantity) * self.price
 
     @property
-    def total_rates_value(self):
-        """Returns the total rate value for this operation."""
+    def total_fees_value(self):
+        """Returns the total fee value for this operation."""
         return sum(
-                [self.volume * value / 100  for value in self.rates.values()]
+                [self.volume * value / 100  for value in self.fees.values()]
             )
 
 
@@ -244,9 +245,9 @@ class OperationContainer:
 
         prorate_commissions()
 
-    - Find the rates, if any, for the positions by calling:
+    - Find the fees, if any, for the positions by calling:
 
-        find_rates_for_positions()
+        find_fees_for_positions()
 
     Attributes:
         date: A string 'YYYY-mm-dd' representing the date of the
@@ -319,7 +320,7 @@ class OperationContainer:
         Then it reads the self.operations list and add any remaining
         operation to the self.positions.
 
-        And finally it checks if there are any rates to be applied
+        And finally it checks if there are any fees to be applied
         to the positions.
         """
 
@@ -335,7 +336,7 @@ class OperationContainer:
         # prorate the commission for the operations
         self.prorate_commissions()
 
-        # Add rates to the operations
+        # Add fees to the operations
         self.find_trading_fees_for_positions()
 
     def merge_operations(self, existing_operation, operation):
@@ -387,19 +388,18 @@ class OperationContainer:
                 operation.commissions[key] = value * percent / 100
 
     def find_trading_fees_for_positions(self):
-        """Finds the rates for all daytrades and common operations."""
+        """Finds the fees for all positions in the container."""
         for position_type, position_value in self.positions.items():
             for position in position_value.values():
                 if position.operations:
                     for operation in position.operations:
-                        operation.rates = \
-                            self.trading_fees.get_rates_for_operation(
-                                operation, position_type
-                            )
-                else:
-                    position.rates = self.trading_fees.get_rates_for_operation(
-                                            position, position_type
+                        operation.fees = self.trading_fees.get_fees(
+                                            operation, position_type
                                         )
+                else:
+                    position.fees = self.trading_fees.get_fees(
+                                        position, position_type
+                                    )
 
 
 class Portfolio:
@@ -642,20 +642,21 @@ class Accumulator:
 class TradingFees:
     """The base tax manager.
 
-    A TaxManager returns the correspondent percentual rate for an
+    A TaxManager returns the correspondent percentual fee for an
     Operation. This base TaxManager implements a dummy interface
-    that will return a empty set of rates every time it is called.
+    that will return a empty set of fees every time it is called.
 
     Every OperationContainer has a reference to this class. If you
-    need to implement rates in your application you must create your
+    need to implement fees in your application you must create your
     own tax manager class and then replace the reference in the
     operation container by doing this:
 
-        container.tax_manager = YourTaxManager
+        container.trading_fees = YourTradingFees
 
-    Your TaxManager must obey the interface defined in this class.
+    Your TradingFees implementation must obey the interface defined
+    in this class.
     """
 
     @staticmethod
-    def get_rates_for_operation(operation, operation_type):
+    def get_fees(operation, operation_type):
         return {}
