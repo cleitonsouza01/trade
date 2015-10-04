@@ -24,17 +24,3 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
-
-from __future__ import absolute_import
-
-from .test_accumulator import *
-from .test_operation import *
-from .test_operation_container import *
-from .test_plugins import *
-from .test_portfolio import *
-
-from .test_asset import *
-from .test_daytrade import *
-from .test_event import *
-from .test_trading_fees import *
-from .test_utils import *

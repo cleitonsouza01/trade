@@ -7,7 +7,7 @@ python:
 install:
   - pip install coveralls
 script:
-  coverage run --source=trade tests.py
+  coverage run --source=trade -m unittest discover tests
 after_success:
   coveralls
 branches:
