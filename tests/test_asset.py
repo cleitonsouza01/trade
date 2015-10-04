@@ -72,3 +72,50 @@ class TestAssetCreation_Case_00(unittest.TestCase):
 
     def test_asset4_expiration_date_should_be_other_2105_12_31(self):
         self.assertEqual(self.asset4.expiration_date, '2015-12-31')
+
+
+class TestDerivativeCreation_Case_00(unittest.TestCase):
+    """Test the creation of Derivatives."""
+
+    def setUp(self):
+        self.asset1 = trade.Asset(
+            symbol='STCK'
+        )
+        self.asset5 = trade.Asset(
+            name='some stuff',
+            symbol='ATVI000',
+            expiration_date='2015-12-31',
+            underlying_assets=[self.asset1]
+        )
+        self.asset6 = trade.Asset(
+            name='some stuff',
+            symbol='STFF',
+            expiration_date='2015-12-31',
+            underlying_assets=[self.asset1],
+            ratio=2
+        )
+
+    def test_asset5_symbol_should_be_STFF(self):
+        self.assertEqual(self.asset5.symbol, 'ATVI000')
+
+    def test_asset5_expiration_date(self):
+        self.assertEqual(self.asset5.expiration_date, '2015-12-31')
+
+    def test_asset5_underlying_assets(self):
+        self.assertEqual(
+            self.asset5.underlying_assets[0].symbol,
+            self.asset1.symbol
+        )
+
+    def test_asset5_ratio(self):
+        self.assertEqual(self.asset5.ratio, 1)
+
+
+    def test_asset6_symbol_should_be_STFF(self):
+        self.assertEqual(self.asset6.symbol, 'STFF')
+
+    def test_asset6_expiration_date(self):
+        self.assertEqual(self.asset6.expiration_date, '2015-12-31')
+
+    def test_asset6_ratio(self):
+        self.assertEqual(self.asset6.ratio, 2)

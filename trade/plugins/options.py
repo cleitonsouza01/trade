@@ -40,10 +40,10 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from ..trade import Derivative, Operation, merge_operations
+from ..trade import Asset, Operation, merge_operations
 
 
-class Option(Derivative):
+class Option(Asset):
     """Represents an Option.
 
     This class represents both calls and puts.

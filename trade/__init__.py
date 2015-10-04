@@ -33,7 +33,6 @@ from __future__ import absolute_import
 
 from .trade import (
     Asset,
-    Derivative,
     Operation,
     Accumulator,
     Event,

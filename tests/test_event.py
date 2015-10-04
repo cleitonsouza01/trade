@@ -85,6 +85,9 @@ class TestAbstractEventCreation(unittest.TestCase):
     def test_abstract_event_creation(self):
         """Creating a base Event should raise TypeError."""
         try:
-            event = trade.Event()
+            event = trade.Event(
+                asset=trade.Asset(symbol='a'),
+                date='2015-01-01'
+            )
         except TypeError:
             pass

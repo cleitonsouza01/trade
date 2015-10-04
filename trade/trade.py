@@ -42,40 +42,13 @@ from .utils import average_price, same_sign, merge_operations
 class Asset(object):
     """An asset represents anything that can be traded.
 
+    This class can represent both main assets and derivatives.
+
     Attributes:
         name: A string representing the name of the asset.
         symbol: A string representing the symbol of the asset.
         expiration_date: A string 'YYYY-mm-dd' representing the
             expiration date of the asset, if any.
-    """
-
-    def __init__(self, name=None, symbol=None, expiration_date=None):
-        self.name = name
-        self.symbol = symbol
-        self.expiration_date = expiration_date
-
-
-class Derivative(Asset):
-    """A derivative is an asset which derives from one or more assets.
-
-    Derivative is a subtype of Asset, so it has all the Asset
-    attributes and behaviors and can be used in any situation you
-    would use an Asset. In the real world, options and forward
-    contracts are examples of derivatives.
-
-    This is a base class for derivatives.
-
-    Attributes:
-        name: A string representing the name of the asset.
-        symbol: A string representing the symbol of the asset.
-        expiration_date: A string 'YYYY-mm-dd' representing the
-            expiration date of the derivative, if any.
-        underlying_assets: A list of Asset objects representing the
-            underlying assets of this derivative.
-        ratio: The ratio to which the derivate relates to its
-            underlying assets. For example:
-                If ratio is 1, then 1 derivative = 1 underlying asset
-                If ratio is 2, then 1 derivative = 2 underlying asset
     """
 
     def __init__(
@@ -86,7 +59,9 @@ class Derivative(Asset):
             underlying_assets=None,
             ratio=1
         ):
-        super(Derivative, self).__init__(name, symbol, expiration_date)
+        self.name = name
+        self.symbol = symbol
+        self.expiration_date = expiration_date
         if underlying_assets is None:
             underlying_assets = []
         self.underlying_assets = underlying_assets
@@ -647,8 +622,7 @@ class TradingFees(object):
 
         container.trading_fees = YourTradingFees
 
-    Your TradingFees implementation must obey the interface defined
-    in this class.
+    Your TradingFees implementation must obey this class interface.
     """
 
     @classmethod
