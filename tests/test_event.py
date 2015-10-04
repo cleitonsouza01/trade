@@ -12,7 +12,7 @@ class DummyEvent(trade.Event):
     def __init__(self, asset, date):
         super(DummyEvent, self).__init__(asset, date)
 
-    def update_portfolio(self, quantity, price, results):
+    def update_portfolio(self, quantity, price, results=None):
         return quantity, price
 
 

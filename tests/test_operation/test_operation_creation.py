@@ -11,22 +11,20 @@ class TestOperationCreation(unittest.TestCase):
     """Test the creation of Operation objects."""
 
     def setUp(self):
-        self.asset = trade.Asset(name='some asset')
+        asset = trade.Asset(symbol='AAPL')
         self.operation = trade.Operation(
             date='2015-09-18',
-            asset=self.asset,
+            asset=asset,
             quantity=20,
             price=10,
-            commissions={
-                'some discount': 3
-            }
+            commissions={'some discount': 3}
         )
 
     def test_trade_exists(self):
         self.assertTrue(self.operation)
 
     def test_trade_asset(self):
-        self.assertEqual(self.operation.asset, self.asset)
+        self.assertEqual(self.operation.asset.symbol, 'AAPL')
 
     def test_trade_date_should_be_2015_09_18(self):
         self.assertEqual(self.operation.date, '2015-09-18')
@@ -38,7 +36,5 @@ class TestOperationCreation(unittest.TestCase):
         self.assertEqual(self.operation.price, 10)
 
     def test_trade_discounts_dict(self):
-        discounts={
-            'some discount': 3
-        }
+        discounts={'some discount': 3}
         self.assertEqual(self.operation.commissions, discounts)

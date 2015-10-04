@@ -7,6 +7,7 @@ import trade
 
 
 class Test_accumulate_operation_Case_00(unittest.TestCase):
+    """Test the accumulation of 1 operation."""
 
     def setUp(self):
         self.asset = trade.Asset()
@@ -65,6 +66,7 @@ class Test_accumulate_operation_Case_01(unittest.TestCase):
 
 
 class Test_accumulate_operation_Case_02(unittest.TestCase):
+    """Test the accumulation of 1 operation with commissions."""
 
     def setUp(self):
         asset = trade.Asset(symbol='some asset')
@@ -102,6 +104,7 @@ class Test_accumulate_operation_Case_02(unittest.TestCase):
 
 
 class Test_accumulate_operation_Case_03(unittest.TestCase):
+    """Test the accumulation of 1 operation with zero price."""
 
     def setUp(self):
         asset = trade.Asset(symbol='some asset')
@@ -134,6 +137,7 @@ class Test_accumulate_operation_Case_03(unittest.TestCase):
 
 
 class Test_accumulate_operation_Case_04(unittest.TestCase):
+    """Test the accumulation of 2 operations in consecutive dates."""
 
     def setUp(self):
         asset = trade.Asset(symbol='some asset')
@@ -179,6 +183,7 @@ class Test_accumulate_operation_Case_04(unittest.TestCase):
 
 
 class Test_accumulate_operation_Case_05(unittest.TestCase):
+    """Test the accumulation of empty operations."""
 
     def setUp(self):
         asset = trade.Asset(symbol='some asset')

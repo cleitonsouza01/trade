@@ -1,3 +1,5 @@
+"""Tests for StockSplit events."""
+
 from __future__ import absolute_import
 import unittest
 
@@ -44,7 +46,7 @@ class TestStockSplit_case_00(unittest.TestCase):
 
 class TestEvent_log_stocksplit_Case_00(unittest.TestCase):
     """Test a StockSplit effect on the Accumulator."""
-    
+
     def setUp(self):
         asset = trade.Asset()
         self.accumulator = trade.Accumulator(asset, logging=True)

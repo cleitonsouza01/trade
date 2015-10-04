@@ -1,3 +1,5 @@
+"""Tests for ReverseStockSplit events."""
+
 from __future__ import absolute_import
 import unittest
 
@@ -8,13 +10,13 @@ class TestReverseStockSplit_Case_00(unittest.TestCase):
     """Test the accumulation of a ReverseStockSplit event."""
 
     def setUp(self):
-        self.asset = trade.Asset()
-        self.accumulator = trade.Accumulator(self.asset, logging=True)
+        asset = trade.Asset()
+        self.accumulator = trade.Accumulator(asset, logging=True)
         self.accumulator.quantity = 100
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}
         event = trade.plugins.ReverseStockSplit(
-            asset=self.asset,
+            asset=asset,
             date='2015-09-24',
             factor=2
         )

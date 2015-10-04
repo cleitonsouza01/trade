@@ -37,8 +37,6 @@ def merge_operations(existing_operation, operation):
         operation.price
     )
     existing_operation.quantity += operation.quantity
-    for key, value in operation.results.items():
-        existing_operation.results[key] += value
 
 
 def average_price(quantity_1, price_1, quantity_2, price_2):

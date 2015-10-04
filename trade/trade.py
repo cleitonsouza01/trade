@@ -652,6 +652,6 @@ class TradingFees(object):
     """
 
     @classmethod
-    def get_fees(cls, operation, operation_type):
+    def get_fees(cls, operation=None, operation_type=None):
         """Returns a set of fees (percentages) for a given operation."""
         return {}
