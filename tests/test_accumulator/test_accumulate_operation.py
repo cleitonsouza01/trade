@@ -1,3 +1,5 @@
+"""Tests the method accumulate_operation() of the Accumulator."""
+
 from __future__ import absolute_import
 import unittest
 
@@ -9,11 +11,11 @@ class Test_accumulate_operation_Case_00(unittest.TestCase):
     def setUp(self):
         self.asset = trade.Asset()
         self.operation = trade.Operation(
-                            quantity=100,
-                            price=10,
-                            asset=self.asset,
-                            date='2015-01-01'
-                        )
+            quantity=100,
+            price=10,
+            asset=self.asset,
+            date='2015-01-01'
+        )
         self.accumulator = trade.Accumulator(self.asset)
         self.result = self.accumulator.accumulate_operation(self.operation)
 
@@ -32,17 +34,20 @@ class Test_accumulate_operation_Case_00(unittest.TestCase):
 
 class Test_accumulate_operation_Case_01(unittest.TestCase):
     """Attempt to accumulate a Operation with a different asset.
+
+    The Accumulator should only accumulate operations from assets
+    with the same code from self.asset.
     """
 
     def setUp(self):
         self.asset0 = trade.Asset()
         self.asset1 = trade.Asset(symbol='other')
         self.operation = trade.Operation(
-                            quantity=-100,
-                            price=10,
-                            asset=self.asset0,
-                            date='2015-01-01'
-                        )
+            quantity=-100,
+            price=10,
+            asset=self.asset0,
+            date='2015-01-01'
+        )
         self.accumulator = trade.Accumulator(self.asset1)
         self.result = self.accumulator.accumulate_operation(self.operation)
 
@@ -64,23 +69,22 @@ class Test_accumulate_operation_Case_02(unittest.TestCase):
     def setUp(self):
         asset = trade.Asset(symbol='some asset')
         operation = trade.Operation(
-                        date='2015-09-18',
-                        asset=asset,
-                        quantity=20,
-                        price=10
-                    )
+            date='2015-09-18',
+            asset=asset,
+            quantity=20,
+            price=10
+        )
         comissions = {
             'some comission': 1,
             'other comission': 3,
         }
         container = trade.OperationContainer(
-                        operations=[operation],
-                        commissions=comissions
-                    )
+            operations=[operation],
+            commissions=comissions
+        )
         container.tasks = [
             trade.plugins.fetch_exercises,
             trade.plugins.fetch_daytrades,
-            #trade.prorate_commissions
         ]
         container.fetch_positions()
         self.accumulator = trade.Accumulator(asset)
@@ -102,18 +106,17 @@ class Test_accumulate_operation_Case_03(unittest.TestCase):
     def setUp(self):
         asset = trade.Asset(symbol='some asset')
         operation = trade.Operation(
-                        date='2015-09-18',
-                        asset=asset,
-                        quantity=20,
-                        price=0
-                    )
+            date='2015-09-18',
+            asset=asset,
+            quantity=20,
+            price=0
+        )
         container = trade.OperationContainer(
-                        operations=[operation]
-                    )
+            operations=[operation]
+        )
         container.tasks = [
             trade.plugins.fetch_exercises,
             trade.plugins.fetch_daytrades,
-            #trade.prorate_commissions
         ]
         container.fetch_positions()
         self.accumulator = trade.Accumulator(asset)
@@ -135,18 +138,17 @@ class Test_accumulate_operation_Case_04(unittest.TestCase):
     def setUp(self):
         asset = trade.Asset(symbol='some asset')
         operation = trade.Operation(
-                        date='2015-09-18',
-                        asset=asset,
-                        quantity=20,
-                        price=10
-                    )
+            date='2015-09-18',
+            asset=asset,
+            quantity=20,
+            price=10
+        )
         container = trade.OperationContainer(
-                        operations=[operation]
-                    )
+            operations=[operation]
+        )
         container.tasks = [
             trade.plugins.fetch_exercises,
             trade.plugins.fetch_daytrades,
-            #trade.prorate_commissions
         ]
         container.fetch_positions()
         self.accumulator = trade.Accumulator(asset)
@@ -156,11 +158,11 @@ class Test_accumulate_operation_Case_04(unittest.TestCase):
         )
 
         operation2 = trade.Operation(
-                        date='2015-09-19',
-                        asset=asset,
-                        quantity=-20,
-                        price=0
-                    )
+            date='2015-09-19',
+            asset=asset,
+            quantity=-20,
+            price=0
+        )
         self.accumulator.accumulate_operation(operation2)
 
     def test_accumulator_price(self):
@@ -181,26 +183,23 @@ class Test_accumulate_operation_Case_05(unittest.TestCase):
     def setUp(self):
         asset = trade.Asset(symbol='some asset')
         operation = trade.Operation(
-                        date='2015-09-18',
-                        asset=asset,
-                        quantity=0,
-                        price=0
-                    )
-        container = trade.OperationContainer(
-                        operations=[operation]
-                    )
+            date='2015-09-18',
+            asset=asset,
+            quantity=0,
+            price=0
+        )
         self.accumulator = trade.Accumulator(asset)
         self.accumulator.accumulate_operation(operation)
 
         operation2 = trade.Operation(
-                        date='2015-09-19',
-                        asset=asset,
-                        quantity=0,
-                        price=0,
-                        results={
-                            'some result': 1000
-                        }
-                    )
+            date='2015-09-19',
+            asset=asset,
+            quantity=0,
+            price=0,
+            results={
+                'some result': 1000
+            }
+        )
         self.accumulator.accumulate_operation(operation2)
 
     def test_accumulator_price(self):

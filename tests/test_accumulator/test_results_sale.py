@@ -1,3 +1,5 @@
+"""Tests the result calc for sale operations."""
+
 from __future__ import absolute_import
 import unittest
 
@@ -14,19 +16,19 @@ class TestAccumulatorResults_sale_case_00(unittest.TestCase):
         self.accumulator = Accumulator(self.asset, logging=True)
 
         self.operation0 = Operation(
-                                quantity=100,
-                                price=10,
-                                date='2015-01-01',
-                                asset=self.asset
-                            )
+            quantity=100,
+            price=10,
+            date='2015-01-01',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation0)
 
         self.operation1 = Operation(
-                                quantity=-100,
-                                price=10,
-                                date='2015-01-02',
-                                asset=self.asset
-                            )
+            quantity=-100,
+            price=10,
+            date='2015-01-02',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation1)
 
     def test_sale_result_log(self):
@@ -62,27 +64,27 @@ class TestAccumulatorResults_sale_case_01(unittest.TestCase):
         self.accumulator = Accumulator(self.asset, logging=True)
 
         self.operation0 = Operation(
-                                quantity=100,
-                                price=10,
-                                date='2015-01-01',
-                                asset=self.asset
-                            )
+            quantity=100,
+            price=10,
+            date='2015-01-01',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation0)
 
         self.operation1 = Operation(
-                                quantity=-100,
-                                price=10,
-                                date='2015-01-02',
-                                asset=self.asset
-                            )
+            quantity=-100,
+            price=10,
+            date='2015-01-02',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation1)
 
         self.operation2 = Operation(
-                                quantity=100,
-                                price=10,
-                                date='2015-01-03',
-                                asset=self.asset
-                            )
+            quantity=100,
+            price=10,
+            date='2015-01-03',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation2)
 
     def test_sale_result_log(self):
@@ -125,35 +127,35 @@ class TestAccumulatorResults_sale_case_02(unittest.TestCase):
         self.accumulator = Accumulator(self.asset, logging=True)
 
         self.operation0 = Operation(
-                                quantity=100,
-                                price=10,
-                                date='2015-01-01',
-                                asset=self.asset
-                            )
+            quantity=100,
+            price=10,
+            date='2015-01-01',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation0)
 
         self.operation1 = Operation(
-                                quantity=-100,
-                                price=10,
-                                date='2015-01-02',
-                                asset=self.asset
-                            )
+            quantity=-100,
+            price=10,
+            date='2015-01-02',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation1)
 
         self.operation2 = Operation(
-                                quantity=100,
-                                price=10,
-                                date='2015-01-03',
-                                asset=self.asset
-                            )
+            quantity=100,
+            price=10,
+            date='2015-01-03',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation2)
 
         self.operation3 = Operation(
-                                quantity=-100,
-                                price=20,
-                                date='2015-01-04',
-                                asset=self.asset
-                            )
+            quantity=-100,
+            price=20,
+            date='2015-01-04',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation3)
 
     def test_sale_result_log(self):
@@ -195,7 +197,7 @@ class TestAccumulatorResults_sale_case_02(unittest.TestCase):
 
 
 
-class TestAccumulatorResults_sale_case_01(unittest.TestCase):
+class TestAccumulatorResults_sale_case_03(unittest.TestCase):
 
     maxDiff = None
 
@@ -204,27 +206,27 @@ class TestAccumulatorResults_sale_case_01(unittest.TestCase):
         self.accumulator = Accumulator(self.asset, logging=True)
 
         self.operation0 = Operation(
-                                quantity=100,
-                                price=10,
-                                date='2015-01-01',
-                                asset=self.asset
-                            )
+            quantity=100,
+            price=10,
+            date='2015-01-01',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation0)
 
         self.operation1 = Operation(
-                                quantity=-100,
-                                price=10,
-                                date='2015-01-02',
-                                asset=self.asset
-                            )
+            quantity=-100,
+            price=10,
+            date='2015-01-02',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation1)
 
         self.operation2 = Operation(
-                                quantity=100,
-                                price=10,
-                                date='2015-01-03',
-                                asset=self.asset
-                            )
+            quantity=100,
+            price=10,
+            date='2015-01-03',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation2)
 
     def test_sale_result_log(self):
@@ -243,7 +245,7 @@ class TestAccumulatorResults_sale_case_01(unittest.TestCase):
                 },
                 'occurrences': [self.operation1]
             },
-        '2015-01-01': {
+            '2015-01-01': {
                 'position': {
                     'quantity': 100,
                     'price': 10,
@@ -258,7 +260,7 @@ class TestAccumulatorResults_sale_case_01(unittest.TestCase):
         self.assertEqual(self.accumulator.results, expected_log)
 
 
-class TestAccumulatorResults_sale_case_03(unittest.TestCase):
+class TestAccumulatorResults_sale_case_04(unittest.TestCase):
 
     maxDiff = None
 
@@ -267,43 +269,43 @@ class TestAccumulatorResults_sale_case_03(unittest.TestCase):
         self.accumulator = Accumulator(self.asset, logging=True)
 
         self.operation0 = Operation(
-                                quantity=100,
-                                price=10,
-                                date='2015-01-01',
-                                asset=self.asset
-                            )
+            quantity=100,
+            price=10,
+            date='2015-01-01',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation0)
 
         self.operation1 = Operation(
-                                quantity=-100,
-                                price=10,
-                                date='2015-01-02',
-                                asset=self.asset
-                            )
+            quantity=-100,
+            price=10,
+            date='2015-01-02',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation1)
 
         self.operation2 = Operation(
-                                quantity=100,
-                                price=10,
-                                date='2015-01-03',
-                                asset=self.asset
-                            )
+            quantity=100,
+            price=10,
+            date='2015-01-03',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation2)
 
         self.operation3 = Operation(
-                                quantity=-100,
-                                price=20,
-                                date='2015-01-04',
-                                asset=self.asset
-                            )
+            quantity=-100,
+            price=20,
+            date='2015-01-04',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation3)
 
         self.operation4 = Operation(
-                                quantity=100,
-                                price=20,
-                                date='2015-01-05',
-                                asset=self.asset
-                            )
+            quantity=100,
+            price=20,
+            date='2015-01-05',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation4)
 
     def test_sale_result_log(self):
@@ -352,7 +354,7 @@ class TestAccumulatorResults_sale_case_03(unittest.TestCase):
 
 
 
-class TestAccumulatorResults_sale_case_04(unittest.TestCase):
+class TestAccumulatorResults_sale_case_05(unittest.TestCase):
 
     maxDiff = None
 
@@ -361,51 +363,51 @@ class TestAccumulatorResults_sale_case_04(unittest.TestCase):
         self.accumulator = Accumulator(self.asset, logging=True)
 
         self.operation0 = Operation(
-                                quantity=100,
-                                price=10,
-                                date='2015-01-01',
-                                asset=self.asset
-                            )
+            quantity=100,
+            price=10,
+            date='2015-01-01',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation0)
 
         self.operation1 = Operation(
-                                quantity=-100,
-                                price=10,
-                                date='2015-01-02',
-                                asset=self.asset
-                            )
+            quantity=-100,
+            price=10,
+            date='2015-01-02',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation1)
 
         self.operation2 = Operation(
-                                quantity=100,
-                                price=10,
-                                date='2015-01-03',
-                                asset=self.asset
-                            )
+            quantity=100,
+            price=10,
+            date='2015-01-03',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation2)
 
         self.operation3 = Operation(
-                                quantity=-100,
-                                price=20,
-                                date='2015-01-04',
-                                asset=self.asset
-                            )
+            quantity=-100,
+            price=20,
+            date='2015-01-04',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation3)
 
         self.operation4 = Operation(
-                                quantity=100,
-                                price=20,
-                                date='2015-01-05',
-                                asset=self.asset
-                            )
+            quantity=100,
+            price=20,
+            date='2015-01-05',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation4)
 
         self.operation5 = Operation(
-                                quantity=-100,
-                                price=40,
-                                date='2015-01-06',
-                                asset=self.asset
-                            )
+            quantity=-100,
+            price=40,
+            date='2015-01-06',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation5)
 
     def test_sale_result_log(self):
@@ -460,7 +462,7 @@ class TestAccumulatorResults_sale_case_04(unittest.TestCase):
         self.assertEqual(self.accumulator.results, expected_log)
 
 
-class TestAccumulatorResults_sale_case_05(unittest.TestCase):
+class TestAccumulatorResults_sale_case_06(unittest.TestCase):
 
     maxDiff = None
 
@@ -469,51 +471,51 @@ class TestAccumulatorResults_sale_case_05(unittest.TestCase):
         self.accumulator = Accumulator(self.asset, logging=True)
 
         self.operation0 = Operation(
-                                quantity=100,
-                                price=10,
-                                date='2015-01-01',
-                                asset=self.asset
-                            )
+            quantity=100,
+            price=10,
+            date='2015-01-01',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation0)
 
         self.operation1 = Operation(
-                                quantity=-100,
-                                price=10,
-                                date='2015-01-02',
-                                asset=self.asset
-                            )
+            quantity=-100,
+            price=10,
+            date='2015-01-02',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation1)
 
         self.operation2 = Operation(
-                                quantity=100,
-                                price=10,
-                                date='2015-01-03',
-                                asset=self.asset
-                            )
+            quantity=100,
+            price=10,
+            date='2015-01-03',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation2)
 
         self.operation3 = Operation(
-                                quantity=-100,
-                                price=20,
-                                date='2015-01-04',
-                                asset=self.asset
-                            )
+            quantity=-100,
+            price=20,
+            date='2015-01-04',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation3)
 
         self.operation4 = Operation(
-                                quantity=100,
-                                price=20,
-                                date='2015-01-05',
-                                asset=self.asset
-                            )
+            quantity=100,
+            price=20,
+            date='2015-01-05',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation4)
 
         self.operation5 = Operation(
-                                quantity=-50,
-                                price=40,
-                                date='2015-01-06',
-                                asset=self.asset
-                            )
+            quantity=-50,
+            price=40,
+            date='2015-01-06',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation5)
 
     def test_sale_result_log(self):
@@ -568,7 +570,7 @@ class TestAccumulatorResults_sale_case_05(unittest.TestCase):
         self.assertEqual(self.accumulator.results, expected_log)
 
 
-class TestAccumulatorResults_sale_case_06(unittest.TestCase):
+class TestAccumulatorResults_sale_case_07(unittest.TestCase):
 
     maxDiff = None
 
@@ -577,19 +579,19 @@ class TestAccumulatorResults_sale_case_06(unittest.TestCase):
         self.accumulator = Accumulator(self.asset, logging=True)
 
         self.operation0 = Operation(
-                                quantity=50,
-                                price=10,
-                                date='2015-01-01',
-                                asset=self.asset
-                            )
+            quantity=50,
+            price=10,
+            date='2015-01-01',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation0)
 
         self.operation1 = Operation(
-                                quantity=-100,
-                                price=20,
-                                date='2015-01-02',
-                                asset=self.asset
-                            )
+            quantity=-100,
+            price=20,
+            date='2015-01-02',
+            asset=self.asset
+        )
         self.accumulator.accumulate_operation(self.operation1)
 
     def test_purchase_result_log(self):

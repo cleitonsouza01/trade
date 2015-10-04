@@ -5,26 +5,26 @@ import trade
 
 
 class Test_get_exercises_operations_Case_00(unittest.TestCase):
+    """Test the fetch_exercises() task of the Accumulator."""
 
     def setUp(self):
         self.asset = trade.Asset(symbol='GOOGL')
         self.option = trade.plugins.Option(
-                        symbol='GOOG151002C00540000',
-                        expiration_date='2015-10-02',
-                        underlying_assets=[self.asset]
-                    )
+            symbol='GOOG151002C00540000',
+            expiration_date='2015-10-02',
+            underlying_assets=[self.asset]
+        )
         self.exercise = trade.plugins.Exercise(
-            			date='2015-09-18',
-            			asset=self.option,
-            			quantity=100,
-            			price=10
-                    )
+            date='2015-09-18',
+            asset=self.option,
+            quantity=100,
+            price=10
+        )
         self.container = trade.OperationContainer(
-                            operations=[self.exercise]
-                        )
+            operations=[self.exercise]
+        )
         self.container.tasks = [
             trade.plugins.fetch_exercises,
-            trade.plugins.fetch_daytrades,
         ]
         self.container.fetch_positions()
 
@@ -55,7 +55,6 @@ class Test_get_exercises_operations_Case_00(unittest.TestCase):
             100
         )
 
-    # FIXME premium!
     def test_asset_purchase_operation_price(self):
         self.assertEqual(
             self.container.positions['exercises'][self.asset.symbol].price,
@@ -64,32 +63,32 @@ class Test_get_exercises_operations_Case_00(unittest.TestCase):
 
 
 class Test_get_exercises_operations_Case_01(unittest.TestCase):
-
+    """Test the fetch_exercises() task of the Accumulator."""
+    
     def setUp(self):
         self.asset = trade.Asset(symbol='GOOGL')
         self.option = trade.plugins.Option(
-                            symbol='GOOG151002C00540000',
-                            expiration_date='2015-10-02',
-                            underlying_assets=[self.asset]
-                        )
+            symbol='GOOG151002C00540000',
+            expiration_date='2015-10-02',
+            underlying_assets=[self.asset]
+        )
         self.exercise0 = trade.plugins.Exercise(
-                			date='2015-09-18',
-                			asset=self.option,
-                			quantity=100,
-                			price=1
-                        )
+            date='2015-09-18',
+            asset=self.option,
+            quantity=100,
+            price=1
+        )
         self.exercise1 = trade.plugins.Exercise(
-                			date='2015-09-18',
-                			asset=self.option,
-                			quantity=100,
-                			price=3
-                        )
+            date='2015-09-18',
+            asset=self.option,
+            quantity=100,
+            price=3
+        )
         self.container = trade.OperationContainer(
-                                operations=[self.exercise0, self.exercise1]
-                            )
+            operations=[self.exercise0, self.exercise1]
+        )
         self.container.tasks = [
             trade.plugins.fetch_exercises,
-            trade.plugins.fetch_daytrades,
         ]
 
     def test_container_exercise_operations_len(self):
@@ -120,7 +119,6 @@ class Test_get_exercises_operations_Case_01(unittest.TestCase):
             200
         )
 
-    # FIXME premium!
     def test_asset_purchase_operation_price(self):
         self.container.fetch_positions()
         self.assertEqual(

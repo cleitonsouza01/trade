@@ -40,7 +40,7 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from ..trade import Derivative, Operation
+from ..trade import Derivative, Operation, merge_operations
 
 
 class Option(Derivative):
@@ -108,20 +108,19 @@ class Exercise(Operation):
         """
         if portfolio:
             self.operations = self.asset.exercise(
-                        self.quantity,
-                        self.price,
-                        self.date,
-                        portfolio.assets[self.asset.symbol].price
-                    )
+                self.quantity,
+                self.price,
+                self.date,
+                portfolio.assets[self.asset.symbol].price
+            )
         else:
             self.operations = self.asset.exercise(
-                        self.quantity,
-                        self.price,
-                        self.date
-                    )
+                self.quantity,
+                self.price,
+                self.date
+            )
 
 
-# TODO document better this OperationContainer task
 def fetch_exercises(container):
     """OperationContainer task.
 
@@ -130,22 +129,18 @@ def fetch_exercises(container):
     """
     for operation in container.operations:
         if isinstance(operation, Exercise):
-            fetch_exercise_operation(container, operation)
-
-
-def fetch_exercise_operation(container, operation):
-    if 'exercises' not in container.positions:
-        container.positions['exercises'] = {}
-    operation.fetch_operations()
-    for operation in operation.operations:
-        symbol = operation.asset.symbol
-        if symbol in container.positions['exercises'].keys():
-            container.merge_operations(
-                container.positions['exercises'][symbol],
-                operation
-            )
-        else:
-            container.positions['exercises'][symbol] = operation
+            if 'exercises' not in container.positions:
+                container.positions['exercises'] = {}
+            operation.fetch_operations()
+            for operation in operation.operations:
+                symbol = operation.asset.symbol
+                if symbol in container.positions['exercises'].keys():
+                    merge_operations(
+                        container.positions['exercises'][symbol],
+                        operation
+                    )
+                else:
+                    container.positions['exercises'][symbol] = operation
 
 
 def get_exercise_premium(operation, portfolio):

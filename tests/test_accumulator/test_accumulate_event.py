@@ -1,64 +1,59 @@
+"""Tests the method accumulate_event() of the Accumulator."""
+
 from __future__ import absolute_import
+from __future__ import division
+
 import unittest
 
-#from trade import Accumulator as AssetAccumulator, Event
-#from trade import Asset, Operation
 import trade
 
 
-class StockSplit(trade.Event):
+class EventThatChangeResults(trade.Event):
+    """A fictional event for the tests."""
 
-    def __init__(self, date, asset,  factor):
-        self.factor = factor
-        self.asset = asset
-        self.date = date
+    def __init__(self, asset, date, some_value):
+        self.something = some_value
+        super(EventThatChangeResults, self).__init__(asset, date)
 
     def update_portfolio(self, quantity, price, results):
-        quantity = quantity * self.factor
-        price = price / self.factor
+        for key in results.keys():
+            results[key] += self.something
         return quantity, price
 
 
-class Test_accumulate_event_Case_00(unittest.TestCase):
+class TestEvent_EventThatChangeResults_case_00(unittest.TestCase):
+    """Test the accumulation of an Event object.
 
+    In this test we use the EventThatChangeResults object
+    to test the consequences of an Event accumulation.
+    """
     def setUp(self):
         self.asset = trade.Asset()
-        self.operation = trade.Operation(
-                            quantity=100,
-                            price=10,
-                            asset=self.asset,
-                            date='2015-01-01'
-                        )
-        self.event = StockSplit('2015-09-24', self.asset, 2)
-        self.accumulator = trade.Accumulator(self.asset, logging=True)
-        self.accumulator.accumulate_operation(self.operation)
-        self.accumulator.accumulate_event(self.event)
+        self.accumulator = trade.Accumulator(self.asset)
+        self.accumulator.quantity = 100
+        self.accumulator.price = 10
+        self.accumulator.results = {'trades': 1200}
 
-    def test_accumulator_price(self):
-        self.assertEqual(self.accumulator.price, 5)
+    def test_check_initial_quantity(self):
+        self.assertEqual(self.accumulator.quantity, 100)
 
-    def test_accumulator_quantity(self):
-        self.assertEqual(self.accumulator.quantity, 200)
+    def test_check_initial_price(self):
+        self.assertEqual(self.accumulator.price, 10)
 
+    def test_check_initial_results(self):
+        self.assertEqual(self.accumulator.results, {'trades': 1200})
 
-class Test_accumulate_event_Case_01(unittest.TestCase):
+    def test_check_quantity_after_split(self):
+        event = EventThatChangeResults(self.asset, '2015-09-27', 2)
+        self.accumulator.accumulate_event(event)
+        self.assertEqual(self.accumulator.quantity, 100)
 
-    def setUp(self):
-        self.asset = trade.Asset()
-        self.other_asset = trade.Asset('other')
-        self.operation = trade.Operation(
-                            quantity=100,
-                            price=10,
-                            asset=self.asset,
-                            date='2015-01-01'
-                        )
-        self.event = StockSplit('2015-09-24', self.other_asset, 2)
-        self.accumulator = trade.Accumulator(self.asset, logging=True)
-        self.accumulator.accumulate_operation(self.operation)
-        self.accumulator.accumulate_event(self.event)
+    def test_check_price_after_split(self):
+        event = EventThatChangeResults(self.asset, '2015-09-27', 2)
+        self.accumulator.accumulate_event(event)
+        self.assertEqual(self.accumulator.price, 10)
 
-    def test_accumulator_price(self):
-        self.assertEqual(self.accumulator.price, 5)
-
-    def test_accumulator_quantity(self):
-        self.assertEqual(self.accumulator.quantity, 200)
+    def test_check_results_after_split(self):
+        event = EventThatChangeResults(self.asset, '2015-09-27', 2)
+        self.accumulator.accumulate_event(event)
+        self.assertEqual(self.accumulator.results, {'trades': 1202})

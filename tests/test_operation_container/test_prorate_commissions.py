@@ -1,3 +1,5 @@
+"""Tests for the prorate_commissions() method of Accumulator."""
+
 from __future__ import absolute_import
 import unittest
 
@@ -5,6 +7,7 @@ import trade
 
 
 class TestTradeContainer_rate_discounts_by_trade_case_00(unittest.TestCase):
+    """Test pro rata of one commission for one operation."""
 
     def setUp(self):
         discounts = {
@@ -12,15 +15,15 @@ class TestTradeContainer_rate_discounts_by_trade_case_00(unittest.TestCase):
         }
         asset = trade.Asset(symbol='some asset')
         self.operation = trade.Operation(
-                            date='2015-09-21',
-                            asset=asset,
-                            quantity=-10,
-                            price=2
-                        )
+            date='2015-09-21',
+            asset=asset,
+            quantity=-10,
+            price=2
+        )
         self.container = trade.OperationContainer(
-                                    operations=[self.operation],
-                                    commissions=discounts
-                                )
+            operations=[self.operation],
+            commissions=discounts
+        )
 
     def test_trade_container_should_exist(self):
         self.assertTrue(self.container)
@@ -34,6 +37,7 @@ class TestTradeContainer_rate_discounts_by_trade_case_00(unittest.TestCase):
 
 
 class TestTradeContainer_rate_discounts_by_trade_case_01(unittest.TestCase):
+    """Test pro rata of 1 commission for 3 operations."""
 
     def setUp(self):
         discounts = {
@@ -41,24 +45,24 @@ class TestTradeContainer_rate_discounts_by_trade_case_01(unittest.TestCase):
         }
         asset = trade.Asset(symbol='some asset')
         self.operation1 = trade.Operation(
-                            date='2015-09-21',
-                            asset=asset,
-                            quantity=-10,
-                            price=2
-                        )
+            date='2015-09-21',
+            asset=asset,
+            quantity=-10,
+            price=2
+        )
         self.operation2 = trade.Operation(
-                            date='2015-09-21',
-                            asset=asset,
-                            quantity=-10,
-                            price=2
-                        )
+            date='2015-09-21',
+            asset=asset,
+            quantity=-10,
+            price=2
+        )
         self.container = trade.OperationContainer(
-                                    operations=[
-                                        self.operation1,
-                                        self.operation2
-                                    ],
-                                    commissions=discounts
-                                )
+            operations=[
+                self.operation1,
+                self.operation2
+            ],
+            commissions=discounts
+        )
 
     def test_trade_container_should_exist(self):
         self.assertTrue(self.container)
@@ -79,6 +83,7 @@ class TestTradeContainer_rate_discounts_by_trade_case_01(unittest.TestCase):
 
 
 class TestTradeContainer_rate_discounts_by_trade_case_02(unittest.TestCase):
+    """Test pro rata of 1 commission for 2 operations."""
 
     def setUp(self):
         discounts = {
@@ -86,24 +91,24 @@ class TestTradeContainer_rate_discounts_by_trade_case_02(unittest.TestCase):
         }
         asset = trade.Asset(symbol='some asset')
         self.operation1 = trade.Operation(
-                            date='2015-09-21',
-                            asset=asset,
-                            quantity=-10,
-                            price=2
-                        )
+            date='2015-09-21',
+            asset=asset,
+            quantity=-10,
+            price=2
+        )
         self.operation2 = trade.Operation(
-                            date='2015-09-21',
-                            asset=asset,
-                            quantity=-20,
-                            price=2
-                        )
+            date='2015-09-21',
+            asset=asset,
+            quantity=-20,
+            price=2
+        )
         self.container = trade.OperationContainer(
-                                    operations=[
-                                        self.operation1,
-                                        self.operation2
-                                    ],
-                                    commissions=discounts
-                                )
+            operations=[
+                self.operation1,
+                self.operation2
+            ],
+            commissions=discounts
+        )
 
     def test_trade_container_should_exist(self):
         self.assertTrue(self.container)
@@ -124,6 +129,7 @@ class TestTradeContainer_rate_discounts_by_trade_case_02(unittest.TestCase):
 
 
 class TestTradeContainer_rate_discounts_by_trade_case_03(unittest.TestCase):
+    """Test pro rata of 1 commission for 3 sale operations."""
 
     def setUp(self):
         discounts = {
@@ -132,31 +138,31 @@ class TestTradeContainer_rate_discounts_by_trade_case_03(unittest.TestCase):
         asset1 = trade.Asset(symbol='some asset')
         asset2 = trade.Asset(symbol='some other asset')
         self.operation1 = trade.Operation(
-                            date='2015-09-21',
-                            asset=asset1,
-                            quantity=-10,
-                            price=2
-                        )
+            date='2015-09-21',
+            asset=asset1,
+            quantity=-10,
+            price=2
+        )
         self.operation2 = trade.Operation(
-                            date='2015-09-21',
-                            asset=asset1,
-                            quantity=-20,
-                            price=2
-                        )
+            date='2015-09-21',
+            asset=asset1,
+            quantity=-20,
+            price=2
+        )
         self.operation3 = trade.Operation(
-                            date='2015-09-21',
-                            asset=asset2,
-                            quantity=-10,
-                            price=2
-                        )
+            date='2015-09-21',
+            asset=asset2,
+            quantity=-10,
+            price=2
+        )
         self.container = trade.OperationContainer(
-                                    operations=[
-                                                self.operation1,
-                                                self.operation2,
-                                                self.operation3
-                                                ],
-                                    commissions=discounts
-                                )
+            operations=[
+                self.operation1,
+                self.operation2,
+                self.operation3
+            ],
+            commissions=discounts
+        )
 
     def test_trade_container_should_exist(self):
         self.assertTrue(self.container)
@@ -176,6 +182,7 @@ class TestTradeContainer_rate_discounts_by_trade_case_03(unittest.TestCase):
 
 class TestTradeContainer_prorate_discounts_by_common_trades_and_daytrades(
         unittest.TestCase):
+    """Test pro rata of 1 commission for daytrades."""
 
     def setUp(self):
         discounts = {
@@ -185,27 +192,27 @@ class TestTradeContainer_prorate_discounts_by_common_trades_and_daytrades(
         self.asset1 = trade.Asset(symbol='some asset')
         self.asset2 = trade.Asset(symbol='some other asset')
         trade1 = trade.Operation(
-                    date='2015-09-21',
-                    asset=self.asset1,
-                    quantity=10,
-                    price=2
-                )
+            date='2015-09-21',
+            asset=self.asset1,
+            quantity=10,
+            price=2
+        )
         trade2 = trade.Operation(
-                    date='2015-09-21',
-                    asset=self.asset1,
-                    quantity=-5,
-                    price=3
-                )
+            date='2015-09-21',
+            asset=self.asset1,
+            quantity=-5,
+            price=3
+        )
         trade3 = trade.Operation(
-                    date='2015-09-21',
-                    asset=self.asset2,
-                    quantity=-5,
-                    price=7
-                )
+            date='2015-09-21',
+            asset=self.asset2,
+            quantity=-5,
+            price=7
+        )
         self.container = trade.OperationContainer(
-                                    operations=[trade1,trade2,trade3],
-                                    commissions=discounts
-                                )
+            operations=[trade1, trade2, trade3],
+            commissions=discounts
+        )
         trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
 
@@ -217,25 +224,25 @@ class TestTradeContainer_prorate_discounts_by_common_trades_and_daytrades(
 
     def test_check_daytrade0_buy_discounts(self):
         self.assertEqual(
-            round(self.container.positions['daytrades'][self.asset1.symbol].\
-                    operations[0].commissions['some discount'], 2),
+            round(self.container.positions['daytrades'][self.asset1.symbol]\
+                    .operations[0].commissions['some discount'], 2),
             0.14
         )
         self.assertEqual(
-            round(self.container.positions['daytrades'][self.asset1.symbol].\
-                    operations[0].commissions['other discount'], 2),
+            round(self.container.positions['daytrades'][self.asset1.symbol]\
+                    .operations[0].commissions['other discount'], 2),
             0.43
         )
 
     def test_check_daytrade0_sale_discounts(self):
         self.assertEqual(
-            round(self.container.positions['daytrades'][self.asset1.symbol].\
-                    operations[1].commissions['some discount'], 2),
+            round(self.container.positions['daytrades'][self.asset1.symbol]\
+                    .operations[1].commissions['some discount'], 2),
             0.21
         )
         self.assertEqual(
-            round(self.container.positions['daytrades'][self.asset1.symbol].\
-                    operations[1].commissions['other discount'], 2),
+            round(self.container.positions['daytrades'][self.asset1.symbol]\
+                    .operations[1].commissions['other discount'], 2),
             0.64
         )
 
@@ -247,7 +254,8 @@ class TestTradeContainer_prorate_discounts_by_common_trades_and_daytrades(
 
     def test_common_trades0_quantity_should_be_5(self):
         self.assertEqual(
-            self.container.positions['operations'][self.asset1.symbol].quantity,
+            self.container.positions['operations'][self.asset1.symbol]\
+                .quantity,
             5
         )
 
@@ -265,13 +273,13 @@ class TestTradeContainer_prorate_discounts_by_common_trades_and_daytrades(
 
     def test_check_common_trades0_discounts(self):
         self.assertEqual(
-            round(self.container.positions['operations'][self.asset1.symbol].\
-                    commissions['some discount'],2),
+            round(self.container.positions['operations'][self.asset1.symbol]\
+                    .commissions['some discount'],2),
             0.14
         )
         self.assertEqual(
-            round(self.container.positions['operations'][self.asset1.symbol].\
-                    commissions['other discount'], 2),
+            round(self.container.positions['operations'][self.asset1.symbol]\
+                    .commissions['other discount'], 2),
             0.43
         )
 
@@ -283,7 +291,8 @@ class TestTradeContainer_prorate_discounts_by_common_trades_and_daytrades(
 
     def test_common_trades1_quantity_should_be_minus_5(self):
         self.assertEqual(
-            self.container.positions['operations'][self.asset2.symbol].quantity,
+            self.container.positions['operations'][self.asset2.symbol]\
+                .quantity,
             -5
         )
 
@@ -305,6 +314,7 @@ class TestTradeContainer_prorate_discounts_by_common_trades_and_daytrades(
             'other discount': 1.5
         }
         self.assertEqual(
-            self.container.positions['operations'][self.asset2.symbol].commissions,
+            self.container.positions['operations'][self.asset2.symbol]\
+                .commissions,
             expected_discounts
         )

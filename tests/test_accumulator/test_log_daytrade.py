@@ -1,3 +1,5 @@
+"""Tests the logging of Daytrade objects."""
+
 from __future__ import absolute_import
 import unittest
 
@@ -5,6 +7,7 @@ import trade
 
 
 class TestLogDaytrade(unittest.TestCase):
+    """Test the logging of a Daytrade object."""
 
     def setUp(self):
         self.asset = trade.Asset()
@@ -12,13 +15,12 @@ class TestLogDaytrade(unittest.TestCase):
 
     def test_log_first_operation(self):
         daytrade = trade.plugins.Daytrade(
-                        date='2015-01-01',
-                        asset=self.asset,
-                        quantity=100,
-                        purchase_price=10,
-                        sale_price=20
-                    )
-        #self.accumulator.accumulate_daytrade(daytrade)
+            date='2015-01-01',
+            asset=self.asset,
+            quantity=100,
+            purchase_price=10,
+            sale_price=20
+        )
         self.accumulator.accumulate_operation(daytrade)
         expected_log = {
             '2015-01-01': {
@@ -33,18 +35,22 @@ class TestLogDaytrade(unittest.TestCase):
 
     def test_log_keys(self):
         daytrade = trade.plugins.Daytrade(
-                        date='2015-01-01',
-                        asset=self.asset,
-                        quantity=100,
-                        purchase_price=10,
-                        sale_price=20
-                    )
-        #self.accumulator.accumulate_daytrade(daytrade)
+            date='2015-01-01',
+            asset=self.asset,
+            quantity=100,
+            purchase_price=10,
+            sale_price=20,
+        )
         self.accumulator.accumulate_operation(daytrade)
         self.assertEqual(list(self.accumulator.log), ['2015-01-01'])
 
     def test_returned_result_should_be_1000(self):
-        daytrade = trade.plugins.Daytrade('2015-01-01', self.asset, 100, 10, 20)
-        #result = self.accumulator.accumulate_daytrade(daytrade)
+        daytrade = trade.plugins.Daytrade(
+            date='2015-01-01',
+            asset=self.asset,
+            quantity=100,
+            purchase_price=10,
+            sale_price=20
+        )
         result = self.accumulator.accumulate_operation(daytrade)
         self.assertEqual(result, {'daytrades':1000})

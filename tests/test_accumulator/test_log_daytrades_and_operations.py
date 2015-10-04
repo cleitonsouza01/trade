@@ -1,3 +1,5 @@
+"""Tests the logging of Operation and Daytrade objects."""
+
 from __future__ import absolute_import
 import unittest
 
@@ -12,16 +14,20 @@ class TestLogDaytradesAndOperations_Case_00(unittest.TestCase):
 
     def test_log_occurrences(self):
         daytrade = trade.plugins.Daytrade(
-                        date='2015-01-01',
-                        asset=self.asset,
-                        quantity=100,
-                        purchase_price=10,
-                        sale_price=20
-                    )
-        #self.accumulator.accumulate_daytrade(daytrade)
+            date='2015-01-01',
+            asset=self.asset,
+            quantity=100,
+            purchase_price=10,
+            sale_price=20
+        )
         self.accumulator.accumulate_operation(daytrade)
 
-        operation = trade.Operation(100, 10, asset=self.asset, date='2015-01-01')
+        operation = trade.Operation(
+            quantity=100,
+            price=10,
+            asset=self.asset,
+            date='2015-01-01'
+        )
         self.accumulator.accumulate_operation(operation)
 
         expected_log = {
@@ -44,16 +50,20 @@ class TestLogDaytradesAndOperations_Case_01(unittest.TestCase):
 
     def test_log_occurrences(self):
         daytrade = trade.plugins.Daytrade(
-                        date='2015-01-01',
-                        asset=self.asset,
-                        quantity=100,
-                        purchase_price=10,
-                        sale_price=20
-                    )
-        #self.accumulator.accumulate_daytrade(daytrade)
+            date='2015-01-01',
+            asset=self.asset,
+            quantity=100,
+            purchase_price=10,
+            sale_price=20
+        )
         self.accumulator.accumulate_operation(daytrade)
 
-        operation = trade.Operation(100, 10, asset=self.asset, date='2015-01-02')
+        operation = trade.Operation(
+            quantity=100,
+            price=10,
+            asset=self.asset,
+            date='2015-01-02'
+        )
         self.accumulator.accumulate_operation(operation)
 
         expected_log = {
@@ -83,31 +93,29 @@ class TestLogDaytradesAndOperations_Case_02(unittest.TestCase):
 
     def test_log_occurrences(self):
         daytrade = trade.plugins.Daytrade(
-                        date='2015-01-01',
-                        asset=self.asset,
-                        quantity=100,
-                        purchase_price=10,
-                        sale_price=20
-                    )
-        #self.accumulator.accumulate_daytrade(daytrade)
+            date='2015-01-01',
+            asset=self.asset,
+            quantity=100,
+            purchase_price=10,
+            sale_price=20
+        )
         self.accumulator.accumulate_operation(daytrade)
 
         operation = trade.Operation(
-                        quantity=100,
-                        price=10,
-                        asset=self.asset,
-                        date='2015-01-02'
-                    )
+            quantity=100,
+            price=10,
+            asset=self.asset,
+            date='2015-01-02'
+        )
         self.accumulator.accumulate_operation(operation)
 
         daytrade2 = trade.plugins.Daytrade(
-                        date='2015-01-02',
-                        asset=self.asset,
-                        quantity=100,
-                        purchase_price=10,
-                        sale_price=20
-                    )
-        #self.accumulator.accumulate_daytrade(daytrade2)
+            date='2015-01-02',
+            asset=self.asset,
+            quantity=100,
+            purchase_price=10,
+            sale_price=20
+        )
         self.accumulator.accumulate_operation(daytrade2)
 
         expected_log = {

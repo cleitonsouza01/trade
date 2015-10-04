@@ -45,9 +45,8 @@ class StockSplit(Event):
     """A stock split."""
 
     def __init__(self, asset, date, factor):
+        super(StockSplit, self).__init__(asset, date)
         self.factor = factor
-        self.asset = asset
-        self.date = date
 
     def update_portfolio(self, quantity, price, results):
         quantity = quantity * self.factor
@@ -59,9 +58,8 @@ class ReverseStockSplit(Event):
     """ A reverse stock split."""
 
     def __init__(self, asset, date, factor):
+        super(ReverseStockSplit, self).__init__(asset, date)
         self.factor = factor
-        self.asset = asset
-        self.date = date
 
     def update_portfolio(self, quantity, price, results):
         quantity = quantity / self.factor
@@ -73,12 +71,11 @@ class BonusShares(Event):
     """Bonus shares."""
 
     def __init__(self, asset, date, factor):
+        super(BonusShares, self).__init__(asset, date)
         self.factor = factor
-        self.asset = asset
-        self.date = date
 
     def update_portfolio(self, quantity, price, results):
         new_quantity = quantity * self.factor
-        price = average_price (quantity, price, new_quantity, 0)
+        price = average_price(quantity, price, new_quantity, 0)
         quantity += new_quantity
         return quantity, price

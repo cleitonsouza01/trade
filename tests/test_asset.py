@@ -1,3 +1,5 @@
+"""Tests for Asset and Derivative."""
+
 from __future__ import absolute_import
 import unittest
 

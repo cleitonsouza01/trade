@@ -1,3 +1,5 @@
+"""Tests for the TradingFees base class."""
+
 from __future__ import absolute_import
 import unittest
 
@@ -18,25 +20,25 @@ class TestTaxManager(unittest.TestCase):
 
     def test_get_rates_for_operation_should_return_empty_dict(self):
         operation = trade.Operation(
-                        asset=trade.Asset(),
-                        quantity=10,
-                        price=1,
-                        date='2015-09-25'
-                    )
+            asset=trade.Asset(),
+            quantity=10,
+            price=1,
+            date='2015-09-25'
+        )
         self.assertEqual(
-            self.tax_manager.get_fees(operation,'common operations'),
+            self.tax_manager.get_fees(operation, 'common operations'),
             {}
         )
 
     def test_get_rates_for_daytrade_should_return_empty_dict(self):
         daytrade = trade.plugins.Daytrade(
-                        date='2015-09-25',
-                        asset=trade.Asset(),
-                        quantity=100,
-                        purchase_price=10,
-                        sale_price=20
-                    )
+            date='2015-09-25',
+            asset=trade.Asset(),
+            quantity=100,
+            purchase_price=10,
+            sale_price=20
+        )
         self.assertEqual(
-            self.tax_manager.get_fees(daytrade,'daytrades'),
+            self.tax_manager.get_fees(daytrade, 'daytrades'),
             {}
         )

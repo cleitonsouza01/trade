@@ -41,7 +41,7 @@ from .trade import (
     Portfolio,
     TradingFees
 )
-from .utils import average_price, same_sign
+from .utils import average_price, same_sign, merge_operations
 
 
 __author__ = 'rocha.rafaelsilva@gmail.com'

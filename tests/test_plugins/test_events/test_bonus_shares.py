@@ -14,10 +14,10 @@ class TestBonusSharesEvent_Case_00(unittest.TestCase):
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}
         event = trade.plugins.BonusShares(
-                    asset=self.asset,
-                    date='2015-09-24',
-                    factor=1
-                )
+            asset=self.asset,
+            date='2015-09-24',
+            factor=1
+        )
         self.accumulator.accumulate_event(event)
 
     def test_check_quantity_after_split(self):
@@ -40,10 +40,10 @@ class TestBonusSharesEvent_Case_01(unittest.TestCase):
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}
         event = trade.plugins.BonusShares(
-                    asset=self.asset,
-                    date='2015-09-24',
-                    factor=2
-                )
+            asset=self.asset,
+            date='2015-09-24',
+            factor=2
+        )
         self.accumulator.accumulate_event(event)
 
     def test_check_quantity_after_split(self):
@@ -66,10 +66,10 @@ class TestBonusSharesEvent_Case_02(unittest.TestCase):
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}
         event = trade.plugins.BonusShares(
-                    asset=self.asset,
-                    date='2015-09-24',
-                    factor=0.5
-                )
+            asset=self.asset,
+            date='2015-09-24',
+            factor=0.5
+        )
         self.accumulator.accumulate_event(event)
 
     def test_check_quantity_after_split(self):

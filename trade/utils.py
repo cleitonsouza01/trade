@@ -28,6 +28,19 @@ THE SOFTWARE.
 from __future__ import division
 
 
+def merge_operations(existing_operation, operation):
+    """Merges one operation with another operation."""
+    existing_operation.price = average_price(
+        existing_operation.quantity,
+        existing_operation.price,
+        operation.quantity,
+        operation.price
+    )
+    existing_operation.quantity += operation.quantity
+    for key, value in operation.results.items():
+        existing_operation.results[key] += value
+
+
 def average_price(quantity_1, price_1, quantity_2, price_2):
     """Calculates the average price between two positions.
 
@@ -37,9 +50,6 @@ def average_price(quantity_1, price_1, quantity_2, price_2):
             (quantity_1 + quantity_2)
 
 
-def same_sign(x, y):
+def same_sign(number_1, number_2):
     """Checks if two numbers have the same sign."""
-    try:
-        return (int(x) >= 0) ^ (int(y) < 0)
-    except:
-        return None
+    return (number_1 >= 0) ^ (number_2 < 0)

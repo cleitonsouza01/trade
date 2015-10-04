@@ -5,6 +5,7 @@ import trade
 
 
 class TestTradeContainerCreation_Case_00(unittest.TestCase):
+    """Test the creation of a OperationContainer."""
 
     def setUp(self):
         self.container = trade.OperationContainer()
@@ -14,6 +15,7 @@ class TestTradeContainerCreation_Case_00(unittest.TestCase):
 
 
 class TestTradeContainerCreation_Case_01(unittest.TestCase):
+    """Test the creation of a OperationContainer."""
 
     def setUp(self):
         commissions = {
@@ -40,15 +42,16 @@ class TestTradeContainerCreation_Case_01(unittest.TestCase):
 
 
 class TestTradeContainer_add_to_common_operations(unittest.TestCase):
+    """Test add_to_position_operations method."""
 
     def setUp(self):
         self.asset = trade.Asset(symbol='some asset')
         operation = trade.Operation(
-                    date='2015-09-21',
-                    asset=self.asset,
-                    quantity=10,
-                    price=2
-                )
+            date='2015-09-21',
+            asset=self.asset,
+            quantity=10,
+            price=2
+        )
         self.container = trade.OperationContainer(operations=[operation])
         self.container.fetch_positions_tasks = [
             trade.plugins.fetch_exercises,
@@ -56,11 +59,11 @@ class TestTradeContainer_add_to_common_operations(unittest.TestCase):
         ]
         self.container.fetch_positions()
         operation2 = trade.Operation(
-                    date='2015-09-21',
-                    asset=self.asset,
-                    quantity=10,
-                    price=4
-                )
+            date='2015-09-21',
+            asset=self.asset,
+            quantity=10,
+            price=4
+        )
         self.container.add_to_position_operations(operation2)
 
     def test_common_trades_len_should_be_1(self):

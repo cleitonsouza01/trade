@@ -34,11 +34,12 @@ from __future__ import division
 
 import math
 import copy
+from abc import ABCMeta, abstractmethod
 
-from .utils import average_price, same_sign
+from .utils import average_price, same_sign, merge_operations
 
 
-class Asset:
+class Asset(object):
     """An asset represents anything that can be traded.
 
     Attributes:
@@ -77,22 +78,22 @@ class Derivative(Asset):
                 If ratio is 2, then 1 derivative = 2 underlying asset
     """
 
-    def __init__(self,
-                name=None,
-                symbol=None,
-                expiration_date=None,
-                underlying_assets=None,
-                ratio=1
-            ):
-        self.name = name
-        self.symbol = symbol
-        self.expiration_date = expiration_date
-        if underlying_assets is None: underlying_assets = []
+    def __init__(
+            self,
+            name=None,
+            symbol=None,
+            expiration_date=None,
+            underlying_assets=None,
+            ratio=1
+        ):
+        super(Derivative, self).__init__(name, symbol, expiration_date)
+        if underlying_assets is None:
+            underlying_assets = []
         self.underlying_assets = underlying_assets
         self.ratio = ratio
 
 
-class Operation:
+class Operation(object):
     """An operation represents the purchase or the sale of an asset.
 
     Attributes:
@@ -119,34 +120,46 @@ class Operation:
             may have.
     """
 
+    # By default all Operations can
+    # update a portfolio position.
     update_position = True
-    """By default all Operations can update a portfolio position."""
 
+    # By default underlying operations
+    # should not be accumulated.
     accumulate_underlying_operations = False
-    """By default underlying operations should not be accumulated."""
 
+    # An operation may contain
+    # multiple underlying operations.
     operations = None
-    """An operation may contain multiple underlying operations."""
 
-    def __init__(self,
-                quantity=0,
-                price=0,
-                date=None,
-                asset=None,
-                commissions=None,
-                fees=None,
-                results=None
-            ):
+    def __init__(
+            self,
+            quantity=0,
+            price=0,
+            date=None,
+            asset=None,
+            commissions=None,
+            fees=None,
+            results=None
+        ):
+        if commissions is None:
+            commissions = {}
+        if fees is None:
+            fees = {}
+        if results is None:
+            results = {}
         self.date = date
         self.asset = asset
         self.quantity = quantity
         self.price = price
-        if commissions is None: commissions={}
-        if fees is None: fees={}
-        if results is None: results={}
         self.commissions = commissions
         self.fees = fees
-        self.results = results
+        self.raw_results = results
+
+    @property
+    def results(self):
+        """Return the results associated with the operation."""
+        return self.raw_results
 
     @property
     def real_value(self):
@@ -161,9 +174,9 @@ class Operation:
         already deducted or added.
         """
         return self.price + math.copysign(
-                            self.total_commissions_and_fees / self.quantity,
-                            self.quantity
-                        )
+            self.total_commissions_and_fees / self.quantity,
+            self.quantity
+        )
 
     @property
     def total_commissions_and_fees(self):
@@ -184,35 +197,34 @@ class Operation:
     def total_fees_value(self):
         """Returns the total fee value for this operation."""
         return sum(
-                [self.volume * value / 100  for value in self.fees.values()]
-            )
+            [self.volume * value / 100  for value in self.fees.values()]
+        )
 
 
-class Event:
+class Event(object):
     """An occurrence that change one or more asset's position.
 
-    Events can change the quantity, the price and the results stored on
-    a asset accumulator. This is a base class for Events; every event
-    must obey the update_portfolio method interface defined here:
-
-        update_portfolio(quantity, price, results)
-            # do stuff here...
-            return quantity, price
+    This is a base class for Events. Events can change the quantity,
+    the price and the results stored on a asset accumulator.
 
     Attributes:
         date: A string 'YYYY-mm-dd', the date the event occurred.
         asset: The target asset of the event.
     """
 
+    __metaclass__ = ABCMeta
+
     def __init__(self, asset, date):
         self.asset = asset
         self.date = date
 
+    @abstractmethod
     def update_portfolio(self, quantity, price, results):
+        """Should udpate the quantity, price and/or results."""
         return quantity, price
 
 
-class OperationContainer:
+class OperationContainer(object):
     """A container for operations.
 
     An OperationContainer is used to group operations that occurred on
@@ -274,32 +286,23 @@ class OperationContainer:
             daytrades from other operations).
     """
 
-    def __init__(self,
-                date=None,
-                operations=None,
-                commissions=None
-            ):
+    def __init__(
+            self,
+            date=None,
+            operations=None,
+            commissions=None
+        ):
+        if operations is None:
+            operations = []
+        if commissions is None:
+            commissions = {}
         self.date = date
-        if operations is None: operations=[]
-        if commissions is None: commissions = {}
         self.operations = operations
         self.commissions = commissions
         self.positions = {}
         self.trading_fees = TradingFees
         self.raw_operations = copy.deepcopy(self.operations)
-
         self.tasks = []
-        """Methods to be executed when fetch_positions() is called.
-
-        A default setup could look like this:
-        self.tasks = [
-            trade.plugins.fetch_exercises,
-            trade.plugins.fetch_daytrades,
-        ]
-
-        This would make the container able to deal with options, option
-        exercises and daytrades.
-        """
 
     @property
     def total_commission_value(self):
@@ -339,22 +342,12 @@ class OperationContainer:
         # Add fees to the operations
         self.find_trading_fees_for_positions()
 
-    def merge_operations(self, existing_operation, operation):
-        """Merges one operation with another operation."""
-        existing_operation.price = average_price(
-                                        existing_operation.quantity,
-                                        existing_operation.price,
-                                        operation.quantity,
-                                        operation.price
-                                    )
-        existing_operation.quantity += operation.quantity
-
     def add_to_position_operations(self, operation):
         """Adds an operation to the common operations list."""
         if 'operations' not in self.positions:
             self.positions['operations'] = {}
         if operation.asset.symbol in self.positions['operations']:
-            self.merge_operations(
+            merge_operations(
                 self.positions['operations'][operation.asset.symbol],
                 operation
             )
@@ -368,7 +361,7 @@ class OperationContainer:
         container. The total discount value is then prorated by the
         daytrades and common operations based on their volume.
         """
-        for position_type, position_value in self.positions.items():
+        for position_value in self.positions.values():
             for position in position_value.values():
                 if position.operations:
                     for operation in position.operations:
@@ -394,15 +387,15 @@ class OperationContainer:
                 if position.operations:
                     for operation in position.operations:
                         operation.fees = self.trading_fees.get_fees(
-                                            operation, position_type
-                                        )
+                            operation, position_type
+                        )
                 else:
                     position.fees = self.trading_fees.get_fees(
-                                        position, position_type
-                                    )
+                        position, position_type
+                    )
 
 
-class Portfolio:
+class Portfolio(object):
     """A portfolio of assets.
 
     A portfolio is a collection of Accumulator objects.
@@ -427,7 +420,7 @@ class Portfolio:
                 self.accumulate(underlying_operation)
         else:
             if symbol not in self.assets:
-                self.assets[symbol] =Accumulator(operation.asset)
+                self.assets[symbol] = Accumulator(operation.asset)
             self.assets[symbol].accumulate_operation(operation)
 
     def run_tasks(self, operation):
@@ -440,7 +433,7 @@ class Portfolio:
             task(operation, self)
 
 
-class Accumulator:
+class Accumulator(object):
     """An accumulator of quantity @ some average price.
 
     It can accumulate a series of operations and events with an Asset
@@ -543,11 +536,11 @@ class Accumulator:
             # find out the new average price of the asset
             if same_sign(self.quantity, operation.quantity):
                 self.price = average_price(
-                                self.quantity,
-                                self.price,
-                                operation.quantity,
-                                operation.real_price
-                            )
+                    self.quantity,
+                    self.price,
+                    operation.quantity,
+                    operation.real_price
+                )
 
             # If the traded quantity has an opposite sign of the
             # asset's accumulated quantity and the accumulated
@@ -560,7 +553,7 @@ class Accumulator:
                 # only on what was traded (the rest create
                 # a new position)
                 if abs(operation.quantity) > abs(self.quantity):
-                        result_quantity = self.quantity * -1
+                    result_quantity = self.quantity * -1
 
                 # If we're not trading more than what we have,
                 # then use the operation quantity to calculate
@@ -607,11 +600,12 @@ class Accumulator:
         the accumulator.
         """
         self.quantity, self.price = event.update_portfolio(
-                                        self.quantity,
-                                        self.price,
-                                        self.results
-                                    )
-        if self.logging: self.log_occurrence(event)
+            self.quantity,
+            self.price,
+            self.results
+        )
+        if self.logging:
+            self.log_occurrence(event)
 
     def log_occurrence(self, operation):
         """Log Operation, Daytrade and Event objects.
@@ -639,17 +633,17 @@ class Accumulator:
         self.log[operation.date]['occurrences'].append(operation)
 
 
-class TradingFees:
-    """The base tax manager.
+class TradingFees(object):
+    """Responsible for finding fees for an operation.
 
-    A TaxManager returns the correspondent percentual fee for an
-    Operation. This base TaxManager implements a dummy interface
+    A TradingFees class returns the correspondent percentual fee for
+    an Operation. This base TaxManager implements a dummy interface
     that will return a empty set of fees every time it is called.
 
     Every OperationContainer has a reference to this class. If you
     need to implement fees in your application you must create your
-    own tax manager class and then replace the reference in the
-    operation container by doing this:
+    own TradingFees implementation and then replace the reference in
+    the OperationContainer object by doing this:
 
         container.trading_fees = YourTradingFees
 
@@ -657,6 +651,7 @@ class TradingFees:
     in this class.
     """
 
-    @staticmethod
-    def get_fees(operation, operation_type):
+    @classmethod
+    def get_fees(cls, operation, operation_type):
+        """Returns a set of fees (percentages) for a given operation."""
         return {}
