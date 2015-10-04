@@ -196,7 +196,7 @@ class Event(object):
     @abstractmethod
     def update_portfolio(self, quantity, price, results):
         """Should udpate the quantity, price and/or results."""
-        return quantity, price
+        raise NotImplementedError
 
 
 class OperationContainer(object):
