@@ -44,7 +44,7 @@ class TestLogDaytrade(unittest.TestCase):
         self.accumulator.accumulate_operation(daytrade)
         self.assertEqual(list(self.accumulator.log), ['2015-01-01'])
 
-    def test_returned_result_should_be_1000(self):
+    def test_returned_result(self):
         daytrade = trade.plugins.Daytrade(
             date='2015-01-01',
             asset=self.asset,

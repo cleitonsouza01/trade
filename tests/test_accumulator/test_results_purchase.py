@@ -88,7 +88,7 @@ class TestAccumulatorResults_purchase_case_01(unittest.TestCase):
         self.accumulator.accumulate_operation(self.operation2)
 
     def test_log_2015_01_01(self):
-        expected_log  = {
+        expected_log = {
             'position': {
                 'quantity': -100,
                 'price': 10,
@@ -98,7 +98,7 @@ class TestAccumulatorResults_purchase_case_01(unittest.TestCase):
         self.assertEqual(self.accumulator.log['2015-01-01'], expected_log)
 
     def test_log_2015_01_02(self):
-        expected_log  = {
+        expected_log = {
             'position': {
                 'quantity': 0,
                 'price': 0,

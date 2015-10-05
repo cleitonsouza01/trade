@@ -196,7 +196,6 @@ class TestAccumulatorResults_sale_case_02(unittest.TestCase):
         self.assertEqual(self.accumulator.results, expected_log)
 
 
-
 class TestAccumulatorResults_sale_case_03(unittest.TestCase):
 
     maxDiff = None

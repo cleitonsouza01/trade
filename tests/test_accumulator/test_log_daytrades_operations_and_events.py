@@ -3,15 +3,13 @@
 from __future__ import absolute_import
 import unittest
 
-#from trade import Accumulator, Event, Asset, Operation
-#from trade.plugins import Daytrade
 import trade
 import trade.plugins
 
 
 class TestEvent(trade.Event):
-    def update_portfolio(self, quantity, price, results):
-        return quantity, price
+    def update_portfolio(self, container):
+        pass
 
 
 class TestLogDaytradesOperationsAndEvents_Case_00(unittest.TestCase):
@@ -21,7 +19,7 @@ class TestLogDaytradesOperationsAndEvents_Case_00(unittest.TestCase):
         self.asset = trade.Asset()
         self.accumulator = trade.Accumulator(self.asset, logging=True)
 
-    def test_log_first_operation(self):
+    def test_log(self):
         daytrade = trade.plugins.Daytrade(
             date='2015-01-01',
             asset=self.asset,
@@ -64,7 +62,7 @@ class TestLogDaytradesOperationsAndEvents_Case_01(unittest.TestCase):
         self.asset = trade.Asset()
         self.accumulator = trade.Accumulator(self.asset, logging=True)
 
-    def test_log_first_operation(self):
+    def test_log(self):
         daytrade = trade.plugins.Daytrade(
             date='2015-01-01',
             asset=self.asset,
@@ -121,7 +119,7 @@ class TestLogDaytradesOperationsAndEvents_Case_02(unittest.TestCase):
         self.asset = trade.Asset()
         self.accumulator = trade.Accumulator(self.asset, logging=True)
 
-    def test_log_daytrades_operations_and_events(self):
+    def test_log(self):
         daytrade = trade.plugins.Daytrade(
             date='2015-01-01',
             asset=self.asset,

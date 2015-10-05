@@ -48,10 +48,9 @@ class StockSplit(Event):
         super(StockSplit, self).__init__(asset, date)
         self.factor = factor
 
-    def update_portfolio(self, quantity, price, results):
-        quantity = quantity * self.factor
-        price = price / self.factor
-        return quantity, price
+    def update_portfolio(self, container):
+        container.quantity = container.quantity * self.factor
+        container.price = container.price / self.factor
 
 
 class ReverseStockSplit(Event):
@@ -61,10 +60,9 @@ class ReverseStockSplit(Event):
         super(ReverseStockSplit, self).__init__(asset, date)
         self.factor = factor
 
-    def update_portfolio(self, quantity, price, results):
-        quantity = quantity / self.factor
-        price = price * self.factor
-        return quantity, price
+    def update_portfolio(self, container):
+        container.quantity = container.quantity / self.factor
+        container.price = container.price * self.factor
 
 
 class BonusShares(Event):
@@ -74,8 +72,12 @@ class BonusShares(Event):
         super(BonusShares, self).__init__(asset, date)
         self.factor = factor
 
-    def update_portfolio(self, quantity, price, results):
-        new_quantity = quantity * self.factor
-        price = average_price(quantity, price, new_quantity, 0)
-        quantity += new_quantity
-        return quantity, price
+    def update_portfolio(self, container):
+        new_quantity = container.quantity * self.factor
+        container.price = average_price(
+            container.quantity,
+            container.price,
+            new_quantity,
+            0
+        )
+        container.quantity += new_quantity

@@ -1,4 +1,4 @@
-"""trade: Tools For Stock Trading Applications.
+"""Tests for the Accumulator.
 
 http://trade.readthedocs.org/
 https://github.com/rochars/trade

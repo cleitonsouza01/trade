@@ -12,8 +12,8 @@ class DummyEvent(trade.Event):
     def __init__(self, asset, date):
         super(DummyEvent, self).__init__(asset, date)
 
-    def update_portfolio(self, quantity, price, results=None):
-        return quantity, price
+    def update_portfolio(self, container):
+        pass
 
 
 class TestBaseEventBehavior(unittest.TestCase):
@@ -34,12 +34,26 @@ class TestBaseEventBehavior(unittest.TestCase):
     def test_event_date(self):
         self.assertEqual(self.event.date, self.date)
 
-    def test_event_update_portfolio(self):
-        expected_return = (10, 1)
+    def test_event_update_quantity(self):
+        accumulator = trade.Accumulator()
+        self.event.update_portfolio(accumulator)
         self.assertEqual(
-            self.event.update_portfolio(10, 1, {}),
-            expected_return
+            accumulator.quantity,
+            0
         )
+
+    def test_event_update_price(self):
+        accumulator = trade.Accumulator()
+        self.event.update_portfolio(accumulator)
+        self.assertEqual(
+            accumulator.price,
+            0
+        )
+
+    def test_event_update_results(self):
+        accumulator = trade.Accumulator()
+        self.event.update_portfolio(accumulator)
+        self.assertFalse(accumulator.results)
 
 
 class TestBaseEventAccumulation(unittest.TestCase):
@@ -54,40 +68,26 @@ class TestBaseEventAccumulation(unittest.TestCase):
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}
 
-    def test_check_initial_quantity(self):
+    def test_initial_quantity(self):
         self.assertEqual(self.accumulator.quantity, 100)
 
-    def test_check_initial_price(self):
+    def test_initial_price(self):
         self.assertEqual(self.accumulator.price, 10)
 
-    def test_check_initial_results(self):
+    def test_initial_results(self):
         self.assertEqual(self.accumulator.results, {'trades': 1200})
 
-    def test_check_quantity_after_event(self):
+    def test_quantity_after_event(self):
         event = DummyEvent(asset=self.asset, date=self.date)
         self.accumulator.accumulate_event(event)
         self.assertEqual(self.accumulator.quantity, 100)
 
-    def test_check_price_after_event(self):
+    def test_price_after_event(self):
         event = DummyEvent(asset=self.asset, date=self.date)
         self.accumulator.accumulate_event(event)
         self.assertEqual(self.accumulator.price, 10)
 
-    def test_check_results_after_event(self):
+    def test_results_after_event(self):
         event = DummyEvent(asset=self.asset, date=self.date)
         self.accumulator.accumulate_event(event)
         self.assertEqual(self.accumulator.results, {'trades': 1200})
-
-
-class TestAbstractEventCreation(unittest.TestCase):
-    """The base Event should never be created."""
-
-    def test_abstract_event_creation(self):
-        """Creating a base Event should raise TypeError."""
-        try:
-            event = trade.Event(
-                asset=trade.Asset(symbol='a'),
-                date='2015-01-01'
-            )
-        except TypeError:
-            pass

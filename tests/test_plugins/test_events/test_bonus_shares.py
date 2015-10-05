@@ -6,7 +6,7 @@ import unittest
 import trade
 
 
-class TestBonusSharesEvent_Case_00(unittest.TestCase):
+class TestBonusSharesCase00(unittest.TestCase):
     """Test a bonus shares event with factor 1."""
 
     def setUp(self):
@@ -32,7 +32,7 @@ class TestBonusSharesEvent_Case_00(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {'trades': 1200})
 
 
-class TestBonusSharesEvent_Case_01(unittest.TestCase):
+class TestBonusSharesCase01(unittest.TestCase):
     """Test a bonus shares event with factor 2."""
 
     def setUp(self):
@@ -58,7 +58,7 @@ class TestBonusSharesEvent_Case_01(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {'trades': 1200})
 
 
-class TestBonusSharesEvent_Case_02(unittest.TestCase):
+class TestBonusSharesCase02(unittest.TestCase):
     """Test a bonus shares event with factor 0.5."""
 
     def setUp(self):

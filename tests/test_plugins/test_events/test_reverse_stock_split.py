@@ -6,7 +6,7 @@ import unittest
 import trade
 
 
-class TestReverseStockSplit_Case_00(unittest.TestCase):
+class TestReverseStockSplitCase00(unittest.TestCase):
     """Test the accumulation of a ReverseStockSplit event."""
 
     def setUp(self):

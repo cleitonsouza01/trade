@@ -7,7 +7,7 @@ import trade
 from trade.plugins import StockSplit
 
 
-class TestStockSplit_case_00(unittest.TestCase):
+class TestStockSplitCase00(unittest.TestCase):
     """Test a StockSplit effect on the Accumulator."""
 
     def setUp(self):
@@ -44,7 +44,7 @@ class TestStockSplit_case_00(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {'trades': 1200})
 
 
-class TestEvent_log_stocksplit_Case_00(unittest.TestCase):
+class TestLogStocksplitCase00(unittest.TestCase):
     """Test a StockSplit effect on the Accumulator."""
 
     def setUp(self):

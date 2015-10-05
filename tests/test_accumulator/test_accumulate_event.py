@@ -15,10 +15,9 @@ class EventThatChangeResults(trade.Event):
         self.something = some_value
         super(EventThatChangeResults, self).__init__(asset, date)
 
-    def update_portfolio(self, quantity, price, results):
-        for key in results.keys():
-            results[key] += self.something
-        return quantity, price
+    def update_portfolio(self, container):
+        for key in container.results.keys():
+            container.results[key] += self.something
 
 
 class TestEvent_EventThatChangeResults_case_00(unittest.TestCase):

@@ -194,7 +194,8 @@ class Event(object):
         self.date = date
 
     @abstractmethod
-    def update_portfolio(self, quantity, price, results):
+    #def update_portfolio(self, quantity, price, results):
+    def update_portfolio(self, container):
         """Should udpate the quantity, price and/or results."""
         raise NotImplementedError
 
@@ -574,11 +575,7 @@ class Accumulator(object):
         An event can change the quantity, price and results stored in
         the accumulator.
         """
-        self.quantity, self.price = event.update_portfolio(
-            self.quantity,
-            self.price,
-            self.results
-        )
+        event.update_portfolio(self)
         if self.logging:
             self.log_occurrence(event)
 
@@ -625,7 +622,10 @@ class TradingFees(object):
     Your TradingFees implementation must obey this class interface.
     """
 
+    __metaclass__ = ABCMeta
+
     @classmethod
+    @abstractmethod
     def get_fees(cls, operation=None, operation_type=None):
         """Returns a set of fees (percentages) for a given operation."""
         return {}
