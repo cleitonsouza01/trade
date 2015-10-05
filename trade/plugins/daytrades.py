@@ -107,7 +107,7 @@ class Daytrade(Operation):
                 price=sale.price
             )
         ]
-        
+
         super(Daytrade, self).__init__(
             date=purchase.date,
             asset=purchase.asset,

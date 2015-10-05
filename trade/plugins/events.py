@@ -42,35 +42,28 @@ from ..trade import Event, average_price
 
 
 class StockSplit(Event):
-    """A stock split."""
+    """A stock split.
+
+    This class represents both stock splits and reverse stock splits.
+    Stock splits are represented by values greater than 1.
+    Reverse stock splits are represented by values between 0 and 1.
+    """
 
     def __init__(self, asset, date, factor):
-        super(StockSplit, self).__init__(asset, date)
         self.factor = factor
+        super(StockSplit, self).__init__(asset, date)
 
     def update_portfolio(self, container):
         container.quantity = container.quantity * self.factor
         container.price = container.price / self.factor
 
 
-class ReverseStockSplit(Event):
-    """ A reverse stock split."""
-
-    def __init__(self, asset, date, factor):
-        super(ReverseStockSplit, self).__init__(asset, date)
-        self.factor = factor
-
-    def update_portfolio(self, container):
-        container.quantity = container.quantity / self.factor
-        container.price = container.price * self.factor
-
-
 class BonusShares(Event):
     """Bonus shares."""
 
     def __init__(self, asset, date, factor):
-        super(BonusShares, self).__init__(asset, date)
         self.factor = factor
+        super(BonusShares, self).__init__(asset, date)
 
     def update_portfolio(self, container):
         new_quantity = container.quantity * self.factor

@@ -15,10 +15,11 @@ class TestReverseStockSplitCase00(unittest.TestCase):
         self.accumulator.quantity = 100
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}
-        event = trade.plugins.ReverseStockSplit(
+        #event = trade.plugins.ReverseStockSplit(
+        event = trade.plugins.StockSplit(
             asset=asset,
             date='2015-09-24',
-            factor=2
+            factor=0.5
         )
         self.accumulator.accumulate_event(event)
 
