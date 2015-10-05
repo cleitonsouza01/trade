@@ -36,7 +36,7 @@ container.fetch_positions()
 portfolio = trade.Portfolio()
 
 # Accumulate every operation on the container positions.
-for position in container.positions['common operations'].values():
+for position in container.positions['operations'].values():
     portfolio.accumulate(position)
 for position in container.positions['daytrades'].values():
     portfolio.accumulate(position)

@@ -45,10 +45,10 @@ container.fetch_positions()
 print(container.positions)
 
 # Check each position
-print(container.positions['common operations']['GOOGL'].asset.symbol)
-print(container.positions['common operations']['GOOGL'].quantity)
-print(container.positions['common operations']['GOOGL'].price)
+print(container.positions['operations']['GOOGL'].asset.symbol)
+print(container.positions['operations']['GOOGL'].quantity)
+print(container.positions['operations']['GOOGL'].price)
 
-print(container.positions['common operations']['AAPL'].asset.symbol)
-print(container.positions['common operations']['AAPL'].quantity)
-print(container.positions['common operations']['AAPL'].price)
+print(container.positions['operations']['AAPL'].asset.symbol)
+print(container.positions['operations']['AAPL'].quantity)
+print(container.positions['operations']['AAPL'].price)

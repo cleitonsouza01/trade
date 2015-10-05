@@ -107,19 +107,19 @@ to group all operations with the same asset on a single operation.
 
 This generated positions will be stored on the OperationContainer
 positions attribute, a dictionary indexed by the type of position. By default
-the operation container identifies all operations as 'common operations', so
+the operation container identifies all operations as 'operations', so
 the positions attribute now would look like this:
 
 {
-    'common operations': {...}
+    'operations': {...}
 }
 
-On the value indexed by 'common operations' there is another dictionary, this
+On the value indexed by 'operations' there is another dictionary, this
 one indexed by Asset objects. Each item in this dictionary represents one
 Operation with an Asset. It is something like this:
 
 {
-    'common operations':  {
+    'operations':  {
         <Asset.symbol>: <Operation>,
         ...
     }
@@ -131,18 +131,18 @@ check our OperationContainer object positions we would see this:
 ```python
 
 # Check each position
-print(container.positions['common operations']['GOOGL'].asset.symbol)
+print(container.positions['operations']['GOOGL'].asset.symbol)
 #> GOOGL
-print(container.positions['common operations']['GOOGL'].quantity)
+print(container.positions['operations']['GOOGL'].quantity)
 #> 20
-print(container.positions['common operations']['GOOGL'].price)
+print(container.positions['operations']['GOOGL'].price)
 #> 15
 
-print(container.positions['common operations']['AAPL'].asset.symbol)
+print(container.positions['operations']['AAPL'].asset.symbol)
 #> AAPL
-print(container.positions['common operations']['AAPL'].quantity)
+print(container.positions['operations']['AAPL'].quantity)
 #> 10
-print(container.positions['common operations']['AAPL'].price)
+print(container.positions['operations']['AAPL'].price)
 #> 10
 ```
 

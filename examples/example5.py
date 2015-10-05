@@ -46,7 +46,7 @@ portfolio = trade.Portfolio()
 
 # Accumulate every operation on the container positions.
 # Attribute
-for position in container.positions['common operations'].values():
+for position in container.positions['operations'].values():
     portfolio.accumulate(position)
 
 print(portfolio.assets)

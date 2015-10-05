@@ -19,7 +19,7 @@ accumulator = trade.Accumulator(asset)
 
 # accumulate the operation
 accumulator.accumulate_operation(
-    container.positions['common operations'][asset.symbol]
+    container.positions['operations'][asset.symbol]
 )
 
 print(accumulator.quantity)
