@@ -341,11 +341,11 @@ class OperationContainer(object):
             for position in position_value.values():
                 if position.operations:
                     for operation in position.operations:
-                        self.prorate_commissions_by_operation(operation)
+                        self.prorate_commissions_by_position(operation)
                 else:
-                    self.prorate_commissions_by_operation(position)
+                    self.prorate_commissions_by_position(position)
 
-    def prorate_commissions_by_operation(self, operation):
+    def prorate_commissions_by_position(self, operation):
         """Prorates the commissions of the container for one operation.
 
         The ratio is based on the container volume and the volume of
