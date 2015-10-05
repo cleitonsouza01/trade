@@ -62,6 +62,6 @@ from .daytrades import (
     Daytrade,
     fetch_daytrades,
     daytrade_condition,
-    extract_daytrade,
+    #extract_daytrade,
     find_purchase_and_sale,
 )

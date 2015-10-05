@@ -14,13 +14,20 @@ class TestLogDaytrade(unittest.TestCase):
         self.accumulator = trade.Accumulator(self.asset, logging=True)
 
     def test_log_first_operation(self):
-        daytrade = trade.plugins.Daytrade(
-            date='2015-01-01',
-            asset=self.asset,
+        asset = trade.Asset()
+        operation_a = trade.Operation(
+            asset=asset,
             quantity=100,
-            purchase_price=10,
-            sale_price=20
+            price=10,
+            date='2015-01-01'
         )
+        operation_b = trade.Operation(
+            asset=asset,
+            quantity=-100,
+            price=20,
+            date='2015-01-01'
+        )
+        daytrade = trade.plugins.Daytrade(operation_a, operation_b)
         self.accumulator.accumulate_operation(daytrade)
         expected_log = {
             '2015-01-01': {
@@ -34,23 +41,37 @@ class TestLogDaytrade(unittest.TestCase):
         self.assertEqual(self.accumulator.log, expected_log)
 
     def test_log_keys(self):
-        daytrade = trade.plugins.Daytrade(
-            date='2015-01-01',
-            asset=self.asset,
+        asset = trade.Asset()
+        operation_a = trade.Operation(
+            asset=asset,
             quantity=100,
-            purchase_price=10,
-            sale_price=20,
+            price=10,
+            date='2015-01-01'
         )
+        operation_b = trade.Operation(
+            asset=asset,
+            quantity=-100,
+            price=20,
+            date='2015-01-01'
+        )
+        daytrade = trade.plugins.Daytrade(operation_a, operation_b)
         self.accumulator.accumulate_operation(daytrade)
         self.assertEqual(list(self.accumulator.log), ['2015-01-01'])
 
     def test_returned_result(self):
-        daytrade = trade.plugins.Daytrade(
-            date='2015-01-01',
-            asset=self.asset,
+        asset = trade.Asset()
+        operation_a = trade.Operation(
+            asset=asset,
             quantity=100,
-            purchase_price=10,
-            sale_price=20
+            price=10,
+            date='2015-01-01'
         )
+        operation_b = trade.Operation(
+            asset=asset,
+            quantity=-100,
+            price=20,
+            date='2015-01-01'
+        )
+        daytrade = trade.plugins.Daytrade(operation_a, operation_b)
         result = self.accumulator.accumulate_operation(daytrade)
         self.assertEqual(result, {'daytrades':1000})

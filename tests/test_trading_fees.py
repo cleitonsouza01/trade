@@ -31,13 +31,20 @@ class TestTaxManager(unittest.TestCase):
         )
 
     def test_get_rates_for_daytrade(self):
-        daytrade = trade.plugins.Daytrade(
-            date='2015-09-25',
-            asset=trade.Asset(),
+        asset = trade.Asset()
+        operation_a = trade.Operation(
+            asset=asset,
             quantity=100,
-            purchase_price=10,
-            sale_price=20
+            price=10,
+            date='2015-09-25'
         )
+        operation_b = trade.Operation(
+            asset=asset,
+            quantity=-100,
+            price=12,
+            date='2015-09-25'
+        )
+        daytrade = trade.plugins.Daytrade(operation_a, operation_b)
         self.assertEqual(
             self.tax_manager.get_fees(daytrade, 'daytrades'),
             {}

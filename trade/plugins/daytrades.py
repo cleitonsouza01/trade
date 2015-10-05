@@ -63,7 +63,7 @@ class Daytrade(Operation):
 
     update_position = False
 
-    def __init__(self, date, asset, quantity, purchase_price, sale_price):
+    def __init__(self, operation_a, operation_b):
         """Creates the daytrade object.
 
         Base on the informed values this method creates 2 operations:
@@ -75,26 +75,43 @@ class Daytrade(Operation):
         comes to taxes and the prorate of commissions.
         """
 
+        # Find what is the purchase and what is the sale
+        purchase, sale = find_purchase_and_sale(operation_a, operation_b)
+
+        # Find the daytraded quantity; the daytraded
+        # quantity is always the smallest absolute quantity
+        daytrade_quantity = min([abs(purchase.quantity), abs(sale.quantity)])
+
+        # Update the operations that originated the
+        # daytrade with the new quantity after the
+        # daytraded part has been extracted; One of
+        # the operations will always have zero
+        # quantity after this, being fully consumed
+        # by the daytrade. The other operation may or
+        # may not end with zero quantity.
+        purchase.quantity -= daytrade_quantity
+        sale.quantity += daytrade_quantity
+
         # Purchase is 0, Sale is 1
         self.operations = [
             Operation(
-                date=date,
-                asset=asset,
-                quantity=quantity,
-                price=purchase_price
+                date=purchase.date,
+                asset=purchase.asset,
+                quantity=daytrade_quantity,
+                price=purchase.price
             ),
             Operation(
-                date=date,
-                asset=asset,
-                quantity=quantity*-1,
-                price=sale_price
+                date=sale.date,
+                asset=sale.asset,
+                quantity=daytrade_quantity*-1,
+                price=sale.price
             )
         ]
-
+        
         super(Daytrade, self).__init__(
-            date=date,
-            asset=asset,
-            quantity=quantity,
+            date=purchase.date,
+            asset=purchase.asset,
+            quantity=daytrade_quantity,
         )
 
     @property
@@ -103,6 +120,28 @@ class Daytrade(Operation):
             'daytrades': abs(self.operations[1].real_value) - \
                                         abs(self.operations[0].real_value)
         }
+
+    def append_to_container_positions(self, container):
+        """Save a Daytrade object in the container positions.
+
+        If there is already a daytrade with the same asset on the
+        container's position, then the daytrades are merged.
+        """
+        if 'daytrades' not in container.positions:
+            container.positions['daytrades'] = {}
+        symbol = self.asset.symbol
+        if symbol in container.positions['daytrades']:
+            merge_operations(
+                container.positions['daytrades'][symbol].operations[0],
+                self.operations[0]
+            )
+            merge_operations(
+                container.positions['daytrades'][symbol].operations[1],
+                self.operations[1]
+            )
+            container.positions['daytrades'][symbol].quantity += self.quantity
+        else:
+            container.positions['daytrades'][symbol] = self
 
 
 def fetch_daytrades(container):
@@ -114,10 +153,8 @@ def fetch_daytrades(container):
     for i, operation_a in enumerate(container.operations):
         for operation_b in container.operations[i:]:
             if daytrade_condition(operation_a, operation_b):
-                append_to_container_positions(
-                    extract_daytrade(operation_a, operation_b),
-                    container
-                )
+                Daytrade(operation_a, operation_b)\
+                    .append_to_container_positions(container)
 
 
 def daytrade_condition(operation_a, operation_b):
@@ -128,60 +165,6 @@ def daytrade_condition(operation_a, operation_b):
         operation_a.quantity != 0 and
         operation_b.quantity != 0
     )
-
-
-def extract_daytrade(operation_a, operation_b):
-    """Extracts the daytrade part of two operations."""
-
-    # Find what is the purchase and what is the sale
-    purchase, sale = find_purchase_and_sale(operation_a, operation_b)
-
-    # Find the daytraded quantity; the daytraded
-    # quantity is always the smallest absolute quantity
-    daytrade_quantity = min([abs(purchase.quantity), abs(sale.quantity)])
-
-    # Update the operations that originated the
-    # daytrade with the new quantity after the
-    # daytraded part has been extracted; One of
-    # the operations will always have zero
-    # quantity after this, being fully consumed
-    # by the daytrade. The other operation may or
-    # may not end with zero quantity.
-    purchase.quantity -= daytrade_quantity
-    sale.quantity += daytrade_quantity
-
-    # Now that we know everything we need to know
-    # about the daytrade, we create the Daytrade object
-    return Daytrade(
-        purchase.date,
-        purchase.asset,
-        daytrade_quantity,
-        purchase.price,
-        sale.price
-    )
-
-
-def append_to_container_positions(daytrade, container):
-    """Save a Daytrade object in the container positions.
-
-    If there is already a daytrade with the same asset on the
-    container's position, then the daytrades are merged.
-    """
-    if 'daytrades' not in container.positions:
-        container.positions['daytrades'] = {}
-    symbol = daytrade.asset.symbol
-    if symbol in container.positions['daytrades']:
-        merge_operations(
-            container.positions['daytrades'][symbol].operations[0],
-            daytrade.operations[0]
-        )
-        merge_operations(
-            container.positions['daytrades'][symbol].operations[1],
-            daytrade.operations[1]
-        )
-        container.positions['daytrades'][symbol].quantity += daytrade.quantity
-    else:
-        container.positions['daytrades'][symbol] = daytrade
 
 
 def find_purchase_and_sale(operation_a, operation_b):
