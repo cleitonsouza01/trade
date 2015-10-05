@@ -194,8 +194,7 @@ class Event(object):
         self.date = date
 
     @abstractmethod
-    #def update_portfolio(self, quantity, price, results):
-    def update_portfolio(self, container):
+    def update_container(self, container):
         """Should udpate the quantity, price and/or results."""
         raise NotImplementedError
 
@@ -575,7 +574,7 @@ class Accumulator(object):
         An event can change the quantity, price and results stored in
         the accumulator.
         """
-        event.update_portfolio(self)
+        event.update_container(self)
         if self.logging:
             self.log_occurrence(event)
 

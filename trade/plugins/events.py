@@ -53,7 +53,7 @@ class StockSplit(Event):
         self.factor = factor
         super(StockSplit, self).__init__(asset, date)
 
-    def update_portfolio(self, container):
+    def update_container(self, container):
         container.quantity = container.quantity * self.factor
         container.price = container.price / self.factor
 
@@ -65,7 +65,7 @@ class BonusShares(Event):
         self.factor = factor
         super(BonusShares, self).__init__(asset, date)
 
-    def update_portfolio(self, container):
+    def update_container(self, container):
         new_quantity = container.quantity * self.factor
         container.price = average_price(
             container.quantity,

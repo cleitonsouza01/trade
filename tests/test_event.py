@@ -12,7 +12,7 @@ class DummyEvent(trade.Event):
     def __init__(self, asset, date):
         super(DummyEvent, self).__init__(asset, date)
 
-    def update_portfolio(self, container):
+    def update_container(self, container):
         pass
 
 
@@ -36,7 +36,7 @@ class TestBaseEventBehavior(unittest.TestCase):
 
     def test_event_update_quantity(self):
         accumulator = trade.Accumulator()
-        self.event.update_portfolio(accumulator)
+        self.event.update_container(accumulator)
         self.assertEqual(
             accumulator.quantity,
             0
@@ -44,7 +44,7 @@ class TestBaseEventBehavior(unittest.TestCase):
 
     def test_event_update_price(self):
         accumulator = trade.Accumulator()
-        self.event.update_portfolio(accumulator)
+        self.event.update_container(accumulator)
         self.assertEqual(
             accumulator.price,
             0
@@ -52,7 +52,7 @@ class TestBaseEventBehavior(unittest.TestCase):
 
     def test_event_update_results(self):
         accumulator = trade.Accumulator()
-        self.event.update_portfolio(accumulator)
+        self.event.update_container(accumulator)
         self.assertFalse(accumulator.results)
 
 

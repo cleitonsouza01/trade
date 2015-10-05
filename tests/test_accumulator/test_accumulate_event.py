@@ -15,7 +15,7 @@ class EventThatChangeResults(trade.Event):
         self.something = some_value
         super(EventThatChangeResults, self).__init__(asset, date)
 
-    def update_portfolio(self, container):
+    def update_container(self, container):
         for key in container.results.keys():
             container.results[key] += self.something
 

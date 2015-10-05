@@ -8,7 +8,7 @@ import trade.plugins
 
 
 class TestEvent(trade.Event):
-    def update_portfolio(self, container):
+    def update_container(self, container):
         pass
 
 

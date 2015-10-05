@@ -14,7 +14,7 @@ class DummyEvent(Event):
     def __init__(self, asset, date):
         super(DummyEvent, self).__init__(asset, date)
 
-    def update_portfolio(self, operation):
+    def update_container(self, operation):
         pass
 
 
@@ -25,7 +25,7 @@ class StockSplit(Event):
         super(StockSplit, self).__init__(asset, date)
         self.factor = factor
 
-    def update_portfolio(self, container):
+    def update_container(self, container):
         container.quantity = container.quantity * self.factor
         container.price = container.price / self.factor
 
