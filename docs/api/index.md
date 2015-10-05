@@ -11,15 +11,13 @@ operations, daytrades, cost deduction, asset accumulation, rates and more.
 
 + [trade.Asset](trade)  
   Representing assets.
-+ [trade.Derivative](trade)  
-  A base class for derivatives.
 + [trade.Operation](trade)  
   Representing operations with assets.
 + [trade.OperationContainer](trade)  
   To identify daytrades, prorate comissions and apply taxes to operations.
 + [trade.Portfolio](trade)  
   To represent a portfolio of assets using a series of Accumulator objects.
-+ [trade.TaxManager](trade)  
++ [trade.TradingFees](trade)  
   To get the right taxes for the operations on the container.
 + [trade.Accumulator](trade)  
   To accumulate the assets and calculate the result from the trades.
@@ -60,11 +58,11 @@ import trade
 # create the asset and the operation
 asset = trade.Asset(name='some asset')
 operation = trade.Operation(
-                date='2015-09-18',
-                asset=asset,
-                quantity=20,
-                price=10
-            )
+    date='2015-09-18',
+    asset=asset,
+    quantity=20,
+    price=10
+)
 
 # create a container with some
 # commissions associated with it
@@ -73,9 +71,9 @@ commissions = {
     'other commission': 3,
 }
 container = trade.OperationContainer(
-                operations=[operation],
-                commissions=commissions
-            )
+    operations=[operation],
+    commissions=commissions
+)
 
 # identify common operations and daytrades
 # and prorate the comissions
@@ -95,12 +93,6 @@ print(accumulator.price)
 #>>10.2
 # the original price (10) plus the commissions
 # the OperationContainer prorated (default taxes are zero)
-
-print(accumulator.price * accumulator.quantity)
-#>>204
-# 200 from the raw operation
-# (20 quantity * 10 unitary price)
-# + 4 from the total commissions
 ```
 
 

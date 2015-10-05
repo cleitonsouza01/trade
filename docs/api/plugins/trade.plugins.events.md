@@ -6,19 +6,14 @@
 ### class StockSplit(Event)
 A stock split.
 
-#### update_portfolio(self, quantity, price, results)
+#### update_container(self, accumulator)
 
-
-### class ReverseStockSplit(Event)
-A reverse stock split.
-
-#### update_portfolio(self, quantity, price, results)
 
 
 ### class BonusShares(Event)
 Bonus shares.
 
-#### update_portfolio(self, quantity, price, results)
+#### update_container(self, accumulator)
 
 
 Copyright (c) 2015 Rafael da Silva Rocha  

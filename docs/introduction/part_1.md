@@ -26,11 +26,11 @@ asset = trade.Asset(symbol='GOOGL')
 
 # create the operation
 operation = trade.Operation(
-                asset=asset,
-                quantity=10,
-                price=50.4,
-                date='2015-10-01'
-            )
+    asset=asset,
+    quantity=10,
+    price=50.4,
+    date='2015-10-01'
+)
 ```
 
 Notice that the quantity is a positive value; it means that this is a purchase
@@ -45,11 +45,11 @@ asset = trade.Asset(symbol='GOOGL')
 
 # create the operation
 operation = trade.Operation(
-                asset=asset,
-                quantity=-10,
-                price=52.39,
-                date='2015-10-01'
-            )
+    asset=asset,
+    quantity=-10,
+    price=52.39,
+    date='2015-10-01'
+)
 ```
 
 Notice the negative value on the quantity. Negative quantity values are used

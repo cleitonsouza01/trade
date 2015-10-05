@@ -18,18 +18,18 @@ asset = trade.Asset(symbol='GOOGL')
 
 # create the purchase operation buying 10 stocks
 purchase = trade.Operation(
-                asset=asset,
-                quantity=10,
-                price=50.4,
-                date='2015-10-01'
-            )
+    asset=asset,
+    quantity=10,
+    price=50.4,
+    date='2015-10-01'
+)
 # create the sale operation selling 5 stocks
 sale = trade.Operation(
-                asset=asset,
-                quantity=-5,
-                price=52.39,
-                date='2015-10-02'
-            )
+    asset=asset,
+    quantity=-5,
+    price=52.39,
+    date='2015-10-02'
+)
 ```
 
 It is now that the trade module really comes to work. We are going to create
@@ -59,18 +59,18 @@ asset = trade.Asset(symbol='GOOGL')
 
 # create the purchase operation buying 10 stocks
 purchase = trade.Operation(
-                asset=asset,
-                quantity=10,
-                price=50.4,
-                date='2015-10-01'
-            )
+    asset=asset,
+    quantity=10,
+    price=50.4,
+    date='2015-10-01'
+)
 # create the sale operation selling 5 stocks
 sale = trade.Operation(
-                asset=asset,
-                quantity=-5,
-                price=52.39,
-                date='2015-10-02'
-            )
+    asset=asset,
+    quantity=-5,
+    price=52.39,
+    date='2015-10-02'
+)
 
 # Create the portfolio object
 portfolio = trade.Portfolio()

@@ -7,7 +7,7 @@ OperationContainer and Portfolio tasks.
 
 ## Classes
 
-### Option(Derivative):
+### Option(Asset):
 Represents an Option.
 This class represents both calls and puts.
 

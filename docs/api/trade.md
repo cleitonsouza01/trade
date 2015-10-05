@@ -18,30 +18,12 @@ An asset represents anything that can be traded.
 + name: A string representing the name of the asset.
 + symbol: A string representing the symbol of the asset.
 + expiration_date: A string 'YYYY-mm-dd' representing the expiration date of the asset, if any.
++ underlying_assets: A list of Asset objects representing the underlying assets of the asset.
++ ratio: By default the ratio is 1, so 1 asset = 1 underlying asset.
 
 ### Methods:
 
 #### _ _ init _ _ (self, name=None, symbol=None, expiration_date=None):
-
-#### _ _ deepcopy _ _ (self, memo)
-Assets always return a reference to themselves when being copied, so they
-are never really copied.
-
-
-## trade.Derivative(Asset):
-A derivative is a asset which derives from one or more assets.
-
-Derivatives have all the asset attributes and can be traded like
-normal assets.
-
-This is a base class for derivatives.
-
-### Attributes:
-+ name: A string representing the name of the asset.
-+ symbol: A string representing the symbol of the asset.
-+ expiration_date: A string 'YYYY-mm-dd' representing the expiration date of the derivative, if any.
-+ underlying_assets: A list of Asset objects representing the underlying assets of this derivative.
-+ ratio: By default the ratio is 1, so 1 derivative = 1 underlying asset.
 
 
 ## trade.Event
@@ -52,12 +34,11 @@ the accumulator. This is a base class for Events; every event must
 inherit from this class and have a method like this:
 
 ```python
-    update_portfolio(self, quantity, price, results)
+    update_container(self, accumulator)
         # do stuff here...
-        return quantity, price
 ```
 
-that implements the logic for the change in the portfolio.
+that implements the logic for the change in the accumulator.
 
 
 ## trade.Operation
@@ -137,9 +118,9 @@ execute this tasks behind the scenes:
 
     prorate_commissions()
 
-- Find the rates, if any, for the resulting positions by calling:
+- Find the fees, if any, for the resulting positions by calling:
 
-    find_rates_for_positions()
+    find_fees_for_positions()
 
 ### Attributes:
 + date: A string 'YYYY-mm-dd' representing the date of the operations on the container.
@@ -188,7 +169,7 @@ Merges one operation with another operation.
 #### add_to_common_operations(self, operation):
 Adds an operation to the common operations list.
 
-#### prorate_commissions_by_operation(self, operation):
+#### prorate_commissions_by_positions(self, operation):
 Prorates the commissions of the container for one operation.
 
 The ratio is based on the container volume and the volume of
@@ -275,9 +256,8 @@ The way it changes this information is up to the event object;
 each Event subclass must implement a method like this:
 
 ```python
-update_portfolio(self, quantity, price, results)
+update_container(self, accumulator)
     # do stuff here...
-    return quantity, price
 ```
 
 that have the logic for the change in the accumulator's
@@ -309,32 +289,31 @@ This runs before the call to Accumulator.accumulate().
 
 
 
-## trade.TaxManager
-The base TaxManager.
+## trade.TradingFees
+A base class for identifying fees for operations.
 
-A TaxManager object reads an operation and returns the correspondent rates for
-that operation. Since rates (and also the way they are applied) may vary greatly
+A TradingFees class reads an operation and returns the correspondent fees for
+that operation. Since fees (and also the way they are applied) may vary greatly
 from one context to another, this class just implements a dummy interface for
-the rate discovery process, always returning a empty dictionary of rates.
+the fee discovery process, always returning a empty dictionary of fee.
 
 Every OperationContainer object has a reference to this class.
-If your app need to apply fees to your Operation objects,
-then you should extend this class and inform the new TaxManager to your
-OperationContainer:
+If your app need to apply fees to your Operation objects, then you should
+extend this class and inform the new TaxManager to your OperationContainer:
 
-    operation_container_object.tax_manger = your_tax_manager_object
+    operation_container.trading_fees = YourTradingFeesClass
 
 The OperationContainer always access his TaxManager when
 fetch_positions() is called. Behind the scenes the container
-calls this method from the TaxManager class:
+calls this method from the TradingFees class:
 
-    tax_manager.get_rates_for_operation(operation, operation_type)
+    tax_manager.get_fees(operation, operation_type)
 
 After identifying the positions for every position present on the container.
 
 ### Methods:
 
-#### staticmethod get_rates_for_operation(self, operation, operation_type):
+#### staticmethod get_fees(self, operation, operation_type):
 Return a empty dictionary.
 
 

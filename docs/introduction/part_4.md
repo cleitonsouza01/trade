@@ -25,27 +25,27 @@ other_asset = trade.Asset(name='GOOGL')
 
 # create the purchase operation buying 10 stocks
 purchase = trade.Operation(
-                asset=asset,
-                quantity=10,
-                price=10,
-                date='2015-10-01'
-            )
+    asset=asset,
+    quantity=10,
+    price=10,
+    date='2015-10-01'
+)
 # create another purchase operation, again buying 10 stocks,
 # but with a different price
 other_purchase = trade.Operation(
-                asset=asset,
-                quantity=10,
-                price=20,
-                date='2015-10-01'
-            )
+    asset=asset,
+    quantity=10,
+    price=20,
+    date='2015-10-01'
+)
 # create a purchase operation buying 10 stocks
 # of some other asset
 other_asset_purchase = trade.Operation(
-                asset=other_asset,
-                quantity=10,
-                price=10,
-                date='2015-10-01'
-            )
+    asset=other_asset,
+    quantity=10,
+    price=10,
+    date='2015-10-01'
+)
 
 # Create the operation container
 container = trade.OperationContainer()
@@ -84,18 +84,18 @@ asset = trade.Asset(symbol='ATVI')
 
 # create the purchase operation buying 10 stocks
 purchase = trade.Operation(
-                asset=asset,
-                quantity=10,
-                price=50.4,
-                date='2015-10-01'
-            )
+    asset=asset,
+    quantity=10,
+    price=50.4,
+    date='2015-10-01'
+)
 # create the sale operation selling 5 stocks
 sale = trade.Operation(
-                asset=asset,
-                quantity=-10,
-                price=52.39,
-                date='2015-10-01'
-            )
+    asset=asset,
+    quantity=-10,
+    price=52.39,
+    date='2015-10-01'
+)
 ```
 
 Daytrades are often treated very differently from common operations. Their
@@ -112,18 +112,18 @@ asset = trade.Asset(symbol='ATVI')
 
 # create the purchase operation buying 10 stocks
 purchase = trade.Operation(
-                asset=asset,
-                quantity=10,
-                price=50.4,
-                date='2015-10-01'
-            )
+    asset=asset,
+    quantity=10,
+    price=50.4,
+    date='2015-10-01'
+)
 # create the sale operation selling 5 stocks
 sale = trade.Operation(
-                asset=asset,
-                quantity=-5,
-                price=52.39,
-                date='2015-10-01'
-            )
+    asset=asset,
+    quantity=-5,
+    price=52.39,
+    date='2015-10-01'
+)
 ```
 
 Were out of this two operations we have a daytrade of 5 stocks being purchased
@@ -170,18 +170,18 @@ import trade.plugins
 asset = trade.Asset(symbol='ATVI')
 
 purchase = trade.Operation(
-                asset=asset,
-                quantity=10,
-                price=50.4,
-                date='2015-10-01'
-            )
+    asset=asset,
+    quantity=10,
+    price=50.4,
+    date='2015-10-01'
+)
 # create the sale operation selling 5 stocks
 sale = trade.Operation(
-                asset=asset,
-                quantity=-5,
-                price=52.39,
-                date='2015-10-01'
-            )
+    asset=asset,
+    quantity=-5,
+    price=52.39,
+    date='2015-10-01'
+)
 
 # Create the operation container and append
 # the task to identify daytrades
@@ -207,7 +207,7 @@ for position in container.positions['daytrades'].values():
     portfolio.accumulate(position)
 
 print(portfolio.assets['ATVI'].results)
-#> {'daytrades': 9.949999999999989, 'trades': 0}
+#> {'daytrades': 9.949999999999989}
 ```
 
 

@@ -1,6 +1,9 @@
 # trade: Tools For Stock Trading Applications.
 
-Check the [API docs](../api) for all the available features.
+THIS SECTION OF THE DOCUMENTATION IS OUTDATED.
+The trade module is still in alpha status and evolving rapidly.
+
+Check the [API docs](../api) for up-to-date information.
 
 
 Copyright (c) 2015 Rafael da Silva Rocha
