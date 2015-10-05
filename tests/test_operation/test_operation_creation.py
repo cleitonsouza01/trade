@@ -26,15 +26,15 @@ class TestOperationCreation(unittest.TestCase):
     def test_trade_asset(self):
         self.assertEqual(self.operation.asset.symbol, 'AAPL')
 
-    def test_trade_date_should_be_2015_09_18(self):
+    def test_trade_date(self):
         self.assertEqual(self.operation.date, '2015-09-18')
 
-    def test_trade_quantity_should_be_20(self):
+    def test_trade_quantity(self):
         self.assertEqual(self.operation.quantity, 20)
 
-    def test_trade_price_should_be_10(self):
+    def test_trade_price(self):
         self.assertEqual(self.operation.price, 10)
 
-    def test_trade_discounts_dict(self):
+    def test_trade_discounts(self):
         discounts={'some discount': 3}
         self.assertEqual(self.operation.commissions, discounts)

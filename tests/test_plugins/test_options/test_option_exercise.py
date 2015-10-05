@@ -6,7 +6,7 @@ import unittest
 import trade
 
 
-class TestOptionExercise_Case_00(unittest.TestCase):
+class TestOptionExerciseCase00(unittest.TestCase):
     """Test the exercise of a call.
     """
 
@@ -41,7 +41,7 @@ class TestOptionExercise_Case_00(unittest.TestCase):
 
 
 
-class TestOptionExercise_Case_01(unittest.TestCase):
+class TestOptionExerciseCase01(unittest.TestCase):
     """Test the exercise of a put.
     """
 

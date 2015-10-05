@@ -1,10 +1,12 @@
+"""Test the accumulation of operations with Option objects."""
+
 from __future__ import absolute_import
 import unittest
 
 import trade
 
 
-class Test_accumulate_option_operation_case_00(unittest.TestCase):
+class TestAccumulateOption00(unittest.TestCase):
     """Accumulate a Option operation."""
 
     def setUp(self):

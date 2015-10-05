@@ -1,10 +1,12 @@
+"""Test the accumulation of Exercise operations."""
+
 from __future__ import absolute_import
 import unittest
 
 import trade
 
 
-class Test_accumulate_exercise_Case_00(unittest.TestCase):
+class TestAccumulateExercise00(unittest.TestCase):
     """Accumulate a Option operation, and then its Exercise operation."""
 
     def setUp(self):
@@ -66,7 +68,7 @@ class Test_accumulate_exercise_Case_00(unittest.TestCase):
             self.option_accumulator.results, {})
 
 
-class Test_accumulate_exercise_Case_01(unittest.TestCase):
+class TestAccumulateExercise01(unittest.TestCase):
     """Accumulate a operation, an option and then the exericse."""
 
     def setUp(self):

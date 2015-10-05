@@ -6,7 +6,7 @@ import unittest
 import trade
 
 
-class Test_same_sign(unittest.TestCase):
+class TestSameSign(unittest.TestCase):
     """Test the same_sign() function.
 
     This function should return True if the two values
@@ -20,7 +20,7 @@ class Test_same_sign(unittest.TestCase):
         self.assertFalse(trade.same_sign(-1, 4))
 
 
-class Test_average_price(unittest.TestCase):
+class TestAveragePrice(unittest.TestCase):
     """Test the function average_price.
 
     This function receives two quantity values, both with a

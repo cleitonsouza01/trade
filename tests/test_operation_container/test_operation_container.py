@@ -10,7 +10,7 @@ class TestTradeContainerCreation_Case_00(unittest.TestCase):
     def setUp(self):
         self.container = trade.OperationContainer()
 
-    def test_container_should_exist(self):
+    def test_container_exists(self):
         self.assertTrue(self.container)
 
 
@@ -30,7 +30,7 @@ class TestTradeContainerCreation_Case_01(unittest.TestCase):
             trade.plugins.fetch_daytrades,
         ]
 
-    def test_container_should_exist(self):
+    def test_container_exists(self):
         self.assertTrue(self.container)
 
     def test_container_commissions(self):
@@ -66,19 +66,19 @@ class TestTradeContainer_add_to_common_operations(unittest.TestCase):
         )
         self.container.add_to_position_operations(operation2)
 
-    def test_common_trades_len_should_be_1(self):
+    def test_common_trades_len(self):
         self.assertEqual(len(self.container.positions['operations'].keys()), 1)
 
-    def test_there_should_be_no_daytrades(self):
+    def test_for_no_daytrades(self):
         self.assertEqual(len(self.container.positions), 1)
 
-    def test_common_trades0_quantity_should_be_20(self):
+    def test_operations0_quantity(self):
         self.assertEqual(
             self.container.positions['operations'][self.asset.symbol].quantity,
             20
         )
 
-    def test_common_trades0_price_should_be_3(self):
+    def test_operations0_price(self):
         self.assertEqual(
             self.container.positions['operations'][self.asset.symbol].price,
             3

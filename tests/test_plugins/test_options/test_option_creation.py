@@ -1,10 +1,12 @@
+"""Test the creation of Option objects."""
+
 from __future__ import absolute_import
 import unittest
 
 import trade
 
 
-class TestOptionCreation_Case_00(unittest.TestCase):
+class TestOptionCreationCase00(unittest.TestCase):
     """Test the creation of a call.
     """
 

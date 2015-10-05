@@ -2,15 +2,19 @@
 
 from __future__ import absolute_import
 import unittest
+from abc import ABCMeta, abstractmethod
 
 import trade
 
 
-class TaxManagerForTests:
+class TaxManagerForTests(trade.TradingFees):
     """A TradingFees object for the tests."""
 
+    __metaclass__ = ABCMeta
+
     @classmethod
-    def get_fees(cls, operation, operation_type):
+    @abstractmethod
+    def get_fees(cls, operation=None, operation_type=None):
         if operation_type == 'daytrades':
             return {'rate': 0.005}
         else:
@@ -57,10 +61,10 @@ class Test_find_rates_for_positions_case_00(unittest.TestCase):
     def test_container_should_exist(self):
         self.assertTrue(self.container)
 
-    def test_check_container_volume(self):
+    def test_container_volume(self):
         self.assertEqual(self.container.volume, 70)
 
-    def test_container_daytrade_buy_operation_taxes(self):
+    def test_daytrade_buy_taxes(self):
         taxes = {
             'rate': 0.005,
         }
@@ -70,7 +74,7 @@ class Test_find_rates_for_positions_case_00(unittest.TestCase):
             taxes
         )
 
-    def test_container_daytrade_sale_operation_taxes(self):
+    def test_daytrade_sale_taxes(self):
         taxes = {
             'rate': 0.005,
         }
@@ -80,14 +84,14 @@ class Test_find_rates_for_positions_case_00(unittest.TestCase):
             taxes
         )
 
-    def test_container_common_operation0_taxes(self):
+    def test_operations0_taxes(self):
         taxes = {'rate':1}
         self.assertEqual(
             self.container.positions['operations'][self.asset1.symbol].fees,
             taxes
         )
 
-    def test_container_common_operation1_taxes(self):
+    def test_operations1_taxes(self):
         taxes = {'rate':1}
         self.assertEqual(
             self.container.positions['operations'][self.asset2.symbol].fees,

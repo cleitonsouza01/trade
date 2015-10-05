@@ -20,21 +20,21 @@ class Test_operation_volume_case_00(unittest.TestCase):
         )
         self.assertEqual(operation.volume, 100)
 
-    def test_purchase_volume_should_be_200(self):
+    def test_purchase_volume(self):
         operation = trade.Operation(
             price=10,
             quantity=20
         )
         self.assertEqual(operation.volume, 200)
 
-    def test_sale_volume_should_be_200(self):
+    def test_sale_volume(self):
         operation = trade.Operation(
             price=10,
             quantity=-20
         )
         self.assertEqual(operation.volume, 200)
 
-    def test_sale_volume_should_be_200_with_commissions_and_taxes(self):
+    def test_sale_volume_with_discounts(self):
         operation = trade.Operation(
             price=10,
             quantity=-20,

@@ -1,3 +1,5 @@
+"""Tests for the Daytrade class."""
+
 from __future__ import absolute_import
 import unittest
 
@@ -25,38 +27,38 @@ class TestDaytradeCreation(unittest.TestCase):
     def test_daytrade_should_exist(self):
         self.assertTrue(self.daytrade)
 
-    def test_check_daytrade_asset(self):
+    def test_daytrade_asset(self):
         self.assertEqual(self.daytrade.asset, self.asset)
 
-    def test_check_daytrade_quantity(self):
+    def test_daytrade_quantity(self):
         self.assertEqual(self.daytrade.quantity, 10)
 
-    def test_daytrade_buy_operation_should_exist(self):
+    def test_daytrade_buy(self):
         self.assertTrue(self.daytrade.operations[0])
 
-    def test_check_daytrade_buy_operation_asset(self):
+    def test_daytrade_buy_asset(self):
         self.assertEqual(self.daytrade.operations[0].asset, self.asset)
 
-    def test_check_daytrade_buy_operation_quantity(self):
+    def test_daytrade_buy_quantity(self):
         self.assertEqual(self.daytrade.operations[0].quantity, 10)
 
-    def test_check_daytrade_buy_operation_price(self):
+    def test_daytrade_buy_price(self):
         self.assertEqual(self.daytrade.operations[0].price, 2)
 
-    def test_daytrade_sale_operation_should_exist(self):
+    def test_daytrade_sale_should_exist(self):
         self.assertTrue(self.daytrade.operations[1])
 
-    def test_check_daytrade_sale_operation_asset(self):
+    def test_daytrade_sale_asset(self):
         self.assertEqual(self.daytrade.operations[1].asset, self.asset)
 
-    def test_check_daytrade_sale_operation_quantity(self):
+    def test_daytrade_sale_quantity(self):
         self.assertEqual(self.daytrade.operations[1].quantity, -10)
 
-    def test_check_daytrade_sale_operation_price(self):
+    def test_daytrade_sale_price(self):
         self.assertEqual(self.daytrade.operations[1].price, 3)
 
 
-class TestDaytradeResult_case_00(unittest.TestCase):
+class TestDaytradeResultCase00(unittest.TestCase):
     """Tests the results of a Daytrade operation.
 
     Daytrade results are based on the prices of the sale
@@ -72,14 +74,14 @@ class TestDaytradeResult_case_00(unittest.TestCase):
             sale_price=3
         )
 
-    def test_daytrade_should_exist(self):
+    def test_daytrade_exists(self):
         self.assertTrue(self.daytrade)
 
-    def test_daytrade_result_should_be_1(self):
+    def test_daytrade_result(self):
         self.assertEqual(self.daytrade.results, {'daytrades': 10})
 
 
-class TestDaytradeResult_case_01(unittest.TestCase):
+class TestDaytradeResultCase01(unittest.TestCase):
     """Tests the results of a Daytrade operation.
 
     Daytrade results are based on the prices of the sale
@@ -95,8 +97,8 @@ class TestDaytradeResult_case_01(unittest.TestCase):
             sale_price=2
         )
 
-    def test_daytrade_should_exist(self):
+    def test_daytrade_exists(self):
         self.assertTrue(self.daytrade)
 
-    def test_daytrade_result_should_be_1(self):
+    def test_daytrade_result(self):
         self.assertEqual(self.daytrade.results, {'daytrades': -10})

@@ -1,10 +1,12 @@
+"""Test the trade.plugins.fetch_exercises task from the Option plugin."""
+
 from __future__ import absolute_import
 import unittest
 
 import trade
 
 
-class Test_get_exercises_operations_Case_00(unittest.TestCase):
+class TestFetchExercisesCase00(unittest.TestCase):
     """Test the fetch_exercises() task of the Accumulator."""
 
     def setUp(self):
@@ -62,9 +64,9 @@ class Test_get_exercises_operations_Case_00(unittest.TestCase):
         )
 
 
-class Test_get_exercises_operations_Case_01(unittest.TestCase):
+class TestFetchExercisesCase01(unittest.TestCase):
     """Test the fetch_exercises() task of the Accumulator."""
-    
+
     def setUp(self):
         self.asset = trade.Asset(symbol='GOOGL')
         self.option = trade.plugins.Option(

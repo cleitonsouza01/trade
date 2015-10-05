@@ -1,4 +1,4 @@
-"""trade: Tools For Stock Trading Applications.
+"""Tests for the Portfolio class.
 
 http://trade.readthedocs.org/
 https://github.com/rochars/trade

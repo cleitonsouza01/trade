@@ -6,7 +6,7 @@ import unittest
 import trade
 
 
-class TestPortfolioAssetAccumulation_Case_00(unittest.TestCase):
+class TestPortfolioAssetAccumulationCase00(unittest.TestCase):
     """Test the accumulation of one operation."""
 
     def setUp(self):
@@ -31,7 +31,7 @@ class TestPortfolioAssetAccumulation_Case_00(unittest.TestCase):
             )
         )
 
-    def test_portfolio_asset_accumulator_asset(self):
+    def test_accumulator_asset(self):
         self.assertEqual(
             self.portfolio.assets[self.asset.symbol].asset.symbol,
             self.asset.symbol
@@ -44,7 +44,7 @@ class TestPortfolioAssetAccumulation_Case_00(unittest.TestCase):
         self.assertEqual(self.portfolio.assets[self.asset.symbol].price, 1)
 
 
-class TestPortfolioAssetAccumulation_Case_01(unittest.TestCase):
+class TestPortfolioAssetAccumulationCase01(unittest.TestCase):
     """Test the accumulation of two operations with the same asset."""
 
     def setUp(self):
@@ -68,7 +68,7 @@ class TestPortfolioAssetAccumulation_Case_01(unittest.TestCase):
     def test_portfolio_asset_keys(self):
         self.assertEqual(len(self.portfolio.assets.keys()), 1)
 
-    def test_portfolio_asset_accumulator(self):
+    def test_portfolio_accumulator(self):
         self.assertTrue(
             isinstance(
                 self.portfolio.assets[self.asset.symbol],
@@ -76,7 +76,7 @@ class TestPortfolioAssetAccumulation_Case_01(unittest.TestCase):
             )
         )
 
-    def test_portfolio_asset_accumulator_asset(self):
+    def test_accumulator_asset(self):
         self.assertEqual(
             self.portfolio.assets[self.asset.symbol].asset.symbol,
             self.asset.symbol
@@ -89,7 +89,7 @@ class TestPortfolioAssetAccumulation_Case_01(unittest.TestCase):
         self.assertEqual(self.portfolio.assets[self.asset.symbol].price, 1.5)
 
 
-class TestPortfolioAssetAccumulation_Case_02(unittest.TestCase):
+class TestPortfolioAssetAccumulationCase02(unittest.TestCase):
     """Test the accumulation of two operations with different assets."""
 
     def setUp(self):
@@ -162,7 +162,7 @@ class TestPortfolioAssetAccumulation_Case_02(unittest.TestCase):
         self.assertEqual(self.portfolio.assets[self.asset1.symbol].price, 2)
 
 
-class TestPortfolioAssetAccumulation_Case_03(unittest.TestCase):
+class TestPortfolioAssetAccumulationCase03(unittest.TestCase):
     """Accumulation of multiple operations with different assets."""
 
     def setUp(self):
@@ -242,7 +242,7 @@ class TestPortfolioAssetAccumulation_Case_03(unittest.TestCase):
         self.assertEqual(self.portfolio.assets[self.asset1.symbol].price, 3)
 
 
-class TestPortfolioAssetAccumulation_Case_04(unittest.TestCase):
+class TestPortfolioAssetAccumulationCase04(unittest.TestCase):
     """Accumulation of multiple operations with different assets."""
 
     def setUp(self):
@@ -330,7 +330,7 @@ class TestPortfolioAssetAccumulation_Case_04(unittest.TestCase):
 
 
 
-class TestPortfolioAssetAccumulation_Case_05(unittest.TestCase):
+class TestPortfolioAssetAccumulationCase05(unittest.TestCase):
     """Accumulation of multiple operations with different assets."""
 
     def setUp(self):

@@ -25,10 +25,10 @@ class TestTradeContainer_rate_discounts_by_trade_case_00(unittest.TestCase):
             commissions=discounts
         )
 
-    def test_trade_container_should_exist(self):
+    def test_container_exists(self):
         self.assertTrue(self.container)
 
-    def test_check_trade_discount(self):
+    def test_operation_discount(self):
         expected_discounts = {
             'some discount': 1,
         }
@@ -64,7 +64,7 @@ class TestTradeContainer_rate_discounts_by_trade_case_01(unittest.TestCase):
             commissions=discounts
         )
 
-    def test_trade_container_should_exist(self):
+    def test_container_exists(self):
         self.assertTrue(self.container)
 
     def test_check_trade1_discount(self):
@@ -110,7 +110,7 @@ class TestTradeContainer_rate_discounts_by_trade_case_02(unittest.TestCase):
             commissions=discounts
         )
 
-    def test_trade_container_should_exist(self):
+    def test_container_exists(self):
         self.assertTrue(self.container)
 
     def test_check_trade1_discount(self):
@@ -164,7 +164,7 @@ class TestTradeContainer_rate_discounts_by_trade_case_03(unittest.TestCase):
             commissions=discounts
         )
 
-    def test_trade_container_should_exist(self):
+    def test_container_exists(self):
         self.assertTrue(self.container)
 
     def test_check_trade1_discount(self):
@@ -216,99 +216,99 @@ class TestTradeContainer_prorate_discounts_by_common_trades_and_daytrades(
         trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
 
-    def test_trade_container_should_exist(self):
+    def test_container_exists(self):
         self.assertTrue(self.container)
 
-    def test_check_trade_container_volume(self):
+    def test_container_volume(self):
         self.assertEqual(self.container.volume, 70)
 
-    def test_check_daytrade0_buy_discounts(self):
+    def test_daytrade0_buy_discounts(self):
         self.assertEqual(
             round(self.container.positions['daytrades'][self.asset1.symbol]\
-                    .operations[0].commissions['some discount'], 2),
+                .operations[0].commissions['some discount'], 2),
             0.14
         )
         self.assertEqual(
             round(self.container.positions['daytrades'][self.asset1.symbol]\
-                    .operations[0].commissions['other discount'], 2),
+                .operations[0].commissions['other discount'], 2),
             0.43
         )
 
-    def test_check_daytrade0_sale_discounts(self):
+    def test_daytrade0_sale_discounts(self):
         self.assertEqual(
             round(self.container.positions['daytrades'][self.asset1.symbol]\
-                    .operations[1].commissions['some discount'], 2),
+                .operations[1].commissions['some discount'], 2),
             0.21
         )
         self.assertEqual(
             round(self.container.positions['daytrades'][self.asset1.symbol]\
-                    .operations[1].commissions['other discount'], 2),
+                .operations[1].commissions['other discount'], 2),
             0.64
         )
 
-    def test_check_common_trades0_asset(self):
+    def test_operations0_asset(self):
         self.assertEqual(
             self.container.positions['operations'][self.asset1.symbol].asset,
             self.asset1
         )
 
-    def test_common_trades0_quantity_should_be_5(self):
+    def test_operations0_quantity(self):
         self.assertEqual(
             self.container.positions['operations'][self.asset1.symbol]\
                 .quantity,
             5
         )
 
-    def test_common_trades0_price_should_be_2(self):
+    def test_operations0_price(self):
         self.assertEqual(
             self.container.positions['operations'][self.asset1.symbol].price,
             2
         )
 
-    def test_common_trades0_volume_should_be_35(self):
+    def test_operations0_volume(self):
         self.assertEqual(
             self.container.positions['operations'][self.asset1.symbol].volume,
             10
         )
 
-    def test_check_common_trades0_discounts(self):
+    def test_operations0_discounts(self):
         self.assertEqual(
             round(self.container.positions['operations'][self.asset1.symbol]\
-                    .commissions['some discount'],2),
+                .commissions['some discount'], 2),
             0.14
         )
         self.assertEqual(
             round(self.container.positions['operations'][self.asset1.symbol]\
-                    .commissions['other discount'], 2),
+                .commissions['other discount'], 2),
             0.43
         )
 
-    def test_check_common_trades1_asset(self):
+    def test_operations1_asset(self):
         self.assertEqual(
             self.container.positions['operations'][self.asset2.symbol].asset,
             self.asset2
         )
 
-    def test_common_trades1_quantity_should_be_minus_5(self):
+    def test_operations1_quantity(self):
         self.assertEqual(
             self.container.positions['operations'][self.asset2.symbol]\
                 .quantity,
             -5
         )
 
-    def test_common_trades1_price_should_be_7(self):
+    def test_operations1_price(self):
         self.assertEqual(
             self.container.positions['operations'][self.asset2.symbol].price,
             7
         )
 
-    def test_common_trades1_volume_should_be_35(self):
+    def test_operations1_volume(self):
         self.assertEqual(
             self.container.positions['operations'][self.asset2.symbol].volume,
             35
         )
 
-    def test_check_common_trades1_discounts(self):
+    def test_operations1_discounts(self):
         expected_discounts = {
             'some discount': 0.5,
             'other discount': 1.5

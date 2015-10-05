@@ -10,7 +10,7 @@ import unittest
 import trade
 
 
-class TestExercise_Case_00(unittest.TestCase):
+class TestExerciseCase00(unittest.TestCase):
     """Exercising a call."""
 
     def setUp(self):
@@ -45,7 +45,7 @@ class TestExercise_Case_00(unittest.TestCase):
         self.assertEqual(self.exercise.operations[1].price, 10)
 
 
-class TestExercise_Case_01(unittest.TestCase):
+class TestExerciseCase01(unittest.TestCase):
     """Being exercised on a call."""
 
     def setUp(self):

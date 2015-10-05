@@ -6,7 +6,7 @@ import unittest
 
 import trade
 
-
+# should be different testcases
 class TestTrade_total_discounts(unittest.TestCase):
     """Test the total_commissions property of Operation objects."""
 

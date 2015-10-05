@@ -11,7 +11,7 @@ def get_exercise_no_premium(operation, portfolio):
         operation.fetch_operations()
 
 
-class TestPortfolioUnderlyingAssetAccumulation_Case_00(unittest.TestCase):
+class TestUnderlyingAssetAccumulationCase00(unittest.TestCase):
     """Test the accumulation of one operation with underlying assets."""
 
     def setUp(self):
@@ -97,7 +97,7 @@ class TestPortfolioUnderlyingAssetAccumulation_Case_00(unittest.TestCase):
         self.assertEqual(self.portfolio.assets[self.option.symbol].price, 0)
 
 
-class TestPortfolioUnderlyingAssetAccumulation_Case_01(unittest.TestCase):
+class TestUnderlyingAssetAccumulationCase01(unittest.TestCase):
     """Test the accumulation of one operation with underlying assets."""
 
     def setUp(self):

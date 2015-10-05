@@ -6,7 +6,7 @@ import unittest
 import trade
 
 
-class TestAssetCreation_Case_00(unittest.TestCase):
+class TestAssetCreationCase00(unittest.TestCase):
     """Test the creation of Asset objects.
 
     - Test the creation of an Asset object with a name.
@@ -34,47 +34,47 @@ class TestAssetCreation_Case_00(unittest.TestCase):
     def test_asset1_should_exist(self):
         self.assertTrue(self.asset1)
 
-    def test_asset1_name_should_be_some_stock(self):
+    def test_asset1_name(self):
         self.assertEqual(self.asset1.name, 'some stock')
 
-    def test_asset1_symbol_should_be_None(self):
+    def test_asset1_symbol(self):
         self.assertEqual(self.asset1.symbol, None)
 
-    def test_asset1_expiration_date_should_be_None(self):
+    def test_asset1_expiration_date(self):
         self.assertEqual(self.asset1.expiration_date, None)
 
-    def test_asset2_should_exist(self):
+    def test_asset2_exists(self):
         self.assertTrue(self.asset2)
 
-    def test_asset2_name_should_be_empty_string(self):
+    def test_asset2_name(self):
         self.assertEqual(self.asset2.name, None)
 
-    def test_asset2_symbol_should_be_None(self):
+    def test_asset2_symbol(self):
         self.assertEqual(self.asset2.symbol, None)
 
-    def test_asset2_expiration_date_should_be_None(self):
+    def test_asset2_expiration_date(self):
         self.assertEqual(self.asset2.expiration_date, None)
 
-    def test_asset3_name_should_be_other_stock(self):
+    def test_asset3_name(self):
         self.assertEqual(self.asset3.name, 'other stock')
 
-    def test_asset3_symbol_should_be_AAAA(self):
+    def test_asset3_symbol(self):
         self.assertEqual(self.asset3.symbol, 'AAAA')
 
-    def test_asset3_expiration_date_should_be_None(self):
+    def test_asset3_expiration_date(self):
         self.assertEqual(self.asset3.expiration_date, None)
 
-    def test_asset4_name_should_be_some_stuff(self):
+    def test_asset4_name(self):
         self.assertEqual(self.asset4.name, 'some stuff')
 
-    def test_asset4_symbol_should_be_STFF(self):
+    def test_asset4_symbol(self):
         self.assertEqual(self.asset4.symbol, 'STFF')
 
-    def test_asset4_expiration_date_should_be_other_2105_12_31(self):
+    def test_asset4_expiration_date(self):
         self.assertEqual(self.asset4.expiration_date, '2015-12-31')
 
 
-class TestDerivativeCreation_Case_00(unittest.TestCase):
+class TestDerivativeCreationCase00(unittest.TestCase):
     """Test the creation of Derivatives."""
 
     def setUp(self):
@@ -95,7 +95,7 @@ class TestDerivativeCreation_Case_00(unittest.TestCase):
             ratio=2
         )
 
-    def test_asset5_symbol_should_be_STFF(self):
+    def test_asset5_symbol(self):
         self.assertEqual(self.asset5.symbol, 'ATVI000')
 
     def test_asset5_expiration_date(self):
@@ -111,7 +111,7 @@ class TestDerivativeCreation_Case_00(unittest.TestCase):
         self.assertEqual(self.asset5.ratio, 1)
 
 
-    def test_asset6_symbol_should_be_STFF(self):
+    def test_asset6_symbol(self):
         self.assertEqual(self.asset6.symbol, 'STFF')
 
     def test_asset6_expiration_date(self):
