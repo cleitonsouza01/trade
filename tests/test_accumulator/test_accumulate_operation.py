@@ -6,7 +6,7 @@ import unittest
 import trade
 
 
-class Test_accumulate_operation_Case_00(unittest.TestCase):
+class TestAccumulateOperationCase00(unittest.TestCase):
     """Test the accumulation of 1 operation."""
 
     def setUp(self):
@@ -33,7 +33,7 @@ class Test_accumulate_operation_Case_00(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {})
 
 
-class Test_accumulate_operation_Case_01(unittest.TestCase):
+class TestAccumulateOperationCase01(unittest.TestCase):
     """Attempt to accumulate a Operation with a different asset.
 
     The Accumulator should only accumulate operations from assets
@@ -65,7 +65,7 @@ class Test_accumulate_operation_Case_01(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {})
 
 
-class Test_accumulate_operation_Case_02(unittest.TestCase):
+class TestAccumulateOperationCase02(unittest.TestCase):
     """Test the accumulation of 1 operation with commissions."""
 
     def setUp(self):
@@ -103,7 +103,7 @@ class Test_accumulate_operation_Case_02(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {})
 
 
-class Test_accumulate_operation_Case_03(unittest.TestCase):
+class TestAccumulateOperationCase03(unittest.TestCase):
     """Test the accumulation of 1 operation with zero price."""
 
     def setUp(self):
@@ -136,7 +136,7 @@ class Test_accumulate_operation_Case_03(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {})
 
 
-class Test_accumulate_operation_Case_04(unittest.TestCase):
+class TestAccumulateOperationCase04(unittest.TestCase):
     """Test the accumulation of 2 operations in consecutive dates."""
 
     def setUp(self):
@@ -182,7 +182,7 @@ class Test_accumulate_operation_Case_04(unittest.TestCase):
         )
 
 
-class Test_accumulate_operation_Case_05(unittest.TestCase):
+class TestAccumulateOperationCase05(unittest.TestCase):
     """Test the accumulation of empty operations."""
 
     def setUp(self):

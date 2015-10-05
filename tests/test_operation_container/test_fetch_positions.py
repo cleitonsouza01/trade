@@ -25,7 +25,7 @@ class TaxManagerForTests:
         return {}
 
 
-class TestTradeContainer_fetch_positions_case_00(unittest.TestCase):
+class TestContainerFetchPositionsCase00(unittest.TestCase):
     """Test the fetch_positions() method of Accumulator."""
 
     def setUp(self):
@@ -166,8 +166,7 @@ class TestTradeContainer_fetch_positions_case_00(unittest.TestCase):
         )
 
 
-class TestTradeContainer_fetch_positions_case_01(
-        unittest.TestCase):
+class TestContainerFetchPositionsCase01(unittest.TestCase):
     """Test the fetch_positions() method of Accumulator."""
 
     def setUp(self):
@@ -413,8 +412,8 @@ class TestTradeContainer_fetch_positions_case_01(
         )
 
 
-class TestTradeContainer_fetch_positions_case_02(unittest.TestCase):
-    """ Daytrades, commissions and taxes."""
+class TestContainerFetchPositionsCase02(unittest.TestCase):
+    """Daytrades, commissions and taxes."""
 
     def setUp(self):
 

@@ -31,6 +31,7 @@ class StockSplit(Event):
 
 
 class TestLogEvent00(unittest.TestCase):
+    """Tests the logging of 1 Event object."""
 
     def setUp(self):
         self.asset = Asset()
@@ -68,6 +69,7 @@ class TestLogEvent00(unittest.TestCase):
 
 
 class TestLogEvent01(unittest.TestCase):
+    """Tests the logging of 2 Event objects."""
 
     def setUp(self):
         self.asset = Asset()
@@ -108,6 +110,7 @@ class TestLogEvent01(unittest.TestCase):
 
 
 class TestLogEvent02(unittest.TestCase):
+    """Tests the logging of multiple Event objects."""
 
     def setUp(self):
         self.asset = Asset()

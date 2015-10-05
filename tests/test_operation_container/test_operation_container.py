@@ -1,10 +1,12 @@
+"""Test the creation of OperationContainer objects."""
+
 from __future__ import absolute_import
 import unittest
 
 import trade
 
 
-class TestTradeContainerCreation_Case_00(unittest.TestCase):
+class TestContainerCreationCase00(unittest.TestCase):
     """Test the creation of a OperationContainer."""
 
     def setUp(self):
@@ -14,7 +16,7 @@ class TestTradeContainerCreation_Case_00(unittest.TestCase):
         self.assertTrue(self.container)
 
 
-class TestTradeContainerCreation_Case_01(unittest.TestCase):
+class TestContainerCreationCase01(unittest.TestCase):
     """Test the creation of a OperationContainer."""
 
     def setUp(self):
@@ -41,7 +43,7 @@ class TestTradeContainerCreation_Case_01(unittest.TestCase):
         self.assertEqual(self.container.commissions, commissions)
 
 
-class TestTradeContainer_add_to_common_operations(unittest.TestCase):
+class TestContainerAddToPositions(unittest.TestCase):
     """Test add_to_position_operations method."""
 
     def setUp(self):

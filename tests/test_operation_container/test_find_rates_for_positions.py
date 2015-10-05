@@ -21,7 +21,7 @@ class TaxManagerForTests(trade.TradingFees):
             return {'rate': 1}
 
 
-class Test_find_rates_for_positions_case_00(unittest.TestCase):
+class TestFindFeesForPositionsCase00(unittest.TestCase):
     """Test the application of fees to operations in the container."""
 
     def setUp(self):
@@ -58,7 +58,7 @@ class Test_find_rates_for_positions_case_00(unittest.TestCase):
         ]
         self.container.fetch_positions()
 
-    def test_container_should_exist(self):
+    def test_container_exists(self):
         self.assertTrue(self.container)
 
     def test_container_volume(self):

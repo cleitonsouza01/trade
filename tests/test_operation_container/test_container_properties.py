@@ -6,7 +6,7 @@ import unittest
 import trade
 
 
-class TestTradeContainer_total_discount_value_one_discount(
+class TestContainerPropertiesCase00(
         unittest.TestCase
     ):
     """Test the total_commission_value property of the Container."""
@@ -17,20 +17,20 @@ class TestTradeContainer_total_discount_value_one_discount(
         }
         self.trade_container = trade.OperationContainer(commissions=discounts)
 
-    def test_trade_container_should_exist(self):
+    def test_container_exists(self):
         self.assertTrue(self.trade_container)
 
-    def test_check_trade_container_raw_discounts(self):
+    def test_raw_discounts(self):
         expected_discounts = {
             'some discount': 1,
         }
         self.assertEqual(self.trade_container.commissions, expected_discounts)
 
-    def test_trade_container_total_discount_value_should_be_one(self):
+    def test_total_commission_value(self):
         self.assertEqual(self.trade_container.total_commission_value, 1)
 
 
-class TestTradeContainer_total_discount_value_multiple_discounts(
+class TestContainerPropertiesCase01(
         unittest.TestCase
     ):
     """Test the total_commission_value property of the Container."""
@@ -42,10 +42,10 @@ class TestTradeContainer_total_discount_value_multiple_discounts(
         }
         self.trade_container = trade.OperationContainer(commissions=discounts)
 
-    def test_trade_container_should_exist(self):
+    def test_container_exists(self):
         self.assertTrue(self.trade_container)
 
-    def test_check_raw_discounts(self):
+    def test_raw_discounts(self):
         expected_discounts = {
             'some discount': 1,
             'other discount': 3,
@@ -56,7 +56,7 @@ class TestTradeContainer_total_discount_value_multiple_discounts(
         self.assertEqual(self.trade_container.total_commission_value, 4)
 
 
-class TestTradeContainer_volume_one_trade(unittest.TestCase):
+class TestContainerPropertiesCase02(unittest.TestCase):
     """Test the volume property of the Container."""
 
     def setUp(self):
@@ -69,17 +69,17 @@ class TestTradeContainer_volume_one_trade(unittest.TestCase):
         )
         self.trade_container = trade.OperationContainer(operations=[operation])
 
-    def test_container_should_exist(self):
+    def test_container_exists(self):
         self.assertTrue(self.trade_container)
 
-    def test_container_operations(self):
+    def test_operations(self):
         self.assertEqual(len(self.trade_container.operations), 1)
 
-    def test_container_volume(self):
+    def test_volume(self):
         self.assertEqual(self.trade_container.volume, 20)
 
 
-class TestTradeContainer_volume_multiple_trades_case_00(unittest.TestCase):
+class TestContainerPropertiesCase03(unittest.TestCase):
     """Test the volume property of the Container."""
 
     def setUp(self):
@@ -103,17 +103,17 @@ class TestTradeContainer_volume_multiple_trades_case_00(unittest.TestCase):
             ]
         )
 
-    def testcontainer_should_exist(self):
+    def test_container_exists(self):
         self.assertTrue(self.trade_container)
 
-    def test_container_operations(self):
+    def test_operations(self):
         self.assertEqual(len(self.trade_container.operations), 2)
 
-    def test_container_volume(self):
+    def test_volume(self):
         self.assertEqual(self.trade_container.volume, 25)
 
 
-class TestTradeContainer_volume_multiple_trades_case_01(unittest.TestCase):
+class TestContainerPropertiesCase04(unittest.TestCase):
     """Test the volume property of the Container."""
 
     def setUp(self):
@@ -137,17 +137,17 @@ class TestTradeContainer_volume_multiple_trades_case_01(unittest.TestCase):
             ]
         )
 
-    def test_container_should_exist(self):
+    def test_container_exists(self):
         self.assertTrue(self.trade_container)
 
-    def test_container_operations(self):
+    def test_operations(self):
         self.assertEqual(len(self.trade_container.operations), 2)
 
-    def test_container_volume(self):
+    def test_volume(self):
         self.assertEqual(self.trade_container.volume, 25)
 
 
-class TestTradeContainer_volume_multiple_trades_case_02(unittest.TestCase):
+class TestContainerPropertiesCase05(unittest.TestCase):
     """Test the volume property of the Container."""
 
     def setUp(self):
@@ -179,11 +179,11 @@ class TestTradeContainer_volume_multiple_trades_case_02(unittest.TestCase):
             ]
         )
 
-    def test_container_should_exist(self):
+    def test_container_exists(self):
         self.assertTrue(self.trade_container)
 
-    def test_container_operations(self):
+    def test_operations(self):
         self.assertEqual(len(self.trade_container.operations), 3)
 
-    def test_container_volume(self):
+    def test_volume(self):
         self.assertEqual(self.trade_container.volume, 125)

@@ -7,7 +7,7 @@ from trade import Accumulator
 from trade import Asset, Operation
 
 
-class TestAccumulatorResults_sale_case_00(unittest.TestCase):
+class TestAccumulatorResultsSaleCase00(unittest.TestCase):
 
     maxDiff = None
 
@@ -55,7 +55,7 @@ class TestAccumulatorResults_sale_case_00(unittest.TestCase):
         self.assertEqual(self.accumulator.results, expected_log)
 
 
-class TestAccumulatorResults_sale_case_01(unittest.TestCase):
+class TestAccumulatorResultsSaleCase01(unittest.TestCase):
 
     maxDiff = None
 
@@ -118,7 +118,7 @@ class TestAccumulatorResults_sale_case_01(unittest.TestCase):
         self.assertEqual(self.accumulator.results, expected_log)
 
 
-class TestAccumulatorResults_sale_case_02(unittest.TestCase):
+class TestAccumulatorResultsSaleCase02(unittest.TestCase):
 
     maxDiff = None
 
@@ -196,7 +196,7 @@ class TestAccumulatorResults_sale_case_02(unittest.TestCase):
         self.assertEqual(self.accumulator.results, expected_log)
 
 
-class TestAccumulatorResults_sale_case_03(unittest.TestCase):
+class TestAccumulatorResultsSaleCase03(unittest.TestCase):
 
     maxDiff = None
 
@@ -259,7 +259,7 @@ class TestAccumulatorResults_sale_case_03(unittest.TestCase):
         self.assertEqual(self.accumulator.results, expected_log)
 
 
-class TestAccumulatorResults_sale_case_04(unittest.TestCase):
+class TestAccumulatorResultsSaleCase04(unittest.TestCase):
 
     maxDiff = None
 
@@ -353,7 +353,7 @@ class TestAccumulatorResults_sale_case_04(unittest.TestCase):
 
 
 
-class TestAccumulatorResults_sale_case_05(unittest.TestCase):
+class TestAccumulatorResultsSaleCase05(unittest.TestCase):
 
     maxDiff = None
 
@@ -461,7 +461,7 @@ class TestAccumulatorResults_sale_case_05(unittest.TestCase):
         self.assertEqual(self.accumulator.results, expected_log)
 
 
-class TestAccumulatorResults_sale_case_06(unittest.TestCase):
+class TestAccumulatorResultsSaleCase06(unittest.TestCase):
 
     maxDiff = None
 
@@ -569,7 +569,7 @@ class TestAccumulatorResults_sale_case_06(unittest.TestCase):
         self.assertEqual(self.accumulator.results, expected_log)
 
 
-class TestAccumulatorResults_sale_case_07(unittest.TestCase):
+class TestAccumulatorResultsSaleCase07(unittest.TestCase):
 
     maxDiff = None
 

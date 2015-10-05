@@ -12,7 +12,7 @@ class TestEvent(trade.Event):
         pass
 
 
-class TestLogDaytradesOperationsAndEvents_Case_00(unittest.TestCase):
+class TestLogDaytradesOperationsAndEventsCase00(unittest.TestCase):
     """Test logging events, operations and daytrades on the same date."""
 
     def setUp(self):
@@ -62,7 +62,7 @@ class TestLogDaytradesOperationsAndEvents_Case_00(unittest.TestCase):
         self.assertEqual(self.accumulator.log, expected_log)
 
 
-class TestLogDaytradesOperationsAndEvents_Case_01(unittest.TestCase):
+class TestLogDaytradesOperationsAndEventsCase01(unittest.TestCase):
     """Test logging all objects on the different dates."""
 
     def setUp(self):
@@ -126,7 +126,7 @@ class TestLogDaytradesOperationsAndEvents_Case_01(unittest.TestCase):
         self.assertEqual(self.accumulator.log, expected_log)
 
 
-class TestLogDaytradesOperationsAndEvents_Case_02(unittest.TestCase):
+class TestLogDaytradesOperationsAndEventsCase02(unittest.TestCase):
     """Test logging objects on different dates."""
 
     def setUp(self):

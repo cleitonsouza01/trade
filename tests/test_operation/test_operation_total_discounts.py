@@ -7,13 +7,13 @@ import unittest
 import trade
 
 # should be different testcases
-class TestTrade_total_discounts(unittest.TestCase):
+class TestOperationTotalDiscounts(unittest.TestCase):
     """Test the total_commissions property of Operation objects."""
 
     def setUp(self):
         self.asset = trade.Asset(name='some asset')
 
-    def test_trade_total_discounts_with_one_discount(self):
+    def test_one_discount(self):
         operation = trade.Operation(
             quantity=1,
             price=1,
@@ -23,7 +23,7 @@ class TestTrade_total_discounts(unittest.TestCase):
         )
         self.assertEqual(operation.total_commissions, 3)
 
-    def test_trade_total_discounts_with_multiple_discounts_case_1(self):
+    def test_multiple_discounts_case_1(self):
         operation = trade.Operation(
             quantity=1,
             price=1,
@@ -34,7 +34,7 @@ class TestTrade_total_discounts(unittest.TestCase):
         )
         self.assertEqual(operation.total_commissions, 4)
 
-    def test_trade_total_discounts_with_multiple_discounts_case_2(self):
+    def test_multiple_discounts_case_2(self):
         operation = trade.Operation(
             quantity=1,
             price=1,
@@ -46,7 +46,7 @@ class TestTrade_total_discounts(unittest.TestCase):
         )
         self.assertEqual(operation.total_commissions, 6)
 
-    def test_trade_total_discounts_with_multiple_discounts_case_3(self):
+    def test_multiple_discounts_case_3(self):
         operation = trade.Operation(
             quantity=1,
             price=1,

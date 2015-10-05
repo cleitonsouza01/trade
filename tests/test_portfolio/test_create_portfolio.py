@@ -11,5 +11,5 @@ class TestCreatePortfolio(unittest.TestCase):
     def setUp(self):
         self.portfolio = trade.Portfolio()
 
-    def test_portfolio_should_exist(self):
+    def test_portfolio_exists(self):
         self.assertTrue(self.portfolio)

@@ -6,7 +6,7 @@ import unittest
 import trade
 
 
-class TestLogDaytradesAndOperations_Case_00(unittest.TestCase):
+class TestLogDaytradesAndOperationsCase00(unittest.TestCase):
     """Tests the logging of Operation and Daytrade objects.
 
     Try to log a daytrade and a operation on the same date.
@@ -53,7 +53,7 @@ class TestLogDaytradesAndOperations_Case_00(unittest.TestCase):
         self.assertEqual(self.accumulator.log, expected_log)
 
 
-class TestLogDaytradesAndOperations_Case_01(unittest.TestCase):
+class TestLogDaytradesAndOperationsCase01(unittest.TestCase):
     """Tests the logging of Operation and Daytrade objects.
 
     Logs one daytrade and then one operation on a posterior
@@ -108,7 +108,7 @@ class TestLogDaytradesAndOperations_Case_01(unittest.TestCase):
         self.assertEqual(self.accumulator.log, expected_log)
 
 
-class TestLogDaytradesAndOperations_Case_02(unittest.TestCase):
+class TestLogDaytradesAndOperationsCase02(unittest.TestCase):
     """Tests the logging of Operation and Daytrade objects.
 
     One daytrade first,

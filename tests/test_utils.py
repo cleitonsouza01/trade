@@ -13,10 +13,10 @@ class TestSameSign(unittest.TestCase):
     have opposite signs, and False otherwise.
     """
 
-    def test_same_sign_same_signs(self):
+    def test_same_signs(self):
         self.assertTrue(trade.same_sign(-1, -4))
 
-    def test_same_sign_opposite_signs(self):
+    def test_opposite_signs(self):
         self.assertFalse(trade.same_sign(-1, 4))
 
 
@@ -30,20 +30,20 @@ class TestAveragePrice(unittest.TestCase):
     def setUp(self):
         pass
 
-    def test_average_price_case_00(self):
+    def test_case_00(self):
         price = trade.average_price(10, 2, 10, 4)
         self.assertEqual(price, 3)
 
-    def test_average_price_case_01(self):
+    def test_case_01(self):
         price = trade.average_price(10, 1, 10, 2)
         self.assertEqual(price, 1.5)
 
-    def test_average_price_case_02(self):
+    def test_case_02(self):
         price = trade.average_price(10, 1, 10, 3)
         self.assertEqual(price, 2)
 
 
-class Test_daytrade_condition(unittest.TestCase):
+class TestDaytradeCondition(unittest.TestCase):
     """Tests the function daytrade_condition().
 
     The daytrade_condition function receives two operations and
@@ -55,7 +55,7 @@ class Test_daytrade_condition(unittest.TestCase):
         self.asset1 = trade.Asset()
         self.asset2 = trade.Asset()
 
-    def test_daytrade_condition_case_00(self):
+    def test_case_00(self):
         operation1 = trade.Operation(
             quantity=-10,
             price=5,
@@ -72,7 +72,7 @@ class Test_daytrade_condition(unittest.TestCase):
             trade.plugins.daytrade_condition(operation1, operation2)
         )
 
-    def test_daytrade_condition_case_01(self):
+    def test_case_01(self):
         operation1 = trade.Operation(
             quantity=10,
             price=5,
@@ -89,7 +89,7 @@ class Test_daytrade_condition(unittest.TestCase):
             trade.plugins.daytrade_condition(operation1, operation2)
         )
 
-    def test_daytrade_condition_case_02(self):
+    def test_case_02(self):
         operation1 = trade.Operation(
             quantity=0,
             price=5,
@@ -106,7 +106,7 @@ class Test_daytrade_condition(unittest.TestCase):
             trade.plugins.daytrade_condition(operation1, operation2)
         )
 
-    def test_daytrade_condition_case_03(self):
+    def test_case_03(self):
         operation1 = trade.Operation(
             quantity=0,
             price=5,
@@ -123,7 +123,7 @@ class Test_daytrade_condition(unittest.TestCase):
             trade.plugins.daytrade_condition(operation1, operation2)
         )
 
-    def test_daytrade_condition_case_04(self):
+    def test_case_04(self):
         operation1 = trade.Operation(
             quantity=-10,
             price=5,
@@ -140,7 +140,7 @@ class Test_daytrade_condition(unittest.TestCase):
             trade.plugins.daytrade_condition(operation1, operation2)
         )
 
-    def test_daytrade_condition_case_05(self):
+    def test_case_05(self):
         operation1 = trade.Operation(
             quantity=10,
             price=5,
@@ -157,7 +157,7 @@ class Test_daytrade_condition(unittest.TestCase):
             trade.plugins.daytrade_condition(operation1, operation2)
         )
 
-    def test_daytrade_condition_case_06(self):
+    def test_case_06(self):
         operation1 = trade.Operation(
             quantity=0,
             price=5,
@@ -174,7 +174,7 @@ class Test_daytrade_condition(unittest.TestCase):
             trade.plugins.daytrade_condition(operation1, operation2)
         )
 
-    def test_daytrade_condition_case_07(self):
+    def test_case_07(self):
         operation1 = trade.Operation(
             quantity=-10,
             price=5,
@@ -191,7 +191,7 @@ class Test_daytrade_condition(unittest.TestCase):
             trade.plugins.daytrade_condition(operation1, operation2)
         )
 
-    def test_daytrade_condition_case_08(self):
+    def test_case_08(self):
         operation1 = trade.Operation(
             quantity=10,
             price=5,
@@ -209,7 +209,7 @@ class Test_daytrade_condition(unittest.TestCase):
         )
 
 
-class Test_find_purchase_and_sale(unittest.TestCase):
+class TestFindPurchaseAndSale(unittest.TestCase):
     """Test the find_purchase_and_sale() function.
 
     This function receives two operations an is expected to
@@ -221,7 +221,7 @@ class Test_find_purchase_and_sale(unittest.TestCase):
     def setUp(self):
         self.asset = trade.Asset()
 
-    def test_find_purchase_and_sale_case_00(self):
+    def test_case_00(self):
         operation1 = trade.Operation(
             quantity=10,
             price=5,
@@ -240,7 +240,7 @@ class Test_find_purchase_and_sale(unittest.TestCase):
             result
         )
 
-    def test_find_purchase_and_sale_case_01(self):
+    def test_case_01(self):
         operation1 = trade.Operation(
             quantity=-10,
             price=5,
@@ -259,7 +259,7 @@ class Test_find_purchase_and_sale(unittest.TestCase):
             result
         )
 
-    def test_find_purchase_and_sale_case_02(self):
+    def test_case_02(self):
         operation1 = trade.Operation(
             quantity=10,
             price=5,
@@ -278,7 +278,7 @@ class Test_find_purchase_and_sale(unittest.TestCase):
             result
         )
 
-    def test_find_purchase_and_sale_case_03(self):
+    def test_case_03(self):
         operation1 = trade.Operation(
             quantity=-10,
             price=5,
@@ -297,7 +297,7 @@ class Test_find_purchase_and_sale(unittest.TestCase):
             result
         )
 
-    def test_find_purchase_and_sale_case_04(self):
+    def test_case_04(self):
         operation1 = trade.Operation(
             quantity=0,
             price=0,
@@ -316,7 +316,7 @@ class Test_find_purchase_and_sale(unittest.TestCase):
             result
         )
 
-    def test_find_purchase_and_sale_case_05(self):
+    def test_case_05(self):
         operation1 = trade.Operation(
             quantity=0,
             price=0,
@@ -335,7 +335,7 @@ class Test_find_purchase_and_sale(unittest.TestCase):
             result
         )
 
-    def test_find_purchase_and_sale_case_06(self):
+    def test_case_06(self):
         operation1 = trade.Operation(
             quantity=5,
             price=0,
@@ -354,7 +354,7 @@ class Test_find_purchase_and_sale(unittest.TestCase):
             result
         )
 
-    def test_find_purchase_and_sale_case_07(self):
+    def test_case_07(self):
         operation1 = trade.Operation(
             quantity=-5,
             price=0,

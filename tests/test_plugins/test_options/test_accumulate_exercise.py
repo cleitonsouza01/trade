@@ -48,22 +48,22 @@ class TestAccumulateExercise00(unittest.TestCase):
         self.asset_accumulator.accumulate_operation(self.exercise)
         self.option_accumulator.accumulate_operation(self.exercise)
 
-    def test_asset_accumulator_price(self):
+    def test_accumulator1_price(self):
         self.assertEqual(self.asset_accumulator.price, 10)
 
-    def test_asset_accumulator_quantity(self):
+    def test_accumulator1_quantity(self):
         self.assertEqual(self.asset_accumulator.quantity, 100)
 
-    def test_asset_accumulator_results(self):
+    def test_accumulator1_results(self):
         self.assertEqual(self.asset_accumulator.results, {})
 
-    def test_option_accumulator_price(self):
+    def test_accumulator2_price(self):
         self.assertEqual(self.option_accumulator.price, 0)
 
-    def test_option_accumulator_quantity(self):
+    def test_accumulator2_quantity(self):
         self.assertEqual(self.option_accumulator.quantity, 0)
 
-    def test_option_accumulator_results(self):
+    def test_accumulator2_results(self):
         self.assertEqual(
             self.option_accumulator.results, {})
 
@@ -121,20 +121,20 @@ class TestAccumulateExercise01(unittest.TestCase):
         self.asset_accumulator.accumulate_operation(self.exercise)
         self.option_accumulator.accumulate_operation(self.exercise)
 
-    def test_asset_accumulator_price(self):
+    def test_accumulator1_price(self):
         self.assertEqual(self.asset_accumulator.price, 7.5)
 
-    def test_asset_accumulator_quantity(self):
+    def test_accumulator1_quantity(self):
         self.assertEqual(self.asset_accumulator.quantity, 200)
 
-    def test_asset_accumulator_results(self):
+    def test_accumulator1_results(self):
         self.assertEqual(self.asset_accumulator.results, {})
 
-    def test_option_accumulator_price(self):
+    def test_accumulator2_price(self):
         self.assertEqual(self.option_accumulator.price, 0)
 
-    def test_option_accumulator_quantity(self):
+    def test_accumulator2_quantity(self):
         self.assertEqual(self.option_accumulator.quantity, 0)
 
-    def test_option_accumulator_results(self):
+    def test_accumulator2_results(self):
         self.assertEqual(self.option_accumulator.results, {})

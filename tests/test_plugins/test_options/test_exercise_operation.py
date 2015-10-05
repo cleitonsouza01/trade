@@ -32,16 +32,16 @@ class TestExerciseCase00(unittest.TestCase):
     def test_operations_len(self):
         self.assertEqual(len(self.exercise.operations), 2)
 
-    def test_option_consuming_operation_quantity(self):
+    def test_option_consuming_quantity(self):
         self.assertEqual(self.exercise.operations[0].quantity, -100)
 
-    def test_option_consuming_operation_price(self):
+    def test_option_consuming_price(self):
         self.assertEqual(self.exercise.operations[0].price, 0)
 
-    def test_asset_purchase_operation_quantity(self):
+    def test_asset_purchase_quantity(self):
         self.assertEqual(self.exercise.operations[1].quantity, 100)
 
-    def test_asset_purchase_operation_price(self):
+    def test_asset_purchase_price(self):
         self.assertEqual(self.exercise.operations[1].price, 10)
 
 
@@ -67,14 +67,14 @@ class TestExerciseCase01(unittest.TestCase):
     def test_operations_len(self):
         self.assertEqual(len(self.exercise.operations), 2)
 
-    def test_option_consuming_operation_quantity(self):
+    def test_option_consuming_quantity(self):
         self.assertEqual(self.exercise.operations[0].quantity, -100)
 
-    def test_option_consuming_operation_price(self):
+    def test_option_consuming_price(self):
         self.assertEqual(self.exercise.operations[0].price, 0)
 
-    def test_asset_purchase_operation_quantity(self):
+    def test_asset_purchase_quantity(self):
         self.assertEqual(self.exercise.operations[1].quantity, -100)
 
-    def test_asset_purchase_operation_price(self):
+    def test_asset_purchase_price(self):
         self.assertEqual(self.exercise.operations[1].price, 10)

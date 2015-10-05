@@ -52,7 +52,7 @@ class TestUnderlyingAssetAccumulationCase00(unittest.TestCase):
         )
         self.portfolio.accumulate(self.exercise)
 
-    def test_portfolio_asset_keys(self):
+    def test_portfolio_keys(self):
         self.assertEqual(len(self.portfolio.assets.keys()), 2)
 
     def test_asset_accumulator(self):
@@ -63,16 +63,16 @@ class TestUnderlyingAssetAccumulationCase00(unittest.TestCase):
             )
         )
 
-    def test_asset_accumulator_asset(self):
+    def test_accumulator1_asset(self):
         self.assertEqual(
             self.portfolio.assets[self.asset.symbol].asset.symbol,
             self.asset.symbol
         )
 
-    def test_asset_accumulator_quantity(self):
+    def test_accumulator1_quantity(self):
         self.assertEqual(self.portfolio.assets[self.asset.symbol].quantity, 20)
 
-    def test_asset_accumulator_price(self):
+    def test_accumulator1_price(self):
         self.assertEqual(self.portfolio.assets[self.asset.symbol].price, 7.5)
 
 
@@ -84,16 +84,16 @@ class TestUnderlyingAssetAccumulationCase00(unittest.TestCase):
             )
         )
 
-    def test_option_accumulator_asset(self):
+    def test_accumulator2_asset(self):
         self.assertEqual(
             self.portfolio.assets[self.option.symbol].asset.symbol,
             self.option.symbol
         )
 
-    def test_option_accumulator_quantity(self):
+    def test_accumulator2_quantity(self):
         self.assertEqual(self.portfolio.assets[self.option.symbol].quantity, 0)
 
-    def test_option_accumulator_price(self):
+    def test_accumulator2_price(self):
         self.assertEqual(self.portfolio.assets[self.option.symbol].price, 0)
 
 

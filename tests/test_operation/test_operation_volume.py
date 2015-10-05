@@ -7,34 +7,27 @@ import unittest
 import trade
 
 
-class Test_operation_volume_case_00(unittest.TestCase):
+class TestOperationVolumeCase00(unittest.TestCase):
     """Test the volume property of Operation objects.
 
     The volume of the operation is its absolute quantity * its price.
     """
 
-    def test_volume_should_be_100(self):
-        operation = trade.Operation(
-            price=10,
-            quantity=10
-        )
-        self.assertEqual(operation.volume, 100)
-
-    def test_purchase_volume(self):
+    def test_purchase(self):
         operation = trade.Operation(
             price=10,
             quantity=20
         )
         self.assertEqual(operation.volume, 200)
 
-    def test_sale_volume(self):
+    def test_sale(self):
         operation = trade.Operation(
             price=10,
             quantity=-20
         )
         self.assertEqual(operation.volume, 200)
 
-    def test_sale_volume_with_discounts(self):
+    def test_sale_with_discounts(self):
         operation = trade.Operation(
             price=10,
             quantity=-20,

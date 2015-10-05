@@ -20,7 +20,7 @@ class EventThatChangeResults(trade.Event):
             container.results[key] += self.something
 
 
-class TestEvent_EventThatChangeResults_case_00(unittest.TestCase):
+class TestEventThatChangeResultsCase00(unittest.TestCase):
     """Test the accumulation of an Event object.
 
     In this test we use the EventThatChangeResults object

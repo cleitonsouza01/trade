@@ -20,10 +20,10 @@ class TestPortfolioAssetAccumulationCase00(unittest.TestCase):
         )
         self.portfolio.accumulate(self.operation)
 
-    def test_portfolio_asset_keys(self):
+    def test_portfolio_keys(self):
         self.assertEqual(len(self.portfolio.assets.keys()), 1)
 
-    def test_portfolio_asset_accumulator(self):
+    def test_portfolio_accumulator(self):
         self.assertTrue(
             isinstance(
                 self.portfolio.assets[self.asset.symbol],
@@ -65,7 +65,7 @@ class TestPortfolioAssetAccumulationCase01(unittest.TestCase):
         self.portfolio.accumulate(self.operation0)
         self.portfolio.accumulate(self.operation1)
 
-    def test_portfolio_asset_keys(self):
+    def test_portfolio_keys(self):
         self.assertEqual(len(self.portfolio.assets.keys()), 1)
 
     def test_portfolio_accumulator(self):
@@ -111,7 +111,7 @@ class TestPortfolioAssetAccumulationCase02(unittest.TestCase):
         self.portfolio.accumulate(self.operation0)
         self.portfolio.accumulate(self.operation1)
 
-    def test_portfolio_asset_keys(self):
+    def test_portfolio_keys(self):
         self.assertEqual(len(self.portfolio.assets.keys()), 2)
 
     def test_accumulator0(self):

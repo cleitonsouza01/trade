@@ -20,21 +20,21 @@ class TestOperationCreation(unittest.TestCase):
             commissions={'some discount': 3}
         )
 
-    def test_trade_exists(self):
+    def test_operation_exists(self):
         self.assertTrue(self.operation)
 
-    def test_trade_asset(self):
+    def test_asset(self):
         self.assertEqual(self.operation.asset.symbol, 'AAPL')
 
-    def test_trade_date(self):
+    def test_date(self):
         self.assertEqual(self.operation.date, '2015-09-18')
 
-    def test_trade_quantity(self):
+    def test_quantity(self):
         self.assertEqual(self.operation.quantity, 20)
 
-    def test_trade_price(self):
+    def test_price(self):
         self.assertEqual(self.operation.price, 10)
 
-    def test_trade_discounts(self):
-        discounts={'some discount': 3}
+    def test_discounts(self):
+        discounts = {'some discount': 3}
         self.assertEqual(self.operation.commissions, discounts)

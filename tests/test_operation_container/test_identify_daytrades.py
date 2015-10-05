@@ -6,7 +6,7 @@ import unittest
 import trade
 
 
-class TestTradeContainer_identify_daytrades_and_common_trades_case_00(
+class TestContainerIndentifyDaytradesCase00(
         unittest.TestCase):
     """Test the identification of daytrade operations."""
 
@@ -113,8 +113,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_00(
         )
 
 
-class TestTradeContainer_identify_daytrades_and_common_trades_case_01(
-        unittest.TestCase):
+class TestContainerIndentifyDaytradesCase01(unittest.TestCase):
     """Test the identification of daytrade operations."""
 
     def setUp(self):
@@ -241,8 +240,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_01(
         )
 
 
-class TestTradeContainer_identify_daytrades_and_common_trades_case_02(
-        unittest.TestCase):
+class TestContainerIndentifyDaytradesCase02(unittest.TestCase):
     """Test the identification of daytrade operations."""
 
     def setUp(self):
@@ -401,8 +399,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_02(
         )
 
 
-class TestTradeContainer_identify_daytrades_and_common_trades_case_03(
-        unittest.TestCase):
+class TestContainerIndentifyDaytradesCase03(unittest.TestCase):
     """Test the identification of daytrade operations."""
 
     def setUp(self):
@@ -598,8 +595,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_03(
         )
 
 
-class TestTradeContainer_identify_daytrades_and_common_trades_case_04(
-        unittest.TestCase):
+class TestContainerIndentifyDaytradesCase04(unittest.TestCase):
     """Test the identification of daytrade operations."""
 
     def setUp(self):
@@ -660,7 +656,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_04(
     def test_trade_1_price(self):
         self.assertEqual(self.container.operations[1].price, 3)
 
-    def test_there_should_be_no_common_trades(self):
+    def test_for_no_common_trades(self):
         self.container.fetch_positions()
         self.assertTrue('operations' not in self.container.positions)
 
@@ -780,8 +776,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_04(
         )
 
 
-class TestTradeContainer_identify_daytrades_and_common_trades_case_05(
-        unittest.TestCase):
+class TestContainerIndentifyDaytradesCase05(unittest.TestCase):
     """Test the identification of daytrade operations."""
 
     def setUp(self):
@@ -842,7 +837,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_05(
     def test_trade_1_price(self):
         self.assertEqual(self.container.operations[1].price, 10)
 
-    def test_there_should_be_no_common_trades(self):
+    def test_for_no_common_trades(self):
         self.container.fetch_positions()
         self.assertTrue('operations' not in self.container.positions)
 
@@ -958,8 +953,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_05(
         )
 
 
-class TestTradeContainer_identify_daytrades_and_common_trades_case_06(
-        unittest.TestCase):
+class TestContainerIndentifyDaytradesCase06(unittest.TestCase):
     """Test the identification of daytrade operations."""
 
     def setUp(self):
@@ -1163,8 +1157,7 @@ class TestTradeContainer_identify_daytrades_and_common_trades_case_06(
         )
 
 
-class TestTradeContainer_identify_daytrades_and_common_trades_case_07(
-        unittest.TestCase):
+class TestContainerIndentifyDaytradesCase07(unittest.TestCase):
     """Test the identification of daytrade operations."""
 
     def setUp(self):
