@@ -6,6 +6,15 @@ import unittest
 
 import trade
 
+OPERATION0 = trade.Operation(
+    price=10,
+    quantity=20
+)
+OPERATION1 = trade.Operation(
+    price=10,
+    quantity=-20
+)
+
 
 class TestOperationVolumeCase00(unittest.TestCase):
     """Test the volume property of Operation objects.
@@ -14,31 +23,19 @@ class TestOperationVolumeCase00(unittest.TestCase):
     """
 
     def test_purchase(self):
-        operation = trade.Operation(
-            price=10,
-            quantity=20
-        )
-        self.assertEqual(operation.volume, 200)
+        self.assertEqual(OPERATION0.volume, 200)
 
     def test_sale(self):
-        operation = trade.Operation(
-            price=10,
-            quantity=-20
-        )
-        self.assertEqual(operation.volume, 200)
+        self.assertEqual(OPERATION1.volume, 200)
 
     def test_sale_with_discounts(self):
-        operation = trade.Operation(
-            price=10,
-            quantity=-20,
-            commissions={
-                'brokerage': 2,
-                'some tax': 1.5,
-                'other tax': 1,
-            },
-            fees={
-                'some tax': 0.005,
-                'some other tax': 0.0275
-            }
-        )
-        self.assertEqual(operation.volume, 200)
+        OPERATION1.commissions = {
+            'brokerage': 2,
+            'some tax': 1.5,
+            'other tax': 1,
+        },
+        OPERATION1.fees = {
+            'some tax': 0.005,
+            'some other tax': 0.0275
+        }
+        self.assertEqual(OPERATION1.volume, 200)

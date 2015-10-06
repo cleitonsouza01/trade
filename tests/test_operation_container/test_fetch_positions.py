@@ -7,14 +7,14 @@ from abc import ABCMeta, abstractmethod
 import trade
 
 
-class TaxManagerForTests:
+class TaxManagerForTests(trade.TradingFees):
     """A TradingFees class for the tests."""
 
     __metaclass__ = ABCMeta
 
     @classmethod
     @abstractmethod
-    def get_fees(cls, operation, operation_type):
+    def get_fees(cls, operation=None, operation_type=None):
         """A sample implementation of get_fees()."""
         if operation_type == 'daytrades':
             return {
@@ -246,9 +246,6 @@ class TestContainerFetchPositionsCase01(unittest.TestCase):
             trade.plugins.fetch_daytrades,
         ]
         self.container.fetch_positions()
-
-    def test_container_should_exist(self):
-        self.assertTrue(self.container)
 
     def test_operations_len(self):
         self.assertEqual(len(self.container.positions['operations'].keys()), 1)

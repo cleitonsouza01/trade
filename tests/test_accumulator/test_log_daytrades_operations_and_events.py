@@ -7,7 +7,8 @@ import trade
 import trade.plugins
 
 
-class TestEvent(trade.Event):
+class TestEvent(trade.plugins.Event):
+    """A dummy event for the tests."""
     def update_container(self, container):
         pass
 
@@ -34,7 +35,7 @@ class TestLogDaytradesOperationsAndEventsCase00(unittest.TestCase):
             date='2015-01-01'
         )
         daytrade = trade.plugins.Daytrade(operation_a, operation_b)
-        self.accumulator.accumulate_operation(daytrade)
+        self.accumulator.accumulate_occurrence(daytrade)
 
         operation = trade.Operation(
             quantity=100,
@@ -42,13 +43,14 @@ class TestLogDaytradesOperationsAndEventsCase00(unittest.TestCase):
             asset=self.asset,
             date='2015-01-01'
         )
-        self.accumulator.accumulate_operation(operation)
+        self.accumulator.accumulate_occurrence(operation)
 
         event = TestEvent(
             asset=self.asset,
-            date='2015-01-01'
+            date='2015-01-01',
+            factor=1
         )
-        self.accumulator.accumulate_event(event)
+        self.accumulator.accumulate_occurrence(event)
 
         expected_log = {
             '2015-01-01': {
@@ -84,7 +86,7 @@ class TestLogDaytradesOperationsAndEventsCase01(unittest.TestCase):
             date='2015-01-01'
         )
         daytrade = trade.plugins.Daytrade(operation_a, operation_b)
-        self.accumulator.accumulate_operation(daytrade)
+        self.accumulator.accumulate_occurrence(daytrade)
 
         operation = trade.Operation(
             quantity=100,
@@ -92,13 +94,14 @@ class TestLogDaytradesOperationsAndEventsCase01(unittest.TestCase):
             asset=self.asset,
             date='2015-01-02'
         )
-        self.accumulator.accumulate_operation(operation)
+        self.accumulator.accumulate_occurrence(operation)
 
         event = TestEvent(
             asset=self.asset,
-            date='2015-01-03'
+            date='2015-01-03',
+            factor=1
         )
-        self.accumulator.accumulate_event(event)
+        self.accumulator.accumulate_occurrence(event)
 
         expected_log = {
             '2015-01-03': {
@@ -148,7 +151,7 @@ class TestLogDaytradesOperationsAndEventsCase02(unittest.TestCase):
             date='2015-01-01'
         )
         daytrade = trade.plugins.Daytrade(operation_a, operation_b)
-        self.accumulator.accumulate_operation(daytrade)
+        self.accumulator.accumulate_occurrence(daytrade)
 
         operation = trade.Operation(
             quantity=100,
@@ -156,7 +159,7 @@ class TestLogDaytradesOperationsAndEventsCase02(unittest.TestCase):
             asset=self.asset,
             date='2015-01-02'
         )
-        self.accumulator.accumulate_operation(operation)
+        self.accumulator.accumulate_occurrence(operation)
 
         asset = trade.Asset()
         operation_a = trade.Operation(
@@ -172,13 +175,14 @@ class TestLogDaytradesOperationsAndEventsCase02(unittest.TestCase):
             date='2015-01-02'
         )
         daytrade2 = trade.plugins.Daytrade(operation_a, operation_b)
-        self.accumulator.accumulate_operation(daytrade2)
+        self.accumulator.accumulate_occurrence(daytrade2)
 
         event = TestEvent(
             asset=self.asset,
-            date='2015-01-02'
+            date='2015-01-02',
+            factor=1
         )
-        self.accumulator.accumulate_event(event)
+        self.accumulator.accumulate_occurrence(event)
 
         expected_log = {
             '2015-01-02': {

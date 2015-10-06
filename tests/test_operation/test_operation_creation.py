@@ -17,8 +17,8 @@ class TestOperationCreation(unittest.TestCase):
             asset=asset,
             quantity=20,
             price=10,
-            commissions={'some discount': 3}
         )
+        self.operation.commissions = {'some discount': 3}
 
     def test_operation_exists(self):
         self.assertTrue(self.operation)

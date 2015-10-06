@@ -20,7 +20,7 @@ class TestBonusSharesCase00(unittest.TestCase):
             date='2015-09-24',
             factor=1
         )
-        self.accumulator.accumulate_event(event)
+        self.accumulator.accumulate_occurrence(event)
 
     def test_check_quantity_after_split(self):
         self.assertEqual(self.accumulator.quantity, 200)
@@ -46,7 +46,7 @@ class TestBonusSharesCase01(unittest.TestCase):
             date='2015-09-24',
             factor=2
         )
-        self.accumulator.accumulate_event(event)
+        self.accumulator.accumulate_occurrence(event)
 
     def test_check_quantity_after_split(self):
         self.assertEqual(self.accumulator.quantity, 300)
@@ -72,7 +72,7 @@ class TestBonusSharesCase02(unittest.TestCase):
             date='2015-09-24',
             factor=0.5
         )
-        self.accumulator.accumulate_event(event)
+        self.accumulator.accumulate_occurrence(event)
 
     def test_check_quantity_after_split(self):
         self.assertEqual(self.accumulator.quantity, 150)

@@ -5,25 +5,19 @@ from __future__ import division
 
 import unittest
 
-from trade import Accumulator, Asset, Event
+import trade
+from trade import Accumulator, Asset
 
 
-class DummyEvent(Event):
+class DummyEvent(trade.plugins.Event):
     """A dummy event for the tests."""
-
-    def __init__(self, asset, date):
-        super(DummyEvent, self).__init__(asset, date)
 
     def update_container(self, operation):
         pass
 
 
-class StockSplit(Event):
+class StockSplit(trade.plugins.Event):
     """A stock split event for the tests."""
-
-    def __init__(self, asset, date, factor):
-        super(StockSplit, self).__init__(asset, date)
-        self.factor = factor
 
     def update_container(self, container):
         container.quantity = container.quantity * self.factor
@@ -44,7 +38,7 @@ class TestLogEvent00(unittest.TestCase):
             date='2015-09-24',
             factor=2
         )
-        self.accumulator.accumulate_event(self.event)
+        self.accumulator.accumulate_occurrence(self.event)
 
     def test_check_quantity_after_split(self):
         self.assertEqual(self.accumulator.quantity, 200)
@@ -82,12 +76,13 @@ class TestLogEvent01(unittest.TestCase):
             date='2015-09-24',
             factor=2
         )
-        self.accumulator.accumulate_event(self.event0)
+        self.accumulator.accumulate_occurrence(self.event0)
         self.event1 = DummyEvent(
             self.asset,
-            '2015-09-25'
+            '2015-09-25',
+            factor=1
         )
-        self.accumulator.accumulate_event(self.event1)
+        self.accumulator.accumulate_occurrence(self.event1)
 
     def test_check_log_case_01(self):
         expected_log = {
@@ -123,12 +118,13 @@ class TestLogEvent02(unittest.TestCase):
             date='2015-09-25',
             factor=2
         )
-        self.accumulator.accumulate_event(self.event0)
+        self.accumulator.accumulate_occurrence(self.event0)
         self.event1 = DummyEvent(
             self.asset,
-            '2015-09-25'
+            '2015-09-25',
+            factor=1,
         )
-        self.accumulator.accumulate_event(self.event1)
+        self.accumulator.accumulate_occurrence(self.event1)
 
     def test_log_position(self):
         expected_log = {

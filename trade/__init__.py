@@ -33,14 +33,15 @@ from __future__ import absolute_import
 
 from .trade import (
     Asset,
-    Operation,
+    Occurrence,
     Accumulator,
-    Event,
-    OperationContainer,
     Portfolio,
+    Operation,
+    OperationContainer,
     TradingFees
 )
 from .utils import average_price, same_sign, merge_operations
+from . import plugins
 
 
 __author__ = 'rocha.rafaelsilva@gmail.com'

@@ -26,10 +26,10 @@ class TestAccumulateOption00(unittest.TestCase):
             date='2015-01-01'
         )
         self.accumulator = trade.Accumulator(self.option)
-        self.result = self.accumulator.accumulate_operation(self.operation)
+        self.accumulator.accumulate_occurrence(self.operation)
 
     def test_returned_result(self):
-        self.assertEqual(self.result, {})
+        self.assertEqual(self.operation.results, {})
 
     def test_accumulator_price(self):
         self.assertEqual(self.accumulator.price, 10)

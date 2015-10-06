@@ -16,56 +16,39 @@ class TestOperationRealPrice(unittest.TestCase):
     """
 
     def setUp(self):
-        self.asset = trade.Asset(name='some asset')
+        self.operation = trade.Operation(
+            price=10,
+            quantity=20,
+        )
 
     def test_no_discount(self):
-        operation = trade.Operation(
-            price=10,
-            quantity=20
-        )
-        self.assertEqual(operation.real_price, 10)
+        self.assertEqual(self.operation.real_price, 10)
 
     def test_one_discount(self):
-        operation = trade.Operation(
-            price=10,
-            quantity=20,
-            commissions={
-                'some discount': 3
-            }
-        )
-        self.assertEqual(operation.real_price, 10.15)
+        self.operation.commissions = {
+            'some discount': 3
+        }
+        self.assertEqual(self.operation.real_price, 10.15)
 
     def test_multiple_discounts_case_1(self):
-        operation = trade.Operation(
-            price=10,
-            quantity=20,
-            commissions={
-                'some discount': 3,
-                'other discount': 1
-            }
-        )
-        self.assertEqual(operation.real_price, 10.2)
+        self.operation.commissions = {
+            'some discount': 3,
+            'other discount': 1
+        }
+        self.assertEqual(self.operation.real_price, 10.2)
 
     def test_multiple_discounts_case_2(self):
-        operation = trade.Operation(
-            price=10,
-            quantity=20,
-            commissions={
-                'some discount': 3,
-                'other discount': 1,
-                'more discounts': 2
-            }
-        )
-        self.assertEqual(operation.real_price, 10.3)
+        self.operation.commissions = {
+            'some discount': 3,
+            'other discount': 1,
+            'more discounts': 2
+        }
+        self.assertEqual(self.operation.real_price, 10.3)
 
     def test_multiple_discounts_case_3(self):
-        operation = trade.Operation(
-            price=10,
-            quantity=20,
-            commissions={
-                'some discount': 3,
-                'other discount': 1,
-                'negative discount': -1
-            }
-        )
-        self.assertEqual(operation.real_price, 10.15)
+        self.operation.commissions = {
+            'some discount': 3,
+            'other discount': 1,
+            'negative discount': -1
+        }
+        self.assertEqual(self.operation.real_price, 10.15)

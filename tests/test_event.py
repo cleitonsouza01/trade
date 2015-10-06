@@ -6,11 +6,11 @@ import unittest
 import trade
 
 
-class DummyEvent(trade.Event):
+class DummyEvent(trade.plugins.Event):
     """A dummy event for the tests."""
 
-    def __init__(self, asset, date):
-        super(DummyEvent, self).__init__(asset, date)
+    def __init__(self, asset, date, factor=1):
+        super(DummyEvent, self).__init__(asset, date, factor)
 
     def update_container(self, container):
         pass
@@ -79,15 +79,15 @@ class TestBaseEventAccumulation(unittest.TestCase):
 
     def test_quantity_after_event(self):
         event = DummyEvent(asset=self.asset, date=self.date)
-        self.accumulator.accumulate_event(event)
+        self.accumulator.accumulate_occurrence(event)
         self.assertEqual(self.accumulator.quantity, 100)
 
     def test_price_after_event(self):
         event = DummyEvent(asset=self.asset, date=self.date)
-        self.accumulator.accumulate_event(event)
+        self.accumulator.accumulate_occurrence(event)
         self.assertEqual(self.accumulator.price, 10)
 
     def test_results_after_event(self):
         event = DummyEvent(asset=self.asset, date=self.date)
-        self.accumulator.accumulate_event(event)
+        self.accumulator.accumulate_occurrence(event)
         self.assertEqual(self.accumulator.results, {'trades': 1200})

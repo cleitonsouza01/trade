@@ -38,7 +38,31 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from ..trade import Event, average_price
+from abc import ABCMeta
+
+from ..trade import Occurrence
+from ..utils import average_price
+
+
+class Event(Occurrence):
+    """An occurrence that change one or more asset's position.
+
+    This is a base class for Events. Events can change the quantity,
+    the price and the results stored on a asset accumulator.
+
+    Attributes:
+        date: A string 'YYYY-mm-dd', the date the event occurred.
+        asset: The target asset of the event.
+    """
+
+    __metaclass__ = ABCMeta
+
+    def __init__(self, asset, date, factor):
+        self.factor = factor
+        super(Event, self).__init__(asset, date)
+
+    def update_container(self, container):
+        raise NotImplementedError
 
 
 class StockSplit(Event):
@@ -49,10 +73,6 @@ class StockSplit(Event):
     Reverse stock splits are represented by values between 0 and 1.
     """
 
-    def __init__(self, asset, date, factor):
-        self.factor = factor
-        super(StockSplit, self).__init__(asset, date)
-
     def update_container(self, container):
         container.quantity = container.quantity * self.factor
         container.price = container.price / self.factor
@@ -60,10 +80,6 @@ class StockSplit(Event):
 
 class BonusShares(Event):
     """Bonus shares."""
-
-    def __init__(self, asset, date, factor):
-        self.factor = factor
-        super(BonusShares, self).__init__(asset, date)
 
     def update_container(self, container):
         new_quantity = container.quantity * self.factor

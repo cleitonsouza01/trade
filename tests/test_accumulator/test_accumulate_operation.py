@@ -1,4 +1,4 @@
-"""Tests the method accumulate_operation() of the Accumulator."""
+"""Tests the method accumulate_occurrence() of the Accumulator."""
 
 from __future__ import absolute_import
 import unittest
@@ -18,10 +18,10 @@ class TestAccumulateOperationCase00(unittest.TestCase):
             date='2015-01-01'
         )
         self.accumulator = trade.Accumulator(self.asset)
-        self.result = self.accumulator.accumulate_operation(self.operation)
+        self.accumulator.accumulate_occurrence(self.operation)
 
     def test_returned_result(self):
-        self.assertEqual(self.result, {})
+        self.assertEqual(self.operation.results, {})
 
     def test_accumulator_price(self):
         self.assertEqual(self.accumulator.price, 10)
@@ -50,10 +50,10 @@ class TestAccumulateOperationCase01(unittest.TestCase):
             date='2015-01-01'
         )
         self.accumulator = trade.Accumulator(self.asset1)
-        self.result = self.accumulator.accumulate_operation(self.operation)
+        self.accumulator.accumulate_occurrence(self.operation)
 
     def test_returned_result(self):
-        self.assertEqual(self.result, {})
+        self.assertEqual(self.operation.results, {})
 
     def test_accumulator_price(self):
         self.assertEqual(self.accumulator.price, 0)
@@ -91,7 +91,7 @@ class TestAccumulateOperationCase02(unittest.TestCase):
         container.fetch_positions()
         self.accumulator = trade.Accumulator(asset)
         operation = container.positions['operations'][asset.symbol]
-        self.accumulator.accumulate_operation(operation)
+        self.accumulator.accumulate_occurrence(operation)
 
     def test_accumulator_price(self):
         self.assertEqual(self.accumulator.price, 10.2)
@@ -124,7 +124,7 @@ class TestAccumulateOperationCase03(unittest.TestCase):
         container.fetch_positions()
         self.accumulator = trade.Accumulator(asset)
         operation = container.positions['operations'][asset.symbol]
-        self.accumulator.accumulate_operation(operation)
+        self.accumulator.accumulate_occurrence(operation)
 
     def test_accumulator_average_price(self):
         self.assertEqual(self.accumulator.price, 0)
@@ -157,7 +157,7 @@ class TestAccumulateOperationCase04(unittest.TestCase):
         container.fetch_positions()
         self.accumulator = trade.Accumulator(asset)
 
-        self.accumulator.accumulate_operation(
+        self.accumulator.accumulate_occurrence(
             container.positions['operations'][asset.symbol]
         )
 
@@ -167,7 +167,7 @@ class TestAccumulateOperationCase04(unittest.TestCase):
             quantity=-20,
             price=0
         )
-        self.accumulator.accumulate_operation(operation2)
+        self.accumulator.accumulate_occurrence(operation2)
 
     def test_accumulator_price(self):
         self.assertEqual(self.accumulator.price, 0)
@@ -194,18 +194,18 @@ class TestAccumulateOperationCase05(unittest.TestCase):
             price=0
         )
         self.accumulator = trade.Accumulator(asset)
-        self.accumulator.accumulate_operation(operation)
+        self.accumulator.accumulate_occurrence(operation)
 
         operation2 = trade.Operation(
             date='2015-09-19',
             asset=asset,
             quantity=0,
             price=0,
-            results={
-                'some result': 1000
-            }
         )
-        self.accumulator.accumulate_operation(operation2)
+        operation2.raw_results = {
+            'some result': 1000
+        }
+        self.accumulator.accumulate_occurrence(operation2)
 
     def test_accumulator_price(self):
         self.assertEqual(self.accumulator.price, 0)

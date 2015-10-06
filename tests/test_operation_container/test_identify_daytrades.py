@@ -6,8 +6,13 @@ import unittest
 import trade
 
 
-class TestContainerIndentifyDaytradesCase00(
-        unittest.TestCase):
+TASKS = [
+    trade.plugins.fetch_exercises,
+    trade.plugins.fetch_daytrades,
+]
+
+
+class TestContainerIndentifyDaytradesCase00(unittest.TestCase):
     """Test the identification of daytrade operations."""
 
     def setUp(self):
@@ -26,39 +31,16 @@ class TestContainerIndentifyDaytradesCase00(
         )
         self.container = trade.OperationContainer(
             operations=[self.trade1, self.trade2])
-        self.container.tasks = [
-            trade.plugins.fetch_exercises,
-            trade.plugins.fetch_daytrades,
-        ]
-
-    def test_container_should_exist(self):
-        self.assertTrue(self.container)
-
-    def test_trades_len(self):
-        self.assertEqual(len(self.container.operations), 2)
-
-    def test_trade_0_quantity(self):
-        self.assertEqual(self.container.operations[0].quantity, 10)
-
-    def test_trade_0_price(self):
-        self.assertEqual(self.container.operations[0].price, 2)
-
-    def test_trade_1_quantity(self):
-        self.assertEqual(self.container.operations[1].quantity, -10)
-
-    def test_trade_1_price(self):
-        self.assertEqual(self.container.operations[1].price, 3)
+        self.container.tasks = TASKS
+        self.container.fetch_positions()
 
     def test_common_trades_len(self):
-        self.container.fetch_positions()
         self.assertTrue('operations' not in self.container.positions)
 
     def test_daytrades_len(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(len(self.container.positions['daytrades'].keys()), 1)
 
     def test_daytrade_asset(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset.symbol]\
                 .asset.symbol,
@@ -66,14 +48,12 @@ class TestContainerIndentifyDaytradesCase00(
         )
 
     def test_daytrade_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset.symbol].quantity,
             10
         )
 
     def test_daytrade_buy_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset.symbol]\
                 .operations[0].price,
@@ -81,7 +61,6 @@ class TestContainerIndentifyDaytradesCase00(
         )
 
     def test_daytrade_buy_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset.symbol]\
                 .operations[0].quantity,
@@ -89,7 +68,6 @@ class TestContainerIndentifyDaytradesCase00(
         )
 
     def test_daytrade_sale_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset.symbol]\
                 .operations[1].price,
@@ -97,7 +75,6 @@ class TestContainerIndentifyDaytradesCase00(
         )
 
     def test_daytrade_sale_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset.symbol]\
                 .operations[1].quantity,
@@ -105,7 +82,6 @@ class TestContainerIndentifyDaytradesCase00(
         )
 
     def test_daytrade_result(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset.symbol]\
                 .results,
@@ -132,35 +108,13 @@ class TestContainerIndentifyDaytradesCase01(unittest.TestCase):
         )
         self.container = trade.OperationContainer(
             operations=[self.trade1, self.trade2])
-        self.container.tasks = [
-            trade.plugins.fetch_exercises,
-            trade.plugins.fetch_daytrades,
-        ]
-
-    def test_container_should_exist(self):
-        self.assertTrue(self.container)
-
-    def test_trades_len(self):
-        self.assertEqual(len(self.container.operations), 2)
-
-    def test_trade_0_quantity(self):
-        self.assertEqual(self.container.operations[0].quantity, 10)
-
-    def test_trade_0_price(self):
-        self.assertEqual(self.container.operations[0].price, 2)
-
-    def test_trade_1_quantity(self):
-        self.assertEqual(self.container.operations[1].quantity, -5)
-
-    def test_trade_1_price(self):
-        self.assertEqual(self.container.operations[1].price, 3)
+        self.container.tasks = TASKS
+        self.container.fetch_positions()
 
     def test_common_trades_len(self):
-        self.container.fetch_positions()
         self.assertEqual(len(self.container.positions['operations'].keys()), 1)
 
     def test_operations0_asset(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['operations'][self.asset.symbol]\
                 .asset.symbol,
@@ -168,25 +122,21 @@ class TestContainerIndentifyDaytradesCase01(unittest.TestCase):
         )
 
     def test_operations1_quantity(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['operations'][self.asset.symbol].quantity,
             5
         )
 
     def test_operations1_price(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['operations'][self.asset.symbol].price,
             2
         )
 
     def test_daytrades_len(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(len(self.container.positions['daytrades'].keys()), 1)
 
     def test_daytrade_asset(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset.symbol]\
                 .asset.symbol,
@@ -194,14 +144,12 @@ class TestContainerIndentifyDaytradesCase01(unittest.TestCase):
         )
 
     def test_daytrade_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset.symbol].quantity,
             5
         )
 
     def test_daytrade_buy_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset.symbol]\
                 .operations[0].price,
@@ -209,7 +157,6 @@ class TestContainerIndentifyDaytradesCase01(unittest.TestCase):
         )
 
     def test_daytrade_buy_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset.symbol]\
                 .operations[0].quantity,
@@ -217,7 +164,6 @@ class TestContainerIndentifyDaytradesCase01(unittest.TestCase):
         )
 
     def test_daytrade_sale_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset.symbol]\
                 .operations[1].price,
@@ -225,7 +171,6 @@ class TestContainerIndentifyDaytradesCase01(unittest.TestCase):
         )
 
     def test_daytrade_sale_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset.symbol]\
                 .operations[1].quantity,
@@ -233,7 +178,6 @@ class TestContainerIndentifyDaytradesCase01(unittest.TestCase):
         )
 
     def test_daytrade_result(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset.symbol].results,
             {'daytrades': 5}
@@ -266,35 +210,13 @@ class TestContainerIndentifyDaytradesCase02(unittest.TestCase):
         )
         self.container = trade.OperationContainer(
             operations=[trade1, trade2, trade3])
-        self.container.tasks = [
-            trade.plugins.fetch_exercises,
-            trade.plugins.fetch_daytrades,
-        ]
-
-    def test_container_should_exist(self):
-        self.assertTrue(self.container)
-
-    def test_trades_len(self):
-        self.assertEqual(len(self.container.operations), 3)
-
-    def test_trade_0_quantity(self):
-        self.assertEqual(self.container.operations[0].quantity, 10)
-
-    def test_trade_0_price(self):
-        self.assertEqual(self.container.operations[0].price, 2)
-
-    def test_trade_1_quantity(self):
-        self.assertEqual(self.container.operations[1].quantity, -5)
-
-    def test_trade_1_price(self):
-        self.assertEqual(self.container.operations[1].price, 3)
+        self.container.tasks = TASKS
+        self.container.fetch_positions()
 
     def test_common_trades_len(self):
-        self.container.fetch_positions()
         self.assertEqual(len(self.container.positions['operations'].keys()), 2)
 
     def test_operations0_asset(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['operations'][self.asset1.symbol]\
                 .asset.symbol,
@@ -302,7 +224,6 @@ class TestContainerIndentifyDaytradesCase02(unittest.TestCase):
         )
 
     def test_operations0_quantity(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['operations'][self.asset1.symbol]\
                 .quantity,
@@ -310,7 +231,6 @@ class TestContainerIndentifyDaytradesCase02(unittest.TestCase):
         )
 
     def test_operations0_price(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['operations'][self.asset1.symbol]\
                 .price,
@@ -318,7 +238,6 @@ class TestContainerIndentifyDaytradesCase02(unittest.TestCase):
         )
 
     def test_operations1_asset(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['operations'][self.asset2.symbol]\
                 .asset.symbol,
@@ -326,7 +245,6 @@ class TestContainerIndentifyDaytradesCase02(unittest.TestCase):
         )
 
     def test_operations1_quantity(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['operations'][self.asset2.symbol]\
                 .quantity,
@@ -334,18 +252,15 @@ class TestContainerIndentifyDaytradesCase02(unittest.TestCase):
         )
 
     def test_common_trades1_price(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['operations'][self.asset2.symbol].price,
             7
         )
 
     def test_daytrades_len(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(len(self.container.positions['daytrades'].keys()), 1)
 
     def test_daytrade_asset(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .asset.symbol,
@@ -353,14 +268,12 @@ class TestContainerIndentifyDaytradesCase02(unittest.TestCase):
         )
 
     def test_daytrade_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol].quantity,
             5
         )
 
     def test_daytrade_buy_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[0].price,
@@ -368,7 +281,6 @@ class TestContainerIndentifyDaytradesCase02(unittest.TestCase):
         )
 
     def test_daytrade_buy_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[0].quantity,
@@ -376,7 +288,6 @@ class TestContainerIndentifyDaytradesCase02(unittest.TestCase):
         )
 
     def test_daytrade_sale_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[1].price,
@@ -384,7 +295,6 @@ class TestContainerIndentifyDaytradesCase02(unittest.TestCase):
         )
 
     def test_daytrade_sale_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[1].quantity,
@@ -392,7 +302,6 @@ class TestContainerIndentifyDaytradesCase02(unittest.TestCase):
         )
 
     def test_daytrade_result(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol].results,
             {'daytrades': 5}
@@ -431,35 +340,13 @@ class TestContainerIndentifyDaytradesCase03(unittest.TestCase):
         )
         self.container = trade.OperationContainer(
             operations=[trade1, trade2, trade3, trade4])
-        self.container.tasks = [
-            trade.plugins.fetch_exercises,
-            trade.plugins.fetch_daytrades,
-        ]
-
-    def test_container_should_exist(self):
-        self.assertTrue(self.container)
-
-    def test_trades_len(self):
-        self.assertEqual(len(self.container.operations), 4)
-
-    def test_trade_0_quantity(self):
-        self.assertEqual(self.container.operations[0].quantity, 10)
-
-    def test_trade_0_price(self):
-        self.assertEqual(self.container.operations[0].price, 2)
-
-    def test_trade_1_quantity(self):
-        self.assertEqual(self.container.operations[1].quantity, -5)
-
-    def test_trade_1_price(self):
-        self.assertEqual(self.container.operations[1].price, 3)
+        self.container.tasks = TASKS
+        self.container.fetch_positions()
 
     def test_common_trades_len(self):
-        self.container.fetch_positions()
         self.assertEqual(len(self.container.positions['operations'].keys()), 1)
 
     def test_common_trades0_asset(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['operations'][self.asset1.symbol]\
                 .asset.symbol,
@@ -467,7 +354,6 @@ class TestContainerIndentifyDaytradesCase03(unittest.TestCase):
         )
 
     def test_common_trades0_quantity(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['operations'][self.asset1.symbol]\
                 .quantity,
@@ -475,18 +361,15 @@ class TestContainerIndentifyDaytradesCase03(unittest.TestCase):
         )
 
     def test_common_trades0_price(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['operations'][self.asset1.symbol].price,
             2
         )
 
     def test_daytrades_len(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(len(self.container.positions['daytrades'].keys()), 2)
 
     def test_daytrade0_asset(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .asset.symbol,
@@ -494,7 +377,6 @@ class TestContainerIndentifyDaytradesCase03(unittest.TestCase):
         )
 
     def test_daytrade0_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .quantity,
@@ -502,7 +384,6 @@ class TestContainerIndentifyDaytradesCase03(unittest.TestCase):
         )
 
     def test_daytrade0_buy_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[0].price,
@@ -510,7 +391,6 @@ class TestContainerIndentifyDaytradesCase03(unittest.TestCase):
         )
 
     def test_daytrade0_buy_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[0].quantity,
@@ -518,7 +398,6 @@ class TestContainerIndentifyDaytradesCase03(unittest.TestCase):
         )
 
     def test_daytrade0_sale_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[1].price,
@@ -526,7 +405,6 @@ class TestContainerIndentifyDaytradesCase03(unittest.TestCase):
         )
 
     def test_daytrade0_sale_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[1].quantity,
@@ -534,14 +412,12 @@ class TestContainerIndentifyDaytradesCase03(unittest.TestCase):
         )
 
     def test_daytrade0_result(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol].results,
             {'daytrades': 5}
         )
 
     def test_daytrade1_asset(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .asset.symbol,
@@ -549,14 +425,12 @@ class TestContainerIndentifyDaytradesCase03(unittest.TestCase):
         )
 
     def test_daytrade1_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol].quantity,
             5
         )
 
     def test_daytrade1_buy_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .operations[0].price,
@@ -564,7 +438,6 @@ class TestContainerIndentifyDaytradesCase03(unittest.TestCase):
         )
 
     def test_daytrade1_buy_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .operations[0].quantity,
@@ -572,7 +445,6 @@ class TestContainerIndentifyDaytradesCase03(unittest.TestCase):
         )
 
     def test_daytrade1_sale_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .operations[1].price,
@@ -580,7 +452,6 @@ class TestContainerIndentifyDaytradesCase03(unittest.TestCase):
         )
 
     def test_daytrade1_sale_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .operations[1].quantity,
@@ -588,7 +459,6 @@ class TestContainerIndentifyDaytradesCase03(unittest.TestCase):
         )
 
     def test_daytrade1_result(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol].results,
             {'daytrades': -15}
@@ -633,39 +503,16 @@ class TestContainerIndentifyDaytradesCase04(unittest.TestCase):
         )
         self.container = trade.OperationContainer(
             operations=[trade1, trade2, trade3, trade4, trade5])
-        self.container.tasks = [
-            trade.plugins.fetch_exercises,
-            trade.plugins.fetch_daytrades,
-        ]
-
-    def test_container_should_exist(self):
-        self.assertTrue(self.container)
-
-    def test_trades_len(self):
-        self.assertEqual(len(self.container.operations), 5)
-
-    def test_trade_0_quantity(self):
-        self.assertEqual(self.container.operations[0].quantity, 10)
-
-    def test_trade_0_price(self):
-        self.assertEqual(self.container.operations[0].price, 2)
-
-    def test_trade_1_quantity(self):
-        self.assertEqual(self.container.operations[1].quantity, -5)
-
-    def test_trade_1_price(self):
-        self.assertEqual(self.container.operations[1].price, 3)
+        self.container.tasks = TASKS
+        self.container.fetch_positions()
 
     def test_for_no_common_trades(self):
-        self.container.fetch_positions()
         self.assertTrue('operations' not in self.container.positions)
 
     def test_daytrades_len(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(len(self.container.positions['daytrades'].keys()), 2)
 
     def test_daytrade0_asset(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .asset.symbol,
@@ -673,14 +520,12 @@ class TestContainerIndentifyDaytradesCase04(unittest.TestCase):
         )
 
     def test_daytrade0_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol].quantity,
             10
         )
 
     def test_daytrade0_buy_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[0].price,
@@ -688,7 +533,6 @@ class TestContainerIndentifyDaytradesCase04(unittest.TestCase):
         )
 
     def test_daytrade0_buy_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[0].quantity,
@@ -696,7 +540,6 @@ class TestContainerIndentifyDaytradesCase04(unittest.TestCase):
         )
 
     def test_daytrade0_sale_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[1].price,
@@ -704,7 +547,6 @@ class TestContainerIndentifyDaytradesCase04(unittest.TestCase):
         )
 
     def test_daytrade0_sale_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[1].quantity,
@@ -712,7 +554,6 @@ class TestContainerIndentifyDaytradesCase04(unittest.TestCase):
         )
 
     def test_daytrade0_result(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .results,
@@ -720,7 +561,6 @@ class TestContainerIndentifyDaytradesCase04(unittest.TestCase):
         )
 
     def test_daytrade1_asset(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .asset.symbol,
@@ -728,7 +568,6 @@ class TestContainerIndentifyDaytradesCase04(unittest.TestCase):
         )
 
     def test_daytrade1_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .quantity,
@@ -736,7 +575,6 @@ class TestContainerIndentifyDaytradesCase04(unittest.TestCase):
         )
 
     def test_daytrade1_buy_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .operations[0].price,
@@ -744,7 +582,6 @@ class TestContainerIndentifyDaytradesCase04(unittest.TestCase):
         )
 
     def test_daytrade1_buy_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .operations[0].quantity,
@@ -752,7 +589,6 @@ class TestContainerIndentifyDaytradesCase04(unittest.TestCase):
         )
 
     def test_daytrade1_sale_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .operations[1].price,
@@ -760,7 +596,6 @@ class TestContainerIndentifyDaytradesCase04(unittest.TestCase):
         )
 
     def test_daytrade1_sale_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .operations[1].quantity,
@@ -768,7 +603,6 @@ class TestContainerIndentifyDaytradesCase04(unittest.TestCase):
         )
 
     def test_daytrade1_result(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .results,
@@ -814,53 +648,28 @@ class TestContainerIndentifyDaytradesCase05(unittest.TestCase):
         )
         self.container = trade.OperationContainer(
             operations=[trade1, trade2, trade3, trade4, trade5])
-        self.container.tasks = [
-            trade.plugins.fetch_exercises,
-            trade.plugins.fetch_daytrades,
-        ]
-
-    def test_container_should_exist(self):
-        self.assertTrue(self.container)
-
-    def test_trades_len(self):
-        self.assertEqual(len(self.container.operations), 5)
-
-    def test_trade_0_quantity(self):
-        self.assertEqual(self.container.operations[0].quantity, 10)
-
-    def test_trade_0_price(self):
-        self.assertEqual(self.container.operations[0].price, 2)
-
-    def test_trade_1_quantity(self):
-        self.assertEqual(self.container.operations[1].quantity, -5)
-
-    def test_trade_1_price(self):
-        self.assertEqual(self.container.operations[1].price, 10)
+        self.container.tasks = TASKS
+        self.container.fetch_positions()
 
     def test_for_no_common_trades(self):
-        self.container.fetch_positions()
         self.assertTrue('operations' not in self.container.positions)
 
     def test_daytrades_len(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(len(self.container.positions['daytrades'].keys()), 2)
 
     def test_check_daytrade0_asset(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol].asset,
             self.asset1
         )
 
     def test_daytrade0_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol].quantity,
             10
         )
 
     def test_daytrade0_buy_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[0].price,
@@ -868,7 +677,6 @@ class TestContainerIndentifyDaytradesCase05(unittest.TestCase):
         )
 
     def test_daytrade0_buy_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[0].quantity,
@@ -876,7 +684,6 @@ class TestContainerIndentifyDaytradesCase05(unittest.TestCase):
         )
 
     def test_daytrade0_sale_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[1].price,
@@ -884,7 +691,6 @@ class TestContainerIndentifyDaytradesCase05(unittest.TestCase):
         )
 
     def test_daytrade0_sale_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[1].quantity,
@@ -892,14 +698,12 @@ class TestContainerIndentifyDaytradesCase05(unittest.TestCase):
         )
 
     def test_daytrade0_result(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol].results,
             {'daytrades': 130}
         )
 
     def test_check_daytrade1_asset(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .asset.symbol,
@@ -907,14 +711,12 @@ class TestContainerIndentifyDaytradesCase05(unittest.TestCase):
         )
 
     def test_daytrade1_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol].quantity,
             5
         )
 
     def test_daytrade1_buy_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .operations[0].price,
@@ -922,7 +724,6 @@ class TestContainerIndentifyDaytradesCase05(unittest.TestCase):
         )
 
     def test_daytrade1_buy_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .operations[0].quantity,
@@ -930,7 +731,6 @@ class TestContainerIndentifyDaytradesCase05(unittest.TestCase):
         )
 
     def test_daytrade1_sale_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .operations[1].price,
@@ -938,7 +738,6 @@ class TestContainerIndentifyDaytradesCase05(unittest.TestCase):
         )
 
     def test_daytrade1_sale_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .operations[1].quantity,
@@ -946,7 +745,6 @@ class TestContainerIndentifyDaytradesCase05(unittest.TestCase):
         )
 
     def test_daytrade1_result(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol].results,
             {'daytrades': -15}
@@ -991,35 +789,13 @@ class TestContainerIndentifyDaytradesCase06(unittest.TestCase):
         )
         self.container = trade.OperationContainer(
             operations=[trade1, trade2, trade3, trade4, trade5])
-        self.container.tasks = [
-            trade.plugins.fetch_exercises,
-            trade.plugins.fetch_daytrades,
-        ]
-
-    def test_container_should_exist(self):
-        self.assertTrue(self.container)
-
-    def test_trades_len(self):
-        self.assertEqual(len(self.container.operations), 5)
-
-    def test_trade_0_quantity(self):
-        self.assertEqual(self.container.operations[0].quantity, 10)
-
-    def test_trade_0_price(self):
-        self.assertEqual(self.container.operations[0].price, 2)
-
-    def test_trade_1_quantity(self):
-        self.assertEqual(self.container.operations[1].quantity, -5)
-
-    def test_trade_1_price(self):
-        self.assertEqual(self.container.operations[1].price, 3)
+        self.container.tasks = TASKS
+        self.container.fetch_positions()
 
     def test_common_trades_len(self):
-        self.container.fetch_positions()
         self.assertEqual(len(self.container.positions['operations'].keys()), 1)
 
     def test_common_trades0_asset(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['operations'][self.asset1.symbol]\
                 .asset.symbol,
@@ -1027,7 +803,6 @@ class TestContainerIndentifyDaytradesCase06(unittest.TestCase):
         )
 
     def test_common_trades0_quantity(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['operations'][self.asset1.symbol]\
                 .quantity,
@@ -1035,21 +810,18 @@ class TestContainerIndentifyDaytradesCase06(unittest.TestCase):
         )
 
     def test_common_trades0_price(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['operations'][self.asset1.symbol].price,
             3
         )
 
     def test_daytrades_len(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             len(self.container.positions['daytrades'].keys()),
             2
         )
 
     def test_daytrade0_asset(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .asset.symbol,
@@ -1057,14 +829,12 @@ class TestContainerIndentifyDaytradesCase06(unittest.TestCase):
         )
 
     def test_daytrade0_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol].quantity,
             5
         )
 
     def test_daytrade0_buy_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[0].price,
@@ -1072,7 +842,6 @@ class TestContainerIndentifyDaytradesCase06(unittest.TestCase):
         )
 
     def test_daytrade0_buy_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[0].quantity,
@@ -1080,7 +849,6 @@ class TestContainerIndentifyDaytradesCase06(unittest.TestCase):
         )
 
     def test_daytrade0_sale_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[1].price,
@@ -1088,7 +856,6 @@ class TestContainerIndentifyDaytradesCase06(unittest.TestCase):
         )
 
     def test_daytrade0_sale_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[1].quantity,
@@ -1096,14 +863,12 @@ class TestContainerIndentifyDaytradesCase06(unittest.TestCase):
         )
 
     def test_daytrade0_result(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol].results,
             {'daytrades': 5}
         )
 
     def test_check_daytrade1_asset(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .asset.symbol,
@@ -1111,14 +876,12 @@ class TestContainerIndentifyDaytradesCase06(unittest.TestCase):
         )
 
     def test_daytrade1_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol].quantity,
             5
         )
 
     def test_daytrade1_buy_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .operations[0].price,
@@ -1126,7 +889,6 @@ class TestContainerIndentifyDaytradesCase06(unittest.TestCase):
         )
 
     def test_daytrade1_buy_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .operations[0].quantity,
@@ -1134,7 +896,6 @@ class TestContainerIndentifyDaytradesCase06(unittest.TestCase):
         )
 
     def test_daytrade1_sale_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .operations[1].price,
@@ -1142,7 +903,6 @@ class TestContainerIndentifyDaytradesCase06(unittest.TestCase):
         )
 
     def test_daytrade1_sale_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .operations[1].quantity,
@@ -1150,7 +910,6 @@ class TestContainerIndentifyDaytradesCase06(unittest.TestCase):
         )
 
     def test_daytrade1_result(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol].results,
             {'daytrades': -15}
@@ -1220,46 +979,17 @@ class TestContainerIndentifyDaytradesCase07(unittest.TestCase):
         )
         self.container = trade.OperationContainer(
             operations=[
-                trade1,
-                trade2,
-                trade3,
-                trade4,
-                trade5,
-                trade6,
-                trade7,
-                trade8,
-                trade9
+                trade1, trade2, trade3, trade4, trade5,
+                trade6, trade7, trade8, trade9
             ]
         )
-        self.container.tasks = [
-            trade.plugins.fetch_exercises,
-            trade.plugins.fetch_daytrades,
-        ]
-
-    def test_container_should_exist(self):
-        self.assertTrue(self.container)
-
-    def test_trades_len(self):
-        self.assertEqual(len(self.container.operations), 9)
-
-    def test_trade_0_quantity(self):
-        self.assertEqual(self.container.operations[0].quantity, 10)
-
-    def test_trade_0_price(self):
-        self.assertEqual(self.container.operations[0].price, 2)
-
-    def test_trade_1_quantity(self):
-        self.assertEqual(self.container.operations[1].quantity, -5)
-
-    def test_trade_1_price(self):
-        self.assertEqual(self.container.operations[1].price, 3)
+        self.container.tasks = TASKS
+        self.container.fetch_positions()
 
     def test_common_trades_len(self):
-        self.container.fetch_positions()
         self.assertEqual(len(self.container.positions['operations'].keys()), 1)
 
     def test_operations0_asset(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['operations'][self.asset1.symbol]\
                 .asset.symbol,
@@ -1267,7 +997,6 @@ class TestContainerIndentifyDaytradesCase07(unittest.TestCase):
         )
 
     def test_operations0_quantity(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['operations'][self.asset1.symbol]\
                 .quantity,
@@ -1275,21 +1004,18 @@ class TestContainerIndentifyDaytradesCase07(unittest.TestCase):
         )
 
     def test_operations0_price(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['operations'][self.asset1.symbol].price,
             3
         )
 
     def test_daytrades_len(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             len(self.container.positions['daytrades'].keys()),
             3
         )
 
     def test_daytrade0_asset(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .asset.symbol,
@@ -1297,14 +1023,12 @@ class TestContainerIndentifyDaytradesCase07(unittest.TestCase):
         )
 
     def test_daytrade0_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol].quantity,
             5
         )
 
     def test_daytrade0_buy_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[0].price,
@@ -1312,7 +1036,6 @@ class TestContainerIndentifyDaytradesCase07(unittest.TestCase):
         )
 
     def test_daytrade0_buy_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[0].quantity,
@@ -1320,7 +1043,6 @@ class TestContainerIndentifyDaytradesCase07(unittest.TestCase):
         )
 
     def test_daytrade0_sale_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[1].price,
@@ -1328,7 +1050,6 @@ class TestContainerIndentifyDaytradesCase07(unittest.TestCase):
         )
 
     def test_daytrade0_sale_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol]\
                 .operations[1].quantity,
@@ -1336,14 +1057,12 @@ class TestContainerIndentifyDaytradesCase07(unittest.TestCase):
         )
 
     def test_daytrade0_result(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset1.symbol].results,
             {'daytrades': 5}
         )
 
     def test_daytrade1_asset(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .asset.symbol,
@@ -1351,14 +1070,12 @@ class TestContainerIndentifyDaytradesCase07(unittest.TestCase):
         )
 
     def test_daytrade1_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol].quantity,
             5
         )
 
     def test_daytrade1_buy_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .operations[0].price,
@@ -1366,7 +1083,6 @@ class TestContainerIndentifyDaytradesCase07(unittest.TestCase):
         )
 
     def test_daytrade1_buy_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .operations[0].quantity,
@@ -1374,7 +1090,6 @@ class TestContainerIndentifyDaytradesCase07(unittest.TestCase):
         )
 
     def test_daytrade1_sale_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .operations[1].price,
@@ -1382,7 +1097,6 @@ class TestContainerIndentifyDaytradesCase07(unittest.TestCase):
         )
 
     def test_daytrade1_sale_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol]\
                 .operations[1].quantity,
@@ -1390,14 +1104,12 @@ class TestContainerIndentifyDaytradesCase07(unittest.TestCase):
         )
 
     def test_daytrade1_result(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset2.symbol].results,
             {'daytrades': -15}
         )
 
     def test_daytrade2_asset(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset3.symbol]\
                 .asset.symbol,
@@ -1405,14 +1117,12 @@ class TestContainerIndentifyDaytradesCase07(unittest.TestCase):
         )
 
     def test_daytrade2_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset3.symbol].quantity,
             10
         )
 
     def test_daytrade2_buy_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset3.symbol]\
                 .operations[0].price,
@@ -1420,7 +1130,6 @@ class TestContainerIndentifyDaytradesCase07(unittest.TestCase):
         )
 
     def test_daytrade2_buy_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset3.symbol]\
                 .operations[0].quantity,
@@ -1428,7 +1137,6 @@ class TestContainerIndentifyDaytradesCase07(unittest.TestCase):
         )
 
     def test_daytrade2_sale_price(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset3.symbol]\
                 .operations[1].price,
@@ -1436,7 +1144,6 @@ class TestContainerIndentifyDaytradesCase07(unittest.TestCase):
         )
 
     def test_daytrade2_sale_quantity(self):
-        trade.plugins.fetch_daytrades(self.container)
         self.assertEqual(
             self.container.positions['daytrades'][self.asset3.symbol]\
                 .operations[1].quantity,

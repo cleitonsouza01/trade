@@ -56,7 +56,7 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from .events import StockSplit, BonusShares
+from .events import Event, StockSplit, BonusShares
 from .options import Option, Exercise, fetch_exercises, get_exercise_premium
 from .daytrades import (
     Daytrade,

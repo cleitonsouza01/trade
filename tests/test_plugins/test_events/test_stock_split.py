@@ -32,15 +32,15 @@ class TestStockSplitCase00(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {'trades': 1200})
 
     def test_check_quantity_after_split(self):
-        self.accumulator.accumulate_event(self.event)
+        self.accumulator.accumulate_occurrence(self.event)
         self.assertEqual(self.accumulator.quantity, 200)
 
     def test_check_price_after_split(self):
-        self.accumulator.accumulate_event(self.event)
+        self.accumulator.accumulate_occurrence(self.event)
         self.assertEqual(self.accumulator.price, 5)
 
     def test_check_results_after_split(self):
-        self.accumulator.accumulate_event(self.event)
+        self.accumulator.accumulate_occurrence(self.event)
         self.assertEqual(self.accumulator.results, {'trades': 1200})
 
 
@@ -58,7 +58,7 @@ class TestLogStocksplitCase00(unittest.TestCase):
             date='2015-09-24',
             factor=2
         )
-        self.accumulator.accumulate_event(self.event)
+        self.accumulator.accumulate_occurrence(self.event)
 
     def test_check_log_case_00(self):
         expected_log = {

@@ -6,47 +6,36 @@ import unittest
 import trade
 
 
+ASSET = trade.Asset()
+OPERATION = trade.Operation(
+    quantity=100,
+    price=10,
+    asset=ASSET,
+    date='2015-01-01'
+)
+
+
 class TestLogOperation(unittest.TestCase):
+    """Tests the logging of Operation objects."""
 
     def setUp(self):
-        self.asset = trade.Asset()
-        self.accumulator = trade.Accumulator(self.asset, logging=True)
+        self.accumulator = trade.Accumulator(ASSET, logging=True)
+        self.accumulator.accumulate_occurrence(OPERATION)
 
     def test_log_first_operation(self):
-        operation = trade.Operation(
-            quantity=100,
-            price=10,
-            asset=self.asset,
-            date='2015-01-01'
-        )
-        self.accumulator.accumulate_operation(operation)
         expected_log = {
             '2015-01-01': {
                 'position': {
                     'quantity': 100,
                     'price': 10
                 },
-                'occurrences': [operation]
+                'occurrences': [OPERATION]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)
 
     def test_log_keys(self):
-        operation = trade.Operation(
-            quantity=100,
-            price=10,
-            asset=self.asset,
-            date='2015-01-01'
-        )
-        self.accumulator.accumulate_operation(operation)
         self.assertEqual(list(self.accumulator.log), ['2015-01-01'])
 
     def test_returned_result(self):
-        operation = trade.Operation(
-            quantity=100,
-            price=10,
-            asset=self.asset,
-            date='2015-01-01'
-        )
-        result = self.accumulator.accumulate_operation(operation)
-        self.assertEqual(result, {})
+        self.assertEqual(OPERATION.results, {})

@@ -32,9 +32,9 @@ THE SOFTWARE.
 from __future__ import absolute_import
 from __future__ import division
 
+from abc import ABCMeta, abstractmethod
 import math
 import copy
-from abc import ABCMeta, abstractmethod
 
 from .utils import average_price, same_sign, merge_operations
 
@@ -49,6 +49,10 @@ class Asset(object):
         symbol: A string representing the symbol of the asset.
         expiration_date: A string 'YYYY-mm-dd' representing the
             expiration date of the asset, if any.
+        underlying_assets: A list of Asset objects representing the
+            underlying assets of this asset, it any.
+        ratio: A number representing the ratio to which whis asset
+            relates to its underlying assets.
     """
 
     def __init__(
@@ -68,7 +72,135 @@ class Asset(object):
         self.ratio = ratio
 
 
-class Operation(object):
+class Occurrence(object):
+    """An occurrence with an asset in a date."""
+
+    __metaclass__ = ABCMeta
+
+    def __init__(self, asset, date):
+        self.asset = asset
+        self.date = date
+
+    @abstractmethod
+    def update_container(self, container):
+        """Should udpate the quantity, price and/or results."""
+        raise NotImplementedError
+
+
+class Portfolio(object):
+    """A portfolio of assets.
+
+    A portfolio is a collection of Accumulator objects.
+    It can receive Operation objects and update the corresponding
+    accumulators.
+
+    Attributes:
+        assets: A dict {Asset.symbol: Accumulator}.
+        tasks: The tasks the portfolio will execute when accumulating.
+    """
+
+    def __init__(self):
+        self.assets = {}
+        self.tasks = []
+
+    def accumulate(self, operation):
+        """Accumulate an operation on its corresponding accumulator."""
+        self.run_tasks(operation)
+        symbol = operation.asset.symbol
+        if operation.accumulate_underlying_operations:
+            for underlying_operation in operation.operations:
+                self.accumulate(underlying_operation)
+        else:
+            if symbol not in self.assets:
+                self.assets[symbol] = Accumulator(operation.asset)
+            self.assets[symbol].accumulate_occurrence(operation)
+
+    def run_tasks(self, operation):
+        """Execute the defined tasks on the Operation.
+
+        Any function listed in self.tasks will be executed.
+        This runs before the call to Accumulator.accumulate().
+        """
+        for task in self.tasks:
+            task(operation, self)
+
+
+class Accumulator(object):
+    """An accumulator of quantity @ some average price.
+
+    It can accumulate a series of operations and events with an Asset
+    and update its quantity, average price and results based on the
+    occurrences it accumulates.
+
+    Attributes:
+        asset: An asset instance, the asset whose data are being
+            accumulated.
+        date: A string 'YYYY-mm-dd' representing the date of the last
+            status change of the accumulator.
+        quantity: The asset's accumulated quantity.
+        price: The asset's average price for the quantity accumulated.
+        results: A dict with the total results from the operations
+            accumulated. It follows the format:
+            {
+                'result name': result_value,
+                ...
+            }
+        logging: A boolean indicating if the accumulator should log
+            the data passed to the methods accumulate_occurrences() and
+            accumulate_occurrence().
+        log: A dict with all the operations performed with the asset,
+            provided that self.logging is True.
+    """
+
+    def __init__(self, asset=None, logging=False):
+        """Creates a instance of the accumulator.
+
+        Logging by default is set to False; the accumulator will not
+        log any operation, just accumulate the quantity and calculate
+        the average price and results related to the asset after each
+        call to accumulate_occurrence() and accumulate_occurrence().
+        """
+        self.asset = asset
+        self.date = None
+        self.quantity = 0
+        self.price = 0
+        self.results = {}
+        self.logging = logging
+        self.log = {}
+
+    def accumulate_occurrence(self, occurrence):
+        """Accumulates operation data to the existing position."""
+        occurrence.update_container(self)
+        if self.logging:
+            self.log_occurrence(occurrence)
+
+    def log_occurrence(self, operation):
+        """Log Operation, Daytrade and Event objects.
+
+        If logging, this method is called behind the scenes every
+        time the methods accumulate_occurrence() or accumulate_occurrence()
+        are called. The occurrences are logged like this:
+        {
+            'YYYY-mm-dd': {
+                'position': {
+                    'quantity': float
+                    'price': float
+                }
+                'occurrences': [operation, ...],
+            },
+            ...
+        }
+        """
+        if operation.date not in self.log:
+            self.log[operation.date] = {'occurrences': []}
+        self.log[operation.date]['position'] = {
+            'quantity': self.quantity,
+            'price': self.price,
+        }
+        self.log[operation.date]['occurrences'].append(operation)
+
+
+class Operation(Occurrence):
     """An operation represents the purchase or the sale of an asset.
 
     Attributes:
@@ -112,24 +244,14 @@ class Operation(object):
             quantity=0,
             price=0,
             date=None,
-            asset=None,
-            commissions=None,
-            fees=None,
-            results=None
+            asset=None
         ):
-        if commissions is None:
-            commissions = {}
-        if fees is None:
-            fees = {}
-        if results is None:
-            results = {}
-        self.date = date
-        self.asset = asset
         self.quantity = quantity
         self.price = price
-        self.commissions = commissions
-        self.fees = fees
-        self.raw_results = results
+        self.commissions = {}
+        self.fees = {}
+        self.raw_results = {}
+        super(Operation, self).__init__(asset, date)
 
     @property
     def results(self):
@@ -175,28 +297,116 @@ class Operation(object):
             [self.volume * value / 100  for value in self.fees.values()]
         )
 
-
-class Event(object):
-    """An occurrence that change one or more asset's position.
-
-    This is a base class for Events. Events can change the quantity,
-    the price and the results stored on a asset accumulator.
-
-    Attributes:
-        date: A string 'YYYY-mm-dd', the date the event occurred.
-        asset: The target asset of the event.
-    """
-
-    __metaclass__ = ABCMeta
-
-    def __init__(self, asset, date):
-        self.asset = asset
-        self.date = date
-
-    @abstractmethod
     def update_container(self, container):
-        """Should udpate the quantity, price and/or results."""
-        raise NotImplementedError
+        """Update the accumulator status with the operation data."""
+
+        # Operations may update the posions themselves,
+        # or maybe its their underlying operations that
+        # should update the position. This is determined
+        # by the accumulate_underlying_operations
+        # attribute on the Operation object.
+        if self.accumulate_underlying_operations:
+
+            # If its the underlying operations that should
+            # update the position, then we iterate through
+            # all underlying operations and let each one
+            # of them update the accumulator's position.
+            for underlying_operation in self.operations:
+                underlying_operation.update_positions(container)
+
+        # If its not the underlying_operations that should
+        # update the position, them we try to use the operation
+        # itself to update the accumulator's position.
+        else:
+            self.update_positions(container)
+
+        # add whatever result was informed with or generated
+        # by this operation to the accumulator results dict
+        for key, value in self.results.items():
+            if key not in container.results:
+                container.results[key] = 0
+            container.results[key] += value
+
+    def update_positions(self, container):
+        """Update the position of the accumulator with an Operation."""
+
+        # Here we check if the operation asset is the same
+        # asset of this Accumulator object; the accumulator
+        # only accumulates operations that trade its asset.
+        # We also check if the operation should update the
+        # position; if all this conditions are met, then
+        # the position is updated.
+        update_position_condition = (
+            self.asset == container.asset and
+            self.update_position and
+            self.quantity
+        )
+        if update_position_condition:
+
+            # Define the new accumualtor quantity
+            new_quantity = container.quantity + self.quantity
+
+            # if the quantity of the operation has the same sign
+            # of the accumulated quantity then we need to
+            # find out the new average price of the asset
+            if same_sign(container.quantity, self.quantity):
+                container.price = average_price(
+                    container.quantity,
+                    container.price,
+                    self.quantity,
+                    self.real_price
+                )
+
+            # If the traded quantity has an opposite sign of the
+            # asset's accumulated quantity and the accumulated
+            # quantity is not zero, then there was a result.
+            elif container.quantity != 0:
+
+                # check if we are trading more than what
+                # we have on our portfolio; if yes,
+                # the result will be calculated based
+                # only on what was traded (the rest create
+                # a new position)
+                if abs(self.quantity) > abs(container.quantity):
+                    result_quantity = container.quantity * -1
+
+                # If we're not trading more than what we have,
+                # then use the operation quantity to calculate
+                # the result
+                else:
+                    result_quantity = self.quantity
+
+                # calculate the result of this operation and add
+                # the new result to the accumulated results
+                results = \
+                    result_quantity * container.price - \
+                    result_quantity * self.real_price
+                if results:
+                    self.results['trades'] = results
+
+                # If the new accumulated quantity has a different
+                # sign of the old accumulated quantity then the
+                # average price is now the price of the operation
+                # If the new accumulated quantity is of the same sign
+                # of the old accumulated quantity, the average of price
+                # will not change.
+                if not same_sign(container.quantity, new_quantity):
+                    container.price = self.real_price
+
+            # If the accumulated quantity was zero then
+            # there was no result and the new average price
+            # is the price of the operation
+            else:
+                container.price = self.real_price
+
+            # update the accumulator quantity
+            # with the new quantity
+            container.quantity = new_quantity
+
+            # If the accumulator is empty
+            # the price is set back to zero
+            if not container.quantity:
+                container.price = 0
 
 
 class OperationContainer(object):
@@ -261,17 +471,11 @@ class OperationContainer(object):
             daytrades from other operations).
     """
 
-    def __init__(
-            self,
-            date=None,
-            operations=None,
-            commissions=None
-        ):
+    def __init__(self, operations=None, commissions=None):
         if operations is None:
             operations = []
         if commissions is None:
             commissions = {}
-        self.date = date
         self.operations = operations
         self.commissions = commissions
         self.positions = {}
@@ -368,240 +572,6 @@ class OperationContainer(object):
                     position.fees = self.trading_fees.get_fees(
                         position, position_type
                     )
-
-
-class Portfolio(object):
-    """A portfolio of assets.
-
-    A portfolio is a collection of Accumulator objects.
-    It can receive Operation objects and update the corresponding
-    accumulators.
-
-    Attributes:
-        assets: A dict {Asset.symbol: Accumulator}.
-        tasks: The tasks the portfolio will execute when accumulating.
-    """
-
-    def __init__(self):
-        self.assets = {}
-        self.tasks = []
-
-    def accumulate(self, operation):
-        """Accumulate an operation on its corresponding accumulator."""
-        self.run_tasks(operation)
-        symbol = operation.asset.symbol
-        if operation.accumulate_underlying_operations:
-            for underlying_operation in operation.operations:
-                self.accumulate(underlying_operation)
-        else:
-            if symbol not in self.assets:
-                self.assets[symbol] = Accumulator(operation.asset)
-            self.assets[symbol].accumulate_operation(operation)
-
-    def run_tasks(self, operation):
-        """Execute the defined tasks on the Operation.
-
-        Any function listed in self.tasks will be executed.
-        This runs before the call to Accumulator.accumulate().
-        """
-        for task in self.tasks:
-            task(operation, self)
-
-
-class Accumulator(object):
-    """An accumulator of quantity @ some average price.
-
-    It can accumulate a series of operations and events with an Asset
-    and update its quantity, average price and results based on the
-    occurrences it accumulates.
-
-    Attributes:
-        asset: An asset instance, the asset whose data are being
-            accumulated.
-        date: A string 'YYYY-mm-dd' representing the date of the last
-            status change of the accumulator.
-        quantity: The asset's accumulated quantity.
-        price: The asset's average price for the quantity accumulated.
-        results: A dict with the total results from the operations
-            accumulated. It follows the format:
-            {
-                'result name': result_value,
-                ...
-            }
-        logging: A boolean indicating if the accumulator should log
-            the data passed to the methods accumulate_operations() and
-            accumulate_event().
-        log: A dict with all the operations performed with the asset,
-            provided that self.logging is True.
-    """
-
-    def __init__(self, asset=None, logging=False):
-        """Creates a instance of the accumulator.
-
-        Logging by default is set to False; the accumulator will not
-        log any operation, just accumulate the quantity and calculate
-        the average price and results related to the asset after each
-        call to accumulate_operation() and accumulate_event().
-        """
-        self.asset = asset
-        self.date = None
-        self.quantity = 0
-        self.price = 0
-        self.results = {}
-        self.logging = logging
-        self.log = {}
-
-    def accumulate_operation(self, operation):
-        """Accumulates operation data to the existing position."""
-
-        # Operations may update the posions themselves,
-        # or maybe its their underlying operations that
-        # should update the position. This is determined
-        # by the accumulate_underlying_operations
-        # attribute on the Operation object.
-        if operation.accumulate_underlying_operations:
-
-            # If its the underlying operations that should
-            # update the position, then we iterate through
-            # all underlying operations and let each one
-            # of them update the accumulator's position.
-            for underlying_operation in operation.operations:
-                self.update_position(underlying_operation)
-
-        # If its not the underlying_operations that should
-        # update the position, them we try to use the operation
-        # itself to update the accumulator's position.
-        else:
-            self.update_position(operation)
-
-        # add whatever result was informed with or generated
-        # by this operation to the accumulator results dict
-        for key, value in operation.results.items():
-            if key not in self.results:
-                self.results[key] = 0
-            self.results[key] += value
-
-        # log the operation, if logging
-        if self.logging:
-            self.log_occurrence(operation)
-
-        return operation.results
-
-    def update_position(self, operation):
-        """Update the position of the accumulator with an Operation."""
-
-        # Here we check if the operation asset is the same
-        # asset of this Accumulator object; the accumulator
-        # only accumulates operations that trade its asset.
-        # We also check if the operation should update the
-        # position; if all this conditions are met, then
-        # the position is updated.
-        update_position_condition = (
-            operation.asset == self.asset and
-            operation.update_position and
-            operation.quantity
-        )
-        if update_position_condition:
-
-            # Define the new accumualtor quantity
-            new_quantity = self.quantity + operation.quantity
-
-            # if the quantity of the operation has the same sign
-            # of the accumulated quantity then we need to
-            # find out the new average price of the asset
-            if same_sign(self.quantity, operation.quantity):
-                self.price = average_price(
-                    self.quantity,
-                    self.price,
-                    operation.quantity,
-                    operation.real_price
-                )
-
-            # If the traded quantity has an opposite sign of the
-            # asset's accumulated quantity and the accumulated
-            # quantity is not zero, then there was a result.
-            elif self.quantity != 0:
-
-                # check if we are trading more than what
-                # we have on our portfolio; if yes,
-                # the result will be calculated based
-                # only on what was traded (the rest create
-                # a new position)
-                if abs(operation.quantity) > abs(self.quantity):
-                    result_quantity = self.quantity * -1
-
-                # If we're not trading more than what we have,
-                # then use the operation quantity to calculate
-                # the result
-                else:
-                    result_quantity = operation.quantity
-
-                # calculate the result of this operation and add
-                # the new result to the accumulated results
-                results = \
-                    result_quantity * self.price - \
-                    result_quantity * operation.real_price
-                if results:
-                    operation.results['trades'] = results
-
-                # If the new accumulated quantity has a different
-                # sign of the old accumulated quantity then the
-                # average price is now the price of the operation
-                # If the new accumulated quantity is of the same sign
-                # of the old accumulated quantity, the average of price
-                # will not change.
-                if not same_sign(self.quantity, new_quantity):
-                    self.price = operation.real_price
-
-            # If the accumulated quantity was zero then
-            # there was no result and the new average price
-            # is the price of the operation
-            else:
-                self.price = operation.real_price
-
-            # update the accumulator quantity
-            # with the new quantity
-            self.quantity = new_quantity
-
-            # If the accumulator is empty
-            # the price is set back to zero
-            if not self.quantity:
-                self.price = 0
-
-    def accumulate_event(self, event):
-        """Receives a Event subclass instance and lets it do its work.
-
-        An event can change the quantity, price and results stored in
-        the accumulator.
-        """
-        event.update_container(self)
-        if self.logging:
-            self.log_occurrence(event)
-
-    def log_occurrence(self, operation):
-        """Log Operation, Daytrade and Event objects.
-
-        If logging, this method is called behind the scenes every
-        time the methods accumulate_operation() or accumulate_event()
-        are called. The occurrences are logged like this:
-        {
-            'YYYY-mm-dd': {
-                'position': {
-                    'quantity': float
-                    'price': float
-                }
-                'occurrences': [operation, ...],
-            },
-            ...
-        }
-        """
-        if operation.date not in self.log:
-            self.log[operation.date] = {'occurrences': []}
-        self.log[operation.date]['position'] = {
-            'quantity': self.quantity,
-            'price': self.price,
-        }
-        self.log[operation.date]['occurrences'].append(operation)
 
 
 class TradingFees(object):

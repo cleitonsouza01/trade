@@ -15,59 +15,42 @@ class TestOperationRealValueCase00(unittest.TestCase):
     """
 
     def setUp(self):
-        self.asset = trade.Asset(name='some asset')
+        self.operation = trade.Operation(
+            price=10,
+            quantity=20,
+        )
 
     def test_no_discount(self):
-        operation = trade.Operation(
-            price=10,
-            quantity=20
-        )
-        self.assertEqual(operation.real_value, 200)
+        self.assertEqual(self.operation.real_value, 200)
 
     def test_one_discount(self):
-        operation = trade.Operation(
-            price=10,
-            quantity=20,
-            commissions={
-                'some discount': 3
-            }
-        )
-        self.assertEqual(operation.real_value, 203)
+        self.operation.commissions = {
+            'some discount': 3
+        }
+        self.assertEqual(self.operation.real_value, 203)
 
     def test_multiple_discounts_case_1(self):
-        operation = trade.Operation(
-            price=10,
-            quantity=20,
-            commissions={
-                'some discount': 3,
-                'other discount': 1
-            }
-        )
-        self.assertEqual(operation.real_value, 204)
+        self.operation.commissions = {
+            'some discount': 3,
+            'other discount': 1
+        }
+        self.assertEqual(self.operation.real_value, 204)
 
     def test_multiple_discounts_case_2(self):
-        operation = trade.Operation(
-            price=10,
-            quantity=20,
-            commissions={
-                'some discount': 3,
-                'other discount': 1,
-                'more discounts': 2
-            }
-        )
-        self.assertEqual(operation.real_value, 206)
+        self.operation.commissions = {
+            'some discount': 3,
+            'other discount': 1,
+            'more discounts': 2
+        }
+        self.assertEqual(self.operation.real_value, 206)
 
     def test_multiple_discounts_case_3(self):
-        operation = trade.Operation(
-            price=10,
-            quantity=20,
-            commissions={
-                'some discount': 3,
-                'other discount': 1,
-                'negative discount': -1
-            }
-        )
-        self.assertEqual(operation.real_value, 203)
+        self.operation.commissions = {
+            'some discount': 3,
+            'other discount': 1,
+            'negative discount': -1
+        }
+        self.assertEqual(self.operation.real_value, 203)
 
 
 class TestOperationRealValueCase01(unittest.TestCase):
@@ -83,16 +66,16 @@ class TestOperationRealValueCase01(unittest.TestCase):
             asset=self.asset,
             quantity=10,
             price=10,
-            commissions={
-                'brokerage': 2,
-                'some tax': 1.5,
-                'other tax': 1,
-            },
-            fees={
-                'some tax': 0.005,
-                'some other tax': 0.0275,
-            }
         )
+        self.operation.commissions = {
+            'brokerage': 2,
+            'some tax': 1.5,
+            'other tax': 1,
+        }
+        self.operation.fees = {
+            'some tax': 0.005,
+            'some other tax': 0.0275,
+        }
 
     def test_trade_exists(self):
         self.assertTrue(self.operation)

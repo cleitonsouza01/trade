@@ -5,6 +5,13 @@ import unittest
 
 import trade
 
+ASSET = trade.Asset(symbol='some asset')
+OPERATION = trade.Operation(
+    date='2015-09-21',
+    asset=ASSET,
+    quantity=-10,
+    price=2
+)
 
 class TestProrateCommissionsByPositionCase01(unittest.TestCase):
     """Test pro rata of one commission for one operation."""
@@ -13,27 +20,17 @@ class TestProrateCommissionsByPositionCase01(unittest.TestCase):
         discounts = {
             'some discount': 1,
         }
-        asset = trade.Asset(symbol='some asset')
-        self.operation = trade.Operation(
-            date='2015-09-21',
-            asset=asset,
-            quantity=-10,
-            price=2
-        )
         self.container = trade.OperationContainer(
-            operations=[self.operation],
+            operations=[OPERATION],
             commissions=discounts
         )
-
-    def test_container_exists(self):
-        self.assertTrue(self.container)
 
     def test_operation_discount(self):
         expected_discounts = {
             'some discount': 1,
         }
-        self.container.prorate_commissions_by_position(self.operation)
-        self.assertEqual(self.operation.commissions, expected_discounts)
+        self.container.prorate_commissions_by_position(OPERATION)
+        self.assertEqual(OPERATION.commissions, expected_discounts)
 
 
 class TestProrateCommissionsByPositionCase02(unittest.TestCase):
@@ -43,36 +40,26 @@ class TestProrateCommissionsByPositionCase02(unittest.TestCase):
         discounts = {
             'some discount': 1,
         }
-        asset = trade.Asset(symbol='some asset')
-        self.operation1 = trade.Operation(
-            date='2015-09-21',
-            asset=asset,
-            quantity=-10,
-            price=2
-        )
         self.operation2 = trade.Operation(
             date='2015-09-21',
-            asset=asset,
+            asset=ASSET,
             quantity=-10,
             price=2
         )
         self.container = trade.OperationContainer(
             operations=[
-                self.operation1,
+                OPERATION,
                 self.operation2
             ],
             commissions=discounts
         )
 
-    def test_container_exists(self):
-        self.assertTrue(self.container)
-
     def test_check_trade1_discount(self):
         expected_discounts = {
             'some discount': 0.5,
         }
-        self.container.prorate_commissions_by_position(self.operation1)
-        self.assertEqual(self.operation1.commissions, expected_discounts)
+        self.container.prorate_commissions_by_position(OPERATION)
+        self.assertEqual(OPERATION.commissions, expected_discounts)
 
     def test_check_trade2_discount(self):
         expected_discounts = {
@@ -89,34 +76,24 @@ class TestProrateCommissionsByPositionCase03(unittest.TestCase):
         discounts = {
             'some discount': 1,
         }
-        asset = trade.Asset(symbol='some asset')
-        self.operation1 = trade.Operation(
-            date='2015-09-21',
-            asset=asset,
-            quantity=-10,
-            price=2
-        )
         self.operation2 = trade.Operation(
             date='2015-09-21',
-            asset=asset,
+            asset=ASSET,
             quantity=-20,
             price=2
         )
         self.container = trade.OperationContainer(
             operations=[
-                self.operation1,
+                OPERATION,
                 self.operation2
             ],
             commissions=discounts
         )
 
-    def test_container_exists(self):
-        self.assertTrue(self.container)
-
     def test_check_trade1_discount(self):
-        self.container.prorate_commissions_by_position(self.operation1)
+        self.container.prorate_commissions_by_position(OPERATION)
         self.assertEqual(
-            round(self.operation1.commissions['some discount'], 8),
+            round(OPERATION.commissions['some discount'], 8),
             0.33333333
         )
 
@@ -135,17 +112,11 @@ class TestProrateCommissionsByPositionCase04(unittest.TestCase):
         discounts = {
             'some discount': 4,
         }
-        asset1 = trade.Asset(symbol='some asset')
         asset2 = trade.Asset(symbol='some other asset')
-        self.operation1 = trade.Operation(
-            date='2015-09-21',
-            asset=asset1,
-            quantity=-10,
-            price=2
-        )
+
         self.operation2 = trade.Operation(
             date='2015-09-21',
-            asset=asset1,
+            asset=ASSET,
             quantity=-20,
             price=2
         )
@@ -157,19 +128,16 @@ class TestProrateCommissionsByPositionCase04(unittest.TestCase):
         )
         self.container = trade.OperationContainer(
             operations=[
-                self.operation1,
+                OPERATION,
                 self.operation2,
                 self.operation3
             ],
             commissions=discounts
         )
 
-    def test_container_exists(self):
-        self.assertTrue(self.container)
-
     def test_check_trade1_discount(self):
-        self.container.prorate_commissions_by_position(self.operation1)
-        self.assertEqual(self.operation1.commissions['some discount'], 1)
+        self.container.prorate_commissions_by_position(OPERATION)
+        self.assertEqual(OPERATION.commissions['some discount'], 1)
 
     def test_check_trade2_discount(self):
         self.container.prorate_commissions_by_position(self.operation2)
@@ -214,9 +182,6 @@ class TestProrateCommissionsByPositionCase05(unittest.TestCase):
         )
         trade.plugins.fetch_daytrades(self.container)
         self.container.fetch_positions()
-
-    def test_container_exists(self):
-        self.assertTrue(self.container)
 
     def test_container_volume(self):
         self.assertEqual(self.container.volume, 70)
