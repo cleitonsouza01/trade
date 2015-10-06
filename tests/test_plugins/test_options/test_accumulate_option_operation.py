@@ -14,8 +14,7 @@ class TestAccumulateOption00(unittest.TestCase):
         self.option = trade.plugins.Option(
             name='Option',
             expiration_date='2015-12-31',
-            underlying_assets=[self.asset],
-            ratio=1
+            underlying_assets={self.asset: 1}
         )
 
         # Accumulate a option operation

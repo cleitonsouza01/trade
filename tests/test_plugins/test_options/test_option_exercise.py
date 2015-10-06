@@ -13,7 +13,7 @@ class TestOptionExercises(unittest.TestCase):
         self.option = trade.plugins.Option(
             symbol='GOOG151002C00540000',
             expiration_date='2015-10-02',
-            underlying_assets=[self.asset]
+            underlying_assets={self.asset: 1}
         )
 
 

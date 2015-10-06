@@ -81,18 +81,17 @@ class TestDerivativeCreationCase00(unittest.TestCase):
         self.asset1 = trade.Asset(
             symbol='STCK'
         )
-        self.asset5 = trade.Asset(
+        self.asset5 = trade.plugins.Option(
             name='some stuff',
             symbol='ATVI000',
             expiration_date='2015-12-31',
-            underlying_assets=[self.asset1]
+            underlying_assets={self.asset1: 1}
         )
-        self.asset6 = trade.Asset(
+        self.asset6 = trade.plugins.Option(
             name='some stuff',
             symbol='STFF',
             expiration_date='2015-12-31',
-            underlying_assets=[self.asset1],
-            ratio=2
+            underlying_assets={self.asset1: 2},
         )
 
     def test_asset5_symbol(self):
@@ -102,14 +101,10 @@ class TestDerivativeCreationCase00(unittest.TestCase):
         self.assertEqual(self.asset5.expiration_date, '2015-12-31')
 
     def test_asset5_underlying_assets(self):
-        self.assertEqual(
-            self.asset5.underlying_assets[0].symbol,
-            self.asset1.symbol
-        )
+        self.assertTrue(self.asset1 in self.asset5.underlying_assets)
 
     def test_asset5_ratio(self):
-        self.assertEqual(self.asset5.ratio, 1)
-
+        self.assertEqual(self.asset5.underlying_assets[self.asset1], 1)
 
     def test_asset6_symbol(self):
         self.assertEqual(self.asset6.symbol, 'STFF')
@@ -118,4 +113,4 @@ class TestDerivativeCreationCase00(unittest.TestCase):
         self.assertEqual(self.asset6.expiration_date, '2015-12-31')
 
     def test_asset6_ratio(self):
-        self.assertEqual(self.asset6.ratio, 2)
+        self.assertEqual(self.asset6.underlying_assets[self.asset1], 2)

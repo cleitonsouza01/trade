@@ -16,7 +16,7 @@ class TestExercisePremium(unittest.TestCase):
         self.asset = trade.Asset(symbol='some asset')
         self.option = trade.plugins.Option(
             symbol='GOOG151002C00540000',
-            underlying_assets=[self.asset],
+            underlying_assets={self.asset: 1},
             expiration_date='2015-10-02'
         )
 
@@ -61,7 +61,7 @@ class TestExercisePremiumCase00(TestExercisePremium):
         self.assertEqual(self.option.expiration_date, '2015-10-02')
 
     def test_underlying_assets(self):
-        self.assertEqual(self.option.underlying_assets, [self.asset])
+        self.assertEqual(self.option.underlying_assets, {self.asset: 1})
 
     def test_portfolio_asset_keys(self):
         self.assertEqual(len(self.portfolio.assets.keys()), 2)

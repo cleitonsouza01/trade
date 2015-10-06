@@ -21,7 +21,7 @@ class TestUnderlyingAssetAccumulation(unittest.TestCase):
         self.asset = trade.Asset(symbol='some asset')
         self.option = trade.plugins.Option(
             symbol='some option',
-            underlying_assets=[self.asset]
+            underlying_assets={self.asset: 1}
         )
         # Create an operation buying the asset
         self.operation = trade.Operation(

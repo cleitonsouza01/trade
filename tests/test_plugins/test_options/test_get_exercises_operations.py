@@ -13,7 +13,7 @@ class TestFetchExercises(unittest.TestCase):
         self.option = trade.plugins.Option(
             symbol='GOOG151002C00540000',
             expiration_date='2015-10-02',
-            underlying_assets=[self.asset]
+            underlying_assets={self.asset: 1}
         )
         self.exercise0 = trade.plugins.Exercise(
             date='2015-09-18',
@@ -21,6 +21,8 @@ class TestFetchExercises(unittest.TestCase):
             quantity=100,
             price=1
         )
+        self.container = trade.OperationContainer()
+        self.container.tasks = [trade.plugins.fetch_exercises]
 
 
 class TestFetchExercisesCase00(TestFetchExercises):
@@ -28,12 +30,7 @@ class TestFetchExercisesCase00(TestFetchExercises):
 
     def setUp(self):
         super(TestFetchExercisesCase00, self).setUp()
-        self.container = trade.OperationContainer(
-            operations=[self.exercise0]
-        )
-        self.container.tasks = [
-            trade.plugins.fetch_exercises,
-        ]
+        self.container.operations = [self.exercise0]
         self.container.fetch_positions()
 
     def test_container_volume(self):
@@ -81,43 +78,34 @@ class TestFetchExercisesCase01(TestFetchExercises):
             quantity=100,
             price=3
         )
-        self.container = trade.OperationContainer(
-            operations=[self.exercise0, self.exercise1]
-        )
-        self.container.tasks = [
-            trade.plugins.fetch_exercises,
-        ]
+        self.container.operations = [self.exercise0, self.exercise1]
+        self.container.fetch_positions()
 
     def test_container_exercises_len(self):
-        self.container.fetch_positions()
         self.assertEqual(
             len(self.container.positions['exercises'].values()),
             2
         )
 
     def test_option_consuming_quantity(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['exercises'][self.option.symbol].quantity,
             -200
         )
 
     def test_option_consuming_price(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['exercises'][self.option.symbol].price,
             0
         )
 
     def test_asset_purchase_quantity(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['exercises'][self.asset.symbol].quantity,
             200
         )
 
     def test_asset_purchase_price(self):
-        self.container.fetch_positions()
         self.assertEqual(
             self.container.positions['exercises'][self.asset.symbol].price,
             2

@@ -48,7 +48,28 @@ class Option(Asset):
     """Represents an Option.
 
     This class represents both calls and puts.
+
+    Attributes:
+        name: A string representing the name of the asset.
+        symbol: A string representing the symbol of the asset.
+        expiration_date: A string 'YYYY-mm-dd' representing the
+            expiration date of the asset, if any.
+        underlying_assets: A dict of Asset objects representing the
+            underlying assets of this asset and the ratio to which
+            the asset relates to the Option.
     """
+
+    def __init__(
+            self,
+            name=None,
+            symbol=None,
+            expiration_date=None,
+            underlying_assets=None
+        ):
+        super(Option, self).__init__(name, symbol, expiration_date)
+        if underlying_assets is None:
+            underlying_assets = {}
+        self.underlying_assets = underlying_assets
 
     def exercise(self, quantity, price, date, premium=0):
         """Exercises the option.
@@ -62,25 +83,28 @@ class Option(Asset):
             - one operation representing the purchase or sale of the
               underlying asset
         """
+        # Create an operation to consume
+        # the option on the portfolio
         operations = [
-            # Create an operation to consume
-            # the option on the portfolio
             Operation(
                 quantity=abs(quantity)*-1,
                 price=0,
                 date=date,
                 asset=self
-            ),
-            # Create an operation to represent
-            # the purchase or sale of the
-            # underlying asset
-            Operation(
-                quantity=quantity * self.ratio,
-                price=price + premium,
-                date=date,
-                asset=self.underlying_assets[0]
             )
         ]
+        # Create an operation to represent
+        # the purchase or sale of the
+        # underlying asset
+        for underlying_asset, ratio in self.underlying_assets.items():
+            operations.append(
+                Operation(
+                    quantity=quantity * ratio,
+                    price=price + premium,
+                    date=date,
+                    asset=underlying_asset
+                )
+            )
         return operations
 
 

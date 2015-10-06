@@ -47,29 +47,12 @@ class Asset(object):
     Attributes:
         name: A string representing the name of the asset.
         symbol: A string representing the symbol of the asset.
-        expiration_date: A string 'YYYY-mm-dd' representing the
-            expiration date of the asset, if any.
-        underlying_assets: A list of Asset objects representing the
-            underlying assets of this asset, it any.
-        ratio: A number representing the ratio to which whis asset
-            relates to its underlying assets.
     """
 
-    def __init__(
-            self,
-            name=None,
-            symbol=None,
-            expiration_date=None,
-            underlying_assets=None,
-            ratio=1
-        ):
+    def __init__(self, name=None, symbol=None, expiration_date=None):
         self.name = name
         self.symbol = symbol
         self.expiration_date = expiration_date
-        if underlying_assets is None:
-            underlying_assets = []
-        self.underlying_assets = underlying_assets
-        self.ratio = ratio
 
 
 class Occurrence(object):

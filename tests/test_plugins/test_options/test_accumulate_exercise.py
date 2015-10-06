@@ -16,8 +16,7 @@ class TestAccumulateExercise00(unittest.TestCase):
         self.option = trade.plugins.Option(
             name='Option',
             expiration_date='2015-12-31',
-            underlying_assets=[self.asset],
-            ratio=1
+            underlying_assets={self.asset: 1},
         )
 
         # create a accumultor for the options, a accumulator for the asset
@@ -78,8 +77,7 @@ class TestAccumulateExercise01(unittest.TestCase):
         self.option = trade.plugins.Option(
             name='Option',
             expiration_date='2015-12-31',
-            underlying_assets=[self.asset],
-            ratio=1
+            underlying_assets={self.asset: 1}
         )
 
         # create a accumultor for the options, a accumulator for the asset
