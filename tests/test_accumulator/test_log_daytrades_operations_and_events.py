@@ -2,6 +2,7 @@
 
 from __future__ import absolute_import
 import unittest
+import copy
 
 import trade
 import trade.plugins
@@ -22,21 +23,8 @@ DAYTRADE = trade.plugins.Daytrade(
         date='2015-01-01'
     )
 )
-
-DAYTRADE2 = trade.plugins.Daytrade(
-    trade.Operation(
-        asset=ASSET,
-        quantity=100,
-        price=10,
-        date='2015-01-02'
-    ),
-    trade.Operation(
-        asset=ASSET,
-        quantity=-100,
-        price=20,
-        date='2015-01-02'
-    )
-)
+DAYTRADE2 = copy.deepcopy(DAYTRADE)
+DAYTRADE2.date = '2015-01-02'
 
 OPERATION1 = trade.Operation(
     quantity=100,

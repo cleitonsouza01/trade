@@ -92,22 +92,6 @@ class TestContainerPropertiesCase03(TestContainerProperties):
         self.assertEqual(self.trade_container.volume, 25)
 
 
-class TestContainerPropertiesCase04(TestContainerProperties):
-    """Test the volume property of the Container."""
-
-    def setUp(self):
-        super(TestContainerPropertiesCase04, self).setUp()
-        self.trade_container = trade.OperationContainer(
-            operations=[
-                self.operation1,
-                self.operation2
-            ]
-        )
-
-    def test_volume(self):
-        self.assertEqual(self.trade_container.volume, 25)
-
-
 class TestContainerPropertiesCase05(TestContainerProperties):
     """Test the volume property of the Container."""
 

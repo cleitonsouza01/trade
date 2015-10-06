@@ -2,7 +2,6 @@
 
 from __future__ import absolute_import
 import unittest
-import copy
 
 import trade
 
@@ -49,18 +48,25 @@ class TestIdentifyDaytrades(unittest.TestCase):
             quantity=5,
             price=10
         )
+        self.container = trade.OperationContainer()
+        self.container.tasks = TASKS
 
+        self.operation_set1 = [self.operation0, self.operation1]
+        self.operation_set2 = [self.operation0, self.operation2]
+        self.operation_set3 = [self.operation0, self.operation2, self.operation3]
+        self.operation_set4 = [
+            self.operation0,
+            self.operation2,
+            self.operation3,
+            self.operation4
+        ]
 
 class TestContainerIndentifyDaytradesCase00(TestIdentifyDaytrades):
     """Test the identification of daytrade operations."""
 
     def setUp(self):
         super(TestContainerIndentifyDaytradesCase00, self).setUp()
-        self.trade1 = copy.deepcopy(self.operation0)
-        self.trade2 = copy.deepcopy(self.operation1)
-        self.container = trade.OperationContainer(
-            operations=[self.trade1, self.trade2])
-        self.container.tasks = TASKS
+        self.container.operations = self.operation_set1
         self.container.fetch_positions()
 
     def test_common_trades_len(self):
@@ -123,22 +129,11 @@ class TestContainerIndentifyDaytradesCase01(TestIdentifyDaytrades):
 
     def setUp(self):
         super(TestContainerIndentifyDaytradesCase01, self).setUp()
-        self.trade1 = copy.deepcopy(self.operation0)
-        self.trade2 = copy.deepcopy(self.operation2)
-        self.container = trade.OperationContainer(
-            operations=[self.trade1, self.trade2])
-        self.container.tasks = TASKS
+        self.container.operations = self.operation_set2
         self.container.fetch_positions()
 
     def test_common_trades_len(self):
         self.assertEqual(len(self.container.positions['operations'].keys()), 1)
-
-    def test_operations0_asset(self):
-        self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol]\
-                .asset.symbol,
-            ASSET.symbol
-        )
 
     def test_operations1_quantity(self):
         self.assertEqual(
@@ -154,13 +149,6 @@ class TestContainerIndentifyDaytradesCase01(TestIdentifyDaytrades):
 
     def test_daytrades_len(self):
         self.assertEqual(len(self.container.positions['daytrades'].keys()), 1)
-
-    def test_daytrade_asset(self):
-        self.assertEqual(
-            self.container.positions['daytrades'][ASSET.symbol]\
-                .asset.symbol,
-            ASSET.symbol
-        )
 
     def test_daytrade_quantity(self):
         self.assertEqual(
@@ -208,23 +196,11 @@ class TestContainerIndentifyDaytradesCase02(TestIdentifyDaytrades):
 
     def setUp(self):
         super(TestContainerIndentifyDaytradesCase02, self).setUp()
-        trade1 = copy.deepcopy(self.operation0)
-        trade2 = copy.deepcopy(self.operation2)
-        trade3 = copy.deepcopy(self.operation3)
-        self.container = trade.OperationContainer(
-            operations=[trade1, trade2, trade3])
-        self.container.tasks = TASKS
+        self.container.operations = self.operation_set3
         self.container.fetch_positions()
 
     def test_common_trades_len(self):
         self.assertEqual(len(self.container.positions['operations'].keys()), 2)
-
-    def test_operations0_asset(self):
-        self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol]\
-                .asset.symbol,
-            ASSET.symbol
-        )
 
     def test_operations0_quantity(self):
         self.assertEqual(
@@ -238,13 +214,6 @@ class TestContainerIndentifyDaytradesCase02(TestIdentifyDaytrades):
             self.container.positions['operations'][ASSET.symbol]\
                 .price,
             2
-        )
-
-    def test_operations1_asset(self):
-        self.assertEqual(
-            self.container.positions['operations'][ASSET2.symbol]\
-                .asset.symbol,
-            ASSET2.symbol
         )
 
     def test_operations1_quantity(self):
@@ -262,13 +231,6 @@ class TestContainerIndentifyDaytradesCase02(TestIdentifyDaytrades):
 
     def test_daytrades_len(self):
         self.assertEqual(len(self.container.positions['daytrades'].keys()), 1)
-
-    def test_daytrade_asset(self):
-        self.assertEqual(
-            self.container.positions['daytrades'][ASSET.symbol]\
-                .asset.symbol,
-            ASSET.symbol
-        )
 
     def test_daytrade_quantity(self):
         self.assertEqual(
@@ -316,24 +278,11 @@ class TestContainerIndentifyDaytradesCase03(TestIdentifyDaytrades):
 
     def setUp(self):
         super(TestContainerIndentifyDaytradesCase03, self).setUp()
-        trade1 = copy.deepcopy(self.operation0)
-        trade2 = copy.deepcopy(self.operation2)
-        trade3 = copy.deepcopy(self.operation3)
-        trade4 = copy.deepcopy(self.operation4)
-        self.container = trade.OperationContainer(
-            operations=[trade1, trade2, trade3, trade4])
-        self.container.tasks = TASKS
+        self.container.operations = self.operation_set4
         self.container.fetch_positions()
 
     def test_common_trades_len(self):
         self.assertEqual(len(self.container.positions['operations'].keys()), 1)
-
-    def test_common_trades0_asset(self):
-        self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol]\
-                .asset.symbol,
-            ASSET.symbol
-        )
 
     def test_common_trades0_quantity(self):
         self.assertEqual(
@@ -350,13 +299,6 @@ class TestContainerIndentifyDaytradesCase03(TestIdentifyDaytrades):
 
     def test_daytrades_len(self):
         self.assertEqual(len(self.container.positions['daytrades'].keys()), 2)
-
-    def test_daytrade0_asset(self):
-        self.assertEqual(
-            self.container.positions['daytrades'][ASSET.symbol]\
-                .asset.symbol,
-            ASSET.symbol
-        )
 
     def test_daytrade0_quantity(self):
         self.assertEqual(
@@ -452,19 +394,14 @@ class TestContainerIndentifyDaytradesCase04(TestIdentifyDaytrades):
 
     def setUp(self):
         super(TestContainerIndentifyDaytradesCase04, self).setUp()
-        trade1 = copy.deepcopy(self.operation0)
-        trade2 = copy.deepcopy(self.operation2)
-        trade3 = copy.deepcopy(self.operation3)
-        trade4 = copy.deepcopy(self.operation4)
         trade5 = trade.Operation(
             date='2015-09-21',
             asset=ASSET,
             quantity=-5,
             price=3
         )
-        self.container = trade.OperationContainer(
-            operations=[trade1, trade2, trade3, trade4, trade5])
-        self.container.tasks = TASKS
+        self.container.operations = self.operation_set4
+        self.container.operations.append(trade5)
         self.container.fetch_positions()
 
     def test_for_no_common_trades(self):
@@ -472,13 +409,6 @@ class TestContainerIndentifyDaytradesCase04(TestIdentifyDaytrades):
 
     def test_daytrades_len(self):
         self.assertEqual(len(self.container.positions['daytrades'].keys()), 2)
-
-    def test_daytrade0_asset(self):
-        self.assertEqual(
-            self.container.positions['daytrades'][ASSET.symbol]\
-                .asset.symbol,
-            ASSET.symbol
-        )
 
     def test_daytrade0_quantity(self):
         self.assertEqual(
@@ -576,24 +506,25 @@ class TestContainerIndentifyDaytradesCase05(TestIdentifyDaytrades):
 
     def setUp(self):
         super(TestContainerIndentifyDaytradesCase05, self).setUp()
-        trade1 = copy.deepcopy(self.operation0)
         trade2 = trade.Operation(
             date='2015-09-21',
             asset=ASSET,
             quantity=-5,
             price=10
         )
-        trade3 = copy.deepcopy(self.operation3)
-        trade4 = copy.deepcopy(self.operation4)
         trade5 = trade.Operation(
             date='2015-09-21',
             asset=ASSET,
             quantity=-5,
             price=20
         )
-        self.container = trade.OperationContainer(
-            operations=[trade1, trade2, trade3, trade4, trade5])
-        self.container.tasks = TASKS
+        self.container.operations = [
+            self.operation0,
+            trade2,
+            self.operation3,
+            self.operation4,
+            trade5
+        ]
         self.container.fetch_positions()
 
     def test_for_no_common_trades(self):
@@ -601,12 +532,6 @@ class TestContainerIndentifyDaytradesCase05(TestIdentifyDaytrades):
 
     def test_daytrades_len(self):
         self.assertEqual(len(self.container.positions['daytrades'].keys()), 2)
-
-    def test_check_daytrade0_asset(self):
-        self.assertEqual(
-            self.container.positions['daytrades'][ASSET.symbol].asset.symbol,
-            ASSET.symbol
-        )
 
     def test_daytrade0_quantity(self):
         self.assertEqual(
@@ -646,13 +571,6 @@ class TestContainerIndentifyDaytradesCase05(TestIdentifyDaytrades):
         self.assertEqual(
             self.container.positions['daytrades'][ASSET.symbol].results,
             {'daytrades': 130}
-        )
-
-    def test_check_daytrade1_asset(self):
-        self.assertEqual(
-            self.container.positions['daytrades'][ASSET2.symbol]\
-                .asset.symbol,
-            ASSET2.symbol
         )
 
     def test_daytrade1_quantity(self):
@@ -701,30 +619,18 @@ class TestContainerIndentifyDaytradesCase06(TestIdentifyDaytrades):
 
     def setUp(self):
         super(TestContainerIndentifyDaytradesCase06, self).setUp()
-        trade1 = copy.deepcopy(self.operation0)
-        trade2 = copy.deepcopy(self.operation2)
-        trade3 = copy.deepcopy(self.operation3)
-        trade4 = copy.deepcopy(self.operation4)
         trade5 = trade.Operation(
             date='2015-09-21',
             asset=ASSET,
             quantity=5,
             price=4
         )
-        self.container = trade.OperationContainer(
-            operations=[trade1, trade2, trade3, trade4, trade5])
-        self.container.tasks = TASKS
+        self.container.operations = self.operation_set4
+        self.container.operations.append(trade5)
         self.container.fetch_positions()
 
     def test_common_trades_len(self):
         self.assertEqual(len(self.container.positions['operations'].keys()), 1)
-
-    def test_common_trades0_asset(self):
-        self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol]\
-                .asset.symbol,
-            ASSET.symbol
-        )
 
     def test_common_trades0_quantity(self):
         self.assertEqual(
@@ -743,13 +649,6 @@ class TestContainerIndentifyDaytradesCase06(TestIdentifyDaytrades):
         self.assertEqual(
             len(self.container.positions['daytrades'].keys()),
             2
-        )
-
-    def test_daytrade0_asset(self):
-        self.assertEqual(
-            self.container.positions['daytrades'][ASSET.symbol]\
-                .asset.symbol,
-            ASSET.symbol
         )
 
     def test_daytrade0_quantity(self):
@@ -790,13 +689,6 @@ class TestContainerIndentifyDaytradesCase06(TestIdentifyDaytrades):
         self.assertEqual(
             self.container.positions['daytrades'][ASSET.symbol].results,
             {'daytrades': 5}
-        )
-
-    def test_check_daytrade1_asset(self):
-        self.assertEqual(
-            self.container.positions['daytrades'][ASSET2.symbol]\
-                .asset.symbol,
-            ASSET2.symbol
         )
 
     def test_daytrade1_quantity(self):
@@ -846,10 +738,6 @@ class TestContainerIndentifyDaytradesCase07(TestIdentifyDaytrades):
     def setUp(self):
         super(TestContainerIndentifyDaytradesCase07, self).setUp()
         self.asset3 = trade.Asset(symbol='even other asset')
-        trade1 = copy.deepcopy(self.operation0)
-        trade2 = copy.deepcopy(self.operation2)
-        trade3 = copy.deepcopy(self.operation3)
-        trade4 = copy.deepcopy(self.operation4)
         trade5 = trade.Operation(
             date='2015-09-21',
             asset=ASSET,
@@ -880,24 +768,13 @@ class TestContainerIndentifyDaytradesCase07(TestIdentifyDaytrades):
             quantity=-5,
             price=4
         )
-        self.container = trade.OperationContainer(
-            operations=[
-                trade1, trade2, trade3, trade4, trade5,
-                trade6, trade7, trade8, trade9
-            ]
-        )
-        self.container.tasks = TASKS
+
+        self.container.operations = self.operation_set4
+        self.container.operations += [trade5, trade6, trade7, trade8, trade9]
         self.container.fetch_positions()
 
     def test_common_trades_len(self):
         self.assertEqual(len(self.container.positions['operations'].keys()), 1)
-
-    def test_operations0_asset(self):
-        self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol]\
-                .asset.symbol,
-            ASSET.symbol
-        )
 
     def test_operations0_quantity(self):
         self.assertEqual(
@@ -916,13 +793,6 @@ class TestContainerIndentifyDaytradesCase07(TestIdentifyDaytrades):
         self.assertEqual(
             len(self.container.positions['daytrades'].keys()),
             3
-        )
-
-    def test_daytrade0_asset(self):
-        self.assertEqual(
-            self.container.positions['daytrades'][ASSET.symbol]\
-                .asset.symbol,
-            ASSET.symbol
         )
 
     def test_daytrade0_quantity(self):
@@ -965,17 +835,17 @@ class TestContainerIndentifyDaytradesCase07(TestIdentifyDaytrades):
             {'daytrades': 5}
         )
 
+    def test_daytrade1_quantity(self):
+        self.assertEqual(
+            self.container.positions['daytrades'][ASSET2.symbol].quantity,
+            5
+        )
+
     def test_daytrade1_asset(self):
         self.assertEqual(
             self.container.positions['daytrades'][ASSET2.symbol]\
                 .asset.symbol,
             ASSET2.symbol
-        )
-
-    def test_daytrade1_quantity(self):
-        self.assertEqual(
-            self.container.positions['daytrades'][ASSET2.symbol].quantity,
-            5
         )
 
     def test_daytrade1_buy_price(self):

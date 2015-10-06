@@ -66,41 +66,12 @@ class TestExercisePremiumCase00(TestExercisePremium):
     def test_portfolio_asset_keys(self):
         self.assertEqual(len(self.portfolio.assets.keys()), 2)
 
-    def test_asset_accumulator(self):
-        self.assertTrue(
-            isinstance(
-                self.portfolio.assets[self.asset.symbol],
-                trade.Accumulator
-                )
-        )
-
-    def test_asset_accumulator_asset(self):
-        self.assertEqual(
-            self.portfolio.assets[self.asset.symbol].asset.symbol,
-            self.asset.symbol
-        )
-
     def test_asset_accumulator_quantity(self):
         self.assertEqual(self.portfolio.assets[self.asset.symbol].quantity, 20)
 
     def test_asset_accumulator_price(self):
         """Should have the premium included on the price"""
         self.assertEqual(self.portfolio.assets[self.asset.symbol].price, 5.5)
-
-
-    def test_option_accumulator(self):
-        self.assertTrue(
-            isinstance(
-                self.portfolio.assets[self.option.symbol],
-                trade.Accumulator
-            )
-        )
-
-    def test_option_accumulator_asset(self):
-        self.assertEqual(
-            self.portfolio.assets[self.option.symbol].asset.symbol,
-            self.option.symbol
-        )
 
     def test_option_accumulator_quantity(self):
         self.assertEqual(self.portfolio.assets[self.option.symbol].quantity, 0)
@@ -128,41 +99,12 @@ class TestExercisePremiumCase01(TestExercisePremium):
     def test_portfolio_asset_keys(self):
         self.assertEqual(len(self.portfolio.assets.keys()), 2)
 
-    def test_asset_accumulator(self):
-        self.assertTrue(
-            isinstance(
-                self.portfolio.assets[self.asset.symbol],
-                trade.Accumulator
-            )
-        )
-
-    def test_asset_accumulator_asset(self):
-        self.assertEqual(
-            self.portfolio.assets[self.asset.symbol].asset.symbol,
-            self.asset.symbol
-        )
-
     def test_asset_accumulator_quantity(self):
         self.assertEqual(self.portfolio.assets[self.asset.symbol].quantity, 20)
 
     def test_asset_accumulator_price(self):
         """Should have the premium included on the price"""
         self.assertEqual(self.portfolio.assets[self.asset.symbol].price, 5.5)
-
-
-    def test_option_accumulator(self):
-        self.assertTrue(
-            isinstance(
-                self.portfolio.assets[self.option.symbol],
-                trade.Accumulator
-            )
-        )
-
-    def test_option_accumulator_asset(self):
-        self.assertEqual(
-            self.portfolio.assets[self.option.symbol].asset.symbol,
-            self.option.symbol
-        )
 
     def test_option_accumulator_quantity(self):
         self.assertEqual(

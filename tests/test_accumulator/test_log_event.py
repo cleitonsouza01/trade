@@ -10,6 +10,9 @@ from trade import Accumulator, Asset
 from trade.plugins import StockSplit
 
 
+ASSET = Asset()
+
+
 class DummyEvent(trade.plugins.Event):
     """A dummy event for the tests."""
 
@@ -17,21 +20,23 @@ class DummyEvent(trade.plugins.Event):
         pass
 
 
-class TestLogEvent00(unittest.TestCase):
-    """Tests the logging of 1 Event object."""
+class TestLogEvent(unittest.TestCase):
 
     def setUp(self):
-        self.asset = Asset()
-        self.accumulator = Accumulator(self.asset, logging=True)
+        self.accumulator = Accumulator(ASSET, logging=True)
         self.accumulator.quantity = 100
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}
         self.event = StockSplit(
-            asset=self.asset,
+            asset=ASSET,
             date='2015-09-24',
             factor=2
         )
         self.accumulator.accumulate_occurrence(self.event)
+
+
+class TestLogEvent00(TestLogEvent):
+    """Tests the logging of 1 Event object."""
 
     def test_check_quantity_after_split(self):
         self.assertEqual(self.accumulator.quantity, 200)
@@ -55,23 +60,13 @@ class TestLogEvent00(unittest.TestCase):
         self.assertEqual(self.accumulator.log, expected_log)
 
 
-class TestLogEvent01(unittest.TestCase):
+class TestLogEvent01(TestLogEvent):
     """Tests the logging of 2 Event objects."""
 
     def setUp(self):
-        self.asset = Asset()
-        self.accumulator = Accumulator(self.asset, logging=True)
-        self.accumulator.quantity = 100
-        self.accumulator.price = 10
-        self.accumulator.results = {'trades': 1200}
-        self.event0 = StockSplit(
-            asset=self.asset,
-            date='2015-09-24',
-            factor=2
-        )
-        self.accumulator.accumulate_occurrence(self.event0)
+        super(TestLogEvent01, self).setUp()
         self.event1 = DummyEvent(
-            self.asset,
+            ASSET,
             '2015-09-25',
             factor=1
         )
@@ -91,30 +86,20 @@ class TestLogEvent01(unittest.TestCase):
                     'price': 5.0,
                     'quantity': 200
                 },
-                'occurrences': [self.event0]
+                'occurrences': [self.event]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)
 
 
-class TestLogEvent02(unittest.TestCase):
+class TestLogEvent02(TestLogEvent):
     """Tests the logging of multiple Event objects."""
 
     def setUp(self):
-        self.asset = Asset()
-        self.accumulator = Accumulator(self.asset, logging=True)
-        self.accumulator.quantity = 100
-        self.accumulator.price = 10
-        self.accumulator.results = {'trades': 1200}
-        self.event0 = StockSplit(
-            asset=self.asset,
-            date='2015-09-25',
-            factor=2
-        )
-        self.accumulator.accumulate_occurrence(self.event0)
+        super(TestLogEvent02, self).setUp()
         self.event1 = DummyEvent(
-            self.asset,
-            '2015-09-25',
+            ASSET,
+            '2015-09-24',
             factor=1,
         )
         self.accumulator.accumulate_occurrence(self.event1)
@@ -125,16 +110,16 @@ class TestLogEvent02(unittest.TestCase):
             'quantity': 200
         }
         self.assertEqual(
-            self.accumulator.log['2015-09-25']['position'],
+            self.accumulator.log['2015-09-24']['position'],
             expected_log
         )
 
     def test_log_occurrences(self):
         expected_log = [
-            self.event0,
+            self.event,
             self.event1
         ]
         self.assertEqual(
-            self.accumulator.log['2015-09-25']['occurrences'],
+            self.accumulator.log['2015-09-24']['occurrences'],
             expected_log
         )

@@ -44,7 +44,6 @@ class TestOptionExerciseCase00(TestOptionExercises):
         self.assertEqual(self.operations[1].price, 10)
 
 
-
 class TestOptionExerciseCase01(TestOptionExercises):
     """Test the exercise of a put."""
 

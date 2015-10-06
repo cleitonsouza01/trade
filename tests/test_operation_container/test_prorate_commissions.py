@@ -198,12 +198,6 @@ class TestProrateCommissionsByPositionCase05(unittest.TestCase):
             1.29
         )
 
-    def test_operations0_asset(self):
-        self.assertEqual(
-            self.container.positions['operations'][ASSET1.symbol].asset,
-            ASSET1
-        )
-
     def test_operations0_quantity(self):
         self.assertEqual(
             self.container.positions['operations'][ASSET1.symbol]\
@@ -233,12 +227,6 @@ class TestProrateCommissionsByPositionCase05(unittest.TestCase):
             round(self.container.positions['operations'][ASSET1.symbol]\
                 .commissions['other discount'], 2),
             0.86
-        )
-
-    def test_operations1_asset(self):
-        self.assertEqual(
-            self.container.positions['operations'][ASSET2.symbol].asset,
-            ASSET2
         )
 
     def test_operations1_quantity(self):

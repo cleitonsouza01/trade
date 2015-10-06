@@ -11,8 +11,7 @@ def get_exercise_no_premium(operation, portfolio):
         operation.fetch_operations()
 
 
-class TestUnderlyingAssetAccumulationCase00(unittest.TestCase):
-    """Test the accumulation of one operation with underlying assets."""
+class TestUnderlyingAssetAccumulation(unittest.TestCase):
 
     def setUp(self):
         self.portfolio = trade.Portfolio()
@@ -24,42 +23,47 @@ class TestUnderlyingAssetAccumulationCase00(unittest.TestCase):
             symbol='some option',
             underlying_assets=[self.asset]
         )
-
-        # Buy the asset
+        # Create an operation buying the asset
         self.operation = trade.Operation(
             asset=self.asset,
             date='2015-10-01',
             quantity=10,
             price=5
         )
-        self.portfolio.accumulate(self.operation)
-
-        # Buy the call
+        # Create an operation buying the call
         self.option_operation = trade.Operation(
             asset=self.option,
             date='2015-10-02',
             quantity=10,
             price=1
         )
-        self.portfolio.accumulate(self.option_operation)
-
-        # Exercise the call
+        # Create an operation exercising the call
         self.exercise = trade.plugins.Exercise(
             asset=self.option,
             date='2015-10-04',
             quantity=10,
             price=10
         )
+        # Create other operation buying the asset
+        self.operation2 = trade.Operation(
+            asset=self.asset,
+            date='2015-10-05',
+            quantity=10,
+            price=7.5
+        )
+        self.portfolio.accumulate(self.operation)
+        self.portfolio.accumulate(self.option_operation)
+
+
+class TestUnderlyingAssetAccumulationCase00(TestUnderlyingAssetAccumulation):
+    """Test the accumulation of one operation with underlying assets."""
+
+    def setUp(self):
+        super(TestUnderlyingAssetAccumulationCase00, self).setUp()
         self.portfolio.accumulate(self.exercise)
 
     def test_portfolio_keys(self):
         self.assertEqual(len(self.portfolio.assets.keys()), 2)
-
-    def test_accumulator1_asset(self):
-        self.assertEqual(
-            self.portfolio.assets[self.asset.symbol].asset.symbol,
-            self.asset.symbol
-        )
 
     def test_accumulator1_quantity(self):
         self.assertEqual(self.portfolio.assets[self.asset.symbol].quantity, 20)
@@ -74,55 +78,13 @@ class TestUnderlyingAssetAccumulationCase00(unittest.TestCase):
         self.assertEqual(self.portfolio.assets[self.option.symbol].price, 0)
 
 
-class TestUnderlyingAssetAccumulationCase01(unittest.TestCase):
+class TestUnderlyingAssetAccumulationCase01(TestUnderlyingAssetAccumulation):
     """Test the accumulation of one operation with underlying assets."""
 
     def setUp(self):
-        self.portfolio = trade.Portfolio()
-        self.portfolio.tasks = [get_exercise_no_premium]
-
-        # Create an asset and a call
-        self.asset = trade.Asset(symbol='some asset')
-        self.option = trade.plugins.Option(
-            symbol='some option',
-            underlying_assets=[self.asset]
-        )
-
-        # Buy the asset
-        self.operation = trade.Operation(
-            asset=self.asset,
-            date='2015-10-01',
-            quantity=10,
-            price=5
-        )
-        self.portfolio.accumulate(self.operation)
-
-        # Buy the call
-        self.option_operation = trade.Operation(
-            asset=self.option,
-            date='2015-10-02',
-            quantity=10,
-            price=1
-        )
-        self.portfolio.accumulate(self.option_operation)
-
-        # Exercise the call
-        self.exercise = trade.plugins.Exercise(
-            asset=self.option,
-            date='2015-10-04',
-            quantity=10,
-            price=10
-        )
+        super(TestUnderlyingAssetAccumulationCase01, self).setUp()
         self.portfolio.accumulate(self.exercise)
-
-        # Buy the asset again
-        self.operation = trade.Operation(
-            asset=self.asset,
-            date='2015-10-05',
-            quantity=10,
-            price=7.5
-        )
-        self.portfolio.accumulate(self.operation)
+        self.portfolio.accumulate(self.operation2)
 
     def test_portfolio_asset_keys(self):
         self.assertEqual(len(self.portfolio.assets.keys()), 2)
@@ -132,12 +94,6 @@ class TestUnderlyingAssetAccumulationCase01(unittest.TestCase):
 
     def test_asset_accumulator_price(self):
         self.assertEqual(self.portfolio.assets[self.asset.symbol].price, 7.5)
-
-    def test_option_accumulator_asset(self):
-        self.assertEqual(
-            self.portfolio.assets[self.option.symbol].asset.symbol,
-            self.option.symbol
-        )
 
     def test_option_accumulator_quantity(self):
         self.assertEqual(self.portfolio.assets[self.option.symbol].quantity, 0)

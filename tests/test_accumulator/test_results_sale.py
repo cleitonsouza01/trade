@@ -46,13 +46,16 @@ OPERATION5 = Operation(
 )
 
 
-class TestAccumulatorResultsSaleCase00(unittest.TestCase):
-    """Test profits or losses originating from sale operations."""
+
+class TestAccumulatorSaleResults(unittest.TestCase):
 
     def setUp(self):
         self.accumulator = Accumulator(ASSET, logging=True)
         self.accumulator.accumulate_occurrence(OPERATION0)
         self.accumulator.accumulate_occurrence(OPERATION1)
+
+class TestAccumulatorResultsSaleCase00(TestAccumulatorSaleResults):
+    """Test profits or losses originating from sale operations."""
 
     def test_sale_result_log(self):
         expected_log = {
@@ -77,13 +80,11 @@ class TestAccumulatorResultsSaleCase00(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {})
 
 
-class TestAccumulatorResultsSaleCase01(unittest.TestCase):
+class TestAccumulatorResultsSaleCase01(TestAccumulatorSaleResults):
     """Test profits or losses originating from sale operations."""
 
     def setUp(self):
-        self.accumulator = Accumulator(ASSET, logging=True)
-        self.accumulator.accumulate_occurrence(OPERATION0)
-        self.accumulator.accumulate_occurrence(OPERATION1)
+        super(TestAccumulatorResultsSaleCase01, self).setUp()
         self.accumulator.accumulate_occurrence(OPERATION2)
 
     def test_sale_result_log(self):
@@ -116,13 +117,11 @@ class TestAccumulatorResultsSaleCase01(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {})
 
 
-class TestAccumulatorResultsSaleCase02(unittest.TestCase):
+class TestAccumulatorResultsSaleCase02(TestAccumulatorSaleResults):
     """Test profits or losses originating from sale operations."""
 
     def setUp(self):
-        self.accumulator = Accumulator(ASSET, logging=True)
-        self.accumulator.accumulate_occurrence(OPERATION0)
-        self.accumulator.accumulate_occurrence(OPERATION1)
+        super(TestAccumulatorResultsSaleCase02, self).setUp()
         self.accumulator.accumulate_occurrence(OPERATION2)
         self.accumulator.accumulate_occurrence(OPERATION3)
 
@@ -163,13 +162,11 @@ class TestAccumulatorResultsSaleCase02(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {'trades': 1000})
 
 
-class TestAccumulatorResultsSaleCase04(unittest.TestCase):
+class TestAccumulatorResultsSaleCase04(TestAccumulatorSaleResults):
     """Test profits or losses originating from sale operations."""
 
     def setUp(self):
-        self.accumulator = Accumulator(ASSET, logging=True)
-        self.accumulator.accumulate_occurrence(OPERATION0)
-        self.accumulator.accumulate_occurrence(OPERATION1)
+        super(TestAccumulatorResultsSaleCase04, self).setUp()
         self.accumulator.accumulate_occurrence(OPERATION2)
         self.accumulator.accumulate_occurrence(OPERATION3)
         self.accumulator.accumulate_occurrence(OPERATION4)
@@ -218,13 +215,11 @@ class TestAccumulatorResultsSaleCase04(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {'trades': 1000})
 
 
-class TestAccumulatorResultsSaleCase05(unittest.TestCase):
+class TestAccumulatorResultsSaleCase05(TestAccumulatorSaleResults):
     """Test profits or losses originating from sale operations."""
 
     def setUp(self):
-        self.accumulator = Accumulator(ASSET, logging=True)
-        self.accumulator.accumulate_occurrence(OPERATION0)
-        self.accumulator.accumulate_occurrence(OPERATION1)
+        super(TestAccumulatorResultsSaleCase05, self).setUp()
         self.accumulator.accumulate_occurrence(OPERATION2)
         self.accumulator.accumulate_occurrence(OPERATION3)
         self.accumulator.accumulate_occurrence(OPERATION4)
@@ -281,19 +276,17 @@ class TestAccumulatorResultsSaleCase05(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {'trades': 3000})
 
 
-class TestAccumulatorResultsSaleCase06(unittest.TestCase):
+class TestAccumulatorResultsSaleCase06(TestAccumulatorSaleResults):
     """Test profits or losses originating from sale operations."""
 
     def setUp(self):
-        self.accumulator = Accumulator(ASSET, logging=True)
+        super(TestAccumulatorResultsSaleCase06, self).setUp()
         self.operation5 = Operation(
             quantity=-50,
             price=40,
             date='2015-01-06',
             asset=ASSET
         )
-        self.accumulator.accumulate_occurrence(OPERATION0)
-        self.accumulator.accumulate_occurrence(OPERATION1)
         self.accumulator.accumulate_occurrence(OPERATION2)
         self.accumulator.accumulate_occurrence(OPERATION3)
         self.accumulator.accumulate_occurrence(OPERATION4)
@@ -350,25 +343,23 @@ class TestAccumulatorResultsSaleCase06(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {'trades': 2000})
 
 
-class TestAccumulatorResultsSaleCase07(unittest.TestCase):
+class TestAccumulatorResultsSaleCase07(TestAccumulatorSaleResults):
     """Test profits or losses originating from sale operations."""
 
     def setUp(self):
-        self.asset = Asset()
-        self.accumulator = Accumulator(self.asset, logging=True)
-
         self.operation0 = Operation(
             quantity=50,
             price=10,
             date='2015-01-01',
-            asset=self.asset
+            asset=ASSET
         )
         self.operation1 = Operation(
             quantity=-100,
             price=20,
             date='2015-01-02',
-            asset=self.asset
+            asset=ASSET
         )
+        self.accumulator = Accumulator(ASSET, logging=True)
         self.accumulator.accumulate_occurrence(self.operation0)
         self.accumulator.accumulate_occurrence(self.operation1)
 
