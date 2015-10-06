@@ -70,7 +70,7 @@ purchase = trade.Operation(
 )
 
 # accumulate the trade
-accumulator.accumulate_operation(purchase)
+accumulator.accumulate_occurrence(purchase)
 
 
 print(accumulator.quantity)
@@ -92,7 +92,7 @@ sale = trade.Operation(
 )
 
 # accumulate the new trade
-accumulator.accumulate_operation(sale)
+accumulator.accumulate_occurrence(sale)
 
 
 print(accumulator.quantity)

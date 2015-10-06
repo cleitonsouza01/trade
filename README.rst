@@ -73,7 +73,7 @@ A basic example of the trade module in action:
     )
 
     # accumulate the trade
-    accumulator.accumulate_operation(purchase)
+    accumulator.accumulate_occurrence(purchase)
 
 
     print(accumulator.quantity)
@@ -95,7 +95,7 @@ A basic example of the trade module in action:
     )
 
     # accumulate the new trade
-    accumulator.accumulate_operation(sale)
+    accumulator.accumulate_occurrence(sale)
 
 
     print(accumulator.quantity)

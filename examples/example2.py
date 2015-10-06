@@ -1,3 +1,6 @@
+from __future__ import absolute_import
+from __future__ import print_function
+
 import trade
 
 # create the asset and the operation
@@ -18,7 +21,7 @@ container.fetch_positions()
 accumulator = trade.Accumulator(asset)
 
 # accumulate the operation
-accumulator.accumulate_operation(
+accumulator.accumulate_occurrence(
     container.positions['operations'][asset.symbol]
 )
 

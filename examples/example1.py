@@ -1,3 +1,6 @@
+from __future__ import absolute_import
+from __future__ import print_function
+
 import trade
 
 # create the asset that we are going to trade
@@ -29,7 +32,7 @@ purchase = trade.Operation(
             )
 
 # accumulate the trade
-accumulator.accumulate_operation(purchase)
+accumulator.accumulate_occurrence(purchase)
 
 
 print(accumulator.quantity)
@@ -51,7 +54,7 @@ sale = trade.Operation(
         )
 
 # accumulate the new trade
-accumulator.accumulate_operation(sale)
+accumulator.accumulate_occurrence(sale)
 
 
 print(accumulator.quantity)
