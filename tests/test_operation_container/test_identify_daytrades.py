@@ -14,44 +14,50 @@ TASKS = [
 
 ASSET = trade.Asset(symbol='some asset')
 ASSET2 = trade.Asset(symbol='some other asset')
-OPERATION0 = trade.Operation(
-    date='2015-09-21',
-    asset=ASSET,
-    quantity=10,
-    price=2
-)
-OPERATION1 = trade.Operation(
-    date='2015-09-21',
-    asset=ASSET,
-    quantity=-10,
-    price=3
-)
-OPERATION2 = trade.Operation(
-    date='2015-09-21',
-    asset=ASSET,
-    quantity=-5,
-    price=3
-)
-OPERATION3 = trade.Operation(
-    date='2015-09-21',
-    asset=ASSET2,
-    quantity=-5,
-    price=7
-)
-OPERATION4 = trade.Operation(
-    date='2015-09-21',
-    asset=ASSET2,
-    quantity=5,
-    price=10
-)
 
 
-class TestContainerIndentifyDaytradesCase00(unittest.TestCase):
+class TestIdentifyDaytrades(unittest.TestCase):
+
+    def setUp(self):
+        self.operation0 = trade.Operation(
+            date='2015-09-21',
+            asset=ASSET,
+            quantity=10,
+            price=2
+        )
+        self.operation1 = trade.Operation(
+            date='2015-09-21',
+            asset=ASSET,
+            quantity=-10,
+            price=3
+        )
+        self.operation2 = trade.Operation(
+            date='2015-09-21',
+            asset=ASSET,
+            quantity=-5,
+            price=3
+        )
+        self.operation3 = trade.Operation(
+            date='2015-09-21',
+            asset=ASSET2,
+            quantity=-5,
+            price=7
+        )
+        self.operation4 = trade.Operation(
+            date='2015-09-21',
+            asset=ASSET2,
+            quantity=5,
+            price=10
+        )
+
+
+class TestContainerIndentifyDaytradesCase00(TestIdentifyDaytrades):
     """Test the identification of daytrade operations."""
 
     def setUp(self):
-        self.trade1 = copy.deepcopy(OPERATION0)
-        self.trade2 = copy.deepcopy(OPERATION1)
+        super(TestContainerIndentifyDaytradesCase00, self).setUp()
+        self.trade1 = copy.deepcopy(self.operation0)
+        self.trade2 = copy.deepcopy(self.operation1)
         self.container = trade.OperationContainer(
             operations=[self.trade1, self.trade2])
         self.container.tasks = TASKS
@@ -112,12 +118,13 @@ class TestContainerIndentifyDaytradesCase00(unittest.TestCase):
         )
 
 
-class TestContainerIndentifyDaytradesCase01(unittest.TestCase):
+class TestContainerIndentifyDaytradesCase01(TestIdentifyDaytrades):
     """Test the identification of daytrade operations."""
 
     def setUp(self):
-        self.trade1 = copy.deepcopy(OPERATION0)
-        self.trade2 = copy.deepcopy(OPERATION2)
+        super(TestContainerIndentifyDaytradesCase01, self).setUp()
+        self.trade1 = copy.deepcopy(self.operation0)
+        self.trade2 = copy.deepcopy(self.operation2)
         self.container = trade.OperationContainer(
             operations=[self.trade1, self.trade2])
         self.container.tasks = TASKS
@@ -196,13 +203,14 @@ class TestContainerIndentifyDaytradesCase01(unittest.TestCase):
         )
 
 
-class TestContainerIndentifyDaytradesCase02(unittest.TestCase):
+class TestContainerIndentifyDaytradesCase02(TestIdentifyDaytrades):
     """Test the identification of daytrade operations."""
 
     def setUp(self):
-        trade1 = copy.deepcopy(OPERATION0)
-        trade2 = copy.deepcopy(OPERATION2)
-        trade3 = copy.deepcopy(OPERATION3)
+        super(TestContainerIndentifyDaytradesCase02, self).setUp()
+        trade1 = copy.deepcopy(self.operation0)
+        trade2 = copy.deepcopy(self.operation2)
+        trade3 = copy.deepcopy(self.operation3)
         self.container = trade.OperationContainer(
             operations=[trade1, trade2, trade3])
         self.container.tasks = TASKS
@@ -303,14 +311,15 @@ class TestContainerIndentifyDaytradesCase02(unittest.TestCase):
         )
 
 
-class TestContainerIndentifyDaytradesCase03(unittest.TestCase):
+class TestContainerIndentifyDaytradesCase03(TestIdentifyDaytrades):
     """Test the identification of daytrade operations."""
 
     def setUp(self):
-        trade1 = copy.deepcopy(OPERATION0)
-        trade2 = copy.deepcopy(OPERATION2)
-        trade3 = copy.deepcopy(OPERATION3)
-        trade4 = copy.deepcopy(OPERATION4)
+        super(TestContainerIndentifyDaytradesCase03, self).setUp()
+        trade1 = copy.deepcopy(self.operation0)
+        trade2 = copy.deepcopy(self.operation2)
+        trade3 = copy.deepcopy(self.operation3)
+        trade4 = copy.deepcopy(self.operation4)
         self.container = trade.OperationContainer(
             operations=[trade1, trade2, trade3, trade4])
         self.container.tasks = TASKS
@@ -438,14 +447,15 @@ class TestContainerIndentifyDaytradesCase03(unittest.TestCase):
         )
 
 
-class TestContainerIndentifyDaytradesCase04(unittest.TestCase):
+class TestContainerIndentifyDaytradesCase04(TestIdentifyDaytrades):
     """Test the identification of daytrade operations."""
 
     def setUp(self):
-        trade1 = copy.deepcopy(OPERATION0)
-        trade2 = copy.deepcopy(OPERATION2)
-        trade3 = copy.deepcopy(OPERATION3)
-        trade4 = copy.deepcopy(OPERATION4)
+        super(TestContainerIndentifyDaytradesCase04, self).setUp()
+        trade1 = copy.deepcopy(self.operation0)
+        trade2 = copy.deepcopy(self.operation2)
+        trade3 = copy.deepcopy(self.operation3)
+        trade4 = copy.deepcopy(self.operation4)
         trade5 = trade.Operation(
             date='2015-09-21',
             asset=ASSET,
@@ -561,19 +571,20 @@ class TestContainerIndentifyDaytradesCase04(unittest.TestCase):
         )
 
 
-class TestContainerIndentifyDaytradesCase05(unittest.TestCase):
+class TestContainerIndentifyDaytradesCase05(TestIdentifyDaytrades):
     """Test the identification of daytrade operations."""
 
     def setUp(self):
-        trade1 = copy.deepcopy(OPERATION0)
+        super(TestContainerIndentifyDaytradesCase05, self).setUp()
+        trade1 = copy.deepcopy(self.operation0)
         trade2 = trade.Operation(
             date='2015-09-21',
             asset=ASSET,
             quantity=-5,
             price=10
         )
-        trade3 = copy.deepcopy(OPERATION3)
-        trade4 = copy.deepcopy(OPERATION4)
+        trade3 = copy.deepcopy(self.operation3)
+        trade4 = copy.deepcopy(self.operation4)
         trade5 = trade.Operation(
             date='2015-09-21',
             asset=ASSET,
@@ -685,14 +696,15 @@ class TestContainerIndentifyDaytradesCase05(unittest.TestCase):
         )
 
 
-class TestContainerIndentifyDaytradesCase06(unittest.TestCase):
+class TestContainerIndentifyDaytradesCase06(TestIdentifyDaytrades):
     """Test the identification of daytrade operations."""
 
     def setUp(self):
-        trade1 = copy.deepcopy(OPERATION0)
-        trade2 = copy.deepcopy(OPERATION2)
-        trade3 = copy.deepcopy(OPERATION3)
-        trade4 = copy.deepcopy(OPERATION4)
+        super(TestContainerIndentifyDaytradesCase06, self).setUp()
+        trade1 = copy.deepcopy(self.operation0)
+        trade2 = copy.deepcopy(self.operation2)
+        trade3 = copy.deepcopy(self.operation3)
+        trade4 = copy.deepcopy(self.operation4)
         trade5 = trade.Operation(
             date='2015-09-21',
             asset=ASSET,
@@ -828,15 +840,16 @@ class TestContainerIndentifyDaytradesCase06(unittest.TestCase):
         )
 
 
-class TestContainerIndentifyDaytradesCase07(unittest.TestCase):
+class TestContainerIndentifyDaytradesCase07(TestIdentifyDaytrades):
     """Test the identification of daytrade operations."""
 
     def setUp(self):
+        super(TestContainerIndentifyDaytradesCase07, self).setUp()
         self.asset3 = trade.Asset(symbol='even other asset')
-        trade1 = copy.deepcopy(OPERATION0)
-        trade2 = copy.deepcopy(OPERATION2)
-        trade3 = copy.deepcopy(OPERATION3)
-        trade4 = copy.deepcopy(OPERATION4)
+        trade1 = copy.deepcopy(self.operation0)
+        trade2 = copy.deepcopy(self.operation2)
+        trade3 = copy.deepcopy(self.operation3)
+        trade4 = copy.deepcopy(self.operation4)
         trade5 = trade.Operation(
             date='2015-09-21',
             asset=ASSET,

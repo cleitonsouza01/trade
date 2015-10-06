@@ -246,12 +246,12 @@ class Operation(Occurrence):
             date=None,
             asset=None
         ):
+        super(Operation, self).__init__(asset, date)
         self.quantity = quantity
         self.price = price
         self.commissions = {}
         self.fees = {}
         self.raw_results = {}
-        super(Operation, self).__init__(asset, date)
 
     @property
     def results(self):

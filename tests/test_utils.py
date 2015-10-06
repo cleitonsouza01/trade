@@ -41,6 +41,12 @@ class TestOperationUtils(unittest.TestCase):
             date='2015-09-22',
             asset=self.asset1
         )
+        self.operation6 = trade.Operation(
+            quantity=10,
+            price=5,
+            date='2015-09-22',
+            asset=self.asset2
+        )
 
 
 class TestSameSign(unittest.TestCase):
@@ -122,34 +128,11 @@ class TestDaytradeCondition(TestOperationUtils):
         )
 
     def test_case_06(self):
-        operation2 = trade.Operation(
-            quantity=10,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset2
-        )
         self.assertFalse(
-            trade.plugins.daytrade_condition(self.operation4, operation2)
+            trade.plugins.daytrade_condition(self.operation4, self.operation6)
         )
 
-    def test_case_07(self):
-        operation1 = trade.Operation(
-            quantity=-10,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset1
-        )
-        operation2 = trade.Operation(
-            quantity=-10,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset2
-        )
-        self.assertFalse(
-            trade.plugins.daytrade_condition(operation1, operation2)
-        )
-
-    def test_case_08(self):
+    def test_case_09(self):
         self.assertFalse(
             trade.plugins.daytrade_condition(self.operation2, self.operation2)
         )

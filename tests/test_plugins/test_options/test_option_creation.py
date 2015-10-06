@@ -18,14 +18,3 @@ class TestOptionCreationCase00(unittest.TestCase):
             expiration_date='2015-10-02',
             underlying_assets=[self.asset]
         )
-    def test_option_should_exist(self):
-        self.assertTrue(self.option)
-
-    def test_option_name(self):
-        self.assertEqual(self.option.symbol, 'GOOG151002C00540000')
-
-    def test_option_expiration_date(self):
-        self.assertEqual(self.option.expiration_date, '2015-10-02')
-
-    def test_underlying_assets(self):
-        self.assertEqual(self.option.underlying_assets, [self.asset])

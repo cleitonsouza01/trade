@@ -143,8 +143,8 @@ class TestProrateCommissionsByPositionCase05(unittest.TestCase):
 
     def setUp(self):
         discounts = {
-            'some discount': 1,
-            'other discount': 3
+            'some discount': 2,
+            'other discount': 6
         }
         trade1 = trade.Operation(
             date='2015-09-21',
@@ -178,24 +178,24 @@ class TestProrateCommissionsByPositionCase05(unittest.TestCase):
         self.assertEqual(
             round(self.container.positions['daytrades'][ASSET1.symbol]\
                 .operations[0].commissions['some discount'], 2),
-            0.14
+            0.29
         )
         self.assertEqual(
             round(self.container.positions['daytrades'][ASSET1.symbol]\
                 .operations[0].commissions['other discount'], 2),
-            0.43
+            0.86
         )
 
     def test_daytrade0_sale_discounts(self):
         self.assertEqual(
             round(self.container.positions['daytrades'][ASSET1.symbol]\
                 .operations[1].commissions['some discount'], 2),
-            0.21
+            0.43
         )
         self.assertEqual(
             round(self.container.positions['daytrades'][ASSET1.symbol]\
                 .operations[1].commissions['other discount'], 2),
-            0.64
+            1.29
         )
 
     def test_operations0_asset(self):
@@ -227,12 +227,12 @@ class TestProrateCommissionsByPositionCase05(unittest.TestCase):
         self.assertEqual(
             round(self.container.positions['operations'][ASSET1.symbol]\
                 .commissions['some discount'], 2),
-            0.14
+            0.29
         )
         self.assertEqual(
             round(self.container.positions['operations'][ASSET1.symbol]\
                 .commissions['other discount'], 2),
-            0.43
+            0.86
         )
 
     def test_operations1_asset(self):
@@ -262,8 +262,8 @@ class TestProrateCommissionsByPositionCase05(unittest.TestCase):
 
     def test_operations1_discounts(self):
         expected_discounts = {
-            'some discount': 0.5,
-            'other discount': 1.5
+            'some discount': 1,
+            'other discount': 3
         }
         self.assertEqual(
             self.container.positions['operations'][ASSET2.symbol]\

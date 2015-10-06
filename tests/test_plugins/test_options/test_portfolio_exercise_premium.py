@@ -15,8 +15,9 @@ class TestExercisePremium(unittest.TestCase):
         # Create an asset and a call
         self.asset = trade.Asset(symbol='some asset')
         self.option = trade.plugins.Option(
-            symbol='some option',
-            underlying_assets=[self.asset]
+            symbol='GOOG151002C00540000',
+            underlying_assets=[self.asset],
+            expiration_date='2015-10-02'
         )
 
         # Buy the asset
@@ -27,6 +28,14 @@ class TestExercisePremium(unittest.TestCase):
             price=5
         )
         self.portfolio.accumulate(self.operation)
+
+        # Exercise the call
+        self.exercise = trade.plugins.Exercise(
+            asset=self.option,
+            date='2015-10-04',
+            quantity=10,
+            price=5
+        )
 
 
 class TestExercisePremiumCase00(TestExercisePremium):
@@ -43,15 +52,16 @@ class TestExercisePremiumCase00(TestExercisePremium):
             price=1
         )
         self.portfolio.accumulate(self.option_operation)
-
-        # Exercise the call
-        self.exercise = trade.plugins.Exercise(
-            asset=self.option,
-            date='2015-10-04',
-            quantity=10,
-            price=5
-        )
         self.portfolio.accumulate(self.exercise)
+
+    def test_option_name(self):
+        self.assertEqual(self.option.symbol, 'GOOG151002C00540000')
+
+    def test_option_expiration_date(self):
+        self.assertEqual(self.option.expiration_date, '2015-10-02')
+
+    def test_underlying_assets(self):
+        self.assertEqual(self.option.underlying_assets, [self.asset])
 
     def test_portfolio_asset_keys(self):
         self.assertEqual(len(self.portfolio.assets.keys()), 2)
@@ -113,14 +123,6 @@ class TestExercisePremiumCase01(TestExercisePremium):
             price=1
         )
         self.portfolio.accumulate(self.option_operation)
-
-        # Exercise the call
-        self.exercise = trade.plugins.Exercise(
-            asset=self.option,
-            date='2015-10-04',
-            quantity=10,
-            price=5
-        )
         self.portfolio.accumulate(self.exercise)
 
     def test_portfolio_asset_keys(self):

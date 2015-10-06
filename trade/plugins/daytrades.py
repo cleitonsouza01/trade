@@ -75,13 +75,44 @@ class Daytrade(Operation):
         Both operations can be treated like any other operation when it
         comes to taxes and the prorate of commissions.
         """
-
-        # Find what is the purchase and what is the sale
+        super(Daytrade, self).__init__(
+            date=operation_a.date,
+            asset=operation_a.asset,
+        )
         purchase, sale = find_purchase_and_sale(operation_a, operation_b)
+        self.extract_daytrade(purchase, sale)
 
+        # Purchase is 0, Sale is 1
+        self.operations = [
+            Operation(
+                date=purchase.date,
+                asset=purchase.asset,
+                quantity=self.quantity,
+                price=purchase.price
+            ),
+            Operation(
+                date=sale.date,
+                asset=sale.asset,
+                quantity=self.quantity*-1,
+                price=sale.price
+            )
+        ]
+
+    @property
+    def results(self):
+        return {
+            'daytrades': abs(self.operations[1].real_value) - \
+                                        abs(self.operations[0].real_value)
+        }
+
+    def extract_daytrade(self, purchase, sale):
+        """Extract the daytraded quantity from 2 operations.
+
+        Returns the daytraded quantity.
+        """
         # Find the daytraded quantity; the daytraded
         # quantity is always the smallest absolute quantity
-        daytrade_quantity = min([abs(purchase.quantity), abs(sale.quantity)])
+        self.quantity = min([abs(purchase.quantity), abs(sale.quantity)])
 
         # Update the operations that originated the
         # daytrade with the new quantity after the
@@ -90,37 +121,8 @@ class Daytrade(Operation):
         # quantity after this, being fully consumed
         # by the daytrade. The other operation may or
         # may not end with zero quantity.
-        purchase.quantity -= daytrade_quantity
-        sale.quantity += daytrade_quantity
-
-        # Purchase is 0, Sale is 1
-        self.operations = [
-            Operation(
-                date=purchase.date,
-                asset=purchase.asset,
-                quantity=daytrade_quantity,
-                price=purchase.price
-            ),
-            Operation(
-                date=sale.date,
-                asset=sale.asset,
-                quantity=daytrade_quantity*-1,
-                price=sale.price
-            )
-        ]
-
-        super(Daytrade, self).__init__(
-            date=purchase.date,
-            asset=purchase.asset,
-            quantity=daytrade_quantity,
-        )
-
-    @property
-    def results(self):
-        return {
-            'daytrades': abs(self.operations[1].real_value) - \
-                                        abs(self.operations[0].real_value)
-        }
+        purchase.quantity -= self.quantity
+        sale.quantity += self.quantity
 
     def append_to_container_positions(self, container):
         """Save a Daytrade object in the container positions.

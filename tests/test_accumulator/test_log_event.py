@@ -7,6 +7,7 @@ import unittest
 
 import trade
 from trade import Accumulator, Asset
+from trade.plugins import StockSplit
 
 
 class DummyEvent(trade.plugins.Event):
@@ -14,14 +15,6 @@ class DummyEvent(trade.plugins.Event):
 
     def update_container(self, operation):
         pass
-
-
-class StockSplit(trade.plugins.Event):
-    """A stock split event for the tests."""
-
-    def update_container(self, container):
-        container.quantity = container.quantity * self.factor
-        container.price = container.price / self.factor
 
 
 class TestLogEvent00(unittest.TestCase):
