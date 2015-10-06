@@ -48,8 +48,6 @@ OPERATION5 = Operation(
 class TestAccumulatorResultsPurchaseCase00(unittest.TestCase):
     """Test profits or losses originating from purchase operations."""
 
-    maxDiff = None
-
     def setUp(self):
 
         self.accumulator = Accumulator(ASSET, logging=True)
@@ -81,8 +79,6 @@ class TestAccumulatorResultsPurchaseCase00(unittest.TestCase):
 
 class TestAccumulatorResultsPurchaseCase01(unittest.TestCase):
     """Test profits or losses originating from purchase operations."""
-
-    maxDiff = None
 
     def setUp(self):
         self.accumulator = Accumulator(ASSET, logging=True)
@@ -150,8 +146,6 @@ class TestAccumulatorResultsPurchaseCase01(unittest.TestCase):
 class TestAccumulatorResultsPurchaseCase02(unittest.TestCase):
     """Test profits or losses originating from purchase operations."""
 
-    maxDiff = None
-
     def setUp(self):
         self.accumulator = Accumulator(ASSET, logging=True)
         self.accumulator.accumulate_occurrence(OPERATION0)
@@ -199,8 +193,6 @@ class TestAccumulatorResultsPurchaseCase02(unittest.TestCase):
 
 class TestAccumulatorResultsPurchaseCase03(unittest.TestCase):
     """Test profits or losses originating from purchase operations."""
-
-    maxDiff = None
 
     def setUp(self):
         self.accumulator = Accumulator(ASSET, logging=True)
@@ -257,8 +249,6 @@ class TestAccumulatorResultsPurchaseCase03(unittest.TestCase):
 
 class TestAccumulatorResultsPurchaseCase04(unittest.TestCase):
     """Test profits or losses originating from purchase operations."""
-
-    maxDiff = None
 
     def setUp(self):
         self.accumulator = Accumulator(ASSET, logging=True)
@@ -322,8 +312,6 @@ class TestAccumulatorResultsPurchaseCase04(unittest.TestCase):
 
 class TestAccumulatorResultsPurchaseCase05(unittest.TestCase):
     """Test profits or losses originating from purchase operations."""
-
-    maxDiff = None
 
     def setUp(self):
         self.accumulator = Accumulator(ASSET, logging=True)
@@ -394,8 +382,6 @@ class TestAccumulatorResultsPurchaseCase05(unittest.TestCase):
 class TestAccumulatorResultsPurchaseCase06(unittest.TestCase):
     """Test profits or losses originating from purchase operations."""
 
-    maxDiff = None
-
     def setUp(self):
         self.accumulator = Accumulator(ASSET, logging=True)
         self.operation0 = Operation(
@@ -433,8 +419,6 @@ class TestAccumulatorResultsPurchaseCase06(unittest.TestCase):
 
 class TestAccumulatorResultsPurchaseCase07(unittest.TestCase):
     """Test profits or losses originating from purchase operations."""
-
-    maxDiff = None
 
     def setUp(self):
         self.accumulator = Accumulator(ASSET, logging=True)

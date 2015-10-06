@@ -5,8 +5,8 @@ import unittest
 
 import trade
 
-class TestExercisePremiumCase00(unittest.TestCase):
-    """Test the accumulation of one operation with underlying assets."""
+
+class TestExercisePremium(unittest.TestCase):
 
     def setUp(self):
         self.portfolio = trade.Portfolio()
@@ -27,6 +27,13 @@ class TestExercisePremiumCase00(unittest.TestCase):
             price=5
         )
         self.portfolio.accumulate(self.operation)
+
+
+class TestExercisePremiumCase00(TestExercisePremium):
+    """Test the accumulation of one operation with underlying assets."""
+
+    def setUp(self):
+        super(TestExercisePremiumCase00, self).setUp()
 
         # Buy the call
         self.option_operation = trade.Operation(
@@ -92,28 +99,11 @@ class TestExercisePremiumCase00(unittest.TestCase):
         self.assertEqual(self.portfolio.assets[self.option.symbol].price, 0)
 
 
-class TestExercisePremiumCase01(unittest.TestCase):
+class TestExercisePremiumCase01(TestExercisePremium):
     """Test the accumulation of one operation with underlying assets."""
 
     def setUp(self):
-        self.portfolio = trade.Portfolio()
-        self.portfolio.tasks = [trade.plugins.get_exercise_premium]
-
-        # Create an asset and a call
-        self.asset = trade.Asset(symbol='some asset')
-        self.option = trade.plugins.Option(
-            symbol='some option',
-            underlying_assets=[self.asset]
-        )
-
-        # Buy the asset
-        self.operation = trade.Operation(
-            asset=self.asset,
-            date='2015-10-01',
-            quantity=10,
-            price=5
-        )
-        self.portfolio.accumulate(self.operation)
+        super(TestExercisePremiumCase01, self).setUp()
 
         # Buy the call
         self.option_operation = trade.Operation(

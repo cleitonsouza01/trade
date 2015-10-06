@@ -6,6 +6,43 @@ import unittest
 import trade
 
 
+class TestOperationUtils(unittest.TestCase):
+
+    def setUp(self):
+        self.asset1 = trade.Asset()
+        self.asset2 = trade.Asset()
+        self.operation1 = trade.Operation(
+            quantity=-10,
+            price=5,
+            date='2015-09-22',
+            asset=self.asset1
+        )
+        self.operation2 = trade.Operation(
+            quantity=10,
+            price=5,
+            date='2015-09-22',
+            asset=self.asset1
+        )
+        self.operation3 = trade.Operation(
+            quantity=0,
+            price=0,
+            date='2015-09-22',
+            asset=self.asset1
+        )
+        self.operation4 = trade.Operation(
+            quantity=0,
+            price=5,
+            date='2015-09-22',
+            asset=self.asset1
+        )
+        self.operation5 = trade.Operation(
+            quantity=-5,
+            price=0,
+            date='2015-09-22',
+            asset=self.asset1
+        )
+
+
 class TestSameSign(unittest.TestCase):
     """Test the same_sign() function.
 
@@ -27,9 +64,6 @@ class TestAveragePrice(unittest.TestCase):
     price associeated to it, and returns the average price.
     """
 
-    def setUp(self):
-        pass
-
     def test_case_00(self):
         price = trade.average_price(10, 2, 10, 4)
         self.assertEqual(price, 3)
@@ -43,7 +77,7 @@ class TestAveragePrice(unittest.TestCase):
         self.assertEqual(price, 2)
 
 
-class TestDaytradeCondition(unittest.TestCase):
+class TestDaytradeCondition(TestOperationUtils):
     """Tests the function daytrade_condition().
 
     The daytrade_condition function receives two operations and
@@ -51,85 +85,27 @@ class TestDaytradeCondition(unittest.TestCase):
     False otherwise.
     """
 
-    def setUp(self):
-        self.asset1 = trade.Asset()
-        self.asset2 = trade.Asset()
-
     def test_case_00(self):
-        operation1 = trade.Operation(
-            quantity=-10,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset1
-        )
-        operation2 = trade.Operation(
-            quantity=10,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset1
-        )
         self.assertTrue(
-            trade.plugins.daytrade_condition(operation1, operation2)
+            trade.plugins.daytrade_condition(self.operation1, self.operation2)
         )
 
     def test_case_01(self):
-        operation1 = trade.Operation(
-            quantity=10,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset1
-        )
-        operation2 = trade.Operation(
-            quantity=-10,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset1
-        )
         self.assertTrue(
-            trade.plugins.daytrade_condition(operation1, operation2)
+            trade.plugins.daytrade_condition(self.operation2, self.operation1)
         )
 
     def test_case_02(self):
-        operation1 = trade.Operation(
-            quantity=0,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset1
-        )
-        operation2 = trade.Operation(
-            quantity=0,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset1
-        )
         self.assertFalse(
-            trade.plugins.daytrade_condition(operation1, operation2)
+            trade.plugins.daytrade_condition(self.operation4, self.operation4)
         )
 
     def test_case_03(self):
-        operation1 = trade.Operation(
-            quantity=0,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset1
-        )
-        operation2 = trade.Operation(
-            quantity=-10,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset2
-        )
         self.assertFalse(
-            trade.plugins.daytrade_condition(operation1, operation2)
+            trade.plugins.daytrade_condition(self.operation4, self.operation1)
         )
 
     def test_case_04(self):
-        operation1 = trade.Operation(
-            quantity=-10,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset1
-        )
         operation2 = trade.Operation(
             quantity=0,
             price=5,
@@ -137,33 +113,15 @@ class TestDaytradeCondition(unittest.TestCase):
             asset=self.asset2
         )
         self.assertFalse(
-            trade.plugins.daytrade_condition(operation1, operation2)
+            trade.plugins.daytrade_condition(self.operation1, operation2)
         )
 
     def test_case_05(self):
-        operation1 = trade.Operation(
-            quantity=10,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset1
-        )
-        operation2 = trade.Operation(
-            quantity=0,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset2
-        )
         self.assertFalse(
-            trade.plugins.daytrade_condition(operation1, operation2)
+            trade.plugins.daytrade_condition(self.operation1, self.operation4)
         )
 
     def test_case_06(self):
-        operation1 = trade.Operation(
-            quantity=0,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset1
-        )
         operation2 = trade.Operation(
             quantity=10,
             price=5,
@@ -171,7 +129,7 @@ class TestDaytradeCondition(unittest.TestCase):
             asset=self.asset2
         )
         self.assertFalse(
-            trade.plugins.daytrade_condition(operation1, operation2)
+            trade.plugins.daytrade_condition(self.operation4, operation2)
         )
 
     def test_case_07(self):
@@ -192,24 +150,12 @@ class TestDaytradeCondition(unittest.TestCase):
         )
 
     def test_case_08(self):
-        operation1 = trade.Operation(
-            quantity=10,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset1
-        )
-        operation2 = trade.Operation(
-            quantity=10,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset2
-        )
         self.assertFalse(
-            trade.plugins.daytrade_condition(operation1, operation2)
+            trade.plugins.daytrade_condition(self.operation2, self.operation2)
         )
 
 
-class TestFindPurchaseAndSale(unittest.TestCase):
+class TestFindPurchaseAndSale(TestOperationUtils):
     """Test the find_purchase_and_sale() function.
 
     This function receives two operations an is expected to
@@ -218,120 +164,63 @@ class TestFindPurchaseAndSale(unittest.TestCase):
     element.
     """
 
-    def setUp(self):
-        self.asset = trade.Asset()
-
     def test_case_00(self):
-        operation1 = trade.Operation(
-            quantity=10,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset
-        )
-        operation2 = trade.Operation(
-            quantity=-10,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset
-        )
-        result = (operation1, operation2)
+        result = (self.operation2, self.operation1)
         self.assertEqual(
-            trade.plugins.find_purchase_and_sale(operation1, operation2),
+            trade.plugins.find_purchase_and_sale(
+                self.operation2, self.operation1
+            ),
             result
         )
 
     def test_case_01(self):
-        operation1 = trade.Operation(
-            quantity=-10,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset
-        )
-        operation2 = trade.Operation(
-            quantity=10,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset
-        )
-        result = (operation2, operation1)
+        result = (self.operation2, self.operation1)
         self.assertEqual(
-            trade.plugins.find_purchase_and_sale(operation1, operation2),
+            trade.plugins.find_purchase_and_sale(self.operation1, self.operation2),
             result
         )
 
     def test_case_02(self):
-        operation1 = trade.Operation(
-            quantity=10,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset
-        )
-        operation2 = trade.Operation(
-            quantity=10,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset
-        )
         result = None, None
         self.assertEqual(
-            trade.plugins.find_purchase_and_sale(operation1, operation2),
+            trade.plugins.find_purchase_and_sale(
+                self.operation2, self.operation2
+            ),
             result
         )
 
     def test_case_03(self):
-        operation1 = trade.Operation(
-            quantity=-10,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset
-        )
-        operation2 = trade.Operation(
-            quantity=-10,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset
-        )
         result = None, None
         self.assertEqual(
-            trade.plugins.find_purchase_and_sale(operation1, operation2),
+            trade.plugins.find_purchase_and_sale(
+                self.operation1, self.operation1
+            ),
             result
         )
 
     def test_case_04(self):
-        operation1 = trade.Operation(
-            quantity=0,
-            price=0,
-            date='2015-09-22',
-            asset=self.asset
-        )
         operation2 = trade.Operation(
             quantity=5,
             price=5,
             date='2015-09-22',
-            asset=self.asset
+            asset=self.asset1
         )
         result = None, None
         self.assertEqual(
-            trade.plugins.find_purchase_and_sale(operation1, operation2),
+            trade.plugins.find_purchase_and_sale(self.operation2, operation2),
             result
         )
 
     def test_case_05(self):
-        operation1 = trade.Operation(
-            quantity=0,
-            price=0,
-            date='2015-09-22',
-            asset=self.asset
-        )
         operation2 = trade.Operation(
             quantity=-5,
             price=5,
             date='2015-09-22',
-            asset=self.asset
+            asset=self.asset1
         )
-        result = (operation1, operation2)
+        result = (self.operation3, operation2)
         self.assertEqual(
-            trade.plugins.find_purchase_and_sale(operation1, operation2),
+            trade.plugins.find_purchase_and_sale(self.operation3, operation2),
             result
         )
 
@@ -340,35 +229,20 @@ class TestFindPurchaseAndSale(unittest.TestCase):
             quantity=5,
             price=0,
             date='2015-09-22',
-            asset=self.asset
-        )
-        operation2 = trade.Operation(
-            quantity=0,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset
+            asset=self.asset1
         )
         result = None, None
         self.assertEqual(
-            trade.plugins.find_purchase_and_sale(operation1, operation2),
+            trade.plugins.find_purchase_and_sale(operation1, self.operation4),
             result
         )
 
     def test_case_07(self):
-        operation1 = trade.Operation(
-            quantity=-5,
-            price=0,
-            date='2015-09-22',
-            asset=self.asset
-        )
-        operation2 = trade.Operation(
-            quantity=0,
-            price=5,
-            date='2015-09-22',
-            asset=self.asset
-        )
-        result = (operation2, operation1)
+
+        result = (self.operation4, self.operation5)
         self.assertEqual(
-            trade.plugins.find_purchase_and_sale(operation1, operation2),
+            trade.plugins.find_purchase_and_sale(
+                self.operation5, self.operation4
+            ),
             result
         )

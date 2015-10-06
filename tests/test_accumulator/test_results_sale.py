@@ -49,8 +49,6 @@ OPERATION5 = Operation(
 class TestAccumulatorResultsSaleCase00(unittest.TestCase):
     """Test profits or losses originating from sale operations."""
 
-    maxDiff = None
-
     def setUp(self):
         self.accumulator = Accumulator(ASSET, logging=True)
         self.accumulator.accumulate_occurrence(OPERATION0)
@@ -81,8 +79,6 @@ class TestAccumulatorResultsSaleCase00(unittest.TestCase):
 
 class TestAccumulatorResultsSaleCase01(unittest.TestCase):
     """Test profits or losses originating from sale operations."""
-
-    maxDiff = None
 
     def setUp(self):
         self.accumulator = Accumulator(ASSET, logging=True)
@@ -122,8 +118,6 @@ class TestAccumulatorResultsSaleCase01(unittest.TestCase):
 
 class TestAccumulatorResultsSaleCase02(unittest.TestCase):
     """Test profits or losses originating from sale operations."""
-
-    maxDiff = None
 
     def setUp(self):
         self.accumulator = Accumulator(ASSET, logging=True)
@@ -171,8 +165,6 @@ class TestAccumulatorResultsSaleCase02(unittest.TestCase):
 
 class TestAccumulatorResultsSaleCase04(unittest.TestCase):
     """Test profits or losses originating from sale operations."""
-
-    maxDiff = None
 
     def setUp(self):
         self.accumulator = Accumulator(ASSET, logging=True)
@@ -228,8 +220,6 @@ class TestAccumulatorResultsSaleCase04(unittest.TestCase):
 
 class TestAccumulatorResultsSaleCase05(unittest.TestCase):
     """Test profits or losses originating from sale operations."""
-
-    maxDiff = None
 
     def setUp(self):
         self.accumulator = Accumulator(ASSET, logging=True)
@@ -293,8 +283,6 @@ class TestAccumulatorResultsSaleCase05(unittest.TestCase):
 
 class TestAccumulatorResultsSaleCase06(unittest.TestCase):
     """Test profits or losses originating from sale operations."""
-
-    maxDiff = None
 
     def setUp(self):
         self.accumulator = Accumulator(ASSET, logging=True)
@@ -364,8 +352,6 @@ class TestAccumulatorResultsSaleCase06(unittest.TestCase):
 
 class TestAccumulatorResultsSaleCase07(unittest.TestCase):
     """Test profits or losses originating from sale operations."""
-
-    maxDiff = None
 
     def setUp(self):
         self.asset = Asset()

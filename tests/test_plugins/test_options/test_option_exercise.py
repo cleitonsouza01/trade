@@ -6,18 +6,22 @@ import unittest
 import trade
 
 
-class TestOptionExerciseCase00(unittest.TestCase):
-    """Test the exercise of a call.
-    """
+class TestOptionExercises(unittest.TestCase):
 
     def setUp(self):
-
         self.asset = trade.Asset(symbol='GOOGL')
         self.option = trade.plugins.Option(
             symbol='GOOG151002C00540000',
             expiration_date='2015-10-02',
             underlying_assets=[self.asset]
         )
+
+
+class TestOptionExerciseCase00(TestOptionExercises):
+    """Test the exercise of a call."""
+
+    def setUp(self):
+        super(TestOptionExerciseCase00, self).setUp()
         self.operations = self.option.exercise(
             quantity=100,
             price=10,
@@ -41,18 +45,11 @@ class TestOptionExerciseCase00(unittest.TestCase):
 
 
 
-class TestOptionExerciseCase01(unittest.TestCase):
-    """Test the exercise of a put.
-    """
+class TestOptionExerciseCase01(TestOptionExercises):
+    """Test the exercise of a put."""
 
     def setUp(self):
-
-        self.asset = trade.Asset(symbol='GOOGL')
-        self.option = trade.plugins.Option(
-            symbol='GOOG151002C00540000',
-            expiration_date='2015-10-02',
-            underlying_assets=[self.asset]
-        )
+        super(TestOptionExerciseCase01, self).setUp()
         self.operations = self.option.exercise(
             quantity=-100,
             price=10,

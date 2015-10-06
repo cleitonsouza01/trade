@@ -5,10 +5,11 @@ import unittest
 
 import trade
 
-ASSET = trade.Asset(symbol='some asset')
+ASSET1 = trade.Asset(symbol='GOOGL')
+ASSET2 = trade.Asset(symbol='AAPL')
 OPERATION = trade.Operation(
     date='2015-09-21',
-    asset=ASSET,
+    asset=ASSET1,
     quantity=-10,
     price=2
 )
@@ -26,11 +27,8 @@ class TestProrateCommissionsByPositionCase01(unittest.TestCase):
         )
 
     def test_operation_discount(self):
-        expected_discounts = {
-            'some discount': 1,
-        }
         self.container.prorate_commissions_by_position(OPERATION)
-        self.assertEqual(OPERATION.commissions, expected_discounts)
+        self.assertEqual(OPERATION.commissions, {'some discount': 1})
 
 
 class TestProrateCommissionsByPositionCase02(unittest.TestCase):
@@ -42,7 +40,7 @@ class TestProrateCommissionsByPositionCase02(unittest.TestCase):
         }
         self.operation2 = trade.Operation(
             date='2015-09-21',
-            asset=ASSET,
+            asset=ASSET1,
             quantity=-10,
             price=2
         )
@@ -55,18 +53,12 @@ class TestProrateCommissionsByPositionCase02(unittest.TestCase):
         )
 
     def test_check_trade1_discount(self):
-        expected_discounts = {
-            'some discount': 0.5,
-        }
         self.container.prorate_commissions_by_position(OPERATION)
-        self.assertEqual(OPERATION.commissions, expected_discounts)
+        self.assertEqual(OPERATION.commissions, {'some discount': 0.5})
 
     def test_check_trade2_discount(self):
-        expected_discounts = {
-            'some discount': 0.5,
-        }
         self.container.prorate_commissions_by_position(self.operation2)
-        self.assertEqual(self.operation2.commissions, expected_discounts)
+        self.assertEqual(self.operation2.commissions, {'some discount': 0.5})
 
 
 class TestProrateCommissionsByPositionCase03(unittest.TestCase):
@@ -78,7 +70,7 @@ class TestProrateCommissionsByPositionCase03(unittest.TestCase):
         }
         self.operation2 = trade.Operation(
             date='2015-09-21',
-            asset=ASSET,
+            asset=ASSET1,
             quantity=-20,
             price=2
         )
@@ -112,17 +104,15 @@ class TestProrateCommissionsByPositionCase04(unittest.TestCase):
         discounts = {
             'some discount': 4,
         }
-        asset2 = trade.Asset(symbol='some other asset')
-
         self.operation2 = trade.Operation(
             date='2015-09-21',
-            asset=ASSET,
+            asset=ASSET1,
             quantity=-20,
             price=2
         )
         self.operation3 = trade.Operation(
             date='2015-09-21',
-            asset=asset2,
+            asset=ASSET2,
             quantity=-10,
             price=2
         )
@@ -156,23 +146,21 @@ class TestProrateCommissionsByPositionCase05(unittest.TestCase):
             'some discount': 1,
             'other discount': 3
         }
-        self.asset1 = trade.Asset(symbol='some asset')
-        self.asset2 = trade.Asset(symbol='some other asset')
         trade1 = trade.Operation(
             date='2015-09-21',
-            asset=self.asset1,
+            asset=ASSET1,
             quantity=10,
             price=2
         )
         trade2 = trade.Operation(
             date='2015-09-21',
-            asset=self.asset1,
+            asset=ASSET1,
             quantity=-5,
             price=3
         )
         trade3 = trade.Operation(
             date='2015-09-21',
-            asset=self.asset2,
+            asset=ASSET2,
             quantity=-5,
             price=7
         )
@@ -188,87 +176,87 @@ class TestProrateCommissionsByPositionCase05(unittest.TestCase):
 
     def test_daytrade0_buy_discounts(self):
         self.assertEqual(
-            round(self.container.positions['daytrades'][self.asset1.symbol]\
+            round(self.container.positions['daytrades'][ASSET1.symbol]\
                 .operations[0].commissions['some discount'], 2),
             0.14
         )
         self.assertEqual(
-            round(self.container.positions['daytrades'][self.asset1.symbol]\
+            round(self.container.positions['daytrades'][ASSET1.symbol]\
                 .operations[0].commissions['other discount'], 2),
             0.43
         )
 
     def test_daytrade0_sale_discounts(self):
         self.assertEqual(
-            round(self.container.positions['daytrades'][self.asset1.symbol]\
+            round(self.container.positions['daytrades'][ASSET1.symbol]\
                 .operations[1].commissions['some discount'], 2),
             0.21
         )
         self.assertEqual(
-            round(self.container.positions['daytrades'][self.asset1.symbol]\
+            round(self.container.positions['daytrades'][ASSET1.symbol]\
                 .operations[1].commissions['other discount'], 2),
             0.64
         )
 
     def test_operations0_asset(self):
         self.assertEqual(
-            self.container.positions['operations'][self.asset1.symbol].asset,
-            self.asset1
+            self.container.positions['operations'][ASSET1.symbol].asset,
+            ASSET1
         )
 
     def test_operations0_quantity(self):
         self.assertEqual(
-            self.container.positions['operations'][self.asset1.symbol]\
+            self.container.positions['operations'][ASSET1.symbol]\
                 .quantity,
             5
         )
 
     def test_operations0_price(self):
         self.assertEqual(
-            self.container.positions['operations'][self.asset1.symbol].price,
+            self.container.positions['operations'][ASSET1.symbol].price,
             2
         )
 
     def test_operations0_volume(self):
         self.assertEqual(
-            self.container.positions['operations'][self.asset1.symbol].volume,
+            self.container.positions['operations'][ASSET1.symbol].volume,
             10
         )
 
     def test_operations0_discounts(self):
         self.assertEqual(
-            round(self.container.positions['operations'][self.asset1.symbol]\
+            round(self.container.positions['operations'][ASSET1.symbol]\
                 .commissions['some discount'], 2),
             0.14
         )
         self.assertEqual(
-            round(self.container.positions['operations'][self.asset1.symbol]\
+            round(self.container.positions['operations'][ASSET1.symbol]\
                 .commissions['other discount'], 2),
             0.43
         )
 
     def test_operations1_asset(self):
         self.assertEqual(
-            self.container.positions['operations'][self.asset2.symbol].asset,
-            self.asset2
+            self.container.positions['operations'][ASSET2.symbol].asset,
+            ASSET2
         )
 
     def test_operations1_quantity(self):
         self.assertEqual(
-            self.container.positions['operations'][self.asset2.symbol]\
+            self.container.positions['operations'][ASSET2.symbol]\
                 .quantity,
             -5
         )
 
     def test_operations1_price(self):
         self.assertEqual(
-            self.container.positions['operations'][self.asset2.symbol].price,
+            self.container.positions['operations'][ASSET2.symbol].price,
             7
         )
 
     def test_operations1_volume(self):
         self.assertEqual(
-            self.container.positions['operations'][self.asset2.symbol].volume,
+            self.container.positions['operations'][ASSET2.symbol].volume,
             35
         )
 
@@ -278,7 +266,7 @@ class TestProrateCommissionsByPositionCase05(unittest.TestCase):
             'other discount': 1.5
         }
         self.assertEqual(
-            self.container.positions['operations'][self.asset2.symbol]\
+            self.container.positions['operations'][ASSET2.symbol]\
                 .commissions,
             expected_discounts
         )

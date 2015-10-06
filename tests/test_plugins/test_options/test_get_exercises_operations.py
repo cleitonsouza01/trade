@@ -6,8 +6,7 @@ import unittest
 import trade
 
 
-class TestFetchExercisesCase00(unittest.TestCase):
-    """Test the fetch_exercises() task of the Accumulator."""
+class TestFetchExercises(unittest.TestCase):
 
     def setUp(self):
         self.asset = trade.Asset(symbol='GOOGL')
@@ -16,14 +15,21 @@ class TestFetchExercisesCase00(unittest.TestCase):
             expiration_date='2015-10-02',
             underlying_assets=[self.asset]
         )
-        self.exercise = trade.plugins.Exercise(
+        self.exercise0 = trade.plugins.Exercise(
             date='2015-09-18',
             asset=self.option,
             quantity=100,
-            price=10
+            price=1
         )
+
+
+class TestFetchExercisesCase00(TestFetchExercises):
+    """Test the fetch_exercises() task of the Accumulator."""
+
+    def setUp(self):
+        super(TestFetchExercisesCase00, self).setUp()
         self.container = trade.OperationContainer(
-            operations=[self.exercise]
+            operations=[self.exercise0]
         )
         self.container.tasks = [
             trade.plugins.fetch_exercises,
@@ -31,7 +37,7 @@ class TestFetchExercisesCase00(unittest.TestCase):
         self.container.fetch_positions()
 
     def test_container_volume(self):
-        self.assertEqual(self.container.volume, 1000)
+        self.assertEqual(self.container.volume, 100)
 
     def test_container_exercises_len(self):
         self.assertEqual(
@@ -60,26 +66,15 @@ class TestFetchExercisesCase00(unittest.TestCase):
     def test_asset_purchase_price(self):
         self.assertEqual(
             self.container.positions['exercises'][self.asset.symbol].price,
-            10
+            1
         )
 
 
-class TestFetchExercisesCase01(unittest.TestCase):
+class TestFetchExercisesCase01(TestFetchExercises):
     """Test the fetch_exercises() task of the Accumulator."""
 
     def setUp(self):
-        self.asset = trade.Asset(symbol='GOOGL')
-        self.option = trade.plugins.Option(
-            symbol='GOOG151002C00540000',
-            expiration_date='2015-10-02',
-            underlying_assets=[self.asset]
-        )
-        self.exercise0 = trade.plugins.Exercise(
-            date='2015-09-18',
-            asset=self.option,
-            quantity=100,
-            price=1
-        )
+        super(TestFetchExercisesCase01, self).setUp()
         self.exercise1 = trade.plugins.Exercise(
             date='2015-09-18',
             asset=self.option,

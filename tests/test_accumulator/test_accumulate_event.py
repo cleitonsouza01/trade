@@ -13,6 +13,7 @@ class EventThatChangeResults(trade.plugins.Event):
     """A fictional event for the tests."""
 
     def update_container(self, container):
+        """Increment all results in the container with the factor."""
         for key in container.results.keys():
             container.results[key] += self.factor
 
@@ -30,24 +31,13 @@ class TestEventThatChangeResultsCase00(unittest.TestCase):
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}
         self.event = EventThatChangeResults(self.asset, '2015-09-27', 2)
-
-    def test_check_initial_quantity(self):
-        self.assertEqual(self.accumulator.quantity, 100)
-
-    def test_check_initial_price(self):
-        self.assertEqual(self.accumulator.price, 10)
-
-    def test_check_initial_results(self):
-        self.assertEqual(self.accumulator.results, {'trades': 1200})
+        self.accumulator.accumulate_occurrence(self.event)
 
     def test_check_quantity_after_split(self):
-        self.accumulator.accumulate_occurrence(self.event)
         self.assertEqual(self.accumulator.quantity, 100)
 
     def test_check_price_after_split(self):
-        self.accumulator.accumulate_occurrence(self.event)
         self.assertEqual(self.accumulator.price, 10)
 
     def test_check_results_after_split(self):
-        self.accumulator.accumulate_occurrence(self.event)
         self.assertEqual(self.accumulator.results, {'trades': 1202})

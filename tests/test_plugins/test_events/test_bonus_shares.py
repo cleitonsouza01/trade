@@ -6,8 +6,7 @@ import unittest
 import trade
 
 
-class TestBonusSharesCase00(unittest.TestCase):
-    """Test a bonus shares event with factor 1."""
+class TestBonusShares(unittest.TestCase):
 
     def setUp(self):
         self.asset = trade.Asset()
@@ -15,6 +14,13 @@ class TestBonusSharesCase00(unittest.TestCase):
         self.accumulator.quantity = 100
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}
+
+
+class TestBonusSharesCase00(TestBonusShares):
+    """Test a bonus shares event with factor 1."""
+
+    def setUp(self):
+        super(TestBonusSharesCase00, self).setUp()
         event = trade.plugins.BonusShares(
             asset=self.asset,
             date='2015-09-24',
@@ -32,15 +38,11 @@ class TestBonusSharesCase00(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {'trades': 1200})
 
 
-class TestBonusSharesCase01(unittest.TestCase):
+class TestBonusSharesCase01(TestBonusShares):
     """Test a bonus shares event with factor 2."""
 
     def setUp(self):
-        self.asset = trade.Asset()
-        self.accumulator = trade.Accumulator(self.asset, logging=True)
-        self.accumulator.quantity = 100
-        self.accumulator.price = 10
-        self.accumulator.results = {'trades': 1200}
+        super(TestBonusSharesCase01, self).setUp()
         event = trade.plugins.BonusShares(
             asset=self.asset,
             date='2015-09-24',
@@ -58,15 +60,11 @@ class TestBonusSharesCase01(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {'trades': 1200})
 
 
-class TestBonusSharesCase02(unittest.TestCase):
+class TestBonusSharesCase02(TestBonusShares):
     """Test a bonus shares event with factor 0.5."""
 
     def setUp(self):
-        self.asset = trade.Asset()
-        self.accumulator = trade.Accumulator(self.asset, logging=True)
-        self.accumulator.quantity = 100
-        self.accumulator.price = 10
-        self.accumulator.results = {'trades': 1200}
+        super(TestBonusSharesCase02, self).setUp()
         event = trade.plugins.BonusShares(
             asset=self.asset,
             date='2015-09-24',

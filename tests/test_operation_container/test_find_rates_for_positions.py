@@ -7,6 +7,10 @@ from abc import ABCMeta, abstractmethod
 import trade
 
 
+ASSET1 = trade.Asset(symbol='some asset')
+ASSET2 = trade.Asset(symbol='some other asset')
+
+
 class TaxManagerForTests(trade.TradingFees):
     """A TradingFees object for the tests."""
 
@@ -25,23 +29,21 @@ class TestFindFeesForPositionsCase00(unittest.TestCase):
     """Test the application of fees to operations in the container."""
 
     def setUp(self):
-        self.asset1 = trade.Asset(symbol='some asset')
-        self.asset2 = trade.Asset(symbol='some other asset')
         operation1 = trade.Operation(
             date='2015-09-21',
-            asset=self.asset1,
+            asset=ASSET1,
             quantity=10,
             price=2
         )
         operation2 = trade.Operation(
             date='2015-09-21',
-            asset=self.asset1,
+            asset=ASSET1,
             quantity=-5,
             price=3
         )
         operation3 = trade.Operation(
             date='2015-09-21',
-            asset=self.asset2,
+            asset=ASSET2,
             quantity=-5,
             price=7
         )
@@ -69,7 +71,7 @@ class TestFindFeesForPositionsCase00(unittest.TestCase):
             'rate': 0.005,
         }
         self.assertEqual(
-            self.container.positions['daytrades'][self.asset1.symbol]\
+            self.container.positions['daytrades'][ASSET1.symbol]\
                 .operations[0].fees,
             taxes
         )
@@ -79,21 +81,21 @@ class TestFindFeesForPositionsCase00(unittest.TestCase):
             'rate': 0.005,
         }
         self.assertEqual(
-            self.container.positions['daytrades'][self.asset1.symbol]\
-                .operations[0].fees,
+            self.container.positions['daytrades'][ASSET1.symbol]\
+                .operations[1].fees,
             taxes
         )
 
     def test_operations0_taxes(self):
         taxes = {'rate':1}
         self.assertEqual(
-            self.container.positions['operations'][self.asset1.symbol].fees,
+            self.container.positions['operations'][ASSET1.symbol].fees,
             taxes
         )
 
     def test_operations1_taxes(self):
         taxes = {'rate':1}
         self.assertEqual(
-            self.container.positions['operations'][self.asset2.symbol].fees,
+            self.container.positions['operations'][ASSET2.symbol].fees,
             taxes
         )
