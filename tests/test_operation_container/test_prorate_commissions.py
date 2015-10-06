@@ -7,85 +7,91 @@ import trade
 
 ASSET1 = trade.Asset(symbol='GOOGL')
 ASSET2 = trade.Asset(symbol='AAPL')
-OPERATION = trade.Operation(
-    date='2015-09-21',
-    asset=ASSET1,
-    quantity=-10,
-    price=2
-)
+ASSET3 = trade.Asset(symbol='ATVI')
 
-class TestProrateCommissionsByPositionCase01(unittest.TestCase):
-    """Test pro rata of one commission for one operation."""
+
+class TestProrateCommissions(unittest.TestCase):
 
     def setUp(self):
-        discounts = {
-            'some discount': 1,
-        }
-        self.container = trade.OperationContainer(
-            operations=[OPERATION],
-            commissions=discounts
-        )
-
-    def test_operation_discount(self):
-        self.container.prorate_commissions_by_position(OPERATION)
-        self.assertEqual(OPERATION.commissions, {'some discount': 1})
-
-
-class TestProrateCommissionsByPositionCase02(unittest.TestCase):
-    """Test pro rata of 1 commission for 3 operations."""
-
-    def setUp(self):
-        discounts = {
-            'some discount': 1,
-        }
-        self.operation2 = trade.Operation(
+        self.operation = trade.Operation(
             date='2015-09-21',
             asset=ASSET1,
             quantity=-10,
             price=2
         )
+        self.discounts = {
+            'some discount': 1,
+        }
+
+class TestProrateCommissionsByPositionCase01(TestProrateCommissions):
+    """Test pro rata of one commission for one operation."""
+
+    def setUp(self):
+        super(TestProrateCommissionsByPositionCase01, self).setUp()
+        self.container = trade.OperationContainer(
+            operations=[self.operation],
+            commissions=self.discounts
+        )
+        self.container.fetch_positions()
+
+    def test_operation_discount(self):
+        self.container.prorate_commissions_by_position(self.operation)
+        self.assertEqual(self.operation.commissions, {'some discount': 1})
+
+
+class TestProrateCommissionsByPositionCase02(TestProrateCommissions):
+    """Test pro rata of 1 commission for 3 operations."""
+
+    def setUp(self):
+        super(TestProrateCommissionsByPositionCase02, self).setUp()
+        self.operation2 = trade.Operation(
+            date='2015-09-21',
+            asset=ASSET2,
+            quantity=-10,
+            price=2
+        )
         self.container = trade.OperationContainer(
             operations=[
-                OPERATION,
+                self.operation,
                 self.operation2
             ],
-            commissions=discounts
+            commissions=self.discounts
         )
+        self.container.fetch_positions()
 
     def test_check_trade1_discount(self):
-        self.container.prorate_commissions_by_position(OPERATION)
-        self.assertEqual(OPERATION.commissions, {'some discount': 0.5})
+        self.container.prorate_commissions_by_position(self.operation)
+        self.assertEqual(self.operation.commissions, {'some discount': 0.5})
 
     def test_check_trade2_discount(self):
         self.container.prorate_commissions_by_position(self.operation2)
         self.assertEqual(self.operation2.commissions, {'some discount': 0.5})
 
 
-class TestProrateCommissionsByPositionCase03(unittest.TestCase):
+class TestProrateCommissionsByPositionCase03(TestProrateCommissions):
     """Test pro rata of 1 commission for 2 operations."""
 
     def setUp(self):
-        discounts = {
-            'some discount': 1,
-        }
+        super(TestProrateCommissionsByPositionCase03, self).setUp()
         self.operation2 = trade.Operation(
             date='2015-09-21',
-            asset=ASSET1,
+            asset=ASSET2,
             quantity=-20,
             price=2
         )
         self.container = trade.OperationContainer(
             operations=[
-                OPERATION,
+                self.operation,
                 self.operation2
             ],
-            commissions=discounts
+            commissions=self.discounts
         )
+        self.container.fetch_positions()
 
     def test_check_trade1_discount(self):
-        self.container.prorate_commissions_by_position(OPERATION)
+        self.container.prorate_commissions_by_position(self.operation)
         self.assertEqual(
-            round(OPERATION.commissions['some discount'], 8),
+            round(self.operation.commissions['some discount'], 8),
             0.33333333
         )
 
@@ -97,16 +103,17 @@ class TestProrateCommissionsByPositionCase03(unittest.TestCase):
         )
 
 
-class TestProrateCommissionsByPositionCase04(unittest.TestCase):
+class TestProrateCommissionsByPositionCase04(TestProrateCommissions):
     """Test pro rata of 1 commission for 3 sale operations."""
 
     def setUp(self):
+        super(TestProrateCommissionsByPositionCase04, self).setUp()
         discounts = {
             'some discount': 4,
         }
         self.operation2 = trade.Operation(
             date='2015-09-21',
-            asset=ASSET1,
+            asset=ASSET3,
             quantity=-20,
             price=2
         )
@@ -118,30 +125,29 @@ class TestProrateCommissionsByPositionCase04(unittest.TestCase):
         )
         self.container = trade.OperationContainer(
             operations=[
-                OPERATION,
+                self.operation,
                 self.operation2,
                 self.operation3
             ],
             commissions=discounts
         )
+        self.container.fetch_positions()
 
     def test_check_trade1_discount(self):
-        self.container.prorate_commissions_by_position(OPERATION)
-        self.assertEqual(OPERATION.commissions['some discount'], 1)
+        self.assertEqual(self.operation.commissions['some discount'], 1)
 
     def test_check_trade2_discount(self):
-        self.container.prorate_commissions_by_position(self.operation2)
         self.assertEqual(self.operation2.commissions['some discount'], 2)
 
     def test_check_trade3_discount(self):
-        self.container.prorate_commissions_by_position(self.operation3)
         self.assertEqual(self.operation3.commissions['some discount'], 1)
 
 
-class TestProrateCommissionsByPositionCase05(unittest.TestCase):
+class TestProrateCommissionsByPositionCase05(TestProrateCommissions):
     """Test pro rata of 1 commission for daytrades."""
 
     def setUp(self):
+        super(TestProrateCommissionsByPositionCase05, self).setUp()
         discounts = {
             'some discount': 2,
             'other discount': 6
@@ -168,7 +174,7 @@ class TestProrateCommissionsByPositionCase05(unittest.TestCase):
             operations=[trade1, trade2, trade3],
             commissions=discounts
         )
-        trade.plugins.fetch_daytrades(self.container)
+        self.container.tasks = [trade.plugins.fetch_daytrades]
         self.container.fetch_positions()
 
     def test_container_volume(self):

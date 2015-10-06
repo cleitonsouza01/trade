@@ -31,6 +31,7 @@ class TestContainerCreationCase01(unittest.TestCase):
             trade.plugins.fetch_exercises,
             trade.plugins.fetch_daytrades,
         ]
+        self.container.fetch_positions()
 
     def test_container_exists(self):
         self.assertTrue(self.container)
@@ -67,6 +68,7 @@ class TestContainerAddToPositions(unittest.TestCase):
             price=4
         )
         self.container.add_to_position_operations(operation2)
+        #self.container.fetch_positions()
 
     def test_common_trades_len(self):
         self.assertEqual(len(self.container.positions['operations'].keys()), 1)

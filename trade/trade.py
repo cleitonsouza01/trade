@@ -471,6 +471,8 @@ class OperationContainer(object):
             daytrades from other operations).
     """
 
+    volume = 0
+
     def __init__(self, operations=None, commissions=None):
         if operations is None:
             operations = []
@@ -478,20 +480,14 @@ class OperationContainer(object):
             commissions = {}
         self.operations = operations
         self.commissions = commissions
-        self.positions = {}
         self.trading_fees = TradingFees
-        self.raw_operations = copy.deepcopy(self.operations)
+        self.positions = {}
         self.tasks = []
 
     @property
     def total_commission_value(self):
         """Returns the sum of the values of all commissions."""
         return sum(self.commissions.values())
-
-    @property
-    def volume(self):
-        """Returns the total volume of the operations in the container."""
-        return sum(operation.volume for operation in self.raw_operations)
 
     def fetch_positions(self):
         """Fetch the positions resulting from the operations.
@@ -505,6 +501,9 @@ class OperationContainer(object):
         And finally it checks if there are any fees to be applied
         to the positions.
         """
+        self.volume = sum(operation.volume for operation in self.operations)
+
+        raw_operations = copy.deepcopy(self.operations)
 
         # Execute all defined tasks
         for task in self.tasks:
@@ -520,6 +519,8 @@ class OperationContainer(object):
 
         # Add fees to the operations
         self.find_trading_fees_for_positions()
+
+        self.operations = raw_operations
 
     def add_to_position_operations(self, operation):
         """Adds an operation to the common operations list."""

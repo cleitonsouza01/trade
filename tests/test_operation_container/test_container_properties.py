@@ -71,6 +71,7 @@ class TestContainerPropertiesCase02(TestContainerProperties):
         self.trade_container = trade.OperationContainer(
             operations=[self.operation1]
         )
+        self.trade_container.fetch_positions()
 
     def test_volume(self):
         self.assertEqual(self.trade_container.volume, 20)
@@ -87,6 +88,7 @@ class TestContainerPropertiesCase03(TestContainerProperties):
                 self.operation2
             ]
         )
+        self.trade_container.fetch_positions()
 
     def test_volume(self):
         self.assertEqual(self.trade_container.volume, 25)
@@ -104,6 +106,7 @@ class TestContainerPropertiesCase05(TestContainerProperties):
                 self.operation3
             ]
         )
+        self.trade_container.fetch_positions()
 
     def test_volume(self):
         self.assertEqual(self.trade_container.volume, 125)
