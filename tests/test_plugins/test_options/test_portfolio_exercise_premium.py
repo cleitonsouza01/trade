@@ -37,20 +37,26 @@ class TestExercisePremium(unittest.TestCase):
             price=5
         )
 
-
-class TestExercisePremiumCase00(TestExercisePremium):
-    """Test the accumulation of one operation with underlying assets."""
-
-    def setUp(self):
-        super(TestExercisePremiumCase00, self).setUp()
-
-        # Buy the call
+        # other operation with the option
         self.option_operation = trade.Operation(
             asset=self.option,
             date='2015-10-02',
             quantity=10,
             price=1
         )
+        self.option_operation2 = trade.Operation(
+            asset=self.option,
+            date='2015-10-02',
+            quantity=20,
+            price=1
+        )
+
+
+class TestExercisePremiumCase00(TestExercisePremium):
+    """Test the accumulation of one operation with underlying assets."""
+
+    def setUp(self):
+        super(TestExercisePremiumCase00, self).setUp()
         self.portfolio.accumulate(self.option_operation)
         self.portfolio.accumulate(self.exercise)
 
@@ -85,15 +91,7 @@ class TestExercisePremiumCase01(TestExercisePremium):
 
     def setUp(self):
         super(TestExercisePremiumCase01, self).setUp()
-
-        # Buy the call
-        self.option_operation = trade.Operation(
-            asset=self.option,
-            date='2015-10-02',
-            quantity=20,
-            price=1
-        )
-        self.portfolio.accumulate(self.option_operation)
+        self.portfolio.accumulate(self.option_operation2)
         self.portfolio.accumulate(self.exercise)
 
     def test_portfolio_asset_keys(self):
