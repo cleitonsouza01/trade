@@ -148,37 +148,33 @@ class TestFindPurchaseAndSale(TestOperationUtils):
     """
 
     def test_case_00(self):
-        result = (self.operation2, self.operation1)
         self.assertEqual(
             trade.plugins.find_purchase_and_sale(
                 self.operation2, self.operation1
             ),
-            result
+            (self.operation2, self.operation1)
         )
 
     def test_case_01(self):
-        result = (self.operation2, self.operation1)
         self.assertEqual(
             trade.plugins.find_purchase_and_sale(self.operation1, self.operation2),
-            result
+            (self.operation2, self.operation1)
         )
 
     def test_case_02(self):
-        result = None, None
         self.assertEqual(
             trade.plugins.find_purchase_and_sale(
                 self.operation2, self.operation2
             ),
-            result
+            (None, None)
         )
 
     def test_case_03(self):
-        result = None, None
         self.assertEqual(
             trade.plugins.find_purchase_and_sale(
                 self.operation1, self.operation1
             ),
-            result
+            (None, None)
         )
 
     def test_case_04(self):
@@ -188,10 +184,9 @@ class TestFindPurchaseAndSale(TestOperationUtils):
             date='2015-09-22',
             asset=self.asset1
         )
-        result = None, None
         self.assertEqual(
             trade.plugins.find_purchase_and_sale(self.operation2, operation2),
-            result
+            (None, None)
         )
 
     def test_case_05(self):
@@ -201,10 +196,9 @@ class TestFindPurchaseAndSale(TestOperationUtils):
             date='2015-09-22',
             asset=self.asset1
         )
-        result = (self.operation3, operation2)
         self.assertEqual(
             trade.plugins.find_purchase_and_sale(self.operation3, operation2),
-            result
+            (self.operation3, operation2)
         )
 
     def test_case_06(self):
@@ -214,18 +208,16 @@ class TestFindPurchaseAndSale(TestOperationUtils):
             date='2015-09-22',
             asset=self.asset1
         )
-        result = None, None
         self.assertEqual(
             trade.plugins.find_purchase_and_sale(operation1, self.operation4),
-            result
+            (None, None)
         )
 
     def test_case_07(self):
 
-        result = (self.operation4, self.operation5)
         self.assertEqual(
             trade.plugins.find_purchase_and_sale(
                 self.operation5, self.operation4
             ),
-            result
+            (self.operation4, self.operation5)
         )
