@@ -35,76 +35,49 @@ class TestFetchPositions(unittest.TestCase):
 
     def setUp(self):
         self.operation1 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET1,
-            quantity=10,
-            price=2
+            date='2015-09-21', asset=ASSET1, quantity=10, price=2
         )
         self.operation2 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET1,
-            quantity=-5,
-            price=3
+            date='2015-09-21', asset=ASSET1, quantity=-5, price=3
         )
         self.operation3 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET2,
-            quantity=-5,
-            price=7
+            date='2015-09-21', asset=ASSET2, quantity=-5, price=7
         )
         self.operation4 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET2,
-            quantity=5,
-            price=10
+            date='2015-09-21', asset=ASSET2, quantity=5, price=10
         )
         self.operation5 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET1,
-            quantity=5,
-            price=4
+            date='2015-09-21', asset=ASSET1, quantity=5, price=4
         )
         self.operation6 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET3,
-            quantity=5,
-            price=4
+            date='2015-09-21', asset=ASSET3, quantity=5, price=4
         )
         self.operation7 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET3,
-            quantity=-5,
-            price=2
+            date='2015-09-21', asset=ASSET3, quantity=-5, price=2
         )
         self.operation8 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET3,
-            quantity=5,
-            price=4
+            date='2015-09-21', asset=ASSET3, quantity=5, price=4
         )
         self.operation9 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET3,
-            quantity=-5,
-            price=4
+            date='2015-09-21', asset=ASSET3, quantity=-5, price=4
         )
+        self.container = trade.OperationContainer()
+        self.container.tasks = [
+            trade.plugins.fetch_exercises,
+            trade.plugins.fetch_daytrades,
+        ]
 
 class TestContainerFetchPositionsCase00(TestFetchPositions):
     """Test the fetch_positions() method of Accumulator."""
 
     def setUp(self):
         super(TestContainerFetchPositionsCase00, self).setUp()
-        discounts = {
+        self.container.commissions = {
             'some discount': 1,
             'other discount': 3
         }
-        self.container = trade.OperationContainer(
-            operations=[self.operation1, self.operation2, self.operation3],
-            commissions=discounts
-        )
-        self.container.tasks = [
-            trade.plugins.fetch_exercises,
-            trade.plugins.fetch_daytrades,
+        self.container.operations = [
+            self.operation1, self.operation2, self.operation3
         ]
         self.container.fetch_positions()
 
@@ -201,22 +174,16 @@ class TestContainerFetchPositionsCase01(TestFetchPositions):
 
     def setUp(self):
         super(TestContainerFetchPositionsCase01, self).setUp()
-        self.container = trade.OperationContainer(
-            operations=[
-                self.operation1,
-                self.operation2,
-                self.operation3,
-                self.operation4,
-                self.operation5,
-                self.operation6,
-                self.operation7,
-                self.operation8,
-                self.operation9
-            ]
-        )
-        self.container.tasks = [
-            trade.plugins.fetch_exercises,
-            trade.plugins.fetch_daytrades,
+        self.container.operations = [
+            self.operation1,
+            self.operation2,
+            self.operation3,
+            self.operation4,
+            self.operation5,
+            self.operation6,
+            self.operation7,
+            self.operation8,
+            self.operation9
         ]
         self.container.fetch_positions()
 
@@ -362,34 +329,25 @@ class TestContainerFetchPositionsCase02(unittest.TestCase):
     """Daytrades, commissions and taxes."""
 
     def setUp(self):
-        self.containers = []
-        self.container_operations = []
         date = '2015-02-03'
         operations = []
         operations.append(
             trade.Operation(
-                date=date,
-                asset=ASSET1,
-                quantity=10,
-                price=10
+                date=date, asset=ASSET1, quantity=10, price=10
             )
         )
         operations.append(
             trade.Operation(
-                date=date,
-                asset=ASSET1,
-                quantity=-10,
-                price=10
+                date=date, asset=ASSET1, quantity=-10, price=10
             )
         )
         commissions = {
-            'corretagem': 2,
-            'iss': 1.5,
-            'outros': 1,
+            'some': 2,
+            'other': 1.5,
+            'and other': 1,
         }
         self.container = trade.OperationContainer(
-            operations=operations,
-            commissions=commissions
+            operations=operations, commissions=commissions
         )
         self.container.tasks = [
             trade.plugins.fetch_exercises,
@@ -400,9 +358,9 @@ class TestContainerFetchPositionsCase02(unittest.TestCase):
 
     def test_daytrade_buy_discounts(self):
         discounts = {
-            'corretagem': 1,
-            'iss': 0.75,
-            'outros': 0.5,
+            'some': 1,
+            'other': 0.75,
+            'and other': 0.5,
         }
         self.assertEqual(
             self.container.positions['daytrades'][ASSET1.symbol]\
@@ -412,9 +370,9 @@ class TestContainerFetchPositionsCase02(unittest.TestCase):
 
     def test_daytrade_sale_discounts(self):
         discounts = {
-            'corretagem': 1,
-            'iss': 0.75,
-            'outros': 0.5,
+            'some': 1,
+            'other': 0.75,
+            'and other': 0.5,
         }
         self.assertEqual(
             self.container.positions['daytrades'][ASSET1.symbol]\
@@ -423,27 +381,25 @@ class TestContainerFetchPositionsCase02(unittest.TestCase):
         )
 
     def test_daytrade_buy_taxes(self):
-        taxes = {
-            'emoluments': 0.005,
-            'liquidation': 0.02,
-            'registry': 0,
-        }
         self.assertEqual(
             self.container.positions['daytrades'][ASSET1.symbol].\
                 operations[0].fees,
-            taxes
+            {
+                'emoluments': 0.005,
+                'liquidation': 0.02,
+                'registry': 0,
+            }
         )
 
     def test_daytrade_sale_taxes(self):
-        taxes = {
-            'emoluments': 0.005,
-            'liquidation': 0.02,
-            'registry': 0,
-        }
         self.assertEqual(
             self.container.positions['daytrades'][ASSET1.symbol].\
                 operations[1].fees,
-            taxes
+            {
+                'emoluments': 0.005,
+                'liquidation': 0.02,
+                'registry': 0,
+            }
         )
 
     def test_daytrade_result(self):
@@ -477,7 +433,8 @@ class TestContainerFetchPositionsCase02(unittest.TestCase):
             round(
                 self.container.positions['daytrades'][ASSET1.symbol]\
                     .operations[1].real_price,
-                8),
+                8
+            ),
             9.77250000
         )
 
