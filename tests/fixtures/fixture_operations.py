@@ -4,12 +4,18 @@ from __future__ import absolute_import
 import copy
 
 from trade import Asset, Operation
-from trade.plugins import Daytrade
+from trade.plugins import Daytrade, Option, Exercise
+
 
 ASSET = Asset(symbol='some asset')
 ASSET2 = Asset(symbol='some other asset')
 ASSET3 = Asset(symbol='even other asset')
 
+OPTION1 = Option(
+    symbol='some option',
+    underlying_assets={ASSET: 1},
+    expiration_date='2015-10-02'
+)
 
 # 2015-01-01
 OPERATION0 = Operation(
@@ -261,6 +267,121 @@ OPERATION41 = Operation(
     date='2015-09-21',
     asset=ASSET2,
     quantity=20,
+    price=5
+)
+OPERATION42 = Operation(
+    date='2015-09-21',
+    asset=ASSET2,
+    quantity=-10,
+    price=2
+)
+OPERATION43 = Operation(
+    date='2015-09-21',
+    asset=ASSET2,
+    quantity=-20,
+    price=2
+)
+OPERATION44 = Operation(
+    date='2015-09-21',
+    asset=ASSET3,
+    quantity=-20,
+    price=2
+)
+OPERATION45 = Operation(
+    date='2015-09-21',
+    asset=ASSET,
+    quantity=10,
+    price=4
+)
+
+
+
+OPERATION46 = Operation(
+    asset=ASSET,
+    date='2015-10-01',
+    quantity=10,
+    price=5
+)
+OPERATION47 = Operation(
+    asset=ASSET,
+    date='2015-10-05',
+    quantity=10,
+    price=7.5
+)
+
+OPERATION48 = Operation(
+    asset=ASSET,
+    date='2015-10-01',
+    quantity=10,
+    price=1
+)
+OPERATION49 = Operation(
+    asset=ASSET2,
+    date='2015-10-01',
+    quantity=20,
+    price=2
+)
+OPERATION50 = Operation(
+    asset=ASSET2,
+    date='2015-10-01',
+    quantity=20,
+    price=4
+)
+OPERATION51 = Operation(
+    asset=ASSET2,
+    date='2015-10-02',
+    quantity=20,
+    price=3
+)
+OPERATION52 = Operation(
+    asset=ASSET,
+    date='2015-10-06',
+    quantity=10,
+    price=2
+)
+OPERATION53 = Operation(
+    asset=ASSET3,
+    date='2015-10-01',
+    quantity=20,
+    price=2
+)
+
+
+OPTION_OPERATION1 = Operation(
+    asset=OPTION1,
+    date='2015-10-02',
+    quantity=10,
+    price=1
+)
+OPTION_OPERATION2 = Operation(
+    asset=OPTION1,
+    date='2015-10-04',
+    quantity=20,
+    price=1
+)
+
+EXERCISE_OPERATION1 = Exercise(
+    asset=OPTION1,
+    date='2015-10-04',
+    quantity=10,
+    price=10
+)
+EXERCISE_OPERATION2 = Exercise(
+    date='2015-09-18',
+    asset=OPTION1,
+    quantity=100,
+    price=1
+)
+EXERCISE_OPERATION3 = Exercise(
+    date='2015-09-18',
+    asset=OPTION1,
+    quantity=100,
+    price=3
+)
+EXERCISE_OPERATION4 = Exercise(
+    asset=OPTION1,
+    date='2015-10-02',
+    quantity=10,
     price=5
 )
 

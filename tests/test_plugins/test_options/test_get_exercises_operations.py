@@ -2,25 +2,20 @@
 
 from __future__ import absolute_import
 import unittest
+import copy
 
 import trade
+
+from tests.fixtures.fixture_operations import (
+    ASSET, OPTION1,
+
+    EXERCISE_OPERATION2, EXERCISE_OPERATION3
+)
 
 
 class TestFetchExercises(unittest.TestCase):
 
     def setUp(self):
-        self.asset = trade.Asset(symbol='GOOGL')
-        self.option = trade.plugins.Option(
-            symbol='GOOG151002C00540000',
-            expiration_date='2015-10-02',
-            underlying_assets={self.asset: 1}
-        )
-        self.exercise0 = trade.plugins.Exercise(
-            date='2015-09-18',
-            asset=self.option,
-            quantity=100,
-            price=1
-        )
         self.container = trade.OperationContainer()
         self.container.tasks = [trade.plugins.fetch_exercises]
 
@@ -30,7 +25,9 @@ class TestFetchExercisesCase00(TestFetchExercises):
 
     def setUp(self):
         super(TestFetchExercisesCase00, self).setUp()
-        self.container.operations = [self.exercise0]
+        self.container.operations = [
+            copy.deepcopy(EXERCISE_OPERATION2),
+        ]
         self.container.fetch_positions()
 
     def test_container_volume(self):
@@ -44,25 +41,25 @@ class TestFetchExercisesCase00(TestFetchExercises):
 
     def test_option_consuming_quantity(self):
         self.assertEqual(
-            self.container.positions['exercises'][self.option.symbol].quantity,
+            self.container.positions['exercises'][OPTION1.symbol].quantity,
             -100
         )
 
     def test_option_consuming_price(self):
         self.assertEqual(
-            self.container.positions['exercises'][self.option.symbol].price,
+            self.container.positions['exercises'][OPTION1.symbol].price,
             0
         )
 
     def test_asset_purchase_quantity(self):
         self.assertEqual(
-            self.container.positions['exercises'][self.asset.symbol].quantity,
+            self.container.positions['exercises'][ASSET.symbol].quantity,
             100
         )
 
     def test_asset_purchase_price(self):
         self.assertEqual(
-            self.container.positions['exercises'][self.asset.symbol].price,
+            self.container.positions['exercises'][ASSET.symbol].price,
             1
         )
 
@@ -72,13 +69,10 @@ class TestFetchExercisesCase01(TestFetchExercises):
 
     def setUp(self):
         super(TestFetchExercisesCase01, self).setUp()
-        self.exercise1 = trade.plugins.Exercise(
-            date='2015-09-18',
-            asset=self.option,
-            quantity=100,
-            price=3
-        )
-        self.container.operations = [self.exercise0, self.exercise1]
+        self.container.operations = [
+            copy.deepcopy(EXERCISE_OPERATION2),
+            copy.deepcopy(EXERCISE_OPERATION3)
+        ]
         self.container.fetch_positions()
 
     def test_container_exercises_len(self):
@@ -89,24 +83,24 @@ class TestFetchExercisesCase01(TestFetchExercises):
 
     def test_option_consuming_quantity(self):
         self.assertEqual(
-            self.container.positions['exercises'][self.option.symbol].quantity,
+            self.container.positions['exercises'][OPTION1.symbol].quantity,
             -200
         )
 
     def test_option_consuming_price(self):
         self.assertEqual(
-            self.container.positions['exercises'][self.option.symbol].price,
+            self.container.positions['exercises'][OPTION1.symbol].price,
             0
         )
 
     def test_asset_purchase_quantity(self):
         self.assertEqual(
-            self.container.positions['exercises'][self.asset.symbol].quantity,
+            self.container.positions['exercises'][ASSET.symbol].quantity,
             200
         )
 
     def test_asset_purchase_price(self):
         self.assertEqual(
-            self.container.positions['exercises'][self.asset.symbol].price,
+            self.container.positions['exercises'][ASSET.symbol].price,
             2
         )

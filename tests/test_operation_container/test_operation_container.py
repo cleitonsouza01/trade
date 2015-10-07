@@ -2,11 +2,15 @@
 
 from __future__ import absolute_import
 import unittest
+import copy
 
 import trade
 
 from tests.fixtures.fixture_operations import (
-    ASSET
+    ASSET, OPERATION24, OPERATION45
+)
+from tests.fixtures.fixture_commissions import (
+    COMMISSIONS12
 )
 
 
@@ -24,12 +28,8 @@ class TestContainerCreationCase01(unittest.TestCase):
     """Test the creation of a OperationContainer."""
 
     def setUp(self):
-        commissions = {
-            'brokerage': 2.3,
-            'other': 1
-        }
         self.container = trade.OperationContainer(
-            commissions=commissions
+            commissions=COMMISSIONS12
         )
         self.container.fetch_positions_tasks = [
             trade.plugins.fetch_exercises,
@@ -41,36 +41,26 @@ class TestContainerCreationCase01(unittest.TestCase):
         self.assertTrue(self.container)
 
     def test_container_commissions(self):
-        commissions = {
-            'brokerage': 2.3,
-            'other': 1
-        }
-        self.assertEqual(self.container.commissions, commissions)
+        self.assertEqual(self.container.commissions, COMMISSIONS12)
 
 
 class TestContainerAddToPositions(unittest.TestCase):
     """Test add_to_position_operations method."""
 
     def setUp(self):
-        operation = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET,
-            quantity=10,
-            price=2
+        self.container = trade.OperationContainer(
+            operations=[
+                copy.deepcopy(OPERATION24)
+            ]
         )
-        self.container = trade.OperationContainer(operations=[operation])
         self.container.fetch_positions_tasks = [
             trade.plugins.fetch_exercises,
             trade.plugins.fetch_daytrades,
         ]
         self.container.fetch_positions()
-        operation2 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET,
-            quantity=10,
-            price=4
+        self.container.add_to_position_operations(
+            copy.deepcopy(OPERATION45)
         )
-        self.container.add_to_position_operations(operation2)
 
     def test_common_trades_len(self):
         self.assertEqual(len(self.container.positions['operations'].keys()), 1)
@@ -80,12 +70,8 @@ class TestContainerAddToPositions(unittest.TestCase):
 
     def test_operations0_quantity(self):
         self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol].quantity,
-            20
-        )
+            self.container.positions['operations'][ASSET.symbol].quantity, 20)
 
     def test_operations0_price(self):
         self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol].price,
-            3
-        )
+            self.container.positions['operations'][ASSET.symbol].price, 3)

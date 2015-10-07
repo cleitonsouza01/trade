@@ -8,6 +8,7 @@ import trade
 
 class TestCreatePortfolio(unittest.TestCase):
     """Test the creation of a Portfolio object."""
+
     def setUp(self):
         self.portfolio = trade.Portfolio()
 

@@ -2,26 +2,26 @@
 
 from __future__ import absolute_import
 import unittest
+import copy
 
 import trade
 
-ASSET1 = trade.Asset(symbol='GOOGL')
-ASSET2 = trade.Asset(symbol='AAPL')
-ASSET3 = trade.Asset(symbol='ATVI')
+from tests.fixtures.fixture_operations import (
+    ASSET, ASSET2,
+
+    OPERATION39, OPERATION42, OPERATION43, OPERATION44,
+    OPERATION24, OPERATION26, OPERATION27,
+)
+from tests.fixtures.fixture_commissions import (
+    COMMISSIONS9, COMMISSIONS10, COMMISSIONS11,
+)
 
 
 class TestProrateCommissions(unittest.TestCase):
 
     def setUp(self):
-        self.operation = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET1,
-            quantity=-10,
-            price=2
-        )
-        self.discounts = {
-            'some discount': 1,
-        }
+        self.operation = copy.deepcopy(OPERATION39)
+
 
 class TestProrateCommissionsByPositionCase01(TestProrateCommissions):
     """Test pro rata of one commission for one operation."""
@@ -30,7 +30,7 @@ class TestProrateCommissionsByPositionCase01(TestProrateCommissions):
         super(TestProrateCommissionsByPositionCase01, self).setUp()
         self.container = trade.OperationContainer(
             operations=[self.operation],
-            commissions=self.discounts
+            commissions=COMMISSIONS11
         )
         self.container.fetch_positions()
 
@@ -44,18 +44,13 @@ class TestProrateCommissionsByPositionCase02(TestProrateCommissions):
 
     def setUp(self):
         super(TestProrateCommissionsByPositionCase02, self).setUp()
-        self.operation2 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET2,
-            quantity=-10,
-            price=2
-        )
+        self.operation2 = copy.deepcopy(OPERATION42)
         self.container = trade.OperationContainer(
             operations=[
                 self.operation,
                 self.operation2
             ],
-            commissions=self.discounts
+            commissions=COMMISSIONS11
         )
         self.container.fetch_positions()
 
@@ -73,18 +68,13 @@ class TestProrateCommissionsByPositionCase03(TestProrateCommissions):
 
     def setUp(self):
         super(TestProrateCommissionsByPositionCase03, self).setUp()
-        self.operation2 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET2,
-            quantity=-20,
-            price=2
-        )
+        self.operation2 = copy.deepcopy(OPERATION43)
         self.container = trade.OperationContainer(
             operations=[
                 self.operation,
                 self.operation2
             ],
-            commissions=self.discounts
+            commissions=COMMISSIONS11
         )
         self.container.fetch_positions()
 
@@ -108,28 +98,15 @@ class TestProrateCommissionsByPositionCase04(TestProrateCommissions):
 
     def setUp(self):
         super(TestProrateCommissionsByPositionCase04, self).setUp()
-        discounts = {
-            'some discount': 4,
-        }
-        self.operation2 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET3,
-            quantity=-20,
-            price=2
-        )
-        self.operation3 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET2,
-            quantity=-10,
-            price=2
-        )
+        self.operation2 = copy.deepcopy(OPERATION44)
+        self.operation3 = copy.deepcopy(OPERATION42)
         self.container = trade.OperationContainer(
             operations=[
                 self.operation,
                 self.operation2,
                 self.operation3
             ],
-            commissions=discounts
+            commissions=COMMISSIONS10
         )
         self.container.fetch_positions()
 
@@ -148,31 +125,12 @@ class TestProrateCommissionsByPositionCase05(TestProrateCommissions):
 
     def setUp(self):
         super(TestProrateCommissionsByPositionCase05, self).setUp()
-        discounts = {
-            'some discount': 2,
-            'other discount': 6
-        }
-        trade1 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET1,
-            quantity=10,
-            price=2
-        )
-        trade2 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET1,
-            quantity=-5,
-            price=3
-        )
-        trade3 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET2,
-            quantity=-5,
-            price=7
-        )
+        trade1 = copy.deepcopy(OPERATION24)
+        trade2 = copy.deepcopy(OPERATION26)
+        trade3 = copy.deepcopy(OPERATION27)
         self.container = trade.OperationContainer(
             operations=[trade1, trade2, trade3],
-            commissions=discounts
+            commissions=COMMISSIONS9
         )
         self.container.tasks = [trade.plugins.fetch_daytrades]
         self.container.fetch_positions()
@@ -182,63 +140,61 @@ class TestProrateCommissionsByPositionCase05(TestProrateCommissions):
 
     def test_daytrade0_buy_discounts(self):
         self.assertEqual(
-            round(self.container.positions['daytrades'][ASSET1.symbol]\
+            round(self.container.positions['daytrades'][ASSET.symbol]\
                 .operations[0].commissions['some discount'], 2),
             0.29
         )
         self.assertEqual(
-            round(self.container.positions['daytrades'][ASSET1.symbol]\
+            round(self.container.positions['daytrades'][ASSET.symbol]\
                 .operations[0].commissions['other discount'], 2),
             0.86
         )
 
     def test_daytrade0_sale_discounts(self):
         self.assertEqual(
-            round(self.container.positions['daytrades'][ASSET1.symbol]\
+            round(self.container.positions['daytrades'][ASSET.symbol]\
                 .operations[1].commissions['some discount'], 2),
             0.43
         )
         self.assertEqual(
-            round(self.container.positions['daytrades'][ASSET1.symbol]\
+            round(self.container.positions['daytrades'][ASSET.symbol]\
                 .operations[1].commissions['other discount'], 2),
             1.29
         )
 
     def test_operations0_quantity(self):
         self.assertEqual(
-            self.container.positions['operations'][ASSET1.symbol]\
-                .quantity,
+            self.container.positions['operations'][ASSET.symbol].quantity,
             5
         )
 
     def test_operations0_price(self):
         self.assertEqual(
-            self.container.positions['operations'][ASSET1.symbol].price,
+            self.container.positions['operations'][ASSET.symbol].price,
             2
         )
 
     def test_operations0_volume(self):
         self.assertEqual(
-            self.container.positions['operations'][ASSET1.symbol].volume,
+            self.container.positions['operations'][ASSET.symbol].volume,
             10
         )
 
     def test_operations0_discounts(self):
         self.assertEqual(
-            round(self.container.positions['operations'][ASSET1.symbol]\
+            round(self.container.positions['operations'][ASSET.symbol]\
                 .commissions['some discount'], 2),
             0.29
         )
         self.assertEqual(
-            round(self.container.positions['operations'][ASSET1.symbol]\
+            round(self.container.positions['operations'][ASSET.symbol]\
                 .commissions['other discount'], 2),
             0.86
         )
 
     def test_operations1_quantity(self):
         self.assertEqual(
-            self.container.positions['operations'][ASSET2.symbol]\
-                .quantity,
+            self.container.positions['operations'][ASSET2.symbol].quantity,
             -5
         )
 
@@ -255,12 +211,10 @@ class TestProrateCommissionsByPositionCase05(TestProrateCommissions):
         )
 
     def test_operations1_discounts(self):
-        expected_discounts = {
-            'some discount': 1,
-            'other discount': 3
-        }
         self.assertEqual(
-            self.container.positions['operations'][ASSET2.symbol]\
-                .commissions,
-            expected_discounts
+            self.container.positions['operations'][ASSET2.symbol].commissions,
+            {
+                'some discount': 1,
+                'other discount': 3
+            }
         )

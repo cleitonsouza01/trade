@@ -42,3 +42,17 @@ COMMISSIONS8 = {
     'some tax': 1.5,
     'other tax': 1,
 }
+COMMISSIONS9 = {
+    'some discount': 2,
+    'other discount': 6
+}
+COMMISSIONS10 = {
+    'some discount': 4,
+}
+COMMISSIONS11 = {
+    'some discount': 1,
+}
+COMMISSIONS12 = {
+    'brokerage': 2.3,
+    'other': 1
+}

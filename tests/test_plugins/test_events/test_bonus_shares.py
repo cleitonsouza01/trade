@@ -5,12 +5,14 @@ import unittest
 
 import trade
 
+from tests.fixtures.fixture_operations import ASSET
+from tests.fixtures.fixture_events import EVENT6, EVENT7, EVENT8
+
 
 class TestBonusShares(unittest.TestCase):
 
     def setUp(self):
-        self.asset = trade.Asset()
-        self.accumulator = trade.Accumulator(self.asset, logging=True)
+        self.accumulator = trade.Accumulator(ASSET, logging=True)
         self.accumulator.quantity = 100
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}
@@ -21,12 +23,7 @@ class TestBonusSharesCase00(TestBonusShares):
 
     def setUp(self):
         super(TestBonusSharesCase00, self).setUp()
-        event = trade.plugins.BonusShares(
-            asset=self.asset,
-            date='2015-09-24',
-            factor=1
-        )
-        self.accumulator.accumulate_occurrence(event)
+        self.accumulator.accumulate_occurrence(EVENT6)
 
     def test_check_quantity_after_split(self):
         self.assertEqual(self.accumulator.quantity, 200)
@@ -43,12 +40,7 @@ class TestBonusSharesCase01(TestBonusShares):
 
     def setUp(self):
         super(TestBonusSharesCase01, self).setUp()
-        event = trade.plugins.BonusShares(
-            asset=self.asset,
-            date='2015-09-24',
-            factor=2
-        )
-        self.accumulator.accumulate_occurrence(event)
+        self.accumulator.accumulate_occurrence(EVENT8)
 
     def test_check_quantity_after_split(self):
         self.assertEqual(self.accumulator.quantity, 300)
@@ -65,12 +57,7 @@ class TestBonusSharesCase02(TestBonusShares):
 
     def setUp(self):
         super(TestBonusSharesCase02, self).setUp()
-        event = trade.plugins.BonusShares(
-            asset=self.asset,
-            date='2015-09-24',
-            factor=0.5
-        )
-        self.accumulator.accumulate_occurrence(event)
+        self.accumulator.accumulate_occurrence(EVENT7)
 
     def test_check_quantity_after_split(self):
         self.assertEqual(self.accumulator.quantity, 150)

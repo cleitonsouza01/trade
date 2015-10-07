@@ -3,7 +3,7 @@
 from __future__ import absolute_import
 
 from .fixture_operations import ASSET
-from trade.plugins import  Event, StockSplit
+from trade.plugins import  Event, StockSplit, BonusShares
 
 
 # EVENTS
@@ -43,6 +43,22 @@ EVENT4 = TestEvent(
 )
 
 EVENT5 = StockSplit(
+    asset=ASSET,
+    date='2015-09-24',
+    factor=2
+)
+
+EVENT6 = BonusShares(
+    asset=ASSET,
+    date='2015-09-24',
+    factor=1
+)
+EVENT7 = BonusShares(
+    asset=ASSET,
+    date='2015-09-24',
+    factor=0.5
+)
+EVENT8 = BonusShares(
     asset=ASSET,
     date='2015-09-24',
     factor=2
