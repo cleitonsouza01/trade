@@ -5,8 +5,9 @@ import unittest
 
 import trade
 
+from . fixture_operations import ASSET, OPERATION1, OPERATION18
 
-ASSET = trade.Asset()
+
 DAYTRADE = trade.plugins.Daytrade(
     trade.Operation(
         asset=ASSET,
@@ -21,18 +22,7 @@ DAYTRADE = trade.plugins.Daytrade(
         date='2015-01-01'
     )
 )
-OPERATION = trade.Operation(
-    quantity=100,
-    price=10,
-    asset=ASSET,
-    date='2015-01-02'
-)
-OPERATION2 = trade.Operation(
-    quantity=100,
-    price=10,
-    asset=ASSET,
-    date='2015-01-01'
-)
+
 DAYTRADE2 = trade.plugins.Daytrade(
     trade.Operation(
         asset=ASSET,
@@ -63,14 +53,14 @@ class TestLogDaytradesAndOperationsCase00(TestLogDaytradesAndOperations):
 
     def test_log_occurrences(self):
         self.accumulator.accumulate_occurrence(DAYTRADE)
-        self.accumulator.accumulate_occurrence(OPERATION2)
+        self.accumulator.accumulate_occurrence(OPERATION18)
         expected_log = {
             '2015-01-01': {
                 'position': {
                     'quantity': 100,
                     'price': 10
                 },
-                'occurrences': [DAYTRADE, OPERATION2]
+                'occurrences': [DAYTRADE, OPERATION18]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)
@@ -85,14 +75,14 @@ class TestLogDaytradesAndOperationsCase01(TestLogDaytradesAndOperations):
 
     def test_log_occurrences(self):
         self.accumulator.accumulate_occurrence(DAYTRADE)
-        self.accumulator.accumulate_occurrence(OPERATION)
+        self.accumulator.accumulate_occurrence(OPERATION1)
         expected_log = {
             '2015-01-02': {
                 'position': {
                     'quantity': 100,
                     'price': 10
                 },
-                'occurrences': [OPERATION]
+                'occurrences': [OPERATION1]
             },
             '2015-01-01': {
                 'position': {
@@ -114,7 +104,7 @@ class TestLogDaytradesAndOperationsCase02(TestLogDaytradesAndOperations):
 
     def test_log_occurrences(self):
         self.accumulator.accumulate_occurrence(DAYTRADE)
-        self.accumulator.accumulate_occurrence(OPERATION)
+        self.accumulator.accumulate_occurrence(OPERATION1)
         self.accumulator.accumulate_occurrence(DAYTRADE2)
         expected_log = {
             '2015-01-02': {
@@ -122,7 +112,7 @@ class TestLogDaytradesAndOperationsCase02(TestLogDaytradesAndOperations):
                     'quantity': 100,
                     'price': 10
                 },
-                'occurrences': [OPERATION, DAYTRADE2]
+                'occurrences': [OPERATION1, DAYTRADE2]
             },
             '2015-01-01': {
                 'position': {

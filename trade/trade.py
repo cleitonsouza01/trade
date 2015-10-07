@@ -222,13 +222,7 @@ class Operation(Occurrence):
     # multiple underlying operations.
     operations = None
 
-    def __init__(
-            self,
-            quantity=0,
-            price=0,
-            date=None,
-            asset=None
-        ):
+    def __init__(self, quantity=0, price=0, date=None, asset=None):
         super(Operation, self).__init__(asset, date)
         self.quantity = quantity
         self.price = price
@@ -320,7 +314,7 @@ class Operation(Occurrence):
         # position; if all this conditions are met, then
         # the position is updated.
         update_position_condition = (
-            self.asset == container.asset and
+            self.asset.symbol == container.asset.symbol and
             self.update_position and
             self.quantity
         )

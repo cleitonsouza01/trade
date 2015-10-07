@@ -7,8 +7,8 @@ import copy
 import trade
 import trade.plugins
 
+from . fixture_operations import OPERATION1, OPERATION18, ASSET
 
-ASSET = trade.Asset()
 DAYTRADE = trade.plugins.Daytrade(
     trade.Operation(
         asset=ASSET,
@@ -26,19 +26,6 @@ DAYTRADE = trade.plugins.Daytrade(
 DAYTRADE2 = copy.deepcopy(DAYTRADE)
 DAYTRADE2.date = '2015-01-02'
 
-OPERATION1 = trade.Operation(
-    quantity=100,
-    price=10,
-    asset=ASSET,
-    date='2015-01-01'
-)
-OPERATION2 = trade.Operation(
-    quantity=100,
-    price=10,
-    asset=ASSET,
-    date='2015-01-02'
-)
-
 
 class TestEvent(trade.plugins.Event):
     """A dummy event for the tests."""
@@ -52,7 +39,7 @@ class TestLogDaytradesOperationsAndEventsCase00(unittest.TestCase):
     def setUp(self):
         self.accumulator = trade.Accumulator(ASSET, logging=True)
         self.accumulator.accumulate_occurrence(DAYTRADE)
-        self.accumulator.accumulate_occurrence(OPERATION1)
+        self.accumulator.accumulate_occurrence(OPERATION18)
         self.event = TestEvent(
             asset=ASSET,
             date='2015-01-01',
@@ -67,7 +54,7 @@ class TestLogDaytradesOperationsAndEventsCase00(unittest.TestCase):
                     'quantity': 100,
                     'price': 10
                 },
-                'occurrences': [DAYTRADE, OPERATION1, self.event]
+                'occurrences': [DAYTRADE, OPERATION18, self.event]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)
@@ -79,7 +66,7 @@ class TestLogDaytradesOperationsAndEventsCase01(unittest.TestCase):
     def setUp(self):
         self.accumulator = trade.Accumulator(ASSET, logging=True)
         self.accumulator.accumulate_occurrence(DAYTRADE)
-        self.accumulator.accumulate_occurrence(OPERATION2)
+        self.accumulator.accumulate_occurrence(OPERATION1)
         self.event = TestEvent(
             asset=ASSET,
             date='2015-01-03',
@@ -101,7 +88,7 @@ class TestLogDaytradesOperationsAndEventsCase01(unittest.TestCase):
                     'quantity': 100,
                     'price': 10
                 },
-                'occurrences': [OPERATION2]
+                'occurrences': [OPERATION1]
             },
             '2015-01-01': {
                 'position': {
@@ -120,7 +107,7 @@ class TestLogDaytradesOperationsAndEventsCase02(unittest.TestCase):
     def setUp(self):
         self.accumulator = trade.Accumulator(ASSET, logging=True)
         self.accumulator.accumulate_occurrence(DAYTRADE)
-        self.accumulator.accumulate_occurrence(OPERATION2)
+        self.accumulator.accumulate_occurrence(OPERATION1)
         self.accumulator.accumulate_occurrence(DAYTRADE2)
         self.event = TestEvent(
             asset=ASSET,
@@ -137,7 +124,7 @@ class TestLogDaytradesOperationsAndEventsCase02(unittest.TestCase):
                     'quantity': 100,
                     'price': 10
                 },
-                'occurrences': [OPERATION2, DAYTRADE2, self.event]
+                'occurrences': [OPERATION1, DAYTRADE2, self.event]
             },
             '2015-01-01': {
                 'position': {

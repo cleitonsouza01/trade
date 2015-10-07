@@ -2,38 +2,41 @@
 
 from __future__ import absolute_import
 import unittest
+import copy
 
 import trade
+from . fixture_operations import (
+    ASSET, OPERATION18, OPERATION19, OPERATION20, OPERATION21, OPERATION22
+)
+
+class TestAccumulateOperation(unittest.TestCase):
+
+    def setUp(self):
+        self.accumulator = trade.Accumulator(ASSET)
 
 
-class TestAccumulateOperationCase00(unittest.TestCase):
+class TestAccumulateOperationCase00(TestAccumulateOperation):
     """Test the accumulation of 1 operation."""
 
     def setUp(self):
-        self.asset = trade.Asset()
-        self.operation = trade.Operation(
-            quantity=100,
-            price=10,
-            asset=self.asset,
-            date='2015-01-01'
-        )
-        self.accumulator = trade.Accumulator(self.asset)
+        super(TestAccumulateOperationCase00, self).setUp()
+        self.operation = copy.deepcopy(OPERATION18)
         self.accumulator.accumulate_occurrence(self.operation)
 
     def test_returned_result(self):
         self.assertEqual(self.operation.results, {})
 
     def test_accumulator_price(self):
-        self.assertEqual(self.accumulator.price, 10)
+        self.assertEqual(self.operation.price, 10)
 
     def test_accumulator_quantity(self):
-        self.assertEqual(self.accumulator.quantity, 100)
+        self.assertEqual(self.operation.quantity, 100)
 
     def test_accumulator_results(self):
-        self.assertEqual(self.accumulator.results, {})
+        self.assertEqual(self.operation.results, {})
 
 
-class TestAccumulateOperationCase01(unittest.TestCase):
+class TestAccumulateOperationCase01(TestAccumulateOperation):
     """Attempt to accumulate a Operation with a different asset.
 
     The Accumulator should only accumulate operations from assets
@@ -41,15 +44,9 @@ class TestAccumulateOperationCase01(unittest.TestCase):
     """
 
     def setUp(self):
-        self.asset0 = trade.Asset()
-        self.asset1 = trade.Asset(symbol='other')
-        self.operation = trade.Operation(
-            quantity=-100,
-            price=10,
-            asset=self.asset0,
-            date='2015-01-01'
-        )
-        self.accumulator = trade.Accumulator(self.asset1)
+        super(TestAccumulateOperationCase01, self).setUp()
+        self.operation = copy.deepcopy(OPERATION18)
+        self.accumulator = trade.Accumulator(trade.Asset(symbol='other'))
         self.accumulator.accumulate_occurrence(self.operation)
 
     def test_returned_result(self):
@@ -65,32 +62,22 @@ class TestAccumulateOperationCase01(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {})
 
 
-class TestAccumulateOperationCase02(unittest.TestCase):
+class TestAccumulateOperationCase02(TestAccumulateOperation):
     """Test the accumulation of 1 operation with commissions."""
 
     def setUp(self):
-        asset = trade.Asset(symbol='some asset')
-        operation = trade.Operation(
-            date='2015-09-18',
-            asset=asset,
-            quantity=20,
-            price=10
-        )
+        super(TestAccumulateOperationCase02, self).setUp()
+        self.operation = copy.deepcopy(OPERATION19)
         comissions = {
             'some comission': 1,
             'other comission': 3,
         }
         container = trade.OperationContainer(
-            operations=[operation],
+            operations=[self.operation],
             commissions=comissions
         )
-        container.tasks = [
-            trade.plugins.fetch_exercises,
-            trade.plugins.fetch_daytrades,
-        ]
         container.fetch_positions()
-        self.accumulator = trade.Accumulator(asset)
-        operation = container.positions['operations'][asset.symbol]
+        operation = container.positions['operations'][ASSET.symbol]
         self.accumulator.accumulate_occurrence(operation)
 
     def test_accumulator_price(self):
@@ -103,27 +90,17 @@ class TestAccumulateOperationCase02(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {})
 
 
-class TestAccumulateOperationCase03(unittest.TestCase):
+class TestAccumulateOperationCase03(TestAccumulateOperation):
     """Test the accumulation of 1 operation with zero price."""
 
     def setUp(self):
-        asset = trade.Asset(symbol='some asset')
-        operation = trade.Operation(
-            date='2015-09-18',
-            asset=asset,
-            quantity=20,
-            price=0
-        )
+        super(TestAccumulateOperationCase03, self).setUp()
+        self.operation = copy.deepcopy(OPERATION20)
         container = trade.OperationContainer(
-            operations=[operation]
+            operations=[self.operation]
         )
-        container.tasks = [
-            trade.plugins.fetch_exercises,
-            trade.plugins.fetch_daytrades,
-        ]
         container.fetch_positions()
-        self.accumulator = trade.Accumulator(asset)
-        operation = container.positions['operations'][asset.symbol]
+        operation = container.positions['operations'][ASSET.symbol]
         self.accumulator.accumulate_occurrence(operation)
 
     def test_accumulator_average_price(self):
@@ -136,37 +113,20 @@ class TestAccumulateOperationCase03(unittest.TestCase):
         self.assertEqual(self.accumulator.results, {})
 
 
-class TestAccumulateOperationCase04(unittest.TestCase):
+class TestAccumulateOperationCase04(TestAccumulateOperation):
     """Test the accumulation of 2 operations in consecutive dates."""
 
     def setUp(self):
-        asset = trade.Asset(symbol='some asset')
-        operation = trade.Operation(
-            date='2015-09-18',
-            asset=asset,
-            quantity=20,
-            price=10
-        )
+        super(TestAccumulateOperationCase04, self).setUp()
+        operation = copy.deepcopy(OPERATION19)
         container = trade.OperationContainer(
             operations=[operation]
         )
-        container.tasks = [
-            trade.plugins.fetch_exercises,
-            trade.plugins.fetch_daytrades,
-        ]
         container.fetch_positions()
-        self.accumulator = trade.Accumulator(asset)
-
         self.accumulator.accumulate_occurrence(
-            container.positions['operations'][asset.symbol]
+            container.positions['operations'][ASSET.symbol]
         )
-
-        operation2 = trade.Operation(
-            date='2015-09-19',
-            asset=asset,
-            quantity=-20,
-            price=0
-        )
+        operation2 = copy.deepcopy(OPERATION21)
         self.accumulator.accumulate_occurrence(operation2)
 
     def test_accumulator_price(self):
@@ -182,23 +142,16 @@ class TestAccumulateOperationCase04(unittest.TestCase):
         )
 
 
-class TestAccumulateOperationCase05(unittest.TestCase):
+class TestAccumulateOperationCase05(TestAccumulateOperation):
     """Test the accumulation of empty operations."""
 
     def setUp(self):
-        asset = trade.Asset(symbol='some asset')
-        operation = trade.Operation(
-            date='2015-09-18',
-            asset=asset,
-            quantity=0,
-            price=0
-        )
-        self.accumulator = trade.Accumulator(asset)
-        self.accumulator.accumulate_occurrence(operation)
+        super(TestAccumulateOperationCase05, self).setUp()
+        self.accumulator.accumulate_occurrence(OPERATION22)
 
         operation2 = trade.Operation(
             date='2015-09-19',
-            asset=asset,
+            asset=ASSET,
             quantity=0,
             price=0,
         )

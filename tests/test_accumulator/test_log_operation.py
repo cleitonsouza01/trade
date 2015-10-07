@@ -6,13 +6,7 @@ import unittest
 import trade
 
 
-ASSET = trade.Asset()
-OPERATION = trade.Operation(
-    quantity=100,
-    price=10,
-    asset=ASSET,
-    date='2015-01-01'
-)
+from . fixture_operations import ASSET, OPERATION18
 
 
 class TestLogOperation(unittest.TestCase):
@@ -20,7 +14,7 @@ class TestLogOperation(unittest.TestCase):
 
     def setUp(self):
         self.accumulator = trade.Accumulator(ASSET, logging=True)
-        self.accumulator.accumulate_occurrence(OPERATION)
+        self.accumulator.accumulate_occurrence(OPERATION18)
 
     def test_log_first_operation(self):
         expected_log = {
@@ -29,7 +23,7 @@ class TestLogOperation(unittest.TestCase):
                     'quantity': 100,
                     'price': 10
                 },
-                'occurrences': [OPERATION]
+                'occurrences': [OPERATION18]
             }
         }
         self.assertEqual(self.accumulator.log, expected_log)
@@ -38,4 +32,4 @@ class TestLogOperation(unittest.TestCase):
         self.assertEqual(list(self.accumulator.log), ['2015-01-01'])
 
     def test_returned_result(self):
-        self.assertEqual(OPERATION.results, {})
+        self.assertEqual(OPERATION18.results, {})

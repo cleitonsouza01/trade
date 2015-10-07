@@ -12,7 +12,7 @@ class TestAccumulateExercise00(unittest.TestCase):
     def setUp(self):
 
         # create a option and a underlying asset
-        self.asset = trade.Asset(name='Main')
+        self.asset = trade.Asset(symbol='some asset')
         self.option = trade.plugins.Option(
             name='Option',
             expiration_date='2015-12-31',
@@ -73,7 +73,7 @@ class TestAccumulateExercise01(unittest.TestCase):
     def setUp(self):
 
         # create a option and a underlying asset
-        self.asset = trade.Asset(name='Main')
+        self.asset = trade.Asset(symbol='some asset')
         self.option = trade.plugins.Option(
             name='Option',
             expiration_date='2015-12-31',

@@ -4,7 +4,7 @@ from __future__ import absolute_import
 
 from trade import Asset, Operation
 
-ASSET = Asset()
+ASSET = Asset(symbol='some asset')
 OPERATION0 = Operation(
     quantity=-100,
     price=10,
@@ -60,15 +60,6 @@ OPERATION8 = Operation(
     asset=ASSET
 )
 
-
-
-
-
-
-
-
-
-
 OPERATION9 = Operation(
     quantity=100,
     price=10,
@@ -122,4 +113,40 @@ OPERATION17 = Operation(
     price=20,
     date='2015-01-02',
     asset=ASSET
+)
+
+
+OPERATION18 = Operation(
+    quantity=100,
+    price=10,
+    asset=ASSET,
+    date='2015-01-01'
+)
+
+OPERATION19 = Operation(
+    date='2015-09-18',
+    asset=ASSET,
+    quantity=20,
+    price=10
+)
+
+OPERATION20 = Operation(
+    date='2015-09-18',
+    asset=ASSET,
+    quantity=20,
+    price=0
+)
+OPERATION21 = Operation(
+    date='2015-09-19',
+    asset=ASSET,
+    quantity=-20,
+    price=0
+)
+
+
+OPERATION22 = Operation(
+    date='2015-09-18',
+    asset=ASSET,
+    quantity=0,
+    price=0
 )
