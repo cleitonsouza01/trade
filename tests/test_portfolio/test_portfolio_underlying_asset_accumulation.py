@@ -6,10 +6,11 @@ import copy
 
 import trade
 
-from tests.fixtures.fixture_operations import (
-    ASSET, OPTION1,
-
+from tests.fixtures.operations import (
     OPTION_OPERATION1, EXERCISE_OPERATION1, OPERATION46, OPERATION47,
+)
+from tests.fixtures.assets import (
+    ASSET, OPTION1,
 )
 
 

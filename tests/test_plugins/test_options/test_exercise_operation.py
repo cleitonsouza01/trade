@@ -6,31 +6,19 @@ assets to get the underlying operations of the exercise.
 
 from __future__ import absolute_import
 import unittest
+import copy
 
-import trade
+from tests.fixtures.operations import (
+    EXERCISE_OPERATION5, EXERCISE_OPERATION6
+)
 
 
-class TestExerciseOperation(unittest.TestCase):
-
-    def setUp(self):
-        self.asset = trade.Asset(symbol='GOOGL')
-        self.option = trade.plugins.Option(
-            name='GOOG151002C00540000',
-            expiration_date='2015-10-02',
-            underlying_assets={self.asset: 1}
-        )
-
-class TestExerciseCase00(TestExerciseOperation):
+class TestExerciseCase00(unittest.TestCase):
     """Exercising a call."""
 
     def setUp(self):
         super(TestExerciseCase00, self).setUp()
-        self.exercise = trade.plugins.Exercise(
-            date='2015-09-18',
-            asset=self.option,
-            quantity=100,
-            price=10
-        )
+        self.exercise = copy.deepcopy(EXERCISE_OPERATION5)
         self.operations = self.exercise.fetch_operations()
 
     def test_operations_len(self):
@@ -49,17 +37,12 @@ class TestExerciseCase00(TestExerciseOperation):
         self.assertEqual(self.exercise.operations[1].price, 10)
 
 
-class TestExerciseCase01(TestExerciseOperation):
+class TestExerciseCase01(unittest.TestCase):
     """Being exercised on a call."""
 
     def setUp(self):
         super(TestExerciseCase01, self).setUp()
-        self.exercise = trade.plugins.Exercise(
-            date='2015-09-18',
-            asset=self.option,
-            quantity=-100,
-            price=10
-        )
+        self.exercise = copy.deepcopy(EXERCISE_OPERATION6)
         self.exercise.fetch_operations()
 
     def test_operations_len(self):

@@ -3,18 +3,13 @@
 from __future__ import absolute_import
 import unittest
 
-import trade
+from tests.fixtures.assets import OPTION1
 
 
 class TestOptionExercises(unittest.TestCase):
 
     def setUp(self):
-        self.asset = trade.Asset(symbol='GOOGL')
-        self.option = trade.plugins.Option(
-            symbol='GOOG151002C00540000',
-            expiration_date='2015-10-02',
-            underlying_assets={self.asset: 1}
-        )
+        self.option = OPTION1
         self.exercise_op_1 = self.option.exercise(quantity=100, price=10)
         self.exercise_op_2 = self.option.exercise(quantity=-100, price=10)
 

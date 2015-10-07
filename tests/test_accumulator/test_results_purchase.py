@@ -5,10 +5,12 @@ import unittest
 
 from trade import Accumulator
 
-from tests.fixtures.fixture_operations import (
-    ASSET,
+from tests.fixtures.operations import (
     OPERATION0, OPERATION1, OPERATION2, OPERATION3, OPERATION4, OPERATION5,
     OPERATION6, OPERATION7, OPERATION8,
+)
+from tests.fixtures.assets import (
+    ASSET,
 )
 from . fixture_logs import (
     EXPECTED_LOG7, EXPECTED_LOG8, EXPECTED_LOG9, EXPECTED_LOG10,

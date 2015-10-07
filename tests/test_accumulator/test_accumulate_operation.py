@@ -5,9 +5,12 @@ import unittest
 import copy
 
 import trade
-from tests.fixtures.fixture_operations import (
+from tests.fixtures.operations import (
     ASSET, OPERATION18, OPERATION19, OPERATION20, OPERATION21, OPERATION22,
     OPERATION23
+)
+from tests.fixtures.commissions import (
+    COMMISSIONS13
 )
 
 class TestAccumulateOperation(unittest.TestCase):
@@ -68,13 +71,9 @@ class TestAccumulateOperationCase02(TestAccumulateOperation):
 
     def setUp(self):
         super(TestAccumulateOperationCase02, self).setUp()
-        comissions = {
-            'some comission': 1,
-            'other comission': 3,
-        }
         container = trade.OperationContainer(
             operations=[copy.deepcopy(OPERATION19)],
-            commissions=comissions
+            commissions=COMMISSIONS13
         )
         container.fetch_positions()
         operation = container.positions['operations'][ASSET.symbol]
@@ -133,10 +132,7 @@ class TestAccumulateOperationCase04(TestAccumulateOperation):
         self.assertEqual(self.accumulator.quantity, 0)
 
     def test_accumulator_results(self):
-        self.assertEqual(
-            self.accumulator.results,
-            {'trades': -200}
-        )
+        self.assertEqual(self.accumulator.results, {'trades': -200})
 
 
 class TestAccumulateOperationCase05(TestAccumulateOperation):

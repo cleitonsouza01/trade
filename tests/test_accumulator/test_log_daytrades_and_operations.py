@@ -5,7 +5,7 @@ import unittest
 
 import trade
 
-from tests.fixtures.fixture_operations import (
+from tests.fixtures.operations import (
     ASSET, OPERATION1, OPERATION18, DAYTRADE0, DAYTRADE1,
 )
 from . fixture_logs import (

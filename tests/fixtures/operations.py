@@ -3,21 +3,24 @@
 from __future__ import absolute_import
 import copy
 
-from trade import Asset, Operation
-from trade.plugins import Daytrade, Option, Exercise
+from trade import Operation
+from trade.plugins import Daytrade, Exercise
+from .assets import ASSET, ASSET2, ASSET3, OPTION1
 
-
-ASSET = Asset(symbol='some asset')
-ASSET2 = Asset(symbol='some other asset')
-ASSET3 = Asset(symbol='even other asset')
-
-OPTION1 = Option(
-    symbol='some option',
-    underlying_assets={ASSET: 1},
-    expiration_date='2015-10-02'
-)
 
 # 2015-01-01
+OPERATION54 = Operation(
+    quantity=100,
+    price=5,
+    asset=ASSET,
+    date='2015-01-01'
+)
+OPERATION55 = Operation(
+    quantity=-20,
+    price=10,
+    asset=ASSET,
+    date='2015-01-01'
+)
 OPERATION0 = Operation(
     quantity=-100,
     price=10,
@@ -161,6 +164,12 @@ OPERATION22 = Operation(
     asset=ASSET,
     quantity=0,
     price=0
+)
+OPERATION56 = Operation(
+    date='2015-09-18',
+    asset=ASSET,
+    quantity=10,
+    price=10,
 )
 
 # 2015-09-19
@@ -359,6 +368,12 @@ OPTION_OPERATION2 = Operation(
     quantity=20,
     price=1
 )
+OPTION_OPERATION3 = Operation(
+    quantity=100,
+    price=10,
+    asset=OPTION1,
+    date='2015-01-01'
+)
 
 EXERCISE_OPERATION1 = Exercise(
     asset=OPTION1,
@@ -383,6 +398,18 @@ EXERCISE_OPERATION4 = Exercise(
     date='2015-10-02',
     quantity=10,
     price=5
+)
+EXERCISE_OPERATION5 = Exercise(
+    quantity=100,
+    price=10,
+    asset=OPTION1,
+    date='2015-01-01'
+)
+EXERCISE_OPERATION6 = Exercise(
+    date='2015-09-18',
+    asset=OPTION1,
+    quantity=-100,
+    price=10
 )
 
 

@@ -2,15 +2,14 @@
 
 from __future__ import absolute_import
 
-from tests.fixtures.fixture_operations import (
+from tests.fixtures.operations import (
     OPERATION0, OPERATION1, OPERATION2, OPERATION3, OPERATION4, OPERATION5,
     OPERATION6, OPERATION7, OPERATION8, OPERATION9, OPERATION10, OPERATION11,
     OPERATION12, OPERATION13, OPERATION14, OPERATION15, OPERATION16,
     OPERATION17, OPERATION18,
-
     DAYTRADE0, DAYTRADE2, DAYTRADE3, DAYTRADE1,
 )
-from tests.fixtures.fixture_events import (
+from tests.fixtures.events import (
     EVENT0, EVENT1, EVENT2, EVENT3, EVENT5,
 )
 

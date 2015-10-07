@@ -7,11 +7,12 @@ import unittest
 
 from trade import Accumulator
 
-from tests.fixtures.fixture_operations import ASSET
-from tests.fixtures.fixture_events import (
+from tests.fixtures.assets import ASSET
+from tests.fixtures.events import (
     EVENT3, EVENT5, EVENT4
 )
 from . fixture_logs import EXPECTED_LOG17, EXPECTED_LOG18
+
 
 class TestLogEvent(unittest.TestCase):
 

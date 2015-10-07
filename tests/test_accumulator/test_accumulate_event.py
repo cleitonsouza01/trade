@@ -8,7 +8,7 @@ import unittest
 import trade
 import trade.plugins
 
-from tests.fixtures.fixture_operations import ASSET
+from tests.fixtures.operations import ASSET
 
 
 class EventThatChangeResults(trade.plugins.Event):

@@ -6,12 +6,13 @@ import copy
 
 import trade
 
-from tests.fixtures.fixture_operations import (
-    ASSET, ASSET2, ASSET3,
-
+from tests.fixtures.operations import (
     OPERATION24, OPERATION25, OPERATION26, OPERATION27, OPERATION28,
     OPERATION29, OPERATION30, OPERATION26, OPERATION32, OPERATION32,
     OPERATION34, OPERATION35, OPERATION34, OPERATION37,
+)
+from tests.fixtures.assets import (
+    ASSET, ASSET2, ASSET3,
 )
 
 TASKS = [
@@ -60,8 +61,7 @@ class TestContainerIndentifyDaytradesCase00(TestIdentifyDaytrades):
 
     def test_daytrade_quantity(self):
         self.assertEqual(
-            self.container.positions['daytrades'][ASSET.symbol].quantity,
-            10
+            self.container.positions['daytrades'][ASSET.symbol].quantity, 10
         )
 
     def test_daytrade_buy_price(self):
@@ -113,14 +113,12 @@ class TestContainerIndentifyDaytradesCase01(TestIdentifyDaytrades):
 
     def test_operations1_quantity(self):
         self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol].quantity,
-            5
+            self.container.positions['operations'][ASSET.symbol].quantity, 5
         )
 
     def test_operations1_price(self):
         self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol].price,
-            2
+            self.container.positions['operations'][ASSET.symbol].price, 2
         )
 
     def test_daytrades_len(self):
@@ -128,8 +126,7 @@ class TestContainerIndentifyDaytradesCase01(TestIdentifyDaytrades):
 
     def test_daytrade_quantity(self):
         self.assertEqual(
-            self.container.positions['daytrades'][ASSET.symbol].quantity,
-            5
+            self.container.positions['daytrades'][ASSET.symbol].quantity, 5
         )
 
     def test_daytrade_buy_price(self):
@@ -194,9 +191,7 @@ class TestContainerIndentifyDaytradesCase02(TestIdentifyDaytrades):
 
     def test_operations1_quantity(self):
         self.assertEqual(
-            self.container.positions['operations'][ASSET2.symbol]\
-                .quantity,
-            -5
+            self.container.positions['operations'][ASSET2.symbol].quantity, -5
         )
 
     def test_common_trades1_price(self):
@@ -262,15 +257,12 @@ class TestContainerIndentifyDaytradesCase03(TestIdentifyDaytrades):
 
     def test_common_trades0_quantity(self):
         self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol]\
-                .quantity,
-            5
+            self.container.positions['operations'][ASSET.symbol].quantity, 5
         )
 
     def test_common_trades0_price(self):
         self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol].price,
-            2
+            self.container.positions['operations'][ASSET.symbol].price, 2
         )
 
     def test_daytrades_len(self):
@@ -278,9 +270,7 @@ class TestContainerIndentifyDaytradesCase03(TestIdentifyDaytrades):
 
     def test_daytrade0_quantity(self):
         self.assertEqual(
-            self.container.positions['daytrades'][ASSET.symbol]\
-                .quantity,
-            5
+            self.container.positions['daytrades'][ASSET.symbol].quantity, 5
         )
 
     def test_daytrade0_buy_price(self):
@@ -409,15 +399,13 @@ class TestContainerIndentifyDaytradesCase04(TestIdentifyDaytrades):
 
     def test_daytrade0_result(self):
         self.assertEqual(
-            self.container.positions['daytrades'][ASSET.symbol]\
-                .results,
+            self.container.positions['daytrades'][ASSET.symbol].results,
             {'daytrades': 10}
         )
 
     def test_daytrade1_quantity(self):
         self.assertEqual(
-            self.container.positions['daytrades'][ASSET2.symbol]\
-                .quantity,
+            self.container.positions['daytrades'][ASSET2.symbol].quantity,
             5
         )
 
@@ -451,8 +439,7 @@ class TestContainerIndentifyDaytradesCase04(TestIdentifyDaytrades):
 
     def test_daytrade1_result(self):
         self.assertEqual(
-            self.container.positions['daytrades'][ASSET2.symbol]\
-                .results,
+            self.container.positions['daytrades'][ASSET2.symbol].results,
             {'daytrades': -15}
         )
 
@@ -520,36 +507,31 @@ class TestContainerIndentifyDaytradesCase05(TestIdentifyDaytrades):
 
     def test_daytrade1_quantity(self):
         self.assertEqual(
-            self.container.positions['daytrades'][ASSET2.symbol].quantity,
-            5
+            self.container.positions['daytrades'][ASSET2.symbol].quantity, 5
         )
 
     def test_daytrade1_buy_price(self):
         self.assertEqual(
             self.container.positions['daytrades'][ASSET2.symbol]\
-                .operations[0].price,
-            10
+                .operations[0].price, 10
         )
 
     def test_daytrade1_buy_quantity(self):
         self.assertEqual(
             self.container.positions['daytrades'][ASSET2.symbol]\
-                .operations[0].quantity,
-            5
+                .operations[0].quantity, 5
         )
 
     def test_daytrade1_sale_price(self):
         self.assertEqual(
             self.container.positions['daytrades'][ASSET2.symbol]\
-                .operations[1].price,
-            7
+                .operations[1].price, 7
         )
 
     def test_daytrade1_sale_quantity(self):
         self.assertEqual(
             self.container.positions['daytrades'][ASSET2.symbol]\
-                .operations[1].quantity,
-            -5
+                .operations[1].quantity, -5
         )
 
     def test_daytrade1_result(self):
@@ -573,27 +555,22 @@ class TestContainerIndentifyDaytradesCase06(TestIdentifyDaytrades):
 
     def test_common_trades0_quantity(self):
         self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol]\
-                .quantity,
-            10
+            self.container.positions['operations'][ASSET.symbol].quantity, 10
         )
 
     def test_common_trades0_price(self):
         self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol].price,
-            3
+            self.container.positions['operations'][ASSET.symbol].price, 3
         )
 
     def test_daytrades_len(self):
         self.assertEqual(
-            len(self.container.positions['daytrades'].keys()),
-            2
+            len(self.container.positions['daytrades'].keys()), 2
         )
 
     def test_daytrade0_quantity(self):
         self.assertEqual(
-            self.container.positions['daytrades'][ASSET.symbol].quantity,
-            5
+            self.container.positions['daytrades'][ASSET.symbol].quantity, 5
         )
 
     def test_daytrade0_buy_price(self):
@@ -639,15 +616,13 @@ class TestContainerIndentifyDaytradesCase06(TestIdentifyDaytrades):
     def test_daytrade1_buy_price(self):
         self.assertEqual(
             self.container.positions['daytrades'][ASSET2.symbol]\
-                .operations[0].price,
-            10
+                .operations[0].price, 10
         )
 
     def test_daytrade1_buy_quantity(self):
         self.assertEqual(
             self.container.positions['daytrades'][ASSET2.symbol]\
-                .operations[0].quantity,
-            5
+                .operations[0].quantity, 5
         )
 
     def test_daytrade1_sale_price(self):
@@ -702,10 +677,7 @@ class TestContainerIndentifyDaytradesCase07(TestIdentifyDaytrades):
         )
 
     def test_daytrades_len(self):
-        self.assertEqual(
-            len(self.container.positions['daytrades'].keys()),
-            3
-        )
+        self.assertEqual(len(self.container.positions['daytrades'].keys()), 3)
 
     def test_daytrade0_quantity(self):
         self.assertEqual(

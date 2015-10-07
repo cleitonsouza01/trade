@@ -3,28 +3,24 @@
 from __future__ import absolute_import
 from __future__ import division
 import unittest
+import copy
 
-import trade
+from tests.fixtures.operations import OPERATION19
+from tests.fixtures.commissions import COMMISSIONS0
 
 
 class TestOperationCreation(unittest.TestCase):
     """Test the creation of Operation objects."""
 
     def setUp(self):
-        asset = trade.Asset(symbol='AAPL')
-        self.operation = trade.Operation(
-            date='2015-09-18',
-            asset=asset,
-            quantity=20,
-            price=10,
-        )
-        self.operation.commissions = {'some discount': 3}
+        self.operation = copy.deepcopy(OPERATION19)
+        self.operation.commissions = COMMISSIONS0
 
     def test_operation_exists(self):
         self.assertTrue(self.operation)
 
     def test_asset(self):
-        self.assertEqual(self.operation.asset.symbol, 'AAPL')
+        self.assertEqual(self.operation.asset.symbol, 'some asset')
 
     def test_date(self):
         self.assertEqual(self.operation.date, '2015-09-18')
@@ -36,5 +32,4 @@ class TestOperationCreation(unittest.TestCase):
         self.assertEqual(self.operation.price, 10)
 
     def test_discounts(self):
-        discounts = {'some discount': 3}
-        self.assertEqual(self.operation.commissions, discounts)
+        self.assertEqual(self.operation.commissions, {'some discount': 3})

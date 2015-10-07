@@ -5,8 +5,8 @@ import unittest
 
 import trade
 
-from tests.fixtures.fixture_operations import ASSET
-from tests.fixtures.fixture_events import EVENT6, EVENT7, EVENT8
+from tests.fixtures.assets import ASSET
+from tests.fixtures.events import EVENT6, EVENT7, EVENT8
 
 
 class TestBonusShares(unittest.TestCase):

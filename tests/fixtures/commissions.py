@@ -38,9 +38,9 @@ COMMISSIONS7 = {
     'negative discount': -1
 }
 COMMISSIONS8 = {
-    'brokerage': 2,
-    'some tax': 1.5,
-    'other tax': 1,
+    'some': 2,
+    'other': 1.5,
+    'and other': 1,
 }
 COMMISSIONS9 = {
     'some discount': 2,
@@ -55,4 +55,8 @@ COMMISSIONS11 = {
 COMMISSIONS12 = {
     'brokerage': 2.3,
     'other': 1
+}
+COMMISSIONS13 = {
+    'some discount': 1,
+    'other discount': 3,
 }

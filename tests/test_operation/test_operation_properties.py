@@ -3,26 +3,22 @@
 from __future__ import absolute_import
 from __future__ import division
 import unittest
+import copy
 
-import trade
-
-from tests.fixtures.fixture_commissions import (
+from tests.fixtures.commissions import (
     COMMISSIONS0, COMMISSIONS1, COMMISSIONS2, COMMISSIONS3, COMMISSIONS4,
     COMMISSIONS5, COMMISSIONS6, COMMISSIONS7, COMMISSIONS8
+)
+from tests.fixtures.operations import (
+    OPERATION19, OPERATION55, OPERATION56,
 )
 
 
 class TestOperationProperties(unittest.TestCase):
 
     def setUp(self):
-        self.operation1 = trade.Operation(
-            price=10,
-            quantity=20
-        )
-        self.operation2 = trade.Operation(
-            price=10,
-            quantity=-20
-        )
+        self.operation1 = copy.deepcopy(OPERATION19)
+        self.operation2 = copy.deepcopy(OPERATION55)
 
 
 class TestOperationRealPrice(TestOperationProperties):
@@ -79,13 +75,7 @@ class TestOperationRealValueCase01(TestOperationProperties):
     """
 
     def setUp(self):
-        self.asset = trade.Asset(name='some asset')
-        self.operation = trade.Operation(
-            date='2015-09-18',
-            asset=self.asset,
-            quantity=10,
-            price=10,
-        )
+        self.operation = copy.deepcopy(OPERATION56)
         self.operation.commissions = COMMISSIONS8
         self.operation.fees = {
             'some tax': 0.005,
@@ -102,33 +92,25 @@ class TestOperationRealValueCase01(TestOperationProperties):
         self.assertEqual(self.operation.price, 10)
 
     def test_commissions_dict(self):
-        commissions = COMMISSIONS8
-        self.assertEqual(self.operation.commissions, commissions)
+        self.assertEqual(self.operation.commissions, COMMISSIONS8)
 
     def test_fees_dict(self):
-        taxes = {
-            'some tax': 0.005,
-            'some other tax': 0.0275
-        }
-        self.assertEqual(self.operation.fees, taxes)
+        self.assertEqual(
+            self.operation.fees,
+            {
+                'some tax': 0.005,
+                'some other tax': 0.0275
+            }
+        )
 
     def test_total_fees_value(self):
-        self.assertEqual(
-            round(self.operation.total_fees_value, 8),
-            0.03250000
-        )
+        self.assertEqual(round(self.operation.total_fees_value, 8), 0.03250000)
 
     def test_real_price(self):
-        self.assertEqual(
-            round(self.operation.real_price, 8),
-            10.45325000
-        )
+        self.assertEqual(round(self.operation.real_price, 8), 10.45325000)
 
     def test_real_value(self):
-        self.assertEqual(
-            round(self.operation.real_value, 8),
-            104.532500
-        )
+        self.assertEqual(round(self.operation.real_value, 8), 104.532500)
 
 
 class TestOperationTotalDiscounts(TestOperationProperties):

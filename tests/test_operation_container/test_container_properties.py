@@ -6,8 +6,11 @@ import copy
 
 import trade
 
-from tests.fixtures.fixture_operations import (
+from tests.fixtures.operations import (
     OPERATION39, OPERATION40, OPERATION41
+)
+from tests.fixtures.commissions import (
+    COMMISSIONS13, COMMISSIONS11
 )
 
 
@@ -23,10 +26,9 @@ class TestContainerPropertiesCase00(TestContainerProperties):
 
     def setUp(self):
         super(TestContainerPropertiesCase00, self).setUp()
-        discounts = {
-            'some discount': 1,
-        }
-        self.trade_container = trade.OperationContainer(commissions=discounts)
+        self.trade_container = trade.OperationContainer(
+            commissions=COMMISSIONS11
+        )
 
     def test_total_commission_value(self):
         self.assertEqual(self.trade_container.total_commission_value, 1)
@@ -37,11 +39,9 @@ class TestContainerPropertiesCase01(TestContainerProperties):
 
     def setUp(self):
         super(TestContainerPropertiesCase01, self).setUp()
-        discounts = {
-            'some discount': 1,
-            'other discount': 3,
-        }
-        self.trade_container = trade.OperationContainer(commissions=discounts)
+        self.trade_container = trade.OperationContainer(
+            commissions=COMMISSIONS13
+        )
 
     def test_total_discount_value(self):
         self.assertEqual(self.trade_container.total_commission_value, 4)

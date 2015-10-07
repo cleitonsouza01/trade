@@ -2,29 +2,20 @@
 
 from __future__ import absolute_import
 import unittest
+import copy
 
 import trade
+
+from tests.fixtures.assets import OPTION1
+from tests.fixtures.operations import OPTION_OPERATION3
 
 
 class TestAccumulateOption00(unittest.TestCase):
     """Accumulate a Option operation."""
 
     def setUp(self):
-        self.asset = trade.Asset(name='Main')
-        self.option = trade.plugins.Option(
-            name='Option',
-            expiration_date='2015-12-31',
-            underlying_assets={self.asset: 1}
-        )
-
-        # Accumulate a option operation
-        self.operation = trade.Operation(
-            quantity=100,
-            price=10,
-            asset=self.option,
-            date='2015-01-01'
-        )
-        self.accumulator = trade.Accumulator(self.option)
+        self.operation = copy.deepcopy(OPTION_OPERATION3)
+        self.accumulator = trade.Accumulator(OPTION1)
         self.accumulator.accumulate_occurrence(self.operation)
 
     def test_returned_result(self):

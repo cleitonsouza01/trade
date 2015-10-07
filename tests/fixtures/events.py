@@ -2,7 +2,7 @@
 
 from __future__ import absolute_import
 
-from .fixture_operations import ASSET
+from .assets import ASSET
 from trade.plugins import  Event, StockSplit, BonusShares
 
 

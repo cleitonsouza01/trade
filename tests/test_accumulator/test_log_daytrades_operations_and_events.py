@@ -6,14 +6,14 @@ import unittest
 import trade
 import trade.plugins
 
-from tests.fixtures.fixture_operations import (
-    OPERATION1, OPERATION18, ASSET, DAYTRADE2, DAYTRADE3,
+from tests.fixtures.operations import (
+    ASSET, OPERATION1, OPERATION18, DAYTRADE2, DAYTRADE3,
+)
+from tests.fixtures.events import (
+    EVENT0, EVENT1, EVENT2,
 )
 from . fixture_logs import (
     EXPECTED_LOG19, EXPECTED_LOG20, EXPECTED_LOG21
-)
-from tests.fixtures.fixture_events import (
-    EVENT0, EVENT1, EVENT2,
 )
 
 

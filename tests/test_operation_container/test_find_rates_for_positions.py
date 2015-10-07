@@ -7,10 +7,11 @@ import copy
 
 import trade
 
-from tests.fixtures.fixture_operations import (
-    ASSET, ASSET2,
-
+from tests.fixtures.operations import (
     OPERATION24, OPERATION26, OPERATION27
+)
+from tests.fixtures.assets import (
+    ASSET, ASSET2,
 )
 
 
@@ -52,35 +53,27 @@ class TestFindFeesForPositionsCase00(unittest.TestCase):
         self.assertEqual(self.container.volume, 70)
 
     def test_daytrade_buy_taxes(self):
-        taxes = {
-            'rate': 0.005,
-        }
         self.assertEqual(
             self.container.positions['daytrades'][ASSET.symbol]\
                 .operations[0].fees,
-            taxes
+            {'rate': 0.005}
         )
 
     def test_daytrade_sale_taxes(self):
-        taxes = {
-            'rate': 0.005,
-        }
         self.assertEqual(
             self.container.positions['daytrades'][ASSET.symbol]\
                 .operations[1].fees,
-            taxes
+            {'rate': 0.005,}
         )
 
     def test_operations0_taxes(self):
-        taxes = {'rate':1}
         self.assertEqual(
             self.container.positions['operations'][ASSET.symbol].fees,
-            taxes
+            {'rate':1}
         )
 
     def test_operations1_taxes(self):
-        taxes = {'rate':1}
         self.assertEqual(
             self.container.positions['operations'][ASSET2.symbol].fees,
-            taxes
+            {'rate':1}
         )
