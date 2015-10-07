@@ -15,16 +15,8 @@ class TestOptionExercises(unittest.TestCase):
             expiration_date='2015-10-02',
             underlying_assets={self.asset: 1}
         )
-        self.exercise_op_1 = self.option.exercise(
-            quantity=100,
-            price=10,
-            date='2015-09-30'
-        )
-        self.exercise_op_2 = self.option.exercise(
-            quantity=-100,
-            price=10,
-            date='2015-09-30'
-        )
+        self.exercise_op_1 = self.option.exercise(quantity=100, price=10)
+        self.exercise_op_2 = self.option.exercise(quantity=-100, price=10)
 
 
 class TestOptionExerciseCase00(TestOptionExercises):

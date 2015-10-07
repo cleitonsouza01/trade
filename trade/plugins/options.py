@@ -71,7 +71,7 @@ class Option(Asset):
             underlying_assets = {}
         self.underlying_assets = underlying_assets
 
-    def exercise(self, quantity, price, date, premium=0):
+    def exercise(self, quantity, price, premium=0):
         """Exercises the option.
 
         If a premium if informed, then it will be considered on the
@@ -89,7 +89,6 @@ class Option(Asset):
             Operation(
                 quantity=abs(quantity)*-1,
                 price=0,
-                date=date,
                 asset=self
             )
         ]
@@ -101,7 +100,6 @@ class Option(Asset):
                 Operation(
                     quantity=quantity * ratio,
                     price=price + premium,
-                    date=date,
                     asset=underlying_asset
                 )
             )
@@ -135,15 +133,15 @@ class Exercise(Operation):
             self.operations = self.asset.exercise(
                 self.quantity,
                 self.price,
-                self.date,
                 portfolio.assets[self.asset.symbol].price
             )
         else:
             self.operations = self.asset.exercise(
                 self.quantity,
                 self.price,
-                self.date
             )
+        for operation in self.operations:
+            operation.date = self.date
 
 
 def fetch_exercises(container):
