@@ -4,9 +4,11 @@ from __future__ import absolute_import
 import copy
 
 from trade import Asset, Operation
-from trade.plugins import Daytrade, Event, StockSplit
+from trade.plugins import Daytrade
 
 ASSET = Asset(symbol='some asset')
+ASSET2 = Asset(symbol='some other asset')
+ASSET3 = Asset(symbol='even other asset')
 
 
 # 2015-01-01
@@ -196,44 +198,69 @@ DAYTRADE3 = copy.deepcopy(DAYTRADE2)
 DAYTRADE3.date = '2015-01-02'
 
 
-# EVENTS
-
-class TestEvent(Event):
-    """A dummy event for the tests."""
-
-    def update_container(self, container):
-        pass
-
-
-EVENT0 = TestEvent(
+OPERATION24 = Operation(
+    date='2015-09-21',
     asset=ASSET,
-    date='2015-01-01',
-    factor=1
+    quantity=10,
+    price=2
 )
-EVENT1 = TestEvent(
+OPERATION25 = Operation(
+    date='2015-09-21',
     asset=ASSET,
-    date='2015-01-03',
-    factor=1
+    quantity=-10,
+    price=3
 )
-EVENT2 = TestEvent(
+OPERATION26 = Operation(
+    date='2015-09-21',
     asset=ASSET,
-    date='2015-01-02',
-    factor=1
+    quantity=-5,
+    price=3
 )
-
-EVENT3 = TestEvent(
-    ASSET,
-    '2015-09-25',
-    factor=1
+OPERATION27 = Operation(
+    date='2015-09-21',
+    asset=ASSET2,
+    quantity=-5,
+    price=7
 )
-EVENT4 = TestEvent(
-    ASSET,
-    '2015-09-24',
-    factor=1,
+OPERATION28 = Operation(
+    date='2015-09-21',
+    asset=ASSET2,
+    quantity=5,
+    price=10
 )
-
-EVENT5 = StockSplit(
+OPERATION29 = Operation(
+    date='2015-09-21',
     asset=ASSET,
-    date='2015-09-24',
-    factor=2
+    quantity=-5,
+    price=10
+)
+OPERATION30 = Operation(
+    date='2015-09-21',
+    asset=ASSET,
+    quantity=-5,
+    price=20
+)
+OPERATION32 = Operation(
+    date='2015-09-21',
+    asset=ASSET,
+    quantity=5,
+    price=4
+)
+OPERATION34 = Operation(
+    date='2015-09-21',
+    asset=ASSET3,
+    quantity=5,
+    price=4
+)
+OPERATION35 = Operation(
+    date='2015-09-21',
+    asset=ASSET3,
+    quantity=-5,
+    price=2
+)
+OPERATION37 = Operation(
+    date='2015-09-21',
+    asset=ASSET3,
+    quantity=-5,
+    price=4
 )

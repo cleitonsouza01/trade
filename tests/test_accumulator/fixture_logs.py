@@ -9,10 +9,10 @@ from tests.fixtures.fixture_operations import (
     OPERATION17, OPERATION18,
 
     DAYTRADE0, DAYTRADE2, DAYTRADE3, DAYTRADE1,
-
+)
+from tests.fixtures.fixture_events import (
     EVENT0, EVENT1, EVENT2, EVENT3, EVENT5,
 )
-
 
 EXPECTED_LOG0 = {
     '2015-01-02': {
