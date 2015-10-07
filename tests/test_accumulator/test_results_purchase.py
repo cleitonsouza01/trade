@@ -5,7 +5,7 @@ import unittest
 
 from trade import Accumulator
 
-from . fixture_operations import (
+from tests.fixtures.fixture_operations import (
     ASSET,
     OPERATION0, OPERATION1, OPERATION2, OPERATION3, OPERATION4, OPERATION5,
     OPERATION6, OPERATION7, OPERATION8,

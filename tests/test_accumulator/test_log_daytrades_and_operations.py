@@ -5,54 +5,13 @@ import unittest
 
 import trade
 
-from . fixture_operations import (
-    ASSET, OPERATION1, OPERATION18, DAYTRADE0, DAYTRADE1
+from tests.fixtures.fixture_operations import (
+    ASSET, OPERATION1, OPERATION18, DAYTRADE0, DAYTRADE1,
+)
+from . fixture_logs import (
+    EXPECTED_LOG22, EXPECTED_LOG23, EXPECTED_LOG24,
 )
 
-
-EXPECTED_LOG0 = {
-    '2015-01-01': {
-        'position': {
-            'quantity': 100,
-            'price': 10
-        },
-        'occurrences': [DAYTRADE0, OPERATION18]
-    }
-}
-
-EXPECTED_LOG1 = {
-    '2015-01-02': {
-        'position': {
-            'quantity': 100,
-            'price': 10
-        },
-        'occurrences': [OPERATION1]
-    },
-    '2015-01-01': {
-        'position': {
-            'quantity': 0,
-            'price': 0
-        },
-        'occurrences': [DAYTRADE0]
-    }
-}
-
-EXPECTED_LOG2 = {
-    '2015-01-02': {
-        'position': {
-            'quantity': 100,
-            'price': 10
-        },
-        'occurrences': [OPERATION1, DAYTRADE1]
-    },
-    '2015-01-01': {
-        'position': {
-            'quantity': 0,
-            'price': 0
-        },
-        'occurrences': [DAYTRADE0]
-    }
-}
 
 class TestLogDaytradesAndOperations(unittest.TestCase):
 
@@ -69,7 +28,7 @@ class TestLogDaytradesAndOperationsCase00(TestLogDaytradesAndOperations):
     def test_log_occurrences(self):
         self.accumulator.accumulate_occurrence(DAYTRADE0)
         self.accumulator.accumulate_occurrence(OPERATION18)
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG0)
+        self.assertEqual(self.accumulator.log, EXPECTED_LOG22)
 
 
 class TestLogDaytradesAndOperationsCase01(TestLogDaytradesAndOperations):
@@ -82,7 +41,7 @@ class TestLogDaytradesAndOperationsCase01(TestLogDaytradesAndOperations):
     def test_log_occurrences(self):
         self.accumulator.accumulate_occurrence(DAYTRADE0)
         self.accumulator.accumulate_occurrence(OPERATION1)
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG1)
+        self.assertEqual(self.accumulator.log, EXPECTED_LOG23)
 
 
 class TestLogDaytradesAndOperationsCase02(TestLogDaytradesAndOperations):
@@ -96,4 +55,4 @@ class TestLogDaytradesAndOperationsCase02(TestLogDaytradesAndOperations):
         self.accumulator.accumulate_occurrence(DAYTRADE0)
         self.accumulator.accumulate_occurrence(OPERATION1)
         self.accumulator.accumulate_occurrence(DAYTRADE1)
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG2)
+        self.assertEqual(self.accumulator.log, EXPECTED_LOG24)

@@ -4,7 +4,7 @@ from __future__ import absolute_import
 import unittest
 
 import trade
-from . fixture_operations import ASSET, DAYTRADE0
+from tests.fixtures.fixture_operations import ASSET, DAYTRADE0
 from . fixture_logs import EXPECTED_LOG16
 
 

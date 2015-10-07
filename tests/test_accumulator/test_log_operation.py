@@ -5,7 +5,7 @@ import unittest
 
 import trade
 
-from . fixture_operations import ASSET, OPERATION18
+from tests.fixtures.fixture_operations import ASSET, OPERATION18
 from . fixture_logs import EXPECTED_LOG15
 
 

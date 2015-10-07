@@ -2,13 +2,13 @@
 
 from __future__ import absolute_import
 
-from .fixture_operations import (
+from tests.fixtures.fixture_operations import (
     OPERATION0, OPERATION1, OPERATION2, OPERATION3, OPERATION4, OPERATION5,
     OPERATION6, OPERATION7, OPERATION8, OPERATION9, OPERATION10, OPERATION11,
     OPERATION12, OPERATION13, OPERATION14, OPERATION15, OPERATION16,
     OPERATION17, OPERATION18,
 
-    DAYTRADE0, DAYTRADE2, DAYTRADE3,
+    DAYTRADE0, DAYTRADE2, DAYTRADE3, DAYTRADE1,
 
     EVENT0, EVENT1, EVENT2, EVENT3, EVENT5,
 )
@@ -549,7 +549,6 @@ EXPECTED_LOG20 = {
     }
 }
 
-
 EXPECTED_LOG21 = {
     '2015-01-02': {
         'position': {
@@ -564,5 +563,50 @@ EXPECTED_LOG21 = {
             'price': 0
         },
         'occurrences': [DAYTRADE2]
+    }
+}
+
+EXPECTED_LOG22 = {
+    '2015-01-01': {
+        'position': {
+            'quantity': 100,
+            'price': 10
+        },
+        'occurrences': [DAYTRADE0, OPERATION18]
+    }
+}
+
+EXPECTED_LOG23 = {
+    '2015-01-02': {
+        'position': {
+            'quantity': 100,
+            'price': 10
+        },
+        'occurrences': [OPERATION1]
+    },
+    '2015-01-01': {
+        'position': {
+            'quantity': 0,
+            'price': 0
+        },
+        'occurrences': [DAYTRADE0]
+    }
+}
+
+
+EXPECTED_LOG24 = {
+    '2015-01-02': {
+        'position': {
+            'quantity': 100,
+            'price': 10
+        },
+        'occurrences': [OPERATION1, DAYTRADE1]
+    },
+    '2015-01-01': {
+        'position': {
+            'quantity': 0,
+            'price': 0
+        },
+        'occurrences': [DAYTRADE0]
     }
 }

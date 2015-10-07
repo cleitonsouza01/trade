@@ -5,7 +5,7 @@ import unittest
 import copy
 
 import trade
-from . fixture_operations import (
+from tests.fixtures.fixture_operations import (
     ASSET, OPERATION18, OPERATION19, OPERATION20, OPERATION21, OPERATION22,
     OPERATION23
 )

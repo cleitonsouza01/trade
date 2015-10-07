@@ -6,7 +6,7 @@ import unittest
 import trade
 import trade.plugins
 
-from . fixture_operations import (
+from tests.fixtures.fixture_operations import (
     OPERATION1, OPERATION18, ASSET, DAYTRADE2, DAYTRADE3,
     EVENT0, EVENT1, EVENT2
 )

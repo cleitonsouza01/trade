@@ -6,6 +6,11 @@ import unittest
 
 import trade
 
+from tests.fixtures.fixture_commissions import (
+    COMMISSIONS0, COMMISSIONS1, COMMISSIONS2, COMMISSIONS3, COMMISSIONS4,
+    COMMISSIONS5, COMMISSIONS6, COMMISSIONS7, COMMISSIONS8
+)
+
 
 class TestOperationProperties(unittest.TestCase):
 
@@ -32,64 +37,38 @@ class TestOperationRealPrice(TestOperationProperties):
         self.assertEqual(self.operation1.real_price, 10)
 
     def test_price_one_discount(self):
-        self.operation1.commissions = {
-            'some discount': 3
-        }
+        self.operation1.commissions = COMMISSIONS0
         self.assertEqual(self.operation1.real_price, 10.15)
 
     def test_discounts_case1(self):
-        self.operation1.commissions = {
-            'some discount': 3,
-            'other discount': 1
-        }
+        self.operation1.commissions = COMMISSIONS1
         self.assertEqual(self.operation1.real_price, 10.2)
 
     def test_discounts_case2(self):
-        self.operation1.commissions = {
-            'some discount': 3,
-            'other discount': 1,
-            'more discounts': 2
-        }
+        self.operation1.commissions = COMMISSIONS2
         self.assertEqual(self.operation1.real_price, 10.3)
 
     def test_discounts_case3(self):
-        self.operation1.commissions = {
-            'some discount': 3,
-            'other discount': 1,
-            'negative discount': -1
-        }
+        self.operation1.commissions = COMMISSIONS3
         self.assertEqual(self.operation1.real_price, 10.15)
 
     def test_value_no_discount(self):
         self.assertEqual(self.operation1.real_value, 200)
 
     def test_value_one_discount(self):
-        self.operation1.commissions = {
-            'some discount': 6
-        }
+        self.operation1.commissions = COMMISSIONS4
         self.assertEqual(self.operation1.real_value, 206)
 
     def test_value_multiple_discounts_case_1(self):
-        self.operation1.commissions = {
-            'some discount': 7,
-            'other discount': 1
-        }
+        self.operation1.commissions = COMMISSIONS5
         self.assertEqual(self.operation1.real_value, 208)
 
     def test_value_multiple_discounts_case_2(self):
-        self.operation1.commissions = {
-            'some discount': 10,
-            'other discount': 1,
-            'more discounts': 2
-        }
+        self.operation1.commissions = COMMISSIONS6
         self.assertEqual(self.operation1.real_value, 213)
 
     def test_value_multiple_discounts_case_3(self):
-        self.operation1.commissions = {
-            'some discount': 5,
-            'other discount': 1,
-            'negative discount': -1
-        }
+        self.operation1.commissions = COMMISSIONS7
         self.assertEqual(self.operation1.real_value, 205)
 
 
@@ -107,11 +86,7 @@ class TestOperationRealValueCase01(TestOperationProperties):
             quantity=10,
             price=10,
         )
-        self.operation.commissions = {
-            'brokerage': 2,
-            'some tax': 1.5,
-            'other tax': 1,
-        }
+        self.operation.commissions = COMMISSIONS8
         self.operation.fees = {
             'some tax': 0.005,
             'some other tax': 0.0275,
@@ -127,11 +102,7 @@ class TestOperationRealValueCase01(TestOperationProperties):
         self.assertEqual(self.operation.price, 10)
 
     def test_commissions_dict(self):
-        commissions = {
-            'brokerage': 2,
-            'some tax': 1.5,
-            'other tax': 1,
-        }
+        commissions = COMMISSIONS8
         self.assertEqual(self.operation.commissions, commissions)
 
     def test_fees_dict(self):
@@ -164,32 +135,19 @@ class TestOperationTotalDiscounts(TestOperationProperties):
     """Test the total_commissions property of Operation objects."""
 
     def test_one_discount(self):
-        self.operation1.commissions = {
-            'some discount': 3
-        }
+        self.operation1.commissions = COMMISSIONS0
         self.assertEqual(self.operation1.total_commissions, 3)
 
     def test_multiple_discounts_case_1(self):
-        self.operation1.commissions = {
-            'some discount': 3,
-            'other discount': 1
-        }
+        self.operation1.commissions = COMMISSIONS1
         self.assertEqual(self.operation1.total_commissions, 4)
 
     def test_multiple_discounts_case_2(self):
-        self.operation1.commissions = {
-            'some discount': 3,
-            'other discount': 1,
-            'more discounts': 2
-        }
+        self.operation1.commissions = COMMISSIONS2
         self.assertEqual(self.operation1.total_commissions, 6)
 
     def test_multiple_discounts_case_3(self):
-        self.operation1.commissions = {
-            'some discount': 3,
-            'other discount': 1,
-            'negative discount': -1
-        }
+        self.operation1.commissions = COMMISSIONS3
         self.assertEqual(self.operation1.total_commissions, 3)
 
 
@@ -206,11 +164,7 @@ class TestOperationVolumeCase00(TestOperationProperties):
         self.assertEqual(self.operation1.volume, 200)
 
     def test_sale_with_discounts(self):
-        self.operation1.commissions = {
-            'brokerage': 2,
-            'some tax': 1.5,
-            'other tax': 1,
-        },
+        self.operation1.commissions = COMMISSIONS8
         self.operation1.fees = {
             'some tax': 0.005,
             'some other tax': 0.0275
