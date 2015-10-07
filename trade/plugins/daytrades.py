@@ -6,13 +6,14 @@ the fetch_daytrades() task for the OperationContainer.
 With this plugin the trade module can:
 - Identify daytrades in a group of operations
 - Separate daytrades from other operations on the OperationContainer
+- Accumulate Daytrades on the portfolio
 
 It provides:
 - Daytrade, a subclass of trade.Operation
 - the fetch_daytrades() task to the OperationContainer
 
 Daytrades can be accumulated just like any other Operation object.
-They will update the accumulator results, but will not change the
+They will update the accumulated results, but will not change the
 quantity or the price of the asset on the Portfolio.
 
 http://trade.readthedocs.org/
@@ -133,22 +134,40 @@ class Daytrade(Operation):
         if 'daytrades' not in container.positions:
             container.positions['daytrades'] = {}
         symbol = self.asset.symbol
+
+        # If the container already have
+        # a daytrade position with this asset,
+        # then we must merge this daytrade
+        # with the existing daytrade
         if symbol in container.positions['daytrades']:
+
+            # Merges the purchase operation
             merge_operations(
                 container.positions['daytrades'][symbol].operations[0],
                 self.operations[0]
             )
+
+            # Merges the sale operation
             merge_operations(
                 container.positions['daytrades'][symbol].operations[1],
                 self.operations[1]
             )
+
+            # Update the daytraded quantity with the
+            # quantity of this daytrade
             container.positions['daytrades'][symbol].quantity += self.quantity
+
+        # If this is the first found daytrade
+        # with this asset on the container, then
+        # place this daytrade on the container
         else:
             container.positions['daytrades'][symbol] = self
 
 
 def fetch_daytrades(container):
-    """Fetch the daytrades from the OperationContainer operations.
+    """A OperationContainer task.
+
+    Fetch the daytrades from the OperationContainer operations.
 
     The daytrades are placed on the container positions under the
     'daytrades' key, inexed by the Daytrade asset's symbol.

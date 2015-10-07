@@ -11,7 +11,7 @@ It provides:
 - Option, a subclass of trade.Derivative
 - Exercise, a subclass of trade.Operation
 - the fetch_exercises() task to the OperationContainer
-- the get_exercise_premium() task to the Portfolio
+- the fetch_exercise_operations() task to the Portfolio
 
 http://trade.readthedocs.org/
 https://github.com/rochars/trade
@@ -125,7 +125,7 @@ class Exercise(Operation):
 
     # In a exercise operation it is the underlying
     # operations that will change the position on
-    # the portfolio
+    # the portfolio, not the operation itself
     accumulate_underlying_operations = True
 
     def fetch_operations(self, portfolio=None):
@@ -155,7 +155,7 @@ class Exercise(Operation):
 
 
 def fetch_exercises(container):
-    """An OperationContainer task.
+    """A OperationContainer task.
 
     After this task, all operations created by Exercise objects
     will be on the container positions under the key 'exercises'.

@@ -1,15 +1,20 @@
 """events: A default set of events for the trade module.
 
 This plugin provides a standard set of events for the trade module.
-Events are passed to Accumulator objects to change their position.
+Events are subclasses of trade.Occurrence. They are passed to
+Accumulator and Porfolio objects to change asset accumulation data.
 
 It contains the definitions of:
+- Event
 - StockSplit
 - ReverseStockSplit
 - BonusShares
 
-You may use the default events in your application or use them as a
-base to create your own events.
+Events can be accumulated by Portfolio objects just like any other
+occurrence. Just like any other Occurrence subclass, each event must
+for implement a update_container() method that receives a
+trade.Accumulator object. This method will contain the logic for the
+update on the accumulator data.
 
 http://trade.readthedocs.org/
 https://github.com/rochars/trade
@@ -38,7 +43,7 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from abc import ABCMeta
+from abc import ABCMeta, abstractmethod
 
 from ..trade import Occurrence
 from ..utils import average_price
@@ -58,10 +63,12 @@ class Event(Occurrence):
     __metaclass__ = ABCMeta
 
     def __init__(self, asset, date, factor):
-        self.factor = factor
         super(Event, self).__init__(asset, date)
+        self.factor = factor
 
+    @abstractmethod
     def update_container(self, container):
+        """Should udpate the quantity, price and/or results."""
         raise NotImplementedError
 
 
@@ -74,6 +81,7 @@ class StockSplit(Event):
     """
 
     def update_container(self, container):
+        """Performs a split or a reverse split on the stock."""
         container.quantity = container.quantity * self.factor
         container.price = container.price / self.factor
 
@@ -82,11 +90,9 @@ class BonusShares(Event):
     """Bonus shares."""
 
     def update_container(self, container):
+        """Add stocks received as bonus shares do the accumulator."""
         new_quantity = container.quantity * self.factor
         container.price = average_price(
-            container.quantity,
-            container.price,
-            new_quantity,
-            0
+            container.quantity, container.price, new_quantity, 0
         )
         container.quantity += new_quantity
