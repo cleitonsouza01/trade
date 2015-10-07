@@ -49,7 +49,6 @@ OPERATION18 = Operation(
     date='2015-01-01'
 )
 
-
 #2015-01-02
 OPERATION1 = Operation(
     quantity=100,
@@ -70,7 +69,6 @@ OPERATION17 = Operation(
     asset=ASSET
 )
 
-
 #2015-01-03
 OPERATION2 = Operation(
     quantity=-100,
@@ -84,7 +82,6 @@ OPERATION11 = Operation(
     date='2015-01-03',
     asset=ASSET
 )
-
 
 #2015-01-04
 OPERATION3 = Operation(
@@ -100,7 +97,6 @@ OPERATION12 = Operation(
     asset=ASSET
 )
 
-
 #2015-01-05
 OPERATION4 = Operation(
     quantity=-100,
@@ -114,7 +110,6 @@ OPERATION13 = Operation(
     date='2015-01-05',
     asset=ASSET
 )
-
 
 #2015-01-06
 OPERATION5 = Operation(
@@ -142,7 +137,6 @@ OPERATION15 = Operation(
     asset=ASSET
 )
 
-
 # 2015-09-18
 OPERATION19 = Operation(
     date='2015-09-18',
@@ -150,7 +144,6 @@ OPERATION19 = Operation(
     quantity=20,
     price=10
 )
-
 OPERATION20 = Operation(
     date='2015-09-18',
     asset=ASSET,
@@ -163,7 +156,6 @@ OPERATION22 = Operation(
     quantity=0,
     price=0
 )
-
 
 # 2015-09-19
 OPERATION21 = Operation(
@@ -180,24 +172,7 @@ OPERATION23 = Operation(
 )
 
 
-# DAYTRADES
-
-DAYTRADE0 = Daytrade(
-    copy.deepcopy(OPERATION18),
-    copy.deepcopy(OPERATION7)
-)
-DAYTRADE1 = Daytrade(
-    copy.deepcopy(OPERATION1),
-    copy.deepcopy(OPERATION17)
-)
-DAYTRADE2 = Daytrade(
-    copy.deepcopy(OPERATION9),
-    copy.deepcopy(OPERATION7)
-)
-DAYTRADE3 = copy.deepcopy(DAYTRADE2)
-DAYTRADE3.date = '2015-01-02'
-
-
+# 2015-09-21
 OPERATION24 = Operation(
     date='2015-09-21',
     asset=ASSET,
@@ -264,3 +239,44 @@ OPERATION37 = Operation(
     quantity=-5,
     price=4
 )
+OPERATION38 = Operation(
+    date='2015-09-21',
+    asset=ASSET,
+    quantity=5,
+    price=4
+)
+OPERATION39 = Operation(
+    date='2015-09-21',
+    asset=ASSET,
+    quantity=-10,
+    price=2
+)
+OPERATION40 = Operation(
+    date='2015-09-21',
+    asset=ASSET,
+    quantity=5,
+    price=1
+)
+OPERATION41 = Operation(
+    date='2015-09-21',
+    asset=ASSET2,
+    quantity=20,
+    price=5
+)
+
+
+# DAYTRADES
+DAYTRADE0 = Daytrade(
+    copy.deepcopy(OPERATION18),
+    copy.deepcopy(OPERATION7)
+)
+DAYTRADE1 = Daytrade(
+    copy.deepcopy(OPERATION1),
+    copy.deepcopy(OPERATION17)
+)
+DAYTRADE2 = Daytrade(
+    copy.deepcopy(OPERATION9),
+    copy.deepcopy(OPERATION7)
+)
+DAYTRADE3 = copy.deepcopy(DAYTRADE2)
+DAYTRADE3.date = '2015-01-02'

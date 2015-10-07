@@ -2,36 +2,20 @@
 
 from __future__ import absolute_import
 import unittest
+import copy
 
 import trade
 
-
-ASSET1 = trade.Asset('some asset')
-ASSET2 = trade.Asset('some other asset')
+from tests.fixtures.fixture_operations import (
+    OPERATION39, OPERATION40, OPERATION41
+)
 
 
 class TestContainerProperties(unittest.TestCase):
     """A base class with all operations used in the test cases."""
 
     def setUp(self):
-        self.operation1 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET1,
-            quantity=-10,
-            price=2
-        )
-        self.operation2 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET1,
-            quantity=5,
-            price=1
-        )
-        self.operation3 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET2,
-            quantity=20,
-            price=5
-        )
+        pass
 
 
 class TestContainerPropertiesCase00(TestContainerProperties):
@@ -69,7 +53,9 @@ class TestContainerPropertiesCase02(TestContainerProperties):
     def setUp(self):
         super(TestContainerPropertiesCase02, self).setUp()
         self.trade_container = trade.OperationContainer(
-            operations=[self.operation1]
+            operations=[
+                copy.deepcopy(OPERATION39)
+            ]
         )
         self.trade_container.fetch_positions()
 
@@ -84,8 +70,8 @@ class TestContainerPropertiesCase03(TestContainerProperties):
         super(TestContainerPropertiesCase03, self).setUp()
         self.trade_container = trade.OperationContainer(
             operations=[
-                self.operation1,
-                self.operation2
+                copy.deepcopy(OPERATION39),
+                copy.deepcopy(OPERATION40)
             ]
         )
         self.trade_container.fetch_positions()
@@ -101,9 +87,9 @@ class TestContainerPropertiesCase05(TestContainerProperties):
         super(TestContainerPropertiesCase05, self).setUp()
         self.trade_container = trade.OperationContainer(
             operations=[
-                self.operation1,
-                self.operation2,
-                self.operation3
+                copy.deepcopy(OPERATION39),
+                copy.deepcopy(OPERATION40),
+                copy.deepcopy(OPERATION41)
             ]
         )
         self.trade_container.fetch_positions()

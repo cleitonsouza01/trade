@@ -5,6 +5,10 @@ import unittest
 
 import trade
 
+from tests.fixtures.fixture_operations import (
+    ASSET
+)
+
 
 class TestContainerCreationCase00(unittest.TestCase):
     """Test the creation of a OperationContainer."""
@@ -48,10 +52,9 @@ class TestContainerAddToPositions(unittest.TestCase):
     """Test add_to_position_operations method."""
 
     def setUp(self):
-        self.asset = trade.Asset(symbol='some asset')
         operation = trade.Operation(
             date='2015-09-21',
-            asset=self.asset,
+            asset=ASSET,
             quantity=10,
             price=2
         )
@@ -63,12 +66,11 @@ class TestContainerAddToPositions(unittest.TestCase):
         self.container.fetch_positions()
         operation2 = trade.Operation(
             date='2015-09-21',
-            asset=self.asset,
+            asset=ASSET,
             quantity=10,
             price=4
         )
         self.container.add_to_position_operations(operation2)
-        #self.container.fetch_positions()
 
     def test_common_trades_len(self):
         self.assertEqual(len(self.container.positions['operations'].keys()), 1)
@@ -78,12 +80,12 @@ class TestContainerAddToPositions(unittest.TestCase):
 
     def test_operations0_quantity(self):
         self.assertEqual(
-            self.container.positions['operations'][self.asset.symbol].quantity,
+            self.container.positions['operations'][ASSET.symbol].quantity,
             20
         )
 
     def test_operations0_price(self):
         self.assertEqual(
-            self.container.positions['operations'][self.asset.symbol].price,
+            self.container.positions['operations'][ASSET.symbol].price,
             3
         )

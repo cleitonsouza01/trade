@@ -3,12 +3,15 @@
 from __future__ import absolute_import
 import unittest
 from abc import ABCMeta, abstractmethod
+import copy
 
 import trade
 
+from tests.fixtures.fixture_operations import (
+    ASSET, ASSET2,
 
-ASSET1 = trade.Asset(symbol='some asset')
-ASSET2 = trade.Asset(symbol='some other asset')
+    OPERATION24, OPERATION26, OPERATION27
+)
 
 
 class TaxManagerForTests(trade.TradingFees):
@@ -29,29 +32,11 @@ class TestFindFeesForPositionsCase00(unittest.TestCase):
     """Test the application of fees to operations in the container."""
 
     def setUp(self):
-        operation1 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET1,
-            quantity=10,
-            price=2
-        )
-        operation2 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET1,
-            quantity=-5,
-            price=3
-        )
-        operation3 = trade.Operation(
-            date='2015-09-21',
-            asset=ASSET2,
-            quantity=-5,
-            price=7
-        )
         self.container = trade.OperationContainer(
             operations=[
-                operation1,
-                operation2,
-                operation3
+                copy.deepcopy(OPERATION24),
+                copy.deepcopy(OPERATION26),
+                copy.deepcopy(OPERATION27),
             ]
         )
         self.container.trading_fees = TaxManagerForTests
@@ -71,7 +56,7 @@ class TestFindFeesForPositionsCase00(unittest.TestCase):
             'rate': 0.005,
         }
         self.assertEqual(
-            self.container.positions['daytrades'][ASSET1.symbol]\
+            self.container.positions['daytrades'][ASSET.symbol]\
                 .operations[0].fees,
             taxes
         )
@@ -81,7 +66,7 @@ class TestFindFeesForPositionsCase00(unittest.TestCase):
             'rate': 0.005,
         }
         self.assertEqual(
-            self.container.positions['daytrades'][ASSET1.symbol]\
+            self.container.positions['daytrades'][ASSET.symbol]\
                 .operations[1].fees,
             taxes
         )
@@ -89,7 +74,7 @@ class TestFindFeesForPositionsCase00(unittest.TestCase):
     def test_operations0_taxes(self):
         taxes = {'rate':1}
         self.assertEqual(
-            self.container.positions['operations'][ASSET1.symbol].fees,
+            self.container.positions['operations'][ASSET.symbol].fees,
             taxes
         )
 
