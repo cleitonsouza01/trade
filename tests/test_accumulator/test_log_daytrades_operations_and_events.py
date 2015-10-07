@@ -29,9 +29,9 @@ class TestLogDaytradesOperationsAndEventsCase00(
 
     def setUp(self):
         super(TestLogDaytradesOperationsAndEventsCase00, self).setUp()
-        self.accumulator.accumulate_occurrence(DAYTRADE2)
-        self.accumulator.accumulate_occurrence(OPERATION18)
-        self.accumulator.accumulate_occurrence(EVENT0)
+        self.accumulator.accumulate(DAYTRADE2)
+        self.accumulator.accumulate(OPERATION18)
+        self.accumulator.accumulate(EVENT0)
 
     def test_log(self):
         self.assertEqual(self.accumulator.log, EXPECTED_LOG19)
@@ -43,9 +43,9 @@ class TestLogDaytradesOperationsAndEventsCase01(
 
     def setUp(self):
         super(TestLogDaytradesOperationsAndEventsCase01, self).setUp()
-        self.accumulator.accumulate_occurrence(DAYTRADE2)
-        self.accumulator.accumulate_occurrence(OPERATION1)
-        self.accumulator.accumulate_occurrence(EVENT1)
+        self.accumulator.accumulate(DAYTRADE2)
+        self.accumulator.accumulate(OPERATION1)
+        self.accumulator.accumulate(EVENT1)
 
     def test_log(self):
         self.assertEqual(self.accumulator.log, EXPECTED_LOG20)
@@ -57,10 +57,10 @@ class TestLogDaytradesOperationsAndEventsCase02(
 
     def setUp(self):
         super(TestLogDaytradesOperationsAndEventsCase02, self).setUp()
-        self.accumulator.accumulate_occurrence(DAYTRADE2)
-        self.accumulator.accumulate_occurrence(OPERATION1)
-        self.accumulator.accumulate_occurrence(DAYTRADE3)
-        self.accumulator.accumulate_occurrence(EVENT2)
+        self.accumulator.accumulate(DAYTRADE2)
+        self.accumulator.accumulate(OPERATION1)
+        self.accumulator.accumulate(DAYTRADE3)
+        self.accumulator.accumulate(EVENT2)
 
     def test_log(self):
         self.assertEqual(self.accumulator.log, EXPECTED_LOG21)

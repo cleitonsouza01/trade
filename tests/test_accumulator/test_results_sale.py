@@ -22,8 +22,8 @@ class TestAccumulatorSaleResults(unittest.TestCase):
 
     def setUp(self):
         self.accumulator = Accumulator(ASSET, logging=True)
-        self.accumulator.accumulate_occurrence(OPERATION9)
-        self.accumulator.accumulate_occurrence(OPERATION10)
+        self.accumulator.accumulate(OPERATION9)
+        self.accumulator.accumulate(OPERATION10)
 
 
 class TestAccumulatorResultsSaleCase00(TestAccumulatorSaleResults):
@@ -41,7 +41,7 @@ class TestAccumulatorResultsSaleCase01(TestAccumulatorSaleResults):
 
     def setUp(self):
         super(TestAccumulatorResultsSaleCase01, self).setUp()
-        self.accumulator.accumulate_occurrence(OPERATION11)
+        self.accumulator.accumulate(OPERATION11)
 
     def test_sale_result_log(self):
         self.assertEqual(self.accumulator.log, EXPECTED_LOG1)
@@ -55,8 +55,8 @@ class TestAccumulatorResultsSaleCase02(TestAccumulatorSaleResults):
 
     def setUp(self):
         super(TestAccumulatorResultsSaleCase02, self).setUp()
-        self.accumulator.accumulate_occurrence(OPERATION11)
-        self.accumulator.accumulate_occurrence(OPERATION12)
+        self.accumulator.accumulate(OPERATION11)
+        self.accumulator.accumulate(OPERATION12)
 
     def test_sale_result_log(self):
         self.assertEqual(self.accumulator.log, EXPECTED_LOG2)
@@ -70,9 +70,9 @@ class TestAccumulatorResultsSaleCase04(TestAccumulatorSaleResults):
 
     def setUp(self):
         super(TestAccumulatorResultsSaleCase04, self).setUp()
-        self.accumulator.accumulate_occurrence(OPERATION11)
-        self.accumulator.accumulate_occurrence(OPERATION12)
-        self.accumulator.accumulate_occurrence(OPERATION13)
+        self.accumulator.accumulate(OPERATION11)
+        self.accumulator.accumulate(OPERATION12)
+        self.accumulator.accumulate(OPERATION13)
 
     def test_sale_result_log(self):
         self.assertEqual(self.accumulator.log, EXPECTED_LOG3)
@@ -86,10 +86,10 @@ class TestAccumulatorResultsSaleCase05(TestAccumulatorSaleResults):
 
     def setUp(self):
         super(TestAccumulatorResultsSaleCase05, self).setUp()
-        self.accumulator.accumulate_occurrence(OPERATION11)
-        self.accumulator.accumulate_occurrence(OPERATION12)
-        self.accumulator.accumulate_occurrence(OPERATION13)
-        self.accumulator.accumulate_occurrence(OPERATION14)
+        self.accumulator.accumulate(OPERATION11)
+        self.accumulator.accumulate(OPERATION12)
+        self.accumulator.accumulate(OPERATION13)
+        self.accumulator.accumulate(OPERATION14)
 
     def test_sale_result_log(self):
         self.assertEqual(self.accumulator.log, EXPECTED_LOG4)
@@ -104,10 +104,10 @@ class TestAccumulatorResultsSaleCase06(TestAccumulatorSaleResults):
     def setUp(self):
         super(TestAccumulatorResultsSaleCase06, self).setUp()
 
-        self.accumulator.accumulate_occurrence(OPERATION11)
-        self.accumulator.accumulate_occurrence(OPERATION12)
-        self.accumulator.accumulate_occurrence(OPERATION13)
-        self.accumulator.accumulate_occurrence(OPERATION15)
+        self.accumulator.accumulate(OPERATION11)
+        self.accumulator.accumulate(OPERATION12)
+        self.accumulator.accumulate(OPERATION13)
+        self.accumulator.accumulate(OPERATION15)
 
     def test_sale_result_log(self):
         self.assertEqual(self.accumulator.log, EXPECTED_LOG5)
@@ -121,8 +121,8 @@ class TestAccumulatorResultsSaleCase07(TestAccumulatorSaleResults):
 
     def setUp(self):
         self.accumulator = Accumulator(ASSET, logging=True)
-        self.accumulator.accumulate_occurrence(OPERATION16)
-        self.accumulator.accumulate_occurrence(OPERATION17)
+        self.accumulator.accumulate(OPERATION16)
+        self.accumulator.accumulate(OPERATION17)
 
     def test_purchase_result_log(self):
         self.assertEqual(self.accumulator.log, EXPECTED_LOG6)

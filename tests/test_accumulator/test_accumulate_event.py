@@ -1,4 +1,4 @@
-"""Tests the method accumulate_occurrence() of the Accumulator."""
+"""Tests the method accumulate() of the Accumulator."""
 
 from __future__ import absolute_import
 from __future__ import division
@@ -32,7 +32,7 @@ class TestEventThatChangeResultsCase00(unittest.TestCase):
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}
         self.event = EventThatChangeResults(ASSET, '2015-09-27', 2)
-        self.accumulator.accumulate_occurrence(self.event)
+        self.accumulator.accumulate(self.event)
 
     def test_check_quantity_after_split(self):
         self.assertEqual(self.accumulator.quantity, 100)

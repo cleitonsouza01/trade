@@ -47,6 +47,8 @@ class Asset(object):
     Attributes:
         name: A string representing the name of the asset.
         symbol: A string representing the symbol of the asset.
+        expiration_date: A string 'YYYY-mm-dd' representing the
+            expiration date of the asset, if any.
     """
 
     def __init__(self, name=None, symbol=None, expiration_date=None):
@@ -56,7 +58,16 @@ class Asset(object):
 
 
 class Occurrence(object):
-    """An occurrence with an asset in a date."""
+    """An occurrence with an asset in a date.
+
+    This is a base class for any occurrence. An occurrence is
+    anything that interferes with an asset accumulation, like
+    a purchase or sale operation of the asset or a stock split.
+
+    Attributes:
+        asset: An Asset object.
+        date: A string 'YYYY-mm-dd'.
+    """
 
     __metaclass__ = ABCMeta
 
@@ -74,8 +85,8 @@ class Portfolio(object):
     """A portfolio of assets.
 
     A portfolio is a collection of Accumulator objects.
-    It can receive Operation objects and update the corresponding
-    accumulators.
+    It can receive Occurrence subclass objects and update the
+    its accumulators with them.
 
     Attributes:
         assets: A dict {Asset.symbol: Accumulator}.
@@ -96,7 +107,7 @@ class Portfolio(object):
         else:
             if symbol not in self.assets:
                 self.assets[symbol] = Accumulator(operation.asset)
-            self.assets[symbol].accumulate_occurrence(operation)
+            self.assets[symbol].accumulate(operation)
 
     def run_tasks(self, operation):
         """Execute the defined tasks on the Operation.
@@ -144,15 +155,15 @@ class Accumulator(object):
         call to accumulate_occurrence() and accumulate_occurrence().
         """
         self.asset = asset
+        self.logging = logging
         self.date = None
         self.quantity = 0
         self.price = 0
         self.results = {}
-        self.logging = logging
         self.log = {}
 
-    def accumulate_occurrence(self, occurrence):
-        """Accumulates operation data to the existing position."""
+    def accumulate(self, occurrence):
+        """Accumulates an occurrence to the existing position."""
         occurrence.update_container(self)
         if self.logging:
             self.log_occurrence(occurrence)
@@ -210,16 +221,21 @@ class Operation(Occurrence):
             may have.
     """
 
-    # By default all Operations can
-    # update a portfolio position.
+    # By default all Operations should update the
+    # traded asset accumulation data.
     update_position = True
 
     # By default underlying operations
-    # should not be accumulated.
+    # should not be accumulated. It is the
+    # operation itself that should update
+    # the accumulated asset.
     accumulate_underlying_operations = False
 
-    # An operation may contain
-    # multiple underlying operations.
+    # An operation may contain multiple underlying
+    # operations. If accumulate_underlying_operations
+    # is set to true, then the operations listed
+    # in this attribute will update the asset
+    # accumulation data, and not the position itself.
     operations = None
 
     def __init__(self, quantity=0, price=0, date=None, asset=None):
@@ -297,7 +313,7 @@ class Operation(Occurrence):
         else:
             self.update_positions(container)
 
-        # add whatever result was informed with or generated
+        # Add whatever result was informed with or generated
         # by this operation to the accumulator results dict
         for key, value in self.results.items():
             if key not in container.results:
@@ -305,7 +321,7 @@ class Operation(Occurrence):
             container.results[key] += value
 
     def update_positions(self, container):
-        """Update the position of the accumulator with an Operation."""
+        """Update the position of the asset with the Operation data."""
 
         # Here we check if the operation asset is the same
         # asset of this Accumulator object; the accumulator
@@ -516,7 +532,7 @@ class OperationContainer(object):
 
         This method sum the discounts in the commissions dict of the
         container. The total discount value is then prorated by the
-        daytrades and common operations based on their volume.
+        position operations based on their volume.
         """
         for position_value in self.positions.values():
             for position in position_value.values():
@@ -527,10 +543,10 @@ class OperationContainer(object):
                     self.prorate_commissions_by_position(position)
 
     def prorate_commissions_by_position(self, operation):
-        """Prorates the commissions of the container for one operation.
+        """Prorates the commissions of the container for one position.
 
         The ratio is based on the container volume and the volume of
-        the operation.
+        the position operation.
         """
         if operation.volume != 0 and self.volume != 0:
             percent = operation.volume / self.volume * 100

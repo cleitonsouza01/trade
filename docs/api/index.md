@@ -27,8 +27,9 @@ operations, daytrades, cost deduction, asset accumulation, rates and more.
 
 ## Functions available:
 
-+ [trade.average_price()](trade)
-+ [trade.same_sign()](trade)
++ [utils.merge_operations()](utils)
++ [utils.average_price()](utils)
++ [utils.same_sign()](utils)
 
 
 ## Default plugins:
@@ -39,13 +40,13 @@ functionalities related to common stock market operations.
 You may use this plugins in your project or use them as a base
 to create your own plugins.
 
-+ [trade.plugins.options](plugins/trade.plugins.options)
++ [plugins.options](plugins/trade.plugins.options)
   with classes for Options and Exercises and tasks for the
   OperationContainer and Portfolio.
-+ [trade.plugins.daytrades](plugins/trade.plugins.daytrades)
++ [plugins.daytrades](plugins/trade.plugins.daytrades)
   with the Daytrade class, a task for the OperationContainer
   and some helper functions.
-+ [trade.plugins.events](plugins/trade.plugins.events)
++ [plugins.events](plugins/trade.plugins.events)
   with classes representing stock splits, reverse stock splits and
   bonus shares.
 
@@ -84,7 +85,7 @@ accumulator = trade.Accumulator(asset)
 
 # accumulate the operation
 operation = container.common_operations[asset]
-accumulator.accumulate_operation(operation)
+accumulator.accumulate(operation)
 
 print(accumulator.quantity)
 #>>20
@@ -98,8 +99,9 @@ print(accumulator.price)
 
 ## Modules in this package:
 
-+ [trade.trade](trade)
-+ [trade.plugins](plugins)
++ [trade](trade)
++ [utils](utils)
++ [plugins](plugins)
 
 
 ## License

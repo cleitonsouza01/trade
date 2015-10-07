@@ -17,7 +17,8 @@ to create your own plugins.
   and some helper functions.
 + [trade.plugins.events](trade.plugins.events)
   with classes to represent stock splits, reverse stock splits
-  and bonus shares.
+  and bonus shares, and their base class.
+
 
 
 Copyright (c) 2015 Rafael da Silva Rocha  

@@ -21,7 +21,7 @@ class TestLogEvent(unittest.TestCase):
         self.accumulator.quantity = 100
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}
-        self.accumulator.accumulate_occurrence(EVENT5)
+        self.accumulator.accumulate(EVENT5)
 
 
 class TestLogEvent00(TestLogEvent):
@@ -45,7 +45,7 @@ class TestLogEvent01(TestLogEvent):
 
     def setUp(self):
         super(TestLogEvent01, self).setUp()
-        self.accumulator.accumulate_occurrence(EVENT3)
+        self.accumulator.accumulate(EVENT3)
 
     def test_check_log_case_01(self):
         self.assertEqual(self.accumulator.log, EXPECTED_LOG18)
@@ -56,7 +56,7 @@ class TestLogEvent02(TestLogEvent):
 
     def setUp(self):
         super(TestLogEvent02, self).setUp()
-        self.accumulator.accumulate_occurrence(EVENT4)
+        self.accumulator.accumulate(EVENT4)
 
     def test_log_position(self):
         self.assertEqual(

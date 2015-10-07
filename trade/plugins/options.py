@@ -81,11 +81,11 @@ class Option(Asset):
         If a premium is informed, then it will be considered on the
         underlying asset operation price.
 
-        Returns two operations:
+        Returns a list of operations:
             - one operation with zero value representing the option
               being consumed by the exercise;
-            - one operation representing the purchase or sale of the
-              underlying asset
+            - operations representing the purchase or sale of its
+              underlying assets
         """
         # Create an operation to consume
         # the option on the portfolio
@@ -135,8 +135,8 @@ class Exercise(Operation):
         will be considered.
 
         An exercise creates multiple operations:
-        - One operation to consume the option that it being exercised
-        - One operation to represent the sale or the purchase of each
+        - one operation to consume the option that it being exercised
+        - operations to represent the sale or the purchase of each
             of its underlying assets, if any.
         """
         if portfolio:
@@ -182,7 +182,7 @@ def fetch_exercise_operations(operation, portfolio):
     Fetch the operations in a exercise operations and  get the premium
     of the option that is being exercised.
 
-    It searchs on the Portfolio object for an Accumulator of the option
+    It searches on the Portfolio object for an Accumulator of the option
     and then use the accumulator price as the premium to be included
     on the exercise operation price.
     """

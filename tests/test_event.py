@@ -55,7 +55,7 @@ class TestBaseEventAccumulation(unittest.TestCase):
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}
         event = DummyEvent(asset=asset, date=date)
-        self.accumulator.accumulate_occurrence(event)
+        self.accumulator.accumulate(event)
 
     def test_quantity_after_event(self):
         self.assertEqual(self.accumulator.quantity, 100)

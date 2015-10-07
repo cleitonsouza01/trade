@@ -14,34 +14,35 @@ asset = trade.Asset(symbol='GOOGL')
 ## trade.Asset
 An asset represents anything that can be traded.
 
+This class can represent both main assets and derivatives.
+
 ### Attributes:
 + name: A string representing the name of the asset.
 + symbol: A string representing the symbol of the asset.
 + expiration_date: A string 'YYYY-mm-dd' representing the expiration date of the asset, if any.
-+ underlying_assets: A list of Asset objects representing the underlying assets of the asset.
-+ ratio: By default the ratio is 1, so 1 asset = 1 underlying asset.
+
+
+
+## trade.Occurrence(object):
+"""An occurrence with an asset in a date.
+
+This is a base class for any occurrence. An occurrence is
+anything that interferes with an asset accumulation, like
+a purchase or sale operation of the asset or a stock split.
+"""
+
+### Attributes:
++ asset: An Asset object.
++ date: A string 'YYYY-mm-dd'
 
 ### Methods:
-
-#### _ _ init _ _ (self, name=None, symbol=None, expiration_date=None):
-
-
-## trade.Event
-A portfolio-changing event.
-
-Events can change the quantity, the price and the results stored in
-the accumulator. This is a base class for Events; every event must
-inherit from this class and have a method like this:
-
-```python
-    update_container(self, accumulator)
-        # do stuff here...
-```
-
-that implements the logic for the change in the accumulator.
+abstractmethod update_container(self, container):
+Should udpate the quantity, price and/or results.
+raises NotImplementedError.
 
 
-## trade.Operation
+
+## trade.Operation(Occurrence)
 An operation represents the purchase or the sale of an asset.
 
 ### Attributes:  
@@ -54,34 +55,53 @@ An operation represents the purchase or the sale of an asset.
 + comissions: A dict of discounts. String keys and float values
   representing the name of the discounts and the values
   to be deducted from the operation.
-+ rates: A dict of rates. string keys and float values
++ fees: A dict of fees. string keys and float values
   representing the names of the fees and the values of the
   fees to be applied to the operation. Rate values are always
   represented as a percentage. Rates are applied based on the
   volume of the operation.
++ update_position: A boolean indication if the operation should
+  update the asset position or not.
++ accumulate_underlying_operations: A boolean indicating if the
+  operation's underlying operations should be accumulated
+  or ignored by the Accumulator.
++ Operations: A list of underlying operations that the operation
+  may have.
 
 ### Properties:
 
+#### results(self):
+Return the results associated with the operation.
+
 #### real_value(self):
-    """Returns the quantity * the real price of the operation.
+Returns the quantity * the real price of the operation.
 
 #### real_price(self):
 Returns the real price of the operation.
 
-The real price is the price with all commissions and rates
+The real price is the price with all commissions and fees
 already deducted or added.
 
-#### total_commissions(self):
-Return the sum of all commissions and rates included in this operation.
+#### total_commissions_and_fees(self):
+Returns the sum of all commissions and fees.
 
 #### total_commissions(self):
-Return the sum of all commissions included in this operation.
+Return the sum of all commissions of this operation.
 
 #### volume(self):
 Returns the quantity of the operation * its raw price.
 
-#### total_rates_value(self):
-Returns the total rate value for this operation.
+#### total_fees_value(self):
+Returns the total fee value for this operation.
+
+
+### Methods:
+
+#### update_container(self, container):
+Update the accumulator status with the operation data.
+
+#### update_positions(self, container):
+Update the position of the asset with the Operation data.
 
 
 ## trade.OperationContainer
@@ -163,51 +183,42 @@ This method executes all the methods defined on the
 tasks attribute in the order they are
 listed.
 
-#### merge_operations(self, existing_operation, operation):
-Merges one operation with another operation.
-
-#### add_to_common_operations(self, operation):
-Adds an operation to the common operations list.
-
-#### prorate_commissions_by_positions(self, operation):
-Prorates the commissions of the container for one operation.
-
-The ratio is based on the container volume and the volume of
-the operation.
-
 #### prorate_commissions(self):
 Prorates the container's commissions by its operations.
 
 This method sum the discounts in the commissions dict of the
 container. The total discount value is then prorated by the
-daytrades and common operations based on their volume.
+position operations based on their volume.
 
-#### find_rates_for_positions(self):
-Finds the rates for all daytrades and common operations.
+#### find_fees_for_positions(self):
+Finds the fees for all position operations on the container.
+
+#### add_to_position_operations(self, operation):
+Adds an operation to the common operations list.
+
+#### prorate_commissions_by_position(self, operation):
+Prorates the commissions of the container for one position.
+
+The ratio is based on the container volume and the volume of
+the position operation.
 
 
 
 ## trade.Accumulator
 An accumulator of quantity @ some average price.
 
+It can accumulate a series of operations and events with an Asset
+and update its quantity, average price and results based on the
+occurrences it accumulates.
+
 ### Attributes:
 + asset: An asset instance, the asset whose data are being accumulated.
 + date: A string 'YYYY-mm-dd' representing the date of the last status change of the accumulator.
 + quantity: The asset's accumulated quantity.
 + price: The asset's average price for the quantity accumulated.
-+ results: A dict with the total results from the operations accumulated.
++ results: A dict with the total results from the occurrences accumulated.
 + logging: A boolean indicating if the accumulator should log the calls to the accumulate() method.
-+ log: A dict with all the operations performed with the asset, provided that self.logging is True.
-
-if created with logging=True the accumulator will log the every
-operation it accumulates.
-
-Results are calculated by the accumulator according to the value
-of the operations informed and the current status of the
-accumulator (the current quantity and average price of the asset).
-
-A initial status (quantity, price and results) of the asset can be set on the
-accumulator by simply accumulating an Operation representing the status.
++ log: A dict with all the occurrences with the asset, provided that self.logging is True.
 
 ### Methods:
 
@@ -239,29 +250,8 @@ logged like this:
         ...
     }
 ```
-#### accumulate_operation(self, operation):
-Accumulates operation data to the existing position.
-
-The accumulator takes care of adding any custom results already
-present on the operation results attribute to the total
-results of the stock in the accumulator.
-
-#### accumulate_event(self, event):
-Receives a Event subclass instance and lets it do its work.
-
-An event can change the quantity, price and results stored in
-the accumulator.
-
-The way it changes this information is up to the event object;
-each Event subclass must implement a method like this:
-
-```python
-update_container(self, accumulator)
-    # do stuff here...
-```
-
-that have the logic for the change in the accumulator's
-quantity, price and results.
+#### accumulate(self, operation):
+Accumulates an occurrence to the existing position.
 
 
 
@@ -269,8 +259,8 @@ quantity, price and results.
 A portfolio of assets.
 
 A portfolio is a collection of Accumulator objects.
-It can receive Operation objects and update the corresponding
-accumulators.
+It can receive Occurrence subclass objects and update the
+its accumulators with them.
 
 ### Attributes:
 + assets: A dict {Asset.symbol: Accumulator}.
@@ -315,21 +305,6 @@ After identifying the positions for every position present on the container.
 
 #### staticmethod get_fees(self, operation, operation_type):
 Return a empty dictionary.
-
-
-
-## trade.utils.average_price(quantity_1, price_1, quantity_2, price_2):
-Calculates the average price between two positions.
-A position is the quantity of an asset and its average price.  
-Returns the calculated average price.
-
-
-
-## trade.utils.same_sign(x, y):
-Checks if two numbers have the same sign.  
-Return True if they have the same sign,  
-False if they don't have the same sign,
-and None if x or y are not numbers.
 
 
 

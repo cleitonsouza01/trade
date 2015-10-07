@@ -16,7 +16,7 @@ class TestAccumulateOption00(unittest.TestCase):
     def setUp(self):
         self.operation = copy.deepcopy(OPTION_OPERATION3)
         self.accumulator = trade.Accumulator(OPTION1)
-        self.accumulator.accumulate_occurrence(self.operation)
+        self.accumulator.accumulate(self.operation)
 
     def test_returned_result(self):
         self.assertEqual(self.operation.results, {})

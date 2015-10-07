@@ -26,8 +26,8 @@ class TestLogDaytradesAndOperationsCase00(TestLogDaytradesAndOperations):
     """
 
     def test_log_occurrences(self):
-        self.accumulator.accumulate_occurrence(DAYTRADE0)
-        self.accumulator.accumulate_occurrence(OPERATION18)
+        self.accumulator.accumulate(DAYTRADE0)
+        self.accumulator.accumulate(OPERATION18)
         self.assertEqual(self.accumulator.log, EXPECTED_LOG22)
 
 
@@ -39,8 +39,8 @@ class TestLogDaytradesAndOperationsCase01(TestLogDaytradesAndOperations):
     """
 
     def test_log_occurrences(self):
-        self.accumulator.accumulate_occurrence(DAYTRADE0)
-        self.accumulator.accumulate_occurrence(OPERATION1)
+        self.accumulator.accumulate(DAYTRADE0)
+        self.accumulator.accumulate(OPERATION1)
         self.assertEqual(self.accumulator.log, EXPECTED_LOG23)
 
 
@@ -52,7 +52,7 @@ class TestLogDaytradesAndOperationsCase02(TestLogDaytradesAndOperations):
     """
 
     def test_log_occurrences(self):
-        self.accumulator.accumulate_occurrence(DAYTRADE0)
-        self.accumulator.accumulate_occurrence(OPERATION1)
-        self.accumulator.accumulate_occurrence(DAYTRADE1)
+        self.accumulator.accumulate(DAYTRADE0)
+        self.accumulator.accumulate(OPERATION1)
+        self.accumulator.accumulate(DAYTRADE1)
         self.assertEqual(self.accumulator.log, EXPECTED_LOG24)

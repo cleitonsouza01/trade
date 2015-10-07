@@ -21,7 +21,7 @@ class TestStockSplitCase00(unittest.TestCase):
             date='2015-09-24',
             factor=2
         )
-        self.accumulator.accumulate_occurrence(self.event)
+        self.accumulator.accumulate(self.event)
 
     def test_check_quantity_after_split(self):
         self.assertEqual(self.accumulator.quantity, 200)

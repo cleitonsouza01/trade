@@ -13,7 +13,7 @@ class TestLogDaytrade(unittest.TestCase):
 
     def setUp(self):
         self.accumulator = trade.Accumulator(ASSET, logging=True)
-        self.accumulator.accumulate_occurrence(DAYTRADE0)
+        self.accumulator.accumulate(DAYTRADE0)
 
     def test_log_first_operation(self):
         self.assertEqual(self.accumulator.log, EXPECTED_LOG16)

@@ -23,7 +23,7 @@ class TestBonusSharesCase00(TestBonusShares):
 
     def setUp(self):
         super(TestBonusSharesCase00, self).setUp()
-        self.accumulator.accumulate_occurrence(EVENT6)
+        self.accumulator.accumulate(EVENT6)
 
     def test_check_quantity_after_split(self):
         self.assertEqual(self.accumulator.quantity, 200)
@@ -40,7 +40,7 @@ class TestBonusSharesCase01(TestBonusShares):
 
     def setUp(self):
         super(TestBonusSharesCase01, self).setUp()
-        self.accumulator.accumulate_occurrence(EVENT8)
+        self.accumulator.accumulate(EVENT8)
 
     def test_check_quantity_after_split(self):
         self.assertEqual(self.accumulator.quantity, 300)
@@ -57,7 +57,7 @@ class TestBonusSharesCase02(TestBonusShares):
 
     def setUp(self):
         super(TestBonusSharesCase02, self).setUp()
-        self.accumulator.accumulate_occurrence(EVENT7)
+        self.accumulator.accumulate(EVENT7)
 
     def test_check_quantity_after_split(self):
         self.assertEqual(self.accumulator.quantity, 150)

@@ -19,7 +19,7 @@ class TestAccumulateExercise00(unittest.TestCase):
         # create a accumultor for the options, a accumulator for the asset
         self.option_accumulator = trade.Accumulator(OPTION1)
         self.asset_accumulator = trade.Accumulator(ASSET)
-        self.option_accumulator.accumulate_occurrence(
+        self.option_accumulator.accumulate(
             copy.deepcopy(OPTION_OPERATION3)
         )
 
@@ -29,8 +29,8 @@ class TestAccumulateExercise00(unittest.TestCase):
         # be passed to the accumulator of all its assets
         self.exercise = copy.deepcopy(EXERCISE_OPERATION5)
         self.exercise.fetch_operations()
-        self.asset_accumulator.accumulate_occurrence(self.exercise)
-        self.option_accumulator.accumulate_occurrence(self.exercise)
+        self.asset_accumulator.accumulate(self.exercise)
+        self.option_accumulator.accumulate(self.exercise)
 
     def test_accumulator1_price(self):
         self.assertEqual(self.asset_accumulator.price, 10)
@@ -63,12 +63,12 @@ class TestAccumulateExercise01(unittest.TestCase):
         # create and accumulate a operation
         # with the Asset
         self.operation0 = copy.deepcopy(OPERATION54)
-        self.asset_accumulator.accumulate_occurrence(self.operation0)
+        self.asset_accumulator.accumulate(self.operation0)
 
         # Accumulate and accumulate an operation
         # with the Option
         self.operation1 = copy.deepcopy(OPTION_OPERATION3)
-        self.option_accumulator.accumulate_occurrence(self.operation1)
+        self.option_accumulator.accumulate(self.operation1)
 
         # Accumulate a exercise operation on the asset accumulator
         # and on the option accumulator
@@ -81,8 +81,8 @@ class TestAccumulateExercise01(unittest.TestCase):
             date='2015-01-01'
         )
         self.exercise.fetch_operations()
-        self.asset_accumulator.accumulate_occurrence(self.exercise)
-        self.option_accumulator.accumulate_occurrence(self.exercise)
+        self.asset_accumulator.accumulate(self.exercise)
+        self.option_accumulator.accumulate(self.exercise)
 
     def test_accumulator1_price(self):
         self.assertEqual(self.asset_accumulator.price, 7.5)
