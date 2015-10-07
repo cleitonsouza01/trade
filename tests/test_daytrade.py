@@ -31,9 +31,6 @@ class TestDaytradeCreation(unittest.TestCase):
         )
         self.daytrade = trade.plugins.Daytrade(operation_a, operation_b)
 
-    def test_daytrade_should_exist(self):
-        self.assertTrue(self.daytrade)
-
     def test_daytrade_asset(self):
         self.assertEqual(self.daytrade.asset.symbol, self.asset.symbol)
 
@@ -46,8 +43,7 @@ class TestDaytradeCreation(unittest.TestCase):
     def test_daytrade_buy_asset(self):
         self.assertEqual(
             self.daytrade.operations[0].asset.symbol,
-            self.asset.symbol
-        )
+            self.daytrade.asset.symbol)
 
     def test_daytrade_buy_quantity(self):
         self.assertEqual(self.daytrade.operations[0].quantity, 10)
@@ -61,8 +57,7 @@ class TestDaytradeCreation(unittest.TestCase):
     def test_daytrade_sale_asset(self):
         self.assertEqual(
             self.daytrade.operations[1].asset.symbol,
-            self.asset.symbol
-        )
+            self.asset.symbol)
 
     def test_daytrade_sale_quantity(self):
         self.assertEqual(self.daytrade.operations[1].quantity, -10)
@@ -96,9 +91,6 @@ class TestDaytradeResultCase01(unittest.TestCase):
             date='2015-09-20'
         )
         self.daytrade = trade.plugins.Daytrade(operation_a, operation_b)
-
-    def test_daytrade_exists(self):
-        self.assertTrue(self.daytrade)
 
     def test_daytrade_result(self):
         self.assertEqual(self.daytrade.results, {'daytrades': -10})

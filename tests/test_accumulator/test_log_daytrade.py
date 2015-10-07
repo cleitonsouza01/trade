@@ -4,45 +4,31 @@ from __future__ import absolute_import
 import unittest
 
 import trade
+from . fixture_operations import ASSET, DAYTRADE0
 
 
-ASSET = trade.Asset()
-OPERATION_A = trade.Operation(
-    asset=ASSET,
-    quantity=100,
-    price=10,
-    date='2015-01-01'
-)
-OPERATION_B = trade.Operation(
-    asset=ASSET,
-    quantity=-100,
-    price=20,
-    date='2015-01-01'
-)
-DAYTRADE = trade.plugins.Daytrade(OPERATION_A, OPERATION_B)
-
+EXPECTED_LOG = {
+    '2015-01-01': {
+        'position': {
+            'quantity': 0,
+            'price': 0
+        },
+        'occurrences': [DAYTRADE0]
+    }
+}
 
 class TestLogDaytrade(unittest.TestCase):
     """Test the logging of a Daytrade object."""
 
     def setUp(self):
         self.accumulator = trade.Accumulator(ASSET, logging=True)
-        self.accumulator.accumulate_occurrence(DAYTRADE)
+        self.accumulator.accumulate_occurrence(DAYTRADE0)
 
     def test_log_first_operation(self):
-        expected_log = {
-            '2015-01-01': {
-                'position': {
-                    'quantity': 0,
-                    'price': 0
-                },
-                'occurrences': [DAYTRADE]
-            }
-        }
-        self.assertEqual(self.accumulator.log, expected_log)
+        self.assertEqual(self.accumulator.log, EXPECTED_LOG)
 
     def test_log_keys(self):
         self.assertEqual(list(self.accumulator.log), ['2015-01-01'])
 
     def test_returned_result(self):
-        self.assertEqual(DAYTRADE.results, {'daytrades':1000})
+        self.assertEqual(DAYTRADE0.results, {'daytrades':1000})

@@ -6,7 +6,8 @@ import copy
 
 import trade
 from . fixture_operations import (
-    ASSET, OPERATION18, OPERATION19, OPERATION20, OPERATION21, OPERATION22
+    ASSET, OPERATION18, OPERATION19, OPERATION20, OPERATION21, OPERATION22,
+    OPERATION23
 )
 
 class TestAccumulateOperation(unittest.TestCase):
@@ -67,13 +68,12 @@ class TestAccumulateOperationCase02(TestAccumulateOperation):
 
     def setUp(self):
         super(TestAccumulateOperationCase02, self).setUp()
-        self.operation = copy.deepcopy(OPERATION19)
         comissions = {
             'some comission': 1,
             'other comission': 3,
         }
         container = trade.OperationContainer(
-            operations=[self.operation],
+            operations=[copy.deepcopy(OPERATION19)],
             commissions=comissions
         )
         container.fetch_positions()
@@ -95,9 +95,8 @@ class TestAccumulateOperationCase03(TestAccumulateOperation):
 
     def setUp(self):
         super(TestAccumulateOperationCase03, self).setUp()
-        self.operation = copy.deepcopy(OPERATION20)
         container = trade.OperationContainer(
-            operations=[self.operation]
+            operations=[copy.deepcopy(OPERATION20)]
         )
         container.fetch_positions()
         operation = container.positions['operations'][ASSET.symbol]
@@ -118,16 +117,14 @@ class TestAccumulateOperationCase04(TestAccumulateOperation):
 
     def setUp(self):
         super(TestAccumulateOperationCase04, self).setUp()
-        operation = copy.deepcopy(OPERATION19)
         container = trade.OperationContainer(
-            operations=[operation]
+            operations=[copy.deepcopy(OPERATION19)]
         )
         container.fetch_positions()
         self.accumulator.accumulate_occurrence(
             container.positions['operations'][ASSET.symbol]
         )
-        operation2 = copy.deepcopy(OPERATION21)
-        self.accumulator.accumulate_occurrence(operation2)
+        self.accumulator.accumulate_occurrence(copy.deepcopy(OPERATION21))
 
     def test_accumulator_price(self):
         self.assertEqual(self.accumulator.price, 0)
@@ -148,13 +145,7 @@ class TestAccumulateOperationCase05(TestAccumulateOperation):
     def setUp(self):
         super(TestAccumulateOperationCase05, self).setUp()
         self.accumulator.accumulate_occurrence(OPERATION22)
-
-        operation2 = trade.Operation(
-            date='2015-09-19',
-            asset=ASSET,
-            quantity=0,
-            price=0,
-        )
+        operation2 = copy.deepcopy(OPERATION23)
         operation2.raw_results = {
             'some result': 1000
         }

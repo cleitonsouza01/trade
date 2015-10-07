@@ -60,31 +60,23 @@ class TestOperationRealPrice(TestOperationProperties):
         }
         self.assertEqual(self.operation1.real_price, 10.15)
 
-
-class TestOperationRealValueCase00(TestOperationProperties):
-    """Test the real_value property of Operation objects.
-
-    The real value of an operation is its value (quantity*price)
-    with all commissions and taxes considered.
-    """
-
-    def test_no_discount(self):
+    def test_value_no_discount(self):
         self.assertEqual(self.operation1.real_value, 200)
 
-    def test_one_discount(self):
+    def test_value_one_discount(self):
         self.operation1.commissions = {
             'some discount': 6
         }
         self.assertEqual(self.operation1.real_value, 206)
 
-    def test_multiple_discounts_case_1(self):
+    def test_value_multiple_discounts_case_1(self):
         self.operation1.commissions = {
             'some discount': 7,
             'other discount': 1
         }
         self.assertEqual(self.operation1.real_value, 208)
 
-    def test_multiple_discounts_case_2(self):
+    def test_value_multiple_discounts_case_2(self):
         self.operation1.commissions = {
             'some discount': 10,
             'other discount': 1,
@@ -92,7 +84,7 @@ class TestOperationRealValueCase00(TestOperationProperties):
         }
         self.assertEqual(self.operation1.real_value, 213)
 
-    def test_multiple_discounts_case_3(self):
+    def test_value_multiple_discounts_case_3(self):
         self.operation1.commissions = {
             'some discount': 5,
             'other discount': 1,

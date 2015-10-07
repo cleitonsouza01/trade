@@ -8,6 +8,8 @@ import unittest
 import trade
 import trade.plugins
 
+from . fixture_operations import ASSET
+
 
 class EventThatChangeResults(trade.plugins.Event):
     """A fictional event for the tests."""
@@ -25,12 +27,11 @@ class TestEventThatChangeResultsCase00(unittest.TestCase):
     to test the consequences of an Event accumulation.
     """
     def setUp(self):
-        self.asset = trade.Asset()
-        self.accumulator = trade.Accumulator(self.asset)
+        self.accumulator = trade.Accumulator(ASSET)
         self.accumulator.quantity = 100
         self.accumulator.price = 10
         self.accumulator.results = {'trades': 1200}
-        self.event = EventThatChangeResults(self.asset, '2015-09-27', 2)
+        self.event = EventThatChangeResults(ASSET, '2015-09-27', 2)
         self.accumulator.accumulate_occurrence(self.event)
 
     def test_check_quantity_after_split(self):
