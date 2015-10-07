@@ -8,35 +8,7 @@ import unittest
 from trade import Accumulator
 
 from . fixture_operations import ASSET, EVENT3, EVENT4, EVENT5
-
-
-EXPECTED_LOG0 = {
-    '2015-09-24': {
-        'position': {
-            'price': 5.0,
-            'quantity': 200
-        },
-        'occurrences': [EVENT5]
-    }
-}
-
-EXPECTED_LOG1 = {
-    '2015-09-25': {
-        'position': {
-            'price': 5.0,
-            'quantity': 200
-        },
-        'occurrences': [EVENT3]
-    },
-    '2015-09-24': {
-        'position': {
-            'price': 5.0,
-            'quantity': 200
-        },
-        'occurrences': [EVENT5]
-    }
-}
-
+from . fixture_logs import EXPECTED_LOG17, EXPECTED_LOG18
 
 class TestLogEvent(unittest.TestCase):
 
@@ -61,7 +33,7 @@ class TestLogEvent00(TestLogEvent):
         self.assertEqual(self.accumulator.results, {'trades': 1200})
 
     def test_check_log_case_00(self):
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG0)
+        self.assertEqual(self.accumulator.log, EXPECTED_LOG17)
 
 
 class TestLogEvent01(TestLogEvent):
@@ -72,7 +44,7 @@ class TestLogEvent01(TestLogEvent):
         self.accumulator.accumulate_occurrence(EVENT3)
 
     def test_check_log_case_01(self):
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG1)
+        self.assertEqual(self.accumulator.log, EXPECTED_LOG18)
 
 
 class TestLogEvent02(TestLogEvent):

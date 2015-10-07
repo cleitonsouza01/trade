@@ -6,17 +6,8 @@ import unittest
 import trade
 
 from . fixture_operations import ASSET, OPERATION18
+from . fixture_logs import EXPECTED_LOG15
 
-
-EXPECTED_LOG0 = {
-    '2015-01-01': {
-        'position': {
-            'quantity': 100,
-            'price': 10
-        },
-        'occurrences': [OPERATION18]
-    }
-}
 
 class TestLogOperation(unittest.TestCase):
     """Tests the logging of Operation objects."""
@@ -26,7 +17,7 @@ class TestLogOperation(unittest.TestCase):
         self.accumulator.accumulate_occurrence(OPERATION18)
 
     def test_log_first_operation(self):
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG0)
+        self.assertEqual(self.accumulator.log, EXPECTED_LOG15)
 
     def test_log_keys(self):
         self.assertEqual(list(self.accumulator.log), ['2015-01-01'])

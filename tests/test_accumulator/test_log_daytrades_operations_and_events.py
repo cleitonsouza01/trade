@@ -2,68 +2,17 @@
 
 from __future__ import absolute_import
 import unittest
-import copy
 
 import trade
 import trade.plugins
 
 from . fixture_operations import (
-    OPERATION1, OPERATION18, ASSET, DAYTRADE2, EVENT0, EVENT1, EVENT2
+    OPERATION1, OPERATION18, ASSET, DAYTRADE2, DAYTRADE3,
+    EVENT0, EVENT1, EVENT2
 )
-
-DAYTRADE3 = copy.deepcopy(DAYTRADE2)
-DAYTRADE3.date = '2015-01-02'
-
-EXPECTED_LOG0 = {
-    '2015-01-01': {
-        'position': {
-            'quantity': 100,
-            'price': 10
-        },
-        'occurrences': [DAYTRADE2, OPERATION18, EVENT0]
-    }
-}
-
-EXPECTED_LOG1 = {
-    '2015-01-03': {
-        'position': {
-            'quantity': 100,
-            'price': 10
-        },
-        'occurrences': [EVENT1]
-    },
-    '2015-01-02': {
-        'position': {
-            'quantity': 100,
-            'price': 10
-        },
-        'occurrences': [OPERATION1]
-    },
-    '2015-01-01': {
-        'position': {
-            'quantity': 0,
-            'price': 0
-        },
-        'occurrences': [DAYTRADE2]
-    }
-}
-
-EXPECTED_LOG2 = {
-    '2015-01-02': {
-        'position': {
-            'quantity': 100,
-            'price': 10
-        },
-        'occurrences': [OPERATION1, DAYTRADE3, EVENT2]
-    },
-    '2015-01-01': {
-        'position': {
-            'quantity': 0,
-            'price': 0
-        },
-        'occurrences': [DAYTRADE2]
-    }
-}
+from . fixture_logs import (
+    EXPECTED_LOG19, EXPECTED_LOG20, EXPECTED_LOG21
+)
 
 
 class TestLogDaytradesOperationsAndEvents(unittest.TestCase):
@@ -83,7 +32,7 @@ class TestLogDaytradesOperationsAndEventsCase00(
         self.accumulator.accumulate_occurrence(EVENT0)
 
     def test_log(self):
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG0)
+        self.assertEqual(self.accumulator.log, EXPECTED_LOG19)
 
 
 class TestLogDaytradesOperationsAndEventsCase01(
@@ -97,7 +46,7 @@ class TestLogDaytradesOperationsAndEventsCase01(
         self.accumulator.accumulate_occurrence(EVENT1)
 
     def test_log(self):
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG1)
+        self.assertEqual(self.accumulator.log, EXPECTED_LOG20)
 
 
 class TestLogDaytradesOperationsAndEventsCase02(
@@ -112,4 +61,4 @@ class TestLogDaytradesOperationsAndEventsCase02(
         self.accumulator.accumulate_occurrence(EVENT2)
 
     def test_log(self):
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG2)
+        self.assertEqual(self.accumulator.log, EXPECTED_LOG21)

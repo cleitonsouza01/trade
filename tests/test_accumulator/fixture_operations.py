@@ -192,6 +192,8 @@ DAYTRADE2 = Daytrade(
     copy.deepcopy(OPERATION9),
     copy.deepcopy(OPERATION7)
 )
+DAYTRADE3 = copy.deepcopy(DAYTRADE2)
+DAYTRADE3.date = '2015-01-02'
 
 
 # EVENTS
