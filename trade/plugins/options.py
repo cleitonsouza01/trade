@@ -3,7 +3,7 @@
 This plugin provides Options functionalities to the trade module.
 
 With this plugin you can:
-- Create option assets that points to other (underlying) assets
+- Create option assets that references underlying assets
 - Create exercise operations that change both the option and underlying
   asset position on the portfolio
 
@@ -45,9 +45,12 @@ from ..utils import merge_operations
 
 
 class Option(Asset):
-    """Represents an Option.
+    """Represents a vanilla option.
 
-    This class represents both calls and puts.
+    Represents both calls and puts.
+
+    This class can be used for common option operations or as a base
+    for classes that represent exotic options.
 
     Attributes:
         name: A string representing the name of the asset.
@@ -56,7 +59,8 @@ class Option(Asset):
             expiration date of the asset, if any.
         underlying_assets: A dict of Asset objects representing the
             underlying assets of this asset and the ratio to which
-            the asset relates to the Option.
+            the asset relates to the Option. It looks like this:
+            {Asset: float}
     """
 
     def __init__(
@@ -74,7 +78,7 @@ class Option(Asset):
     def exercise(self, quantity, price, premium=0):
         """Exercises the option.
 
-        If a premium if informed, then it will be considered on the
+        If a premium is informed, then it will be considered on the
         underlying asset operation price.
 
         Returns two operations:
@@ -94,7 +98,10 @@ class Option(Asset):
         ]
         # Create an operation to represent
         # the purchase or sale of the
-        # underlying asset
+        # underlying asset. If the option has
+        # no underlying asset, then the only
+        # operation created will be option
+        # consuming operation.
         for underlying_asset, ratio in self.underlying_assets.items():
             operations.append(
                 Operation(
@@ -112,22 +119,25 @@ class Exercise(Operation):
     Exercise operations are operations that involve more than one
     asset, usually a derivative like a Option and an underlying asset.
 
-    An exercise will change the accumulated quantity of both the
-    derivative and the underlying asset.
+    An exercise will likely change the accumulated quantity of both the
+    derivative and its underlyings assets.
     """
 
+    # In a exercise operation it is the underlying
+    # operations that will change the position on
+    # the portfolio
     accumulate_underlying_operations = True
 
     def fetch_operations(self, portfolio=None):
-        """Returns the operations created by this exercise.
+        """Fetch the operations created by this exercise.
 
         If a portfolio is informed, then the premium of the option
         will be considered.
 
-        An exercise creates two operations:
+        An exercise creates multiple operations:
         - One operation to consume the option that it being exercised
-        - One operation to represent the sale or the purchase of the
-            asset
+        - One operation to represent the sale or the purchase of each
+            of its underlying assets, if any.
         """
         if portfolio:
             self.operations = self.asset.exercise(
@@ -145,7 +155,7 @@ class Exercise(Operation):
 
 
 def fetch_exercises(container):
-    """OperationContainer task.
+    """An OperationContainer task.
 
     After this task, all operations created by Exercise objects
     will be on the container positions under the key 'exercises'.
@@ -166,8 +176,11 @@ def fetch_exercises(container):
                     container.positions['exercises'][symbol] = operation
 
 
-def get_exercise_premium(operation, portfolio):
-    """Get the premium of the option that is being exercised.
+def fetch_exercise_operations(operation, portfolio):
+    """A Portfolio task.
+
+    Fetch the operations in a exercise operations and  get the premium
+    of the option that is being exercised.
 
     It searchs on the Portfolio object for an Accumulator of the option
     and then use the accumulator price as the premium to be included

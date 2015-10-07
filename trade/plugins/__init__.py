@@ -15,7 +15,7 @@ The default plugins are:
   provides the Option class, a subtype of trade.Derivative
   provides the Exercise class, a subclass of trade.Operation
   provides the fetch_exercises() task to the OperationContainer
-  provides the get_exercise_premium() task to the Portfolio
+  provides the fetch_exercise_operations() task to the Portfolio
 
 - daytrades
   provides the Daytrade class, a subclass of trade.Operation
@@ -57,7 +57,12 @@ THE SOFTWARE.
 from __future__ import absolute_import
 
 from .events import Event, StockSplit, BonusShares
-from .options import Option, Exercise, fetch_exercises, get_exercise_premium
+from .options import (
+    Option,
+    Exercise,
+    fetch_exercises,
+    fetch_exercise_operations
+)
 from .daytrades import (
     Daytrade,
     fetch_daytrades,

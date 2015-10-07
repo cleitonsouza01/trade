@@ -20,7 +20,7 @@ class TestExercisePremium(unittest.TestCase):
 
     def setUp(self):
         self.portfolio = trade.Portfolio()
-        self.portfolio.tasks = [trade.plugins.get_exercise_premium]
+        self.portfolio.tasks = [trade.plugins.fetch_exercise_operations]
         self.operation = copy.deepcopy(OPERATION46)
         self.exercise = copy.deepcopy(EXERCISE_OPERATION4)
         self.option_operation = copy.deepcopy(OPTION_OPERATION1)
