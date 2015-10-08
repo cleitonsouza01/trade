@@ -38,10 +38,10 @@ class TestPortfolioAssetAccumulationCase00(TestPortfolioAssetAccumulation):
         self.assertEqual(len(self.portfolio.assets.keys()), 1)
 
     def test_accumulator_quantity(self):
-        self.assertEqual(self.portfolio.assets[ASSET.symbol].quantity, 10)
+        self.assertEqual(self.portfolio.assets[ASSET.symbol].data['quantity'], 10)
 
     def test_accumulator_price(self):
-        self.assertEqual(self.portfolio.assets[ASSET.symbol].price, 1)
+        self.assertEqual(self.portfolio.assets[ASSET.symbol].data['price'], 1)
 
 
 class TestPortfolioAssetAccumulationCase01(TestPortfolioAssetAccumulation):
@@ -56,10 +56,10 @@ class TestPortfolioAssetAccumulationCase01(TestPortfolioAssetAccumulation):
         self.assertEqual(len(self.portfolio.assets.keys()), 1)
 
     def test_accumulator_quantity(self):
-        self.assertEqual(self.portfolio.assets[ASSET.symbol].quantity, 20)
+        self.assertEqual(self.portfolio.assets[ASSET.symbol].data['quantity'], 20)
 
     def test_accumulator_price(self):
-        self.assertEqual(self.portfolio.assets[ASSET.symbol].price, 1.5)
+        self.assertEqual(self.portfolio.assets[ASSET.symbol].data['price'], 1.5)
 
 
 class TestPortfolioAssetAccumulationCase02(TestPortfolioAssetAccumulation):
@@ -74,16 +74,16 @@ class TestPortfolioAssetAccumulationCase02(TestPortfolioAssetAccumulation):
         self.assertEqual(len(self.portfolio.assets.keys()), 2)
 
     def test_accumulator0_quantity(self):
-        self.assertEqual(self.portfolio.assets[ASSET.symbol].quantity, 10)
+        self.assertEqual(self.portfolio.assets[ASSET.symbol].data['quantity'], 10)
 
     def test_accumulator0_price(self):
-        self.assertEqual(self.portfolio.assets[ASSET.symbol].price, 1)
+        self.assertEqual(self.portfolio.assets[ASSET.symbol].data['price'], 1)
 
     def test_accumulator1_quantity(self):
-        self.assertEqual(self.portfolio.assets[ASSET3.symbol].quantity, 20)
+        self.assertEqual(self.portfolio.assets[ASSET3.symbol].data['quantity'], 20)
 
     def test_accumulator1_price(self):
-        self.assertEqual(self.portfolio.assets[ASSET3.symbol].price, 2)
+        self.assertEqual(self.portfolio.assets[ASSET3.symbol].data['price'], 2)
 
 
 class TestPortfolioAssetAccumulationCase03(TestPortfolioAssetAccumulation):
@@ -99,16 +99,16 @@ class TestPortfolioAssetAccumulationCase03(TestPortfolioAssetAccumulation):
         self.assertEqual(len(self.portfolio.assets.keys()), 2)
 
     def test_accumulator0_quantity(self):
-        self.assertEqual(self.portfolio.assets[ASSET.symbol].quantity, 10)
+        self.assertEqual(self.portfolio.assets[ASSET.symbol].data['quantity'], 10)
 
     def test_accumulator0_price(self):
-        self.assertEqual(self.portfolio.assets[ASSET.symbol].price, 1)
+        self.assertEqual(self.portfolio.assets[ASSET.symbol].data['price'], 1)
 
     def test_accumulator1_quantity(self):
-        self.assertEqual(self.portfolio.assets[ASSET2.symbol].quantity, 40)
+        self.assertEqual(self.portfolio.assets[ASSET2.symbol].data['quantity'], 40)
 
     def test_accumulator1_price(self):
-        self.assertEqual(self.portfolio.assets[ASSET2.symbol].price, 3)
+        self.assertEqual(self.portfolio.assets[ASSET2.symbol].data['price'], 3)
 
 
 class TestPortfolioAssetAccumulationCase04(TestPortfolioAssetAccumulation):
@@ -131,16 +131,16 @@ class TestPortfolioAssetAccumulationCase04(TestPortfolioAssetAccumulation):
         )
 
     def test_accumulator0_quantity(self):
-        self.assertEqual(self.portfolio.assets[ASSET.symbol].quantity, 10)
+        self.assertEqual(self.portfolio.assets[ASSET.symbol].data['quantity'], 10)
 
     def test_accumulator0_price(self):
-        self.assertEqual(self.portfolio.assets[ASSET.symbol].price, 1)
+        self.assertEqual(self.portfolio.assets[ASSET.symbol].data['price'], 1)
 
     def test_accumulator1_quantity(self):
-        self.assertEqual(self.portfolio.assets[ASSET2.symbol].quantity, 60)
+        self.assertEqual(self.portfolio.assets[ASSET2.symbol].data['quantity'], 60)
 
     def test_accumulator1_price(self):
-        self.assertEqual(self.portfolio.assets[ASSET2.symbol].price, 3)
+        self.assertEqual(self.portfolio.assets[ASSET2.symbol].data['price'], 3)
 
 
 class TestPortfolioAssetAccumulationCase05(TestPortfolioAssetAccumulation):
@@ -158,13 +158,13 @@ class TestPortfolioAssetAccumulationCase05(TestPortfolioAssetAccumulation):
         self.assertEqual(len(self.portfolio.assets.keys()), 2)
 
     def test_accumulator0_quantity(self):
-        self.assertEqual(self.portfolio.assets[ASSET.symbol].quantity, 20)
+        self.assertEqual(self.portfolio.assets[ASSET.symbol].data['quantity'], 20)
 
     def test_accumulator0_price(self):
-        self.assertEqual(self.portfolio.assets[ASSET.symbol].price, 1.5)
+        self.assertEqual(self.portfolio.assets[ASSET.symbol].data['price'], 1.5)
 
     def test_accumulator1_quantity(self):
-        self.assertEqual(self.portfolio.assets[ASSET2.symbol].quantity, 60)
+        self.assertEqual(self.portfolio.assets[ASSET2.symbol].data['quantity'], 60)
 
     def test_accumulator1_price(self):
-        self.assertEqual(self.portfolio.assets[ASSET2.symbol].price, 3)
+        self.assertEqual(self.portfolio.assets[ASSET2.symbol].data['price'], 3)

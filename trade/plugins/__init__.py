@@ -61,7 +61,6 @@ from .options import (
     Option,
     Exercise,
     fetch_exercises,
-    fetch_exercise_operations
 )
 from .daytrades import (
     Daytrade,

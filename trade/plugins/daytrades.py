@@ -44,7 +44,7 @@ THE SOFTWARE.
 from __future__ import absolute_import
 
 from ..utils import same_sign, merge_operations
-from ..trade import Operation
+from ..operations import Operation
 
 
 class Daytrade(Operation):
@@ -106,6 +106,9 @@ class Daytrade(Operation):
             'daytrades': abs(self.operations[1].real_value) - \
                                         abs(self.operations[0].real_value)
         }
+
+    def update_accumulator(self, accumulator):
+        self.update_accumulator_results(accumulator)
 
     def extract_daytrade(self, purchase, sale):
         """Extract the daytraded quantity from 2 operations.

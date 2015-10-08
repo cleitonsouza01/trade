@@ -57,13 +57,13 @@ class TestAccumulateOperationCase01(TestAccumulateOperation):
         self.assertEqual(self.operation.results, {})
 
     def test_accumulator_price(self):
-        self.assertEqual(self.accumulator.price, 0)
+        self.assertEqual(self.accumulator.data['price'], 0)
 
     def test_accumulator_quantity(self):
-        self.assertEqual(self.accumulator.quantity, 0)
+        self.assertEqual(self.accumulator.data['quantity'], 0)
 
     def test_accumulator_results(self):
-        self.assertEqual(self.accumulator.results, {})
+        self.assertEqual(self.accumulator.data['results'], {})
 
 
 class TestAccumulateOperationCase02(TestAccumulateOperation):
@@ -80,13 +80,13 @@ class TestAccumulateOperationCase02(TestAccumulateOperation):
         self.accumulator.accumulate(operation)
 
     def test_accumulator_price(self):
-        self.assertEqual(self.accumulator.price, 10.2)
+        self.assertEqual(self.accumulator.data['price'], 10.2)
 
     def test_accumulator_quantity(self):
-        self.assertEqual(self.accumulator.quantity, 20)
+        self.assertEqual(self.accumulator.data['quantity'], 20)
 
     def test_accumulator_results(self):
-        self.assertEqual(self.accumulator.results, {})
+        self.assertEqual(self.accumulator.data['results'], {})
 
 
 class TestAccumulateOperationCase03(TestAccumulateOperation):
@@ -102,13 +102,13 @@ class TestAccumulateOperationCase03(TestAccumulateOperation):
         self.accumulator.accumulate(operation)
 
     def test_accumulator_average_price(self):
-        self.assertEqual(self.accumulator.price, 0)
+        self.assertEqual(self.accumulator.data['price'], 0)
 
     def test_accumulator_quantity(self):
-        self.assertEqual(self.accumulator.quantity, 20)
+        self.assertEqual(self.accumulator.data['quantity'], 20)
 
     def test_accumulator_results(self):
-        self.assertEqual(self.accumulator.results, {})
+        self.assertEqual(self.accumulator.data['results'], {})
 
 
 class TestAccumulateOperationCase04(TestAccumulateOperation):
@@ -126,13 +126,13 @@ class TestAccumulateOperationCase04(TestAccumulateOperation):
         self.accumulator.accumulate(copy.deepcopy(OPERATION21))
 
     def test_accumulator_price(self):
-        self.assertEqual(self.accumulator.price, 0)
+        self.assertEqual(self.accumulator.data['price'], 0)
 
     def test_accumulator_quantity(self):
-        self.assertEqual(self.accumulator.quantity, 0)
+        self.assertEqual(self.accumulator.data['quantity'], 0)
 
     def test_accumulator_results(self):
-        self.assertEqual(self.accumulator.results, {'trades': -200})
+        self.assertEqual(self.accumulator.data['results'], {'trades': -200})
 
 
 class TestAccumulateOperationCase05(TestAccumulateOperation):
@@ -148,10 +148,10 @@ class TestAccumulateOperationCase05(TestAccumulateOperation):
         self.accumulator.accumulate(operation2)
 
     def test_accumulator_price(self):
-        self.assertEqual(self.accumulator.price, 0)
+        self.assertEqual(self.accumulator.data['price'], 0)
 
     def test_accumulator_quantity(self):
-        self.assertEqual(self.accumulator.quantity, 0)
+        self.assertEqual(self.accumulator.data['quantity'], 0)
 
     def test_accumulator_results(self):
-        self.assertEqual(self.accumulator.results['some result'], 1000)
+        self.assertEqual(self.accumulator.data['results']['some result'], 1000)

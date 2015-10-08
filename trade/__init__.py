@@ -36,6 +36,8 @@ from .trade import (
     Occurrence,
     Accumulator,
     Portfolio,
+)
+from .operations import (
     Operation,
     OperationContainer,
     TradingFees

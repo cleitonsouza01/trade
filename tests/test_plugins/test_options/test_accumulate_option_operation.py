@@ -22,10 +22,10 @@ class TestAccumulateOption00(unittest.TestCase):
         self.assertEqual(self.operation.results, {})
 
     def test_accumulator_price(self):
-        self.assertEqual(self.accumulator.price, 10)
+        self.assertEqual(self.accumulator.data['price'], 10)
 
     def test_accumulator_quantity(self):
-        self.assertEqual(self.accumulator.quantity, 100)
+        self.assertEqual(self.accumulator.data['quantity'], 100)
 
     def test_accumulator_results(self):
-        self.assertEqual(self.accumulator.results, {})
+        self.assertEqual(self.accumulator.data['results'], {})

@@ -40,7 +40,8 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from ..trade import Asset, Operation
+from ..trade import Asset
+from ..operations import Operation
 from ..utils import merge_operations
 
 
@@ -87,15 +88,20 @@ class Option(Asset):
             - operations representing the purchase or sale of its
               underlying assets
         """
+        operations = []
+
         # Create an operation to consume
-        # the option on the portfolio
-        operations = [
-            Operation(
-                quantity=abs(quantity)*-1,
-                price=0,
-                asset=self
-            )
-        ]
+        # the option on the portfolio.
+        # this operation should not create
+        # any results, just update the
+        # quantity and price in the accumulator.
+        option_consuming = Operation(
+            quantity=abs(quantity)*-1,
+            price=0,
+            asset=self
+        )
+        option_consuming.update_results = False
+        operations.append(option_consuming)
         # Create an operation to represent
         # the purchase or sale of the
         # underlying asset. If the option has
@@ -123,10 +129,29 @@ class Exercise(Operation):
     derivative and its underlyings assets.
     """
 
-    # In a exercise operation it is the underlying
-    # operations that will change the position on
-    # the portfolio, not the operation itself
-    accumulate_underlying_operations = True
+    update_position = False
+
+    def update_portfolio(self, portfolio):
+        """A Portfolio task.
+
+        Fetch the operations in a exercise operations and  get the premium
+        of the option that is being exercised.
+
+        It searches on the Portfolio object for an Accumulator of the option
+        and then use the accumulator price as the premium to be included
+        on the exercise operation price.
+        """
+        self.fetch_operations(portfolio)
+        for operation in self.operations:
+            portfolio.accumulate(operation)
+
+    def update_accumulator(self, accumulator):
+        """Exercise operations should not update the accumulator.
+
+        Its its underlying operations that should update the
+        accumulator.
+        """
+        pass
 
     def fetch_operations(self, portfolio=None):
         """Fetch the operations created by this exercise.
@@ -143,7 +168,7 @@ class Exercise(Operation):
             self.operations = self.asset.exercise(
                 self.quantity,
                 self.price,
-                portfolio.assets[self.asset.symbol].price
+                portfolio.assets[self.asset.symbol].data['price']
             )
         else:
             self.operations = self.asset.exercise(
@@ -174,17 +199,3 @@ def fetch_exercises(container):
                     )
                 else:
                     container.positions['exercises'][symbol] = operation
-
-
-def fetch_exercise_operations(operation, portfolio):
-    """A Portfolio task.
-
-    Fetch the operations in a exercise operations and  get the premium
-    of the option that is being exercised.
-
-    It searches on the Portfolio object for an Accumulator of the option
-    and then use the accumulator price as the premium to be included
-    on the exercise operation price.
-    """
-    if isinstance(operation, Exercise):
-        operation.fetch_operations(portfolio)

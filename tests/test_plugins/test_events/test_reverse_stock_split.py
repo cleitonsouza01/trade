@@ -12,9 +12,9 @@ class TestReverseStockSplitCase00(unittest.TestCase):
     def setUp(self):
         asset = trade.Asset()
         self.accumulator = trade.Accumulator(asset, logging=True)
-        self.accumulator.quantity = 100
-        self.accumulator.price = 10
-        self.accumulator.results = {'trades': 1200}
+        self.accumulator.data['quantity'] = 100
+        self.accumulator.data['price'] = 10
+        self.accumulator.data['results'] = {'trades': 1200}
         #event = trade.plugins.ReverseStockSplit(
         event = trade.plugins.StockSplit(
             asset=asset,
@@ -24,10 +24,10 @@ class TestReverseStockSplitCase00(unittest.TestCase):
         self.accumulator.accumulate(event)
 
     def test_check_quantity_after_split(self):
-        self.assertEqual(self.accumulator.quantity, 50)
+        self.assertEqual(self.accumulator.data['quantity'], 50)
 
     def test_check_price_after_split(self):
-        self.assertEqual(self.accumulator.price, 20)
+        self.assertEqual(self.accumulator.data['price'], 20)
 
     def test_check_results_after_split(self):
-        self.assertEqual(self.accumulator.results, {'trades': 1200})
+        self.assertEqual(self.accumulator.data['results'], {'trades': 1200})

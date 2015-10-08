@@ -33,7 +33,7 @@ class TestAccumulatorResultsSaleCase00(TestAccumulatorSaleResults):
         self.assertEqual(self.accumulator.log, EXPECTED_LOG0)
 
     def test_accumulated_result(self):
-        self.assertEqual(self.accumulator.results, {})
+        self.assertEqual(self.accumulator.data['results'], {})
 
 
 class TestAccumulatorResultsSaleCase01(TestAccumulatorSaleResults):
@@ -47,7 +47,7 @@ class TestAccumulatorResultsSaleCase01(TestAccumulatorSaleResults):
         self.assertEqual(self.accumulator.log, EXPECTED_LOG1)
 
     def test_accumulated_result(self):
-        self.assertEqual(self.accumulator.results, {})
+        self.assertEqual(self.accumulator.data['results'], {})
 
 
 class TestAccumulatorResultsSaleCase02(TestAccumulatorSaleResults):
@@ -62,7 +62,7 @@ class TestAccumulatorResultsSaleCase02(TestAccumulatorSaleResults):
         self.assertEqual(self.accumulator.log, EXPECTED_LOG2)
 
     def test_accumulated_result(self):
-        self.assertEqual(self.accumulator.results, {'trades': 1000})
+        self.assertEqual(self.accumulator.data['results'], {'trades': 1000})
 
 
 class TestAccumulatorResultsSaleCase04(TestAccumulatorSaleResults):
@@ -78,7 +78,7 @@ class TestAccumulatorResultsSaleCase04(TestAccumulatorSaleResults):
         self.assertEqual(self.accumulator.log, EXPECTED_LOG3)
 
     def test_accumulated_result(self):
-        self.assertEqual(self.accumulator.results, {'trades': 1000})
+        self.assertEqual(self.accumulator.data['results'], {'trades': 1000})
 
 
 class TestAccumulatorResultsSaleCase05(TestAccumulatorSaleResults):
@@ -95,7 +95,7 @@ class TestAccumulatorResultsSaleCase05(TestAccumulatorSaleResults):
         self.assertEqual(self.accumulator.log, EXPECTED_LOG4)
 
     def test_accumulated_result(self):
-        self.assertEqual(self.accumulator.results, {'trades': 3000})
+        self.assertEqual(self.accumulator.data['results'], {'trades': 3000})
 
 
 class TestAccumulatorResultsSaleCase06(TestAccumulatorSaleResults):
@@ -113,7 +113,7 @@ class TestAccumulatorResultsSaleCase06(TestAccumulatorSaleResults):
         self.assertEqual(self.accumulator.log, EXPECTED_LOG5)
 
     def test_accumulated_result(self):
-        self.assertEqual(self.accumulator.results, {'trades': 2000})
+        self.assertEqual(self.accumulator.data['results'], {'trades': 2000})
 
 
 class TestAccumulatorResultsSaleCase07(TestAccumulatorSaleResults):
@@ -128,4 +128,4 @@ class TestAccumulatorResultsSaleCase07(TestAccumulatorSaleResults):
         self.assertEqual(self.accumulator.log, EXPECTED_LOG6)
 
     def test_accumulated_result(self):
-        self.assertEqual(self.accumulator.results, {'trades': 500})
+        self.assertEqual(self.accumulator.data['results'], {'trades': 500})

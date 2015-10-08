@@ -13,9 +13,9 @@ class TestBonusShares(unittest.TestCase):
 
     def setUp(self):
         self.accumulator = trade.Accumulator(ASSET, logging=True)
-        self.accumulator.quantity = 100
-        self.accumulator.price = 10
-        self.accumulator.results = {'trades': 1200}
+        self.accumulator.data['quantity'] = 100
+        self.accumulator.data['price'] = 10
+        self.accumulator.data['results'] = {'trades': 1200}
 
 
 class TestBonusSharesCase00(TestBonusShares):
@@ -26,13 +26,13 @@ class TestBonusSharesCase00(TestBonusShares):
         self.accumulator.accumulate(EVENT6)
 
     def test_check_quantity_after_split(self):
-        self.assertEqual(self.accumulator.quantity, 200)
+        self.assertEqual(self.accumulator.data['quantity'], 200)
 
     def test_check_price_after_split(self):
-        self.assertEqual(self.accumulator.price, 5)
+        self.assertEqual(self.accumulator.data['price'], 5)
 
     def test_check_results_after_split(self):
-        self.assertEqual(self.accumulator.results, {'trades': 1200})
+        self.assertEqual(self.accumulator.data['results'], {'trades': 1200})
 
 
 class TestBonusSharesCase01(TestBonusShares):
@@ -43,13 +43,13 @@ class TestBonusSharesCase01(TestBonusShares):
         self.accumulator.accumulate(EVENT8)
 
     def test_check_quantity_after_split(self):
-        self.assertEqual(self.accumulator.quantity, 300)
+        self.assertEqual(self.accumulator.data['quantity'], 300)
 
     def test_check_price_after_split(self):
-        self.assertEqual(round(self.accumulator.price, 2), 3.33)
+        self.assertEqual(round(self.accumulator.data['price'], 2), 3.33)
 
     def test_check_results_after_split(self):
-        self.assertEqual(self.accumulator.results, {'trades': 1200})
+        self.assertEqual(self.accumulator.data['results'], {'trades': 1200})
 
 
 class TestBonusSharesCase02(TestBonusShares):
@@ -60,10 +60,10 @@ class TestBonusSharesCase02(TestBonusShares):
         self.accumulator.accumulate(EVENT7)
 
     def test_check_quantity_after_split(self):
-        self.assertEqual(self.accumulator.quantity, 150)
+        self.assertEqual(self.accumulator.data['quantity'], 150)
 
     def test_check_price_after_split(self):
-        self.assertEqual(round(self.accumulator.price, 2), 6.67)
+        self.assertEqual(round(self.accumulator.data['price'], 2), 6.67)
 
     def test_check_results_after_split(self):
-        self.assertEqual(self.accumulator.results, {'trades': 1200})
+        self.assertEqual(self.accumulator.data['results'], {'trades': 1200})

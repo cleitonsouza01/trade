@@ -20,11 +20,10 @@ class TestExercisePremium(unittest.TestCase):
 
     def setUp(self):
         self.portfolio = trade.Portfolio()
-        self.portfolio.tasks = [trade.plugins.fetch_exercise_operations]
         self.operation = copy.deepcopy(OPERATION46)
         self.exercise = copy.deepcopy(EXERCISE_OPERATION4)
         self.option_operation = copy.deepcopy(OPTION_OPERATION1)
-        self.option_operation2 = copy.deepcopy(OPTION_OPERATION2)
+        self.option_operation2 = copy.deepcopy(OPTION_OPERATION2) #20@1
         self.portfolio.accumulate(self.operation)
 
 
@@ -49,17 +48,17 @@ class TestExercisePremiumCase00(TestExercisePremium):
         self.assertEqual(len(self.portfolio.assets.keys()), 2)
 
     def test_asset_accumulator_quantity(self):
-        self.assertEqual(self.portfolio.assets[ASSET.symbol].quantity, 20)
+        self.assertEqual(self.portfolio.assets[ASSET.symbol].data['quantity'], 20)
 
     def test_asset_accumulator_price(self):
         """Should have the premium included on the price"""
-        self.assertEqual(self.portfolio.assets[ASSET.symbol].price, 5.5)
+        self.assertEqual(self.portfolio.assets[ASSET.symbol].data['price'], 5.5)
 
     def test_option_accumulator_quantity(self):
-        self.assertEqual(self.portfolio.assets[OPTION1.symbol].quantity, 0)
+        self.assertEqual(self.portfolio.assets[OPTION1.symbol].data['quantity'], 0)
 
     def test_option_accumulator_price(self):
-        self.assertEqual(self.portfolio.assets[OPTION1.symbol].price, 0)
+        self.assertEqual(self.portfolio.assets[OPTION1.symbol].data['price'], 0)
 
 
 class TestExercisePremiumCase01(TestExercisePremium):
@@ -69,19 +68,20 @@ class TestExercisePremiumCase01(TestExercisePremium):
         super(TestExercisePremiumCase01, self).setUp()
         self.portfolio.accumulate(self.option_operation2)
         self.portfolio.accumulate(self.exercise)
+        #print(self.exercise.operations[0].quantity)
 
     def test_portfolio_asset_keys(self):
         self.assertEqual(len(self.portfolio.assets.keys()), 2)
 
     def test_asset_accumulator_quantity(self):
-        self.assertEqual(self.portfolio.assets[ASSET.symbol].quantity, 20)
+        self.assertEqual(self.portfolio.assets[ASSET.symbol].data['quantity'], 20)
 
     def test_asset_accumulator_price(self):
         """Should have the premium included on the price"""
-        self.assertEqual(self.portfolio.assets[ASSET.symbol].price, 5.5)
+        self.assertEqual(self.portfolio.assets[ASSET.symbol].data['price'], 5.5)
 
     def test_option_accumulator_quantity(self):
-        self.assertEqual(self.portfolio.assets[OPTION1.symbol].quantity, 10)
+        self.assertEqual(self.portfolio.assets[OPTION1.symbol].data['quantity'], 10)
 
     def test_option_accumulator_price(self):
-        self.assertEqual(self.portfolio.assets[OPTION1.symbol].price, 1)
+        self.assertEqual(self.portfolio.assets[OPTION1.symbol].data['price'], 1)

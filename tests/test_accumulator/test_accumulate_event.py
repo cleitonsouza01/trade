@@ -14,10 +14,10 @@ from tests.fixtures.operations import ASSET
 class EventThatChangeResults(trade.plugins.Event):
     """A fictional event for the tests."""
 
-    def update_container(self, container):
+    def update_accumulator(self, accumulator):
         """Increment all results in the container with the factor."""
-        for key in container.results.keys():
-            container.results[key] += self.factor
+        for key in accumulator.data['results'].keys():
+            accumulator.data['results'][key] += self.factor
 
 
 class TestEventThatChangeResultsCase00(unittest.TestCase):
@@ -28,17 +28,17 @@ class TestEventThatChangeResultsCase00(unittest.TestCase):
     """
     def setUp(self):
         self.accumulator = trade.Accumulator(ASSET)
-        self.accumulator.quantity = 100
-        self.accumulator.price = 10
-        self.accumulator.results = {'trades': 1200}
+        self.accumulator.data['quantity'] = 100
+        self.accumulator.data['price'] = 10
+        self.accumulator.data['results'] = {'trades': 1200}
         self.event = EventThatChangeResults(ASSET, '2015-09-27', 2)
         self.accumulator.accumulate(self.event)
 
     def test_check_quantity_after_split(self):
-        self.assertEqual(self.accumulator.quantity, 100)
+        self.assertEqual(self.accumulator.data['quantity'], 100)
 
     def test_check_price_after_split(self):
-        self.assertEqual(self.accumulator.price, 10)
+        self.assertEqual(self.accumulator.data['price'], 10)
 
     def test_check_results_after_split(self):
-        self.assertEqual(self.accumulator.results, {'trades': 1202})
+        self.assertEqual(self.accumulator.data['results'], {'trades': 1202})

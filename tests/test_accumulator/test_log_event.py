@@ -18,9 +18,9 @@ class TestLogEvent(unittest.TestCase):
 
     def setUp(self):
         self.accumulator = Accumulator(ASSET, logging=True)
-        self.accumulator.quantity = 100
-        self.accumulator.price = 10
-        self.accumulator.results = {'trades': 1200}
+        self.accumulator.data['quantity'] = 100
+        self.accumulator.data['price'] = 10
+        self.accumulator.data['results'] = {'trades': 1200}
         self.accumulator.accumulate(EVENT5)
 
 
@@ -28,13 +28,13 @@ class TestLogEvent00(TestLogEvent):
     """Tests the logging of 1 Event object."""
 
     def test_check_quantity_after_split(self):
-        self.assertEqual(self.accumulator.quantity, 200)
+        self.assertEqual(self.accumulator.data['quantity'], 200)
 
     def test_check_price_after_split(self):
-        self.assertEqual(self.accumulator.price, 5)
+        self.assertEqual(self.accumulator.data['price'], 5)
 
     def test_check_results_after_split(self):
-        self.assertEqual(self.accumulator.results, {'trades': 1200})
+        self.assertEqual(self.accumulator.data['results'], {'trades': 1200})
 
     def test_check_log_case_00(self):
         self.assertEqual(self.accumulator.log, EXPECTED_LOG17)
@@ -60,10 +60,11 @@ class TestLogEvent02(TestLogEvent):
 
     def test_log_position(self):
         self.assertEqual(
-            self.accumulator.log['2015-09-24']['position'],
+            self.accumulator.log['2015-09-24']['data'],
             {
                 'price': 5.0,
-                'quantity': 200
+                'quantity': 200,
+                'results': {'trades': 1200}
             }
         )
 

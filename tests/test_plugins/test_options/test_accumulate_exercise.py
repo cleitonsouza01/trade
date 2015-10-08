@@ -29,26 +29,27 @@ class TestAccumulateExercise00(unittest.TestCase):
         # be passed to the accumulator of all its assets
         self.exercise = copy.deepcopy(EXERCISE_OPERATION5)
         self.exercise.fetch_operations()
-        self.asset_accumulator.accumulate(self.exercise)
-        self.option_accumulator.accumulate(self.exercise)
+        for operation in self.exercise.operations:
+            self.asset_accumulator.accumulate(operation)
+            self.option_accumulator.accumulate(operation)
 
     def test_accumulator1_price(self):
-        self.assertEqual(self.asset_accumulator.price, 10)
+        self.assertEqual(self.asset_accumulator.data['price'], 10)
 
     def test_accumulator1_quantity(self):
-        self.assertEqual(self.asset_accumulator.quantity, 100)
+        self.assertEqual(self.asset_accumulator.data['quantity'], 100)
 
     def test_accumulator1_results(self):
-        self.assertEqual(self.asset_accumulator.results, {})
+        self.assertEqual(self.asset_accumulator.data['results'], {})
 
     def test_accumulator2_price(self):
-        self.assertEqual(self.option_accumulator.price, 0)
+        self.assertEqual(self.option_accumulator.data['price'], 0)
 
     def test_accumulator2_quantity(self):
-        self.assertEqual(self.option_accumulator.quantity, 0)
+        self.assertEqual(self.option_accumulator.data['quantity'], 0)
 
     def test_accumulator2_results(self):
-        self.assertEqual(self.option_accumulator.results, {})
+        self.assertEqual(self.option_accumulator.data['results'], {})
 
 
 class TestAccumulateExercise01(unittest.TestCase):
@@ -81,23 +82,24 @@ class TestAccumulateExercise01(unittest.TestCase):
             date='2015-01-01'
         )
         self.exercise.fetch_operations()
-        self.asset_accumulator.accumulate(self.exercise)
-        self.option_accumulator.accumulate(self.exercise)
+        for operation in self.exercise.operations:
+            self.asset_accumulator.accumulate(operation)
+            self.option_accumulator.accumulate(operation)
 
     def test_accumulator1_price(self):
-        self.assertEqual(self.asset_accumulator.price, 7.5)
+        self.assertEqual(self.asset_accumulator.data['price'], 7.5)
 
     def test_accumulator1_quantity(self):
-        self.assertEqual(self.asset_accumulator.quantity, 200)
+        self.assertEqual(self.asset_accumulator.data['quantity'], 200)
 
     def test_accumulator1_results(self):
-        self.assertEqual(self.asset_accumulator.results, {})
+        self.assertEqual(self.asset_accumulator.data['results'], {})
 
     def test_accumulator2_price(self):
-        self.assertEqual(self.option_accumulator.price, 0)
+        self.assertEqual(self.option_accumulator.data['price'], 0)
 
     def test_accumulator2_quantity(self):
-        self.assertEqual(self.option_accumulator.quantity, 0)
+        self.assertEqual(self.option_accumulator.data['quantity'], 0)
 
     def test_accumulator2_results(self):
-        self.assertEqual(self.option_accumulator.results, {})
+        self.assertEqual(self.option_accumulator.data['results'], {})

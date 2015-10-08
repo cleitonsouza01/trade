@@ -67,7 +67,7 @@ class Event(Occurrence):
         self.factor = factor
 
     @abstractmethod
-    def update_container(self, container):
+    def update_accumulator(self, container):
         """Should udpate the quantity, price and/or results."""
         raise NotImplementedError
 
@@ -80,19 +80,20 @@ class StockSplit(Event):
     Reverse stock splits are represented by values between 0 and 1.
     """
 
-    def update_container(self, container):
+    def update_accumulator(self, container):
         """Performs a split or a reverse split on the stock."""
-        container.quantity = container.quantity * self.factor
-        container.price = container.price / self.factor
+        container.data['quantity'] = container.data['quantity'] * self.factor
+        container.data['price'] = container.data['price'] / self.factor
 
 
 class BonusShares(Event):
     """Bonus shares."""
 
-    def update_container(self, container):
+    def update_accumulator(self, container):
         """Add stocks received as bonus shares do the accumulator."""
-        new_quantity = container.quantity * self.factor
-        container.price = average_price(
-            container.quantity, container.price, new_quantity, 0
+        new_quantity = container.data['quantity'] * self.factor
+        container.data['price'] = average_price(
+            container.data['quantity'], container.data['price'],
+            new_quantity, 0
         )
-        container.quantity += new_quantity
+        container.data['quantity'] += new_quantity

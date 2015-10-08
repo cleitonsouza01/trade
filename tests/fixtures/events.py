@@ -11,7 +11,7 @@ from trade.plugins import  Event, StockSplit, BonusShares
 class TestEvent(Event):
     """A dummy event for the tests."""
 
-    def update_container(self, container):
+    def update_accumulator(self, container):
         pass
 
 
