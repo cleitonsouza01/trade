@@ -7,6 +7,8 @@ import copy
 
 import trade
 
+from trade.plugins import prorate_commissions
+
 from tests.fixtures.operations import (
     OPERATION24, OPERATION26, OPERATION27, OPERATION28,
     OPERATION34, OPERATION35, OPERATION37, OPERATION38
@@ -59,6 +61,7 @@ class TestContainerFetchPositionsCase00(TestFetchPositions):
             copy.deepcopy(OPERATION27)
         ]
         self.container.fetch_positions()
+        prorate_commissions(self.container)
 
     def test_container_volume(self):
         self.assertEqual(self.container.volume, 70)
@@ -158,6 +161,7 @@ class TestContainerFetchPositionsCase01(TestFetchPositions):
             copy.deepcopy(OPERATION37)
         ]
         self.container.fetch_positions()
+        prorate_commissions(self.container)
 
     def test_operations_len(self):
         self.assertEqual(len(self.container.positions['operations'].keys()), 1)
@@ -305,6 +309,7 @@ class TestContainerFetchPositionsCase02(unittest.TestCase):
         ]
         self.container.trading_fees = TaxManagerForTests
         self.container.fetch_positions()
+        prorate_commissions(self.container)
 
     def test_daytrade_buy_discounts(self):
         self.assertEqual(

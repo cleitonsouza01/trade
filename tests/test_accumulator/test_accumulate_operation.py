@@ -13,6 +13,9 @@ from tests.fixtures.commissions import (
     COMMISSIONS13
 )
 
+from trade.plugins import prorate_commissions
+
+
 class TestAccumulateOperation(unittest.TestCase):
 
     def setUp(self):
@@ -76,6 +79,7 @@ class TestAccumulateOperationCase02(TestAccumulateOperation):
             commissions=COMMISSIONS13
         )
         container.fetch_positions()
+        prorate_commissions(container)
         operation = container.positions['operations'][ASSET.symbol]
         self.accumulator.accumulate(operation)
 

@@ -345,9 +345,6 @@ class OperationContainer(object):
             if operation.quantity != 0:
                 self.add_to_position_operations(operation)
 
-        # prorate the commission for the operations
-        self.prorate_commissions()
-
         # Add fees to the operations
         self.find_trading_fees_for_positions()
 
@@ -364,32 +361,6 @@ class OperationContainer(object):
             )
         else:
             self.positions['operations'][operation.asset.symbol] = operation
-
-    def prorate_commissions(self):
-        """Prorates the container's commissions by its operations.
-
-        This method sum the discounts in the commissions dict of the
-        container. The total discount value is then prorated by the
-        position operations based on their volume.
-        """
-        for position_value in self.positions.values():
-            for position in position_value.values():
-                if position.update_position:
-                    self.prorate_commissions_by_position(position)
-                else:
-                    for operation in position.operations:
-                        self.prorate_commissions_by_position(operation)
-
-    def prorate_commissions_by_position(self, operation):
-        """Prorates the commissions of the container for one position.
-
-        The ratio is based on the container volume and the volume of
-        the position operation.
-        """
-        if operation.volume != 0 and self.volume != 0:
-            percent = operation.volume / self.volume * 100
-            for key, value in self.commissions.items():
-                operation.commissions[key] = value * percent / 100
 
     def find_trading_fees_for_positions(self):
         """Finds the fees for all positions in the container."""

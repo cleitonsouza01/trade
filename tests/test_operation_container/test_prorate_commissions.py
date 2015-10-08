@@ -5,6 +5,7 @@ import unittest
 import copy
 
 import trade
+from trade.plugins import prorate_commissions, prorate_commissions_by_position
 
 from tests.fixtures.operations import (
     OPERATION39, OPERATION42, OPERATION43, OPERATION44,
@@ -34,9 +35,10 @@ class TestProrateCommissionsByPositionCase01(TestProrateCommissions):
             commissions=COMMISSIONS11
         )
         self.container.fetch_positions()
+        prorate_commissions(self.container)
 
     def test_operation_discount(self):
-        self.container.prorate_commissions_by_position(self.operation)
+        prorate_commissions_by_position(self.container, self.operation)
         self.assertEqual(self.operation.commissions, {'some discount': 1})
 
 
@@ -54,13 +56,14 @@ class TestProrateCommissionsByPositionCase02(TestProrateCommissions):
             commissions=COMMISSIONS11
         )
         self.container.fetch_positions()
+        prorate_commissions(self.container)
 
     def test_check_trade1_discount(self):
-        self.container.prorate_commissions_by_position(self.operation)
+        prorate_commissions_by_position(self.container, self.operation)
         self.assertEqual(self.operation.commissions, {'some discount': 0.5})
 
     def test_check_trade2_discount(self):
-        self.container.prorate_commissions_by_position(self.operation2)
+        prorate_commissions_by_position(self.container, self.operation2)
         self.assertEqual(self.operation2.commissions, {'some discount': 0.5})
 
 
@@ -80,14 +83,15 @@ class TestProrateCommissionsByPositionCase03(TestProrateCommissions):
         self.container.fetch_positions()
 
     def test_check_trade1_discount(self):
-        self.container.prorate_commissions_by_position(self.operation)
+        #self.container.prorate_commissions_by_position(self.operation)
+        prorate_commissions_by_position(self.container, self.operation)
         self.assertEqual(
             round(self.operation.commissions['some discount'], 8),
             0.33333333
         )
 
     def test_check_trade2_discount(self):
-        self.container.prorate_commissions_by_position(self.operation2)
+        prorate_commissions_by_position(self.container, self.operation2)
         self.assertEqual(
             round(self.operation2.commissions['some discount'], 8),
             0.66666667
@@ -110,6 +114,7 @@ class TestProrateCommissionsByPositionCase04(TestProrateCommissions):
             commissions=COMMISSIONS10
         )
         self.container.fetch_positions()
+        prorate_commissions(self.container)
 
     def test_check_trade1_discount(self):
         self.assertEqual(self.operation.commissions['some discount'], 1)
@@ -135,6 +140,7 @@ class TestProrateCommissionsByPositionCase05(TestProrateCommissions):
         )
         self.container.tasks = [trade.plugins.fetch_daytrades]
         self.container.fetch_positions()
+        prorate_commissions(self.container)
 
     def test_container_volume(self):
         self.assertEqual(self.container.volume, 70)
