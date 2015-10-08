@@ -268,11 +268,6 @@ class OperationContainer(object):
       the container. Positions are all the operations with the same
       asset grouped in a single operation.
 
-    - Prorate the commissions, if any, proportionally for all positions
-      by calling:
-
-        prorate_commissions()
-
     - Find the fees, if any, for the positions by calling:
 
         find_fees_for_positions()
@@ -281,8 +276,6 @@ class OperationContainer(object):
         date: A string 'YYYY-mm-dd' representing the date of the
             operations on the container.
         operations: A list of Operation instances.
-        commissions: A dict with discount names and values to be
-            deducted from the operations.
         positions: a dict of positions with this format:
             self.positions = {
                 'position type': {
@@ -302,23 +295,14 @@ class OperationContainer(object):
             daytrades from other operations).
     """
 
-    volume = 0
-
-    def __init__(self, operations=None, commissions=None):
+    def __init__(self, operations=None):
         if operations is None:
             operations = []
-        if commissions is None:
-            commissions = {}
         self.operations = operations
-        self.commissions = commissions
         self.trading_fees = TradingFees
         self.positions = {}
         self.tasks = []
-
-    @property
-    def total_commission_value(self):
-        """Returns the sum of the values of all commissions."""
-        return sum(self.commissions.values())
+        self.volume = 0
 
     def fetch_positions(self):
         """Fetch the positions resulting from the operations.

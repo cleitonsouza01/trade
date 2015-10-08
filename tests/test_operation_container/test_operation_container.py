@@ -31,9 +31,8 @@ class TestContainerCreationCase01(unittest.TestCase):
     """Test the creation of a OperationContainer."""
 
     def setUp(self):
-        self.container = trade.OperationContainer(
-            commissions=COMMISSIONS12
-        )
+        self.container = trade.OperationContainer()
+        self.container.commissions = COMMISSIONS12
         self.container.fetch_positions_tasks = [
             trade.plugins.fetch_exercises,
             trade.plugins.fetch_daytrades,

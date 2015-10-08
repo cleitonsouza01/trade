@@ -161,7 +161,6 @@ class TestContainerFetchPositionsCase01(TestFetchPositions):
             copy.deepcopy(OPERATION37)
         ]
         self.container.fetch_positions()
-        prorate_commissions(self.container)
 
     def test_operations_len(self):
         self.assertEqual(len(self.container.positions['operations'].keys()), 1)
@@ -301,8 +300,8 @@ class TestContainerFetchPositionsCase02(unittest.TestCase):
         )
         self.container = trade.OperationContainer(
             operations=operations,
-            commissions=COMMISSIONS8
         )
+        self.container.commissions = COMMISSIONS8
         self.container.tasks = [
             trade.plugins.fetch_exercises,
             trade.plugins.fetch_daytrades,

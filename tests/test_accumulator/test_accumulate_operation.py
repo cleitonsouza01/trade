@@ -76,8 +76,8 @@ class TestAccumulateOperationCase02(TestAccumulateOperation):
         super(TestAccumulateOperationCase02, self).setUp()
         container = trade.OperationContainer(
             operations=[copy.deepcopy(OPERATION19)],
-            commissions=COMMISSIONS13
         )
+        container.commissions = COMMISSIONS13
         container.fetch_positions()
         prorate_commissions(container)
         operation = container.positions['operations'][ASSET.symbol]

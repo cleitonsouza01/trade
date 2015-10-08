@@ -32,9 +32,9 @@ class TestProrateCommissionsByPositionCase01(TestProrateCommissions):
         super(TestProrateCommissionsByPositionCase01, self).setUp()
         self.container = trade.OperationContainer(
             operations=[self.operation],
-            commissions=COMMISSIONS11
         )
         self.container.fetch_positions()
+        self.container.commissions = COMMISSIONS11
         prorate_commissions(self.container)
 
     def test_operation_discount(self):
@@ -53,8 +53,8 @@ class TestProrateCommissionsByPositionCase02(TestProrateCommissions):
                 self.operation,
                 self.operation2
             ],
-            commissions=COMMISSIONS11
         )
+        self.container.commissions = COMMISSIONS11
         self.container.fetch_positions()
         prorate_commissions(self.container)
 
@@ -78,8 +78,8 @@ class TestProrateCommissionsByPositionCase03(TestProrateCommissions):
                 self.operation,
                 self.operation2
             ],
-            commissions=COMMISSIONS11
         )
+        self.container.commissions = COMMISSIONS11
         self.container.fetch_positions()
 
     def test_check_trade1_discount(self):
@@ -111,8 +111,8 @@ class TestProrateCommissionsByPositionCase04(TestProrateCommissions):
                 self.operation2,
                 self.operation3
             ],
-            commissions=COMMISSIONS10
         )
+        self.container.commissions = COMMISSIONS10
         self.container.fetch_positions()
         prorate_commissions(self.container)
 
@@ -136,8 +136,8 @@ class TestProrateCommissionsByPositionCase05(TestProrateCommissions):
         trade3 = copy.deepcopy(OPERATION27)
         self.container = trade.OperationContainer(
             operations=[trade1, trade2, trade3],
-            commissions=COMMISSIONS9
         )
+        self.container.commissions = COMMISSIONS9
         self.container.tasks = [trade.plugins.fetch_daytrades]
         self.container.fetch_positions()
         prorate_commissions(self.container)

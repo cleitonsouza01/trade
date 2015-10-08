@@ -9,9 +9,6 @@ import trade
 from tests.fixtures.operations import (
     OPERATION39, OPERATION40, OPERATION41
 )
-from tests.fixtures.commissions import (
-    COMMISSIONS13, COMMISSIONS11
-)
 
 
 class TestContainerProperties(unittest.TestCase):
@@ -19,32 +16,6 @@ class TestContainerProperties(unittest.TestCase):
 
     def setUp(self):
         pass
-
-
-class TestContainerPropertiesCase00(TestContainerProperties):
-    """Test the total_commission_value property of the Container."""
-
-    def setUp(self):
-        super(TestContainerPropertiesCase00, self).setUp()
-        self.trade_container = trade.OperationContainer(
-            commissions=COMMISSIONS11
-        )
-
-    def test_total_commission_value(self):
-        self.assertEqual(self.trade_container.total_commission_value, 1)
-
-
-class TestContainerPropertiesCase01(TestContainerProperties):
-    """Test the total_commission_value property of the Container."""
-
-    def setUp(self):
-        super(TestContainerPropertiesCase01, self).setUp()
-        self.trade_container = trade.OperationContainer(
-            commissions=COMMISSIONS13
-        )
-
-    def test_total_discount_value(self):
-        self.assertEqual(self.trade_container.total_commission_value, 4)
 
 
 class TestContainerPropertiesCase02(TestContainerProperties):
