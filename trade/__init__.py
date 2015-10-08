@@ -40,7 +40,6 @@ from .trade import (
 from .operations import (
     Operation,
     OperationContainer,
-    TradingFees
 )
 from .utils import average_price, same_sign, merge_operations
 from . import plugins

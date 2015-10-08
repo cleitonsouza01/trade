@@ -34,7 +34,6 @@ THE SOFTWARE.
 from __future__ import absolute_import
 from __future__ import division
 
-from abc import ABCMeta, abstractmethod
 import math
 import copy
 
@@ -268,10 +267,6 @@ class OperationContainer(object):
       the container. Positions are all the operations with the same
       asset grouped in a single operation.
 
-    - Find the fees, if any, for the positions by calling:
-
-        find_fees_for_positions()
-
     Attributes:
         date: A string 'YYYY-mm-dd' representing the date of the
             operations on the container.
@@ -299,7 +294,6 @@ class OperationContainer(object):
         if operations is None:
             operations = []
         self.operations = operations
-        self.trading_fees = TradingFees
         self.positions = {}
         self.tasks = []
         self.volume = 0
@@ -316,6 +310,10 @@ class OperationContainer(object):
         And finally it checks if there are any fees to be applied
         to the positions.
         """
+
+        # Find the volume of the container
+        # (the sum of the volume of all of
+        # its operations)
         self.volume = sum(operation.volume for operation in self.operations)
 
         raw_operations = copy.deepcopy(self.operations)
@@ -328,9 +326,6 @@ class OperationContainer(object):
         for operation in self.operations:
             if operation.quantity != 0:
                 self.add_to_position_operations(operation)
-
-        # Add fees to the operations
-        self.find_trading_fees_for_positions()
 
         self.operations = raw_operations
 
@@ -345,43 +340,3 @@ class OperationContainer(object):
             )
         else:
             self.positions['operations'][operation.asset.symbol] = operation
-
-    def find_trading_fees_for_positions(self):
-        """Finds the fees for all positions in the container."""
-        for position_type, position_value in self.positions.items():
-            for position in position_value.values():
-                if position.operations:
-                    for operation in position.operations:
-                        operation.fees = self.trading_fees.get_fees(
-                            operation, position_type
-                        )
-                else:
-                    position.fees = self.trading_fees.get_fees(
-                        position, position_type
-                    )
-
-
-class TradingFees(object):
-    """Responsible for finding fees for an operation.
-
-    A TradingFees class returns the correspondent percentual fee for
-    an Operation. This base TaxManager implements a dummy interface
-    that will return a empty set of fees every time it is called.
-
-    Every OperationContainer has a reference to this class. If you
-    need to implement fees in your application you must create your
-    own TradingFees implementation and then replace the reference in
-    the OperationContainer object by doing this:
-
-        container.trading_fees = YourTradingFees
-
-    Your TradingFees implementation must obey this class interface.
-    """
-
-    __metaclass__ = ABCMeta
-
-    @classmethod
-    @abstractmethod
-    def get_fees(cls, operation=None, operation_type=None):
-        """Returns a set of fees (percentages) for a given operation."""
-        return {}

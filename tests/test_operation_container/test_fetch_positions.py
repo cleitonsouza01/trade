@@ -7,7 +7,9 @@ import copy
 
 import trade
 
-from trade.plugins import prorate_commissions
+from trade.plugins import (
+    prorate_commissions, TradingFees, find_trading_fees_for_positions
+)
 
 from tests.fixtures.operations import (
     OPERATION24, OPERATION26, OPERATION27, OPERATION28,
@@ -21,7 +23,7 @@ from tests.fixtures.commissions import (
 )
 
 
-class TaxManagerForTests(trade.TradingFees):
+class TaxManagerForTests(TradingFees):
     """A TradingFees class for the tests."""
 
     __metaclass__ = ABCMeta
@@ -308,6 +310,7 @@ class TestContainerFetchPositionsCase02(unittest.TestCase):
         ]
         self.container.trading_fees = TaxManagerForTests
         self.container.fetch_positions()
+        find_trading_fees_for_positions(self.container)
         prorate_commissions(self.container)
 
     def test_daytrade_buy_discounts(self):

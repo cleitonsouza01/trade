@@ -69,3 +69,4 @@ from .daytrades import (
     find_purchase_and_sale,
 )
 from .prorate import prorate_commissions, prorate_commissions_by_position
+from .fees import TradingFees, find_trading_fees_for_positions

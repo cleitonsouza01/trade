@@ -4,6 +4,7 @@ from __future__ import absolute_import
 import unittest
 
 import trade
+from trade.plugins import TradingFees
 
 
 class TestTaxManager(unittest.TestCase):
@@ -13,7 +14,7 @@ class TestTaxManager(unittest.TestCase):
     for both daytrade and common operation rates.
     """
     def setUp(self):
-        self.tax_manager = trade.TradingFees
+        self.tax_manager = TradingFees
 
     def test_assert_tax_manager_exists(self):
         self.assertTrue(self.tax_manager)

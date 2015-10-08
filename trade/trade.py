@@ -44,8 +44,6 @@ class Asset(object):
             expiration date of the asset, if any.
     """
 
-    blob = True
-
     def __init__(self, name=None, symbol=None, expiration_date=None):
         self.name = name
         self.symbol = symbol

@@ -6,6 +6,7 @@ from abc import ABCMeta, abstractmethod
 import copy
 
 import trade
+from trade.plugins import TradingFees, find_trading_fees_for_positions
 
 from tests.fixtures.operations import (
     OPERATION24, OPERATION26, OPERATION27
@@ -15,7 +16,7 @@ from tests.fixtures.assets import (
 )
 
 
-class TaxManagerForTests(trade.TradingFees):
+class TaxManagerForTests(TradingFees):
     """A TradingFees object for the tests."""
 
     __metaclass__ = ABCMeta
@@ -45,6 +46,7 @@ class TestFindFeesForPositionsCase00(unittest.TestCase):
             trade.plugins.fetch_daytrades,
         ]
         self.container.fetch_positions()
+        find_trading_fees_for_positions(self.container)
 
     def test_container_exists(self):
         self.assertTrue(self.container)
