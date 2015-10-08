@@ -10,7 +10,7 @@ from tests.fixtures.commissions import (
     COMMISSIONS5, COMMISSIONS6, COMMISSIONS7, COMMISSIONS8
 )
 from tests.fixtures.operations import (
-    OPERATION19, OPERATION55, OPERATION56,
+    OPERATION19, OPERATION55
 )
 
 
@@ -66,51 +66,6 @@ class TestOperationRealPrice(TestOperationProperties):
     def test_value_multiple_discounts_case_3(self):
         self.operation1.commissions = COMMISSIONS7
         self.assertEqual(self.operation1.real_value, 205)
-
-
-class TestOperationRealValueCase01(TestOperationProperties):
-    """Test the real_value property of Operation objects.
-
-    In this TestCase we define multiple taxes.
-    """
-
-    def setUp(self):
-        self.operation = copy.deepcopy(OPERATION56)
-        self.operation.commissions = COMMISSIONS8
-        self.operation.fees = {
-            'some tax': 0.005,
-            'some other tax': 0.0275,
-        }
-
-    def test_date(self):
-        self.assertEqual(self.operation.date, '2015-09-18')
-
-    def test_quantity(self):
-        self.assertEqual(self.operation.quantity, 10)
-
-    def test_price(self):
-        self.assertEqual(self.operation.price, 10)
-
-    def test_commissions_dict(self):
-        self.assertEqual(self.operation.commissions, COMMISSIONS8)
-
-    def test_fees_dict(self):
-        self.assertEqual(
-            self.operation.fees,
-            {
-                'some tax': 0.005,
-                'some other tax': 0.0275
-            }
-        )
-
-    def test_total_fees_value(self):
-        self.assertEqual(round(self.operation.total_fees_value, 8), 0.03250000)
-
-    def test_real_price(self):
-        self.assertEqual(round(self.operation.real_price, 8), 10.45325000)
-
-    def test_real_value(self):
-        self.assertEqual(round(self.operation.real_value, 8), 104.532500)
 
 
 class TestOperationTotalDiscounts(TestOperationProperties):

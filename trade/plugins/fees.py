@@ -34,12 +34,16 @@ def find_trading_fees_for_positions(container):
         for position in position_value.values():
             if position.operations:
                 for operation in position.operations:
-                    operation.fees = container.trading_fees.get_fees(
-                        operation, position_type
+                    operation.commissions.update(
+                        container.trading_fees.get_fees(
+                            operation, position_type
+                        )
                     )
             else:
-                position.fees = container.trading_fees.get_fees(
-                    position, position_type
+                position.commissions.update(
+                    container.trading_fees.get_fees(
+                        position, position_type
+                    )
                 )
 
 

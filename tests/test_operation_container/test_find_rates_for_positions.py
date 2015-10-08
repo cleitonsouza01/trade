@@ -57,25 +57,25 @@ class TestFindFeesForPositionsCase00(unittest.TestCase):
     def test_daytrade_buy_taxes(self):
         self.assertEqual(
             self.container.positions['daytrades'][ASSET.symbol]\
-                .operations[0].fees,
+                .operations[0].commissions,
             {'rate': 0.005}
         )
 
     def test_daytrade_sale_taxes(self):
         self.assertEqual(
             self.container.positions['daytrades'][ASSET.symbol]\
-                .operations[1].fees,
+                .operations[1].commissions,
             {'rate': 0.005,}
         )
 
     def test_operations0_taxes(self):
         self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol].fees,
+            self.container.positions['operations'][ASSET.symbol].commissions,
             {'rate':1}
         )
 
     def test_operations1_taxes(self):
         self.assertEqual(
-            self.container.positions['operations'][ASSET2.symbol].fees,
+            self.container.positions['operations'][ASSET2.symbol].commissions,
             {'rate':1}
         )

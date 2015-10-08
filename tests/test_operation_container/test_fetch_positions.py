@@ -34,8 +34,8 @@ class TaxManagerForTests(TradingFees):
         """A sample implementation of get_fees()."""
         if operation_type == 'daytrades':
             return {
-                'emoluments': 0.005,
-                'liquidation': 0.02,
+                'emoluments': operation.volume * 0.005 / 100,
+                'liquidation': operation.volume * 0.02 / 100,
                 'registry': 0,
             }
         return {}
@@ -321,6 +321,9 @@ class TestContainerFetchPositionsCase02(unittest.TestCase):
                 'some': 1,
                 'other': 0.75,
                 'and other': 0.5,
+                'emoluments': 0.005,
+                'liquidation': 0.02,
+                'registry': 0,
             }
         )
 
@@ -332,25 +335,6 @@ class TestContainerFetchPositionsCase02(unittest.TestCase):
                 'some': 1,
                 'other': 0.75,
                 'and other': 0.5,
-            }
-        )
-
-    def test_daytrade_buy_taxes(self):
-        self.assertEqual(
-            self.container.positions['daytrades'][ASSET.symbol].\
-                operations[0].fees,
-            {
-                'emoluments': 0.005,
-                'liquidation': 0.02,
-                'registry': 0,
-            }
-        )
-
-    def test_daytrade_sale_taxes(self):
-        self.assertEqual(
-            self.container.positions['daytrades'][ASSET.symbol].\
-                operations[1].fees,
-            {
                 'emoluments': 0.005,
                 'liquidation': 0.02,
                 'registry': 0,

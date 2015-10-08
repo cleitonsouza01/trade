@@ -83,7 +83,7 @@ class Operation(Occurrence):
         self.quantity = quantity
         self.price = price
         self.commissions = {}
-        self.fees = {}
+        #self.fees = {}
         self.raw_results = {}
         self.operations = []
 
@@ -105,14 +105,10 @@ class Operation(Occurrence):
         already deducted or added.
         """
         return self.price + math.copysign(
-            self.total_commissions_and_fees / self.quantity,
+            #self.total_commissions_and_fees / self.quantity,
+            self.total_commissions / self.quantity,
             self.quantity
         )
-
-    @property
-    def total_commissions_and_fees(self):
-        """Returns the sum of all commissions and fees."""
-        return self.total_commissions + self.total_fees_value
 
     @property
     def total_commissions(self):
@@ -123,13 +119,6 @@ class Operation(Occurrence):
     def volume(self):
         """Returns the quantity of the operation * its raw price."""
         return abs(self.quantity) * self.price
-
-    @property
-    def total_fees_value(self):
-        """Returns the total fee value for this operation."""
-        return sum(
-            [self.volume * value / 100  for value in self.fees.values()]
-        )
 
     def update_accumulator(self, accumulator):
         """Update the accumulator status with the operation data."""
