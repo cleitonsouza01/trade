@@ -18,7 +18,7 @@ class TestAccumulateExercise00(unittest.TestCase):
     def setUp(self):
         # create a accumultor for the options, a accumulator for the asset
         self.option_accumulator = trade.Accumulator(OPTION1)
-        self.asset_accumulator = trade.Accumulator(ASSET)
+        self.subject_accumulator = trade.Accumulator(ASSET)
         self.option_accumulator.accumulate(
             copy.deepcopy(OPTION_OPERATION3)
         )
@@ -30,17 +30,17 @@ class TestAccumulateExercise00(unittest.TestCase):
         self.exercise = copy.deepcopy(EXERCISE_OPERATION5)
         self.exercise.fetch_operations()
         for operation in self.exercise.operations:
-            self.asset_accumulator.accumulate(operation)
+            self.subject_accumulator.accumulate(operation)
             self.option_accumulator.accumulate(operation)
 
     def test_accumulator1_price(self):
-        self.assertEqual(self.asset_accumulator.data['price'], 10)
+        self.assertEqual(self.subject_accumulator.data['price'], 10)
 
     def test_accumulator1_quantity(self):
-        self.assertEqual(self.asset_accumulator.data['quantity'], 100)
+        self.assertEqual(self.subject_accumulator.data['quantity'], 100)
 
     def test_accumulator1_results(self):
-        self.assertEqual(self.asset_accumulator.data['results'], {})
+        self.assertEqual(self.subject_accumulator.data['results'], {})
 
     def test_accumulator2_price(self):
         self.assertEqual(self.option_accumulator.data['price'], 0)
@@ -59,12 +59,12 @@ class TestAccumulateExercise01(unittest.TestCase):
 
         # create a accumultor for the options, a accumulator for the asset
         self.option_accumulator = trade.Accumulator(OPTION1)
-        self.asset_accumulator = trade.Accumulator(ASSET)
+        self.subject_accumulator = trade.Accumulator(ASSET)
 
         # create and accumulate a operation
         # with the Asset
         self.operation0 = copy.deepcopy(OPERATION54)
-        self.asset_accumulator.accumulate(self.operation0)
+        self.subject_accumulator.accumulate(self.operation0)
 
         # Accumulate and accumulate an operation
         # with the Option
@@ -78,22 +78,22 @@ class TestAccumulateExercise01(unittest.TestCase):
         self.exercise = trade.plugins.Exercise(
             quantity=100,
             price=10,
-            asset=OPTION1,
+            subject=OPTION1,
             date='2015-01-01'
         )
         self.exercise.fetch_operations()
         for operation in self.exercise.operations:
-            self.asset_accumulator.accumulate(operation)
+            self.subject_accumulator.accumulate(operation)
             self.option_accumulator.accumulate(operation)
 
     def test_accumulator1_price(self):
-        self.assertEqual(self.asset_accumulator.data['price'], 7.5)
+        self.assertEqual(self.subject_accumulator.data['price'], 7.5)
 
     def test_accumulator1_quantity(self):
-        self.assertEqual(self.asset_accumulator.data['quantity'], 200)
+        self.assertEqual(self.subject_accumulator.data['quantity'], 200)
 
     def test_accumulator1_results(self):
-        self.assertEqual(self.asset_accumulator.data['results'], {})
+        self.assertEqual(self.subject_accumulator.data['results'], {})
 
     def test_accumulator2_price(self):
         self.assertEqual(self.option_accumulator.data['price'], 0)

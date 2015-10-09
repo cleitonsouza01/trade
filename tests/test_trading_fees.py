@@ -21,7 +21,7 @@ class TestTaxManager(unittest.TestCase):
 
     def test_get_rates_for_operation(self):
         operation = trade.Operation(
-            asset=trade.Asset(),
+            subject=trade.Asset(),
             quantity=10,
             price=1,
             date='2015-09-25'
@@ -34,13 +34,13 @@ class TestTaxManager(unittest.TestCase):
     def test_get_rates_for_daytrade(self):
         asset = trade.Asset()
         operation_a = trade.Operation(
-            asset=asset,
+            subject=asset,
             quantity=100,
             price=10,
             date='2015-09-25'
         )
         operation_b = trade.Operation(
-            asset=asset,
+            subject=asset,
             quantity=-100,
             price=12,
             date='2015-09-25'

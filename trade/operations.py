@@ -1,7 +1,7 @@
 """Operations.
 
 This module provides the default funciontalities related to purchase
-and sale operations of assets for the trade module.
+and sale operations of subjects for the trade module.
 
 It is part of the trade framework core, but implemented just like a
 plugin.
@@ -58,7 +58,7 @@ class Operation(Occurrence):
 
     Attributes:
         date: A string 'YYYY-mm-dd', the date the operation occurred.
-        asset: An Asset instance, the asset that is being traded.
+        subject: An Asset instance, the asset that is being traded.
         quantity: A number representing the quantity being traded.
             Positive quantities represent a purchase.
             Negative quantities represent a sale.
@@ -84,8 +84,8 @@ class Operation(Occurrence):
     # changed on-spot if needed
     update_results = True
 
-    def __init__(self, asset=None, date=None, quantity=0, price=0):
-        super(Operation, self).__init__(asset, date)
+    def __init__(self, subject=None, date=None, quantity=0, price=0):
+        super(Operation, self).__init__(subject, date)
         self.quantity = quantity
         self.price = price
         self.commissions = {}
@@ -151,7 +151,7 @@ class Operation(Occurrence):
         # position; if all this conditions are met, then
         # the position is updated.
         update_position_condition = (
-            self.asset.symbol == accumulator.asset.symbol and
+            self.subject.symbol == accumulator.subject.symbol and
             self.quantity
         )
         if update_position_condition:
@@ -308,10 +308,10 @@ class OperationContainer(object):
         """Adds an operation to the common operations list."""
         if 'operations' not in self.positions:
             self.positions['operations'] = {}
-        if operation.asset.symbol in self.positions['operations']:
+        if operation.subject.symbol in self.positions['operations']:
             merge_operations(
-                self.positions['operations'][operation.asset.symbol],
+                self.positions['operations'][operation.subject.symbol],
                 operation
             )
         else:
-            self.positions['operations'][operation.asset.symbol] = operation
+            self.positions['operations'][operation.subject.symbol] = operation

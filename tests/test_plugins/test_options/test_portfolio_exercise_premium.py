@@ -45,20 +45,20 @@ class TestExercisePremiumCase00(TestExercisePremium):
         self.assertEqual(OPTION1.underlying_assets, {ASSET: 1})
 
     def test_portfolio_asset_keys(self):
-        self.assertEqual(len(self.portfolio.assets.keys()), 2)
+        self.assertEqual(len(self.portfolio.subjects.keys()), 2)
 
     def test_asset_accumulator_quantity(self):
-        self.assertEqual(self.portfolio.assets[ASSET.symbol].data['quantity'], 20)
+        self.assertEqual(self.portfolio.subjects[ASSET.symbol].data['quantity'], 20)
 
     def test_asset_accumulator_price(self):
         """Should have the premium included on the price"""
-        self.assertEqual(self.portfolio.assets[ASSET.symbol].data['price'], 5.5)
+        self.assertEqual(self.portfolio.subjects[ASSET.symbol].data['price'], 5.5)
 
     def test_option_accumulator_quantity(self):
-        self.assertEqual(self.portfolio.assets[OPTION1.symbol].data['quantity'], 0)
+        self.assertEqual(self.portfolio.subjects[OPTION1.symbol].data['quantity'], 0)
 
     def test_option_accumulator_price(self):
-        self.assertEqual(self.portfolio.assets[OPTION1.symbol].data['price'], 0)
+        self.assertEqual(self.portfolio.subjects[OPTION1.symbol].data['price'], 0)
 
 
 class TestExercisePremiumCase01(TestExercisePremium):
@@ -71,17 +71,17 @@ class TestExercisePremiumCase01(TestExercisePremium):
         #print(self.exercise.operations[0].quantity)
 
     def test_portfolio_asset_keys(self):
-        self.assertEqual(len(self.portfolio.assets.keys()), 2)
+        self.assertEqual(len(self.portfolio.subjects.keys()), 2)
 
     def test_asset_accumulator_quantity(self):
-        self.assertEqual(self.portfolio.assets[ASSET.symbol].data['quantity'], 20)
+        self.assertEqual(self.portfolio.subjects[ASSET.symbol].data['quantity'], 20)
 
     def test_asset_accumulator_price(self):
         """Should have the premium included on the price"""
-        self.assertEqual(self.portfolio.assets[ASSET.symbol].data['price'], 5.5)
+        self.assertEqual(self.portfolio.subjects[ASSET.symbol].data['price'], 5.5)
 
     def test_option_accumulator_quantity(self):
-        self.assertEqual(self.portfolio.assets[OPTION1.symbol].data['quantity'], 10)
+        self.assertEqual(self.portfolio.subjects[OPTION1.symbol].data['quantity'], 10)
 
     def test_option_accumulator_price(self):
-        self.assertEqual(self.portfolio.assets[OPTION1.symbol].data['price'], 1)
+        self.assertEqual(self.portfolio.subjects[OPTION1.symbol].data['price'], 1)

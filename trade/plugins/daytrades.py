@@ -78,7 +78,7 @@ class Daytrade(Operation):
         """
         super(Daytrade, self).__init__(
             date=operation_a.date,
-            asset=operation_a.asset,
+            subject=operation_a.subject,
         )
         purchase, sale = find_purchase_and_sale(operation_a, operation_b)
         self.extract_daytrade(purchase, sale)
@@ -87,13 +87,13 @@ class Daytrade(Operation):
         self.operations = [
             Operation(
                 date=purchase.date,
-                asset=purchase.asset,
+                subject=purchase.subject,
                 quantity=self.quantity,
                 price=purchase.price
             ),
             Operation(
                 date=sale.date,
-                asset=sale.asset,
+                subject=sale.subject,
                 quantity=self.quantity*-1,
                 price=sale.price
             )
@@ -134,7 +134,7 @@ class Daytrade(Operation):
         """
         if 'daytrades' not in container.positions:
             container.positions['daytrades'] = {}
-        symbol = self.asset.symbol
+        symbol = self.subject.symbol
 
         # If the container already have
         # a daytrade position with this asset,
@@ -183,7 +183,7 @@ def fetch_daytrades(container):
 def daytrade_condition(operation_a, operation_b):
     """Checks if the operations are day trades."""
     return (
-        operation_a.asset.symbol == operation_b.asset.symbol and
+        operation_a.subject.symbol == operation_b.subject.symbol and
         not same_sign(operation_a.quantity, operation_b.quantity) and
         operation_a.quantity != 0 and
         operation_b.quantity != 0

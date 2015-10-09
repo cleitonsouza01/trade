@@ -20,7 +20,7 @@ class TestOperationCreation(unittest.TestCase):
         self.assertTrue(self.operation)
 
     def test_asset(self):
-        self.assertEqual(self.operation.asset.symbol, 'some asset')
+        self.assertEqual(self.operation.subject.symbol, 'some asset')
 
     def test_date(self):
         self.assertEqual(self.operation.date, '2015-09-18')

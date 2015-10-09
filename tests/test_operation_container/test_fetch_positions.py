@@ -292,12 +292,12 @@ class TestContainerFetchPositionsCase02(unittest.TestCase):
         operations = []
         operations.append(
             trade.Operation(
-                date=date, asset=ASSET, quantity=10, price=10
+                date=date, subject=ASSET, quantity=10, price=10
             )
         )
         operations.append(
             trade.Operation(
-                date=date, asset=ASSET, quantity=-10, price=10
+                date=date, subject=ASSET, quantity=-10, price=10
             )
         )
         self.container = trade.OperationContainer(

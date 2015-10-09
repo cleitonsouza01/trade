@@ -36,10 +36,10 @@ class Subject(object):
     """A subject of an occurrence.
 
     Attributes:
-        name: A string representing the name of the asset.
-        symbol: A string representing the symbol of the asset.
+        name: A string representing the name of the subject.
+        symbol: A string representing the symbol of the subject.
         expiration_date: A string 'YYYY-mm-dd' representing the
-            expiration date of the asset, if any.
+            expiration date of the subject, if any.
         default_state: a dictionary with the default state
             of this subject.
     """
@@ -65,19 +65,19 @@ class Subject(object):
 
 
 class Occurrence(object):
-    """An occurrence with an asset in a date.
+    """An occurrence with an subject in a date.
 
     This is a base class for any occurrence. An occurrence is
-    anything that interferes with an asset accumulation, like
-    a purchase or sale operation of the asset or a stock split.
+    anything that interferes with an subject accumulation, like
+    a purchase or sale operation of the subject or a stock split.
 
     Attributes:
-        asset: An Asset object.
+        subject: An Asset object.
         date: A string 'YYYY-mm-dd'.
     """
 
-    def __init__(self, asset, date):
-        self.asset = asset
+    def __init__(self, subject, date):
+        self.subject = subject
         self.date = date
 
     def update_portfolio(self, portfolio):
@@ -90,7 +90,7 @@ class Occurrence(object):
 
 
 class Accumulator(object):
-    """An accumulator of occurrences with an asset.
+    """An accumulator of occurrences with an subject.
 
     It can accumulate a series of occurrence objects and update its
     state based on the occurrences it accumulates.
@@ -98,10 +98,10 @@ class Accumulator(object):
     The update of the accumulator object state is responsibility
     of the occurrence it accumulates.
 
-    It accumualates occurrences of a single asset.
+    It accumualates occurrences of a single subject.
 
     Attributes:
-        asset: An asset instance, the asset whose data are being
+        subject: An subject instance, the subject whose data are being
             accumulated.
         date: A string 'YYYY-mm-dd' representing the date of the last
             status change of the accumulator.
@@ -110,15 +110,15 @@ class Accumulator(object):
             occurrences.
         logging: A boolean indicating if the accumulator should log
             the data passed to accumulate().
-        log: A dict with all the operations performed with the asset,
+        log: A dict with all the operations performed with the subject,
             provided that self.logging is True.
     """
 
-    def __init__(self, asset, logging=False):
-        self.asset = asset
+    def __init__(self, subject, logging=False):
+        self.data = subject.get_default_state()
+        self.subject = subject
         self.logging = logging
         self.date = None
-        self.data = asset.get_default_state()
         self.log = {}
 
     def accumulate(self, occurrence):
@@ -148,18 +148,18 @@ class Accumulator(object):
 
 
 class Portfolio(object):
-    """A portfolio of assets.
+    """A portfolio of subjects.
 
     A portfolio is a collection of Accumulator objects.
     It can receive Occurrence subclass objects and update the
     its accumulators with them.
 
     Attributes:
-        assets: A dict {Asset.symbol: Accumulator}.
+        subjects: A dict {Asset.symbol: Accumulator}.
     """
 
     def __init__(self):
-        self.assets = {}
+        self.subjects = {}
 
     def accumulate(self, occurrence):
         """Accumulate an operation on its corresponding accumulator."""
@@ -168,8 +168,8 @@ class Portfolio(object):
 
     def accumulate_occurrence(self, occurrence):
         """Accumulates an occurrence on its corresponding accumulator."""
-        if occurrence.asset.symbol not in self.assets:
-            self.assets[occurrence.asset.symbol] = Accumulator(
-                occurrence.asset
+        if occurrence.subject.symbol not in self.subjects:
+            self.subjects[occurrence.subject.symbol] = Accumulator(
+                occurrence.subject
             )
-        self.assets[occurrence.asset.symbol].accumulate(occurrence)
+        self.subjects[occurrence.subject.symbol].accumulate(occurrence)

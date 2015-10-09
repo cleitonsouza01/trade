@@ -1,4 +1,4 @@
-"""Tests for the Event base class."""
+"""Tests for the Subject class."""
 
 from __future__ import absolute_import
 import unittest

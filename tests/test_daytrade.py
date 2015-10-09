@@ -2,8 +2,13 @@
 
 from __future__ import absolute_import
 import unittest
+import copy
 
 import trade
+from tests.fixtures.assets import ASSET
+from tests.fixtures.operations import (
+    OPERATION24, OPERATION25, OPERATION60, OPERATION39
+)
 
 
 class TestDaytradeCreation(unittest.TestCase):
@@ -15,24 +20,12 @@ class TestDaytradeCreation(unittest.TestCase):
     """
 
     def setUp(self):
-        self.asset = trade.Asset(name='some stock')
-        asset = trade.Asset()
-        operation_a = trade.Operation(
-            asset=asset,
-            quantity=10,
-            price=2,
-            date='2015-09-20'
-        )
-        operation_b = trade.Operation(
-            asset=asset,
-            quantity=-10,
-            price=3,
-            date='2015-09-20'
-        )
+        operation_a = copy.deepcopy(OPERATION24)
+        operation_b = copy.deepcopy(OPERATION25)
         self.daytrade = trade.plugins.Daytrade(operation_a, operation_b)
 
     def test_daytrade_asset(self):
-        self.assertEqual(self.daytrade.asset.symbol, self.asset.symbol)
+        self.assertEqual(self.daytrade.subject.symbol, ASSET.symbol)
 
     def test_daytrade_quantity(self):
         self.assertEqual(self.daytrade.quantity, 10)
@@ -42,8 +35,8 @@ class TestDaytradeCreation(unittest.TestCase):
 
     def test_daytrade_buy_asset(self):
         self.assertEqual(
-            self.daytrade.operations[0].asset.symbol,
-            self.daytrade.asset.symbol)
+            self.daytrade.operations[0].subject.symbol,
+            self.daytrade.subject.symbol)
 
     def test_daytrade_buy_quantity(self):
         self.assertEqual(self.daytrade.operations[0].quantity, 10)
@@ -56,8 +49,8 @@ class TestDaytradeCreation(unittest.TestCase):
 
     def test_daytrade_sale_asset(self):
         self.assertEqual(
-            self.daytrade.operations[1].asset.symbol,
-            self.asset.symbol)
+            self.daytrade.operations[1].subject.symbol, ASSET.symbol
+        )
 
     def test_daytrade_sale_quantity(self):
         self.assertEqual(self.daytrade.operations[1].quantity, -10)
@@ -77,19 +70,8 @@ class TestDaytradeResultCase01(unittest.TestCase):
     """
 
     def setUp(self):
-        asset = trade.Asset()
-        operation_a = trade.Operation(
-            asset=asset,
-            quantity=10,
-            price=3,
-            date='2015-09-20'
-        )
-        operation_b = trade.Operation(
-            asset=asset,
-            quantity=-10,
-            price=2,
-            date='2015-09-20'
-        )
+        operation_a = copy.deepcopy(OPERATION60)
+        operation_b = copy.deepcopy(OPERATION39)
         self.daytrade = trade.plugins.Daytrade(operation_a, operation_b)
 
     def test_daytrade_result(self):

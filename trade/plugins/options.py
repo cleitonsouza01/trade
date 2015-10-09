@@ -94,7 +94,7 @@ class Option(Asset):
         option_consuming = Operation(
             quantity=abs(quantity)*-1,
             price=0,
-            asset=self
+            subject=self
         )
         # this operation should not create
         # any results, just update the
@@ -113,7 +113,7 @@ class Option(Asset):
                 Operation(
                     quantity=quantity * ratio,
                     price=price + premium,
-                    asset=underlying_asset
+                    subject=underlying_asset
                 )
             )
         return operations
@@ -165,13 +165,13 @@ class Exercise(Operation):
             of its underlying assets, if any.
         """
         if portfolio:
-            self.operations = self.asset.exercise(
+            self.operations = self.subject.exercise(
                 self.quantity,
                 self.price,
-                portfolio.assets[self.asset.symbol].data['price']
+                portfolio.subjects[self.subject.symbol].data['price']
             )
         else:
-            self.operations = self.asset.exercise(
+            self.operations = self.subject.exercise(
                 self.quantity,
                 self.price,
             )
@@ -191,7 +191,7 @@ def fetch_exercises(container):
                 container.positions['exercises'] = {}
             operation.fetch_operations()
             for operation in operation.operations:
-                symbol = operation.asset.symbol
+                symbol = operation.subject.symbol
                 if symbol in container.positions['exercises'].keys():
                     merge_operations(
                         container.positions['exercises'][symbol],
