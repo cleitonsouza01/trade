@@ -65,12 +65,12 @@ class Option(Asset):
 
     def __init__(
             self,
-            name=None,
             symbol=None,
+            name=None,
             expiration_date=None,
             underlying_assets=None
         ):
-        super(Option, self).__init__(name, symbol, expiration_date)
+        super(Option, self).__init__(symbol, name, expiration_date)
         if underlying_assets is None:
             underlying_assets = {}
         self.underlying_assets = underlying_assets

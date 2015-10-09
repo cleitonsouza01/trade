@@ -43,7 +43,7 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta
 
 from ..trade import Occurrence
 from ..utils import average_price

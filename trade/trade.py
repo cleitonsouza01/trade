@@ -46,9 +46,9 @@ class Subject(object):
 
     default_state = {}
 
-    def __init__(self, name=None, symbol=None, expiration_date=None):
-        self.name = name
+    def __init__(self, symbol=None, name=None, expiration_date=None):
         self.symbol = symbol
+        self.name = name
         self.expiration_date = expiration_date
 
     def get_default_state(self):

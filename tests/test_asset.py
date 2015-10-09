@@ -82,14 +82,14 @@ class TestDerivativeCreationCase00(unittest.TestCase):
             symbol='STCK'
         )
         self.asset5 = trade.plugins.Option(
-            name='some stuff',
             symbol='ATVI000',
+            name='some stuff',
             expiration_date='2015-12-31',
             underlying_assets={self.asset1: 1}
         )
         self.asset6 = trade.plugins.Option(
-            name='some stuff',
             symbol='STFF',
+            name='some stuff',
             expiration_date='2015-12-31',
             underlying_assets={self.asset1: 2},
         )
