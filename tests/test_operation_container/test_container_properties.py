@@ -15,17 +15,19 @@ from tests.fixtures.operation_sequences import (
 class TestContainerProperties(unittest.TestCase):
     """A base class with all operations used in the test cases."""
 
+    operations = []
+
     def setUp(self):
-        self.container = trade.OperationContainer()
+        self.container = trade.OperationContainer(
+            operations=copy.deepcopy(self.operations)
+        )
+        self.container.fetch_positions()
 
 
 class TestContainerPropertiesCase00(TestContainerProperties):
     """Test the volume property of the Container."""
 
-    def setUp(self):
-        super(TestContainerPropertiesCase00, self).setUp()
-        self.container.operations = [copy.deepcopy(OPERATION39)]
-        self.container.fetch_positions()
+    operations = [OPERATION39]
 
     def test_volume_00(self):
         self.assertEqual(self.container.volume, 20)
@@ -34,10 +36,7 @@ class TestContainerPropertiesCase00(TestContainerProperties):
 class TestContainerPropertiesCase01(TestContainerProperties):
     """Test the volume property of the Container."""
 
-    def setUp(self):
-        super(TestContainerPropertiesCase01, self).setUp()
-        self.container.operations = copy.deepcopy(OPERATION_SEQUENCE6)
-        self.container.fetch_positions()
+    operations = OPERATION_SEQUENCE6
 
     def test_volume_01(self):
         self.assertEqual(self.container.volume, 25)
@@ -46,10 +45,7 @@ class TestContainerPropertiesCase01(TestContainerProperties):
 class TestContainerPropertiesCase02(TestContainerProperties):
     """Test the volume property of the Container."""
 
-    def setUp(self):
-        super(TestContainerPropertiesCase02, self).setUp()
-        self.container.operations = copy.deepcopy(OPERATION_SEQUENCE7)
-        self.container.fetch_positions()
+    operations = OPERATION_SEQUENCE7
 
     def test_volume_02(self):
         self.assertEqual(self.container.volume, 125)

@@ -2,6 +2,9 @@
 
 from __future__ import absolute_import
 
+import unittest
+import trade
+
 from tests.fixtures.operations import (
     OPERATION0, OPERATION1, OPERATION2, OPERATION3, OPERATION4, OPERATION5,
     OPERATION6, OPERATION7, OPERATION8, OPERATION9, OPERATION10, OPERATION11,
@@ -12,6 +15,20 @@ from tests.fixtures.operations import (
 from tests.fixtures.events import (
     EVENT0, EVENT1, EVENT2, EVENT3, EVENT5,
 )
+from tests.fixtures.assets import (
+    ASSET
+)
+
+
+class LogTest(unittest.TestCase):
+
+    occurrences = []
+
+    def setUp(self):
+        self.accumulator = trade.Accumulator(ASSET, logging=True)
+        for occurrence in self.occurrences:
+            self.accumulator.accumulate(occurrence)
+
 
 EXPECTED_LOG0 = {
     '2015-01-02': {

@@ -1,24 +1,19 @@
 """Tests the logging of Operation and Daytrade objects."""
 
 from __future__ import absolute_import
-import unittest
-
-import trade
 
 from tests.fixtures.operations import (
-    ASSET, OPERATION1, OPERATION18, DAYTRADE0, DAYTRADE1,
+    OPERATION1, OPERATION18, DAYTRADE0, DAYTRADE1,
 )
 from . fixture_logs import (
-    EXPECTED_LOG22, EXPECTED_LOG23, EXPECTED_LOG24,
+    EXPECTED_LOG22, EXPECTED_LOG23, EXPECTED_LOG24, LogTest
 )
 
 
-class TestLogDaytradesAndOperationsCase00(unittest.TestCase):
+class TestLogDaytradesAndOperationsCase00(LogTest):
     """Tests the logging of Operation and Daytrade objects."""
 
-    def setUp(self):
-        self.accumulator = trade.Accumulator(ASSET, logging=True)
-        self.accumulator.accumulate(DAYTRADE0)
+    occurrences = [DAYTRADE0]
 
     def test_log_case_00(self):
         self.accumulator.accumulate(OPERATION18)
