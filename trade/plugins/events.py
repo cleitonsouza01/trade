@@ -66,11 +66,6 @@ class Event(Occurrence):
         super(Event, self).__init__(asset, date)
         self.factor = factor
 
-    @abstractmethod
-    def update_accumulator(self, container):
-        """Should udpate the quantity, price and/or results."""
-        raise NotImplementedError
-
 
 class StockSplit(Event):
     """A stock split.

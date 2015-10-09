@@ -32,12 +32,12 @@ THE SOFTWARE.
 from __future__ import absolute_import
 
 from .trade import (
-    Asset,
     Occurrence,
     Accumulator,
     Portfolio,
 )
 from .operations import (
+    Asset,
     Operation,
     OperationContainer,
 )

@@ -111,10 +111,7 @@ class Daytrade(Operation):
         self.update_accumulator_results(accumulator)
 
     def extract_daytrade(self, purchase, sale):
-        """Extract the daytraded quantity from 2 operations.
-
-        Returns the daytraded quantity.
-        """
+        """Extract the daytraded quantity from 2 operations."""
         # Find the daytraded quantity; the daytraded
         # quantity is always the smallest absolute quantity
         self.quantity = min([abs(purchase.quantity), abs(sale.quantity)])
@@ -194,7 +191,7 @@ def daytrade_condition(operation_a, operation_b):
 
 
 def find_purchase_and_sale(operation_a, operation_b):
-    """Find which is a purchase and which is a sale."""
+    """Find which operation is a purchase and which is a sale."""
     if same_sign(operation_a.quantity, operation_b.quantity):
         return None, None
     if operation_a.quantity > operation_b.quantity:

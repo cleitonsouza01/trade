@@ -4,6 +4,7 @@ from __future__ import absolute_import
 import unittest
 
 import trade
+from tests.fixtures.assets import ASSET
 
 
 class DummyEvent(trade.plugins.Event):
@@ -21,10 +22,8 @@ class TestBaseEventBehavior(unittest.TestCase):
     """
 
     def setUp(self):
-        asset = trade.Asset()
-        date = '2015-09-29'
-        event = DummyEvent(asset=asset, date=date)
-        self.accumulator = trade.Accumulator()
+        event = DummyEvent(asset=ASSET, date='2015-09-29')
+        self.accumulator = trade.Accumulator(ASSET)
         event.update_accumulator(self.accumulator)
 
     def test_event_update_quantity(self):
@@ -48,13 +47,11 @@ class TestBaseEventAccumulation(unittest.TestCase):
     """
 
     def setUp(self):
-        asset = trade.Asset()
-        date = '2015-09-29'
-        self.accumulator = trade.Accumulator(asset)
+        self.accumulator = trade.Accumulator(ASSET)
         self.accumulator.data['quantity'] = 100
         self.accumulator.data['price'] = 10
         self.accumulator.data['results'] = {'trades': 1200}
-        event = DummyEvent(asset=asset, date=date)
+        event = DummyEvent(asset=ASSET, date='2015-09-29')
         self.accumulator.accumulate(event)
 
     def test_quantity_after_event(self):

@@ -32,30 +32,36 @@ THE SOFTWARE.
 import copy
 
 
-class Asset(object):
-    """An asset represents anything that can be traded.
-
-    This class can represent both main assets and derivatives.
+class Subject(object):
+    """A subject of an occurrence.
 
     Attributes:
         name: A string representing the name of the asset.
         symbol: A string representing the symbol of the asset.
         expiration_date: A string 'YYYY-mm-dd' representing the
             expiration date of the asset, if any.
+        default_state: a dictionary with the default state
+            of this subject.
     """
+
+    default_state = {}
 
     def __init__(self, name=None, symbol=None, expiration_date=None):
         self.name = name
         self.symbol = symbol
         self.expiration_date = expiration_date
 
-    def set_default_state(self, accumulator):
+    def get_default_state(self):
         """Should set the default state of the Accumulator.
 
         Every time an Accumulator object is created it calls this
         method from the Asset object it is accumulating data from.
         """
-        pass
+        return copy.deepcopy(self.default_state)
+
+    def expire(self, accumulator):
+        """Updates the accumulator with the expiration of this subject."""
+        accumulator.data = copy.deepcopy(self.default_state)
 
 
 class Occurrence(object):
@@ -99,39 +105,20 @@ class Accumulator(object):
             accumulated.
         date: A string 'YYYY-mm-dd' representing the date of the last
             status change of the accumulator.
-        quantity: The asset's accumulated quantity.
-        price: The asset's average price for the quantity accumulated.
-        results: A dict with the total results from the operations
-            accumulated. It follows the format:
-            {
-                'result name': result_value,
-                ...
-            }
+        data: A dictionary with the state of this accumulator. The
+            state is updated according to the accumulation of
+            occurrences.
         logging: A boolean indicating if the accumulator should log
-            the data passed to the methods accumulate_occurrences() and
-            accumulate_occurrence().
+            the data passed to accumulate().
         log: A dict with all the operations performed with the asset,
             provided that self.logging is True.
     """
 
-    def __init__(self, asset=None, logging=False):
-        """Creates a instance of the accumulator.
-
-        Logging by default is set to False; the accumulator will not
-        log any operation, just accumulate the quantity and calculate
-        the average price and results related to the asset after each
-        call to accumulate_occurrence() and accumulate_occurrence().
-        """
-        if asset:
-            asset.set_default_state(self)
+    def __init__(self, asset, logging=False):
         self.asset = asset
         self.logging = logging
         self.date = None
-        self.data = {
-            'quantity': 0,
-            'price': 0,
-            'results': {}
-        }
+        self.data = asset.get_default_state()
         self.log = {}
 
     def accumulate(self, occurrence):
@@ -144,8 +131,8 @@ class Accumulator(object):
         """Log Operation, Daytrade and Event objects.
 
         If logging, this method is called behind the scenes every
-        time the methods accumulate_occurrence() or accumulate_occurrence()
-        are called. The occurrences are logged like this:
+        time accumulate() is called. The occurrences are logged
+        like this:
         {
             'YYYY-mm-dd': {
                 'data': {}

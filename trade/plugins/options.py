@@ -40,8 +40,7 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from ..trade import Asset
-from ..operations import Operation
+from ..operations import Asset, Operation
 from ..utils import merge_operations
 
 
@@ -92,16 +91,17 @@ class Option(Asset):
 
         # Create an operation to consume
         # the option on the portfolio.
-        # this operation should not create
-        # any results, just update the
-        # quantity and price in the accumulator.
         option_consuming = Operation(
             quantity=abs(quantity)*-1,
             price=0,
             asset=self
         )
+        # this operation should not create
+        # any results, just update the
+        # quantity and price in the accumulator.
         option_consuming.update_results = False
         operations.append(option_consuming)
+
         # Create an operation to represent
         # the purchase or sale of the
         # underlying asset. If the option has

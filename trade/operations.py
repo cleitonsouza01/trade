@@ -38,8 +38,19 @@ import math
 import copy
 
 from .utils import average_price, same_sign, merge_operations
+from .trade import Occurrence, Subject
 
-from .trade import Occurrence
+class Asset(Subject):
+    """An asset represents anything that can be traded.
+
+    This class can represent both main assets and derivatives.
+    """
+
+    default_state = {
+        'quantity': 0,
+        'price': 0,
+        'results': {}
+    }
 
 
 class Operation(Occurrence):
@@ -55,17 +66,12 @@ class Operation(Occurrence):
         commissions: A dict of discounts. String keys and float values
             representing the name of the discounts and the values
             to be deducted added to the the operation value.
-        fees: A dict of fees. string keys and float values
-            representing the names of the fees and the values of the
-            fees to be applied to the operation. Fee values are
-            always represented as a percentage. Fees are applied
-            based on the volume of the operation.
+        operations: A list of underlying occurrences that the
+            might may have.
         update_position: A boolean indication if the operation should
             update the position of the accumulator or not.
         update_results: A boolean indication if the operation should
             update the results of the accumulator or not.
-        operations: A list of underlying occurrences that the
-            might may have.
     """
 
     # By default every operation update
@@ -83,7 +89,6 @@ class Operation(Occurrence):
         self.quantity = quantity
         self.price = price
         self.commissions = {}
-        #self.fees = {}
         self.raw_results = {}
         self.operations = []
 
@@ -101,11 +106,10 @@ class Operation(Occurrence):
     def real_price(self):
         """Returns the real price of the operation.
 
-        The real price is the price with all commissions and fees
+        The real price is the price with all commission and costs
         already deducted or added.
         """
         return self.price + math.copysign(
-            #self.total_commissions_and_fees / self.quantity,
             self.total_commissions / self.quantity,
             self.quantity
         )
@@ -133,8 +137,6 @@ class Operation(Occurrence):
 
     def update_accumulator_results(self, accumulator):
         """Update the results stored in the accumulator."""
-        if 'results' not in accumulator.data:
-            accumulator.data['results'] = {}
         for key, value in self.results.items():
             if key not in accumulator.data['results']:
                 accumulator.data['results'][key] = 0
@@ -142,7 +144,6 @@ class Operation(Occurrence):
 
     def update_positions(self, accumulator):
         """Update the position of the asset with the Operation data."""
-
         # Here we check if the operation asset is the same
         # asset of this Accumulator object; the accumulator
         # only accumulates operations that trade its asset.
@@ -154,14 +155,6 @@ class Operation(Occurrence):
             self.quantity
         )
         if update_position_condition:
-
-            # Assure the accumulator data dict
-            # has the needed keys
-            if 'quantity' not in accumulator.data:
-                accumulator.data['quantity'] = 0
-            if 'price' not in accumulator.data:
-                accumulator.data['price'] = 0
-
             # Define the new accumualtor quantity
             new_quantity = accumulator.data['quantity'] + self.quantity
 
@@ -238,7 +231,6 @@ class OperationContainer(object):
     resulting positions from a group of Operations.
 
     This is achieved by calling this method:
-
         fetch_positions()
 
     Every time fetch_positions() is called the OperationContainer
@@ -246,9 +238,7 @@ class OperationContainer(object):
 
     - Execute all tasks defined in self.tasks. By default, no task is
       listed. Tasks are functions like this:
-
             def some_task(container)
-
       that receive an OperationContainer object and perform some work
       on the container data.
 
@@ -295,14 +285,10 @@ class OperationContainer(object):
 
         Then it reads the self.operations list and add any remaining
         operation to the self.positions.
-
-        And finally it checks if there are any fees to be applied
-        to the positions.
         """
 
-        # Find the volume of the container
-        # (the sum of the volume of all of
-        # its operations)
+        # Find the volume of the container (the sum
+        # of the volume of all of its operations)
         self.volume = sum(operation.volume for operation in self.operations)
 
         raw_operations = copy.deepcopy(self.operations)
