@@ -14,6 +14,7 @@ from tests.fixtures.operations import (
 
 
 class TestAccumulateExercise(unittest.TestCase):
+    """Base class for Exercise accumulation tests."""
 
     def setUp(self):
         self.option_accumulator = trade.Accumulator(OPTION1)
@@ -31,6 +32,7 @@ class TestAccumulateExercise(unittest.TestCase):
         for operation in self.exercise.operations:
             self.subject_accumulator.accumulate(operation)
             self.option_accumulator.accumulate(operation)
+
 
 class TestAccumulateExercise00(TestAccumulateExercise):
     """Accumulate a Option operation, and then its Exercise operation."""

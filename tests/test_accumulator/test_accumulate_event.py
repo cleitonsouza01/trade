@@ -3,12 +3,13 @@
 from __future__ import absolute_import
 from __future__ import division
 
-import unittest
-
 import trade
 import trade.plugins
 
 from tests.fixtures.operations import ASSET
+from tests.fixtures.logs import (
+    LogTest, INITIAL_STATE0
+)
 
 
 class EventThatChangeResults(trade.plugins.Event):
@@ -20,25 +21,16 @@ class EventThatChangeResults(trade.plugins.Event):
             accumulator.data['results'][key] += self.factor
 
 
-class TestEventThatChangeResultsCase00(unittest.TestCase):
+class TestEventThatChangeResultsCase00(LogTest):
     """Test the accumulation of an Event object.
 
     In this test we use the EventThatChangeResults object
     to test the consequences of an Event accumulation.
     """
-    def setUp(self):
-        self.accumulator = trade.Accumulator(ASSET)
-        self.accumulator.data['quantity'] = 100
-        self.accumulator.data['price'] = 10
-        self.accumulator.data['results'] = {'trades': 1200}
-        self.event = EventThatChangeResults(ASSET, '2015-09-27', 2)
-        self.accumulator.accumulate(self.event)
-
-    def test_check_quantity_after_split(self):
-        self.assertEqual(self.accumulator.data['quantity'], 100)
-
-    def test_check_price_after_split(self):
-        self.assertEqual(self.accumulator.data['price'], 10)
-
-    def test_check_results_after_split(self):
-        self.assertEqual(self.accumulator.data['results'], {'trades': 1202})
+    initial_state = INITIAL_STATE0
+    occurrences = [
+        EventThatChangeResults(ASSET, '2015-09-27', 2)
+    ]
+    expected_quantity = 100
+    expected_price = 10
+    expected_results = {'trades': 1202}

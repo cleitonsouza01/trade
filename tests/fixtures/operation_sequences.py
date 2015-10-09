@@ -1,3 +1,4 @@
+"""A set of operation sequences for the tests."""
 
 from __future__ import absolute_import
 

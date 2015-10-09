@@ -6,7 +6,7 @@ from tests.fixtures.operations import (
     OPERATION9, OPERATION10, OPERATION11, OPERATION12, OPERATION13,
     OPERATION14, OPERATION15, OPERATION16, OPERATION17,
 )
-from . fixture_logs import (
+from tests.fixtures.logs import (
     EXPECTED_LOG0, EXPECTED_LOG1, EXPECTED_LOG2, EXPECTED_LOG3,
     EXPECTED_LOG4, EXPECTED_LOG5, EXPECTED_LOG6,
     LogTest
@@ -19,12 +19,10 @@ class TestAccumulatorResultsSaleCase00(LogTest):
     occurrences = [
         OPERATION9, OPERATION10
     ]
-
-    def test_sale_result_log(self):
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG0)
-
-    def test_accumulated_result(self):
-        self.assertEqual(self.accumulator.data['results'], {})
+    expected_log = EXPECTED_LOG0
+    expected_quantity = 0
+    expected_price = 0
+    expected_results = {}
 
 
 class TestAccumulatorResultsSaleCase01(LogTest):
@@ -33,12 +31,10 @@ class TestAccumulatorResultsSaleCase01(LogTest):
     occurrences = [
         OPERATION9, OPERATION10, OPERATION11
     ]
-
-    def test_sale_result_log(self):
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG1)
-
-    def test_accumulated_result(self):
-        self.assertEqual(self.accumulator.data['results'], {})
+    expected_log = EXPECTED_LOG1
+    expected_quantity = 100
+    expected_price = 10
+    expected_results = {}
 
 
 class TestAccumulatorResultsSaleCase02(LogTest):
@@ -47,12 +43,10 @@ class TestAccumulatorResultsSaleCase02(LogTest):
     occurrences = [
         OPERATION9, OPERATION10, OPERATION11, OPERATION12
     ]
-
-    def test_sale_result_log(self):
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG2)
-
-    def test_accumulated_result(self):
-        self.assertEqual(self.accumulator.data['results'], {'trades': 1000})
+    expected_log = EXPECTED_LOG2
+    expected_quantity = 0
+    expected_price = 0
+    expected_results = {'trades': 1000}
 
 
 class TestAccumulatorResultsSaleCase04(LogTest):
@@ -61,12 +55,10 @@ class TestAccumulatorResultsSaleCase04(LogTest):
     occurrences = [
         OPERATION9, OPERATION10, OPERATION11, OPERATION12, OPERATION13
     ]
-
-    def test_sale_result_log(self):
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG3)
-
-    def test_accumulated_result(self):
-        self.assertEqual(self.accumulator.data['results'], {'trades': 1000})
+    expected_log = EXPECTED_LOG3
+    expected_quantity = 100
+    expected_price = 20
+    expected_results = {'trades': 1000}
 
 
 class TestAccumulatorResultsSaleCase05(LogTest):
@@ -76,12 +68,10 @@ class TestAccumulatorResultsSaleCase05(LogTest):
         OPERATION9, OPERATION10, OPERATION11, OPERATION12, OPERATION13,
         OPERATION14
     ]
-
-    def test_sale_result_log(self):
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG4)
-
-    def test_accumulated_result(self):
-        self.assertEqual(self.accumulator.data['results'], {'trades': 3000})
+    expected_log = EXPECTED_LOG4
+    expected_quantity = 0
+    expected_price = 0
+    expected_results = {'trades': 3000}
 
 
 class TestAccumulatorResultsSaleCase06(LogTest):
@@ -91,12 +81,10 @@ class TestAccumulatorResultsSaleCase06(LogTest):
         OPERATION9, OPERATION10, OPERATION11, OPERATION12, OPERATION13,
         OPERATION15
     ]
-
-    def test_sale_result_log(self):
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG5)
-
-    def test_accumulated_result(self):
-        self.assertEqual(self.accumulator.data['results'], {'trades': 2000})
+    expected_log = EXPECTED_LOG5
+    expected_quantity = 50
+    expected_price = 20
+    expected_results = {'trades': 2000}
 
 
 class TestAccumulatorResultsSaleCase07(LogTest):
@@ -105,9 +93,7 @@ class TestAccumulatorResultsSaleCase07(LogTest):
     occurrences = [
         OPERATION16, OPERATION17
     ]
-
-    def test_purchase_result_log(self):
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG6)
-
-    def test_accumulated_result(self):
-        self.assertEqual(self.accumulator.data['results'], {'trades': 500})
+    expected_log = EXPECTED_LOG6
+    expected_quantity = -50
+    expected_price = 20
+    expected_results = {'trades': 500}

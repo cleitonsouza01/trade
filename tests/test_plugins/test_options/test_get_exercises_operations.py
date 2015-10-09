@@ -15,6 +15,7 @@ from tests.fixtures.assets import (
 
 
 class TestFetchExercises(unittest.TestCase):
+    """Base class for the fetch_exercises() task."""
 
     def setUp(self):
         self.container = trade.OperationContainer()

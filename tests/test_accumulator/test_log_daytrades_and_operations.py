@@ -5,25 +5,40 @@ from __future__ import absolute_import
 from tests.fixtures.operations import (
     OPERATION1, OPERATION18, DAYTRADE0, DAYTRADE1,
 )
-from . fixture_logs import (
-    EXPECTED_LOG22, EXPECTED_LOG23, EXPECTED_LOG24, LogTest
+from tests.fixtures.logs import (
+    EXPECTED_LOG22, EXPECTED_LOG23, EXPECTED_LOG24,
+    LogTest
 )
 
 
 class TestLogDaytradesAndOperationsCase00(LogTest):
+    """Tests the logging of Operation and Daytrade objects.
+
+    This test creates a position.
+    """
+
+    occurrences = [DAYTRADE0, OPERATION18]
+    expected_log = EXPECTED_LOG22
+    expected_quantity = 100
+    expected_price = 10
+    expected_results = {'daytrades': 1000}
+
+
+class TestLogDaytradesAndOperationsCase01(LogTest):
     """Tests the logging of Operation and Daytrade objects."""
 
-    occurrences = [DAYTRADE0]
+    occurrences = [DAYTRADE0, OPERATION1, DAYTRADE1]
+    expected_log = EXPECTED_LOG24
+    expected_quantity = 100
+    expected_price = 10
+    expected_results = {'daytrades': 2000}
 
-    def test_log_case_00(self):
-        self.accumulator.accumulate(OPERATION18)
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG22)
 
-    def test_log_case_01(self):
-        self.accumulator.accumulate(OPERATION1)
-        self.accumulator.accumulate(DAYTRADE1)
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG24)
+class TestLogDaytradesAndOperationsCase02(LogTest):
+    """Tests the logging of Operation and Daytrade objects."""
 
-    def test_log_case_02(self):
-        self.accumulator.accumulate(OPERATION1)
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG23)
+    occurrences = [DAYTRADE0, OPERATION1]
+    expected_log = EXPECTED_LOG23
+    expected_quantity = 100
+    expected_price = 10
+    expected_results = {'daytrades': 1000}

@@ -8,28 +8,37 @@ from tests.fixtures.operations import (
 from tests.fixtures.events import (
     EVENT0, EVENT1, EVENT2,
 )
-from . fixture_logs import (
-    EXPECTED_LOG19, EXPECTED_LOG20, EXPECTED_LOG21, LogTest
+from tests.fixtures.logs import (
+    EXPECTED_LOG19, EXPECTED_LOG20, EXPECTED_LOG21,
+    LogTest
 )
 
 
 class TestLogDaytradesOperationsAndEventsCase00(LogTest):
-    """Test logging events, operations and daytrades on the same date."""
+    """Logging events, operations and daytrades on the same date."""
 
-    occurrences = [DAYTRADE2]
+    occurrences = [DAYTRADE2, OPERATION18, EVENT0]
+    expected_log = EXPECTED_LOG19
+    expected_quantity = 100
+    expected_price = 10
+    expected_results = {'daytrades': 1000}
 
-    def test_log_case_00(self):
-        self.accumulator.accumulate(OPERATION18)
-        self.accumulator.accumulate(EVENT0)
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG19)
 
-    def test_log_case_01(self):
-        self.accumulator.accumulate(OPERATION1)
-        self.accumulator.accumulate(EVENT1)
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG20)
+class TestLogDaytradesOperationsAndEventsCase01(LogTest):
+    """Logging events, daytrades and operations on different dates."""
 
-    def test_log_case_02(self):
-        self.accumulator.accumulate(OPERATION1)
-        self.accumulator.accumulate(DAYTRADE3)
-        self.accumulator.accumulate(EVENT2)
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG21)
+    occurrences = [DAYTRADE2, OPERATION1, EVENT1]
+    expected_log = EXPECTED_LOG20
+    expected_quantity = 100
+    expected_price = 10
+    expected_results = {'daytrades': 1000}
+
+
+class TestLogDaytradesOperationsAndEventsCase02(LogTest):
+    """Logging events, operations and daytrades on different dates."""
+
+    occurrences = [DAYTRADE2, OPERATION1, DAYTRADE3, EVENT2]
+    expected_log = EXPECTED_LOG21
+    expected_quantity = 100
+    expected_price = 10
+    expected_results = {'daytrades': 2000}

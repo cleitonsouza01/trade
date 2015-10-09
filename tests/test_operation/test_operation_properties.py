@@ -55,15 +55,15 @@ class TestOperationRealPrice(TestOperationProperties):
         self.operation1.commissions = COMMISSIONS4
         self.assertEqual(self.operation1.real_value, 206)
 
-    def test_value_multiple_discounts_case_1(self):
+    def test_value_case_1(self):
         self.operation1.commissions = COMMISSIONS5
         self.assertEqual(self.operation1.real_value, 208)
 
-    def test_value_multiple_discounts_case_2(self):
+    def test_value_case_2(self):
         self.operation1.commissions = COMMISSIONS6
         self.assertEqual(self.operation1.real_value, 213)
 
-    def test_value_multiple_discounts_case_3(self):
+    def test_value_case_3(self):
         self.operation1.commissions = COMMISSIONS7
         self.assertEqual(self.operation1.real_value, 205)
 
@@ -75,15 +75,15 @@ class TestOperationTotalDiscounts(TestOperationProperties):
         self.operation1.commissions = COMMISSIONS0
         self.assertEqual(self.operation1.total_commissions, 3)
 
-    def test_multiple_discounts_case_1(self):
+    def test_discounts_case_1(self):
         self.operation1.commissions = COMMISSIONS1
         self.assertEqual(self.operation1.total_commissions, 4)
 
-    def test_multiple_discounts_case_2(self):
+    def test_discounts_case_2(self):
         self.operation1.commissions = COMMISSIONS2
         self.assertEqual(self.operation1.total_commissions, 6)
 
-    def test_multiple_discounts_case_3(self):
+    def test_discounts_case_3(self):
         self.operation1.commissions = COMMISSIONS3
         self.assertEqual(self.operation1.total_commissions, 3)
 

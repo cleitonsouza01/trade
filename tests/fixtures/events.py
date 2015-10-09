@@ -1,4 +1,4 @@
-"""A set of operations for the accumualtor tests."""
+"""A set of events for the tests."""
 
 from __future__ import absolute_import
 
@@ -62,4 +62,9 @@ EVENT8 = BonusShares(
     asset=ASSET,
     date='2015-09-24',
     factor=2
+)
+EVENT9 = StockSplit(
+    asset=ASSET,
+    date='2015-09-24',
+    factor=0.5
 )

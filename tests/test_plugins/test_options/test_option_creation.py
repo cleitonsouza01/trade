@@ -7,6 +7,7 @@ import trade
 
 
 class TestOptionCreation(unittest.TestCase):
+    """Base class for the option creation tests."""
 
     def setUp(self):
         self.asset = trade.Asset(symbol='GOOGL')
@@ -14,7 +15,7 @@ class TestOptionCreation(unittest.TestCase):
 
 class TestOptionCretionCase00(TestOptionCreation):
 
-    def test_option_creation_with_no_underlying_assets(self):
+    def test_no_underlying_assets(self):
         option = trade.plugins.Option(
             symbol='OPTIOSYMBOL', expiration_date='2015-12-21'
         )

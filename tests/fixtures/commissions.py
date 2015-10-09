@@ -1,4 +1,4 @@
-"""Tests the real_price property of Operation objects."""
+"""A set of commissions for the tests."""
 
 from __future__ import absolute_import
 

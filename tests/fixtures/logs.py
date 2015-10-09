@@ -1,8 +1,9 @@
-"""A set of operations for the accumualtor tests."""
+"""A set of logs for the accumulator tests."""
 
 from __future__ import absolute_import
-
 import unittest
+import copy
+
 import trade
 
 from tests.fixtures.operations import (
@@ -13,21 +14,60 @@ from tests.fixtures.operations import (
     DAYTRADE0, DAYTRADE2, DAYTRADE3, DAYTRADE1,
 )
 from tests.fixtures.events import (
-    EVENT0, EVENT1, EVENT2, EVENT3, EVENT5,
+    EVENT0, EVENT1, EVENT2, EVENT3, EVENT4, EVENT5,
 )
 from tests.fixtures.assets import (
     ASSET
 )
 
 
+INITIAL_STATE0 = {
+    'quantity': 100,
+    'price': 10,
+    'results': {'trades': 1200},
+}
+
 class LogTest(unittest.TestCase):
+    """Base class for Accumulator tests."""
+
+    maxDiff = None
 
     occurrences = []
+    expected_log = {}
+    expected_quantity = 0
+    expected_price = 0
+    expected_results = {}
+    initial_state = {}
 
     def setUp(self):
         self.accumulator = trade.Accumulator(ASSET, logging=True)
+        if self.initial_state:
+            self.accumulator.data = copy.deepcopy(self.initial_state)
+        self.accumulate_occurrences()
+
+    def accumulate_occurrences(self):
+        """Accumulates all occurrences defined in the test case."""
         for occurrence in self.occurrences:
             self.accumulator.accumulate(occurrence)
+
+    def test_purchase_result_log(self):
+        """Test the log for the defined occurrences."""
+        if self.expected_log:
+            self.assertEqual(self.accumulator.log, self.expected_log)
+
+    def test_accumulated_result(self):
+        """Test the results for the defined occurrences."""
+        self.assertEqual(
+            self.accumulator.data['results'], self.expected_results)
+
+    def test_current_quantity(self):
+        """Test the quantity for the defined occurrences."""
+        self.assertEqual(
+            self.accumulator.data['quantity'], self.expected_quantity)
+
+    def test_current_price(self):
+        self.assertEqual(
+            round(self.accumulator.data['price'], 2), self.expected_price)
 
 
 EXPECTED_LOG0 = {
@@ -592,6 +632,17 @@ EXPECTED_LOG18 = {
         'occurrences': [EVENT5]
     }
 }
+EXPECTED_LOG25 = {
+    '2015-09-24': {
+        'data': {
+            'price': 5.0,
+            'quantity': 200,
+            'results': {'trades': 1200},
+        },
+        'occurrences': [EVENT5, EVENT4]
+    }
+}
+
 
 EXPECTED_LOG19 = {
     '2015-01-01': {
