@@ -8,30 +8,39 @@ import trade
 
 from tests.fixtures.assets import ASSET, OPTION1
 from tests.fixtures.operations import (
-    OPTION_OPERATION3, EXERCISE_OPERATION5, OPERATION54
+    OPTION_OPERATION3, EXERCISE_OPERATION5, OPERATION54,
+    EXERCISE_OPERATION5
 )
 
 
-class TestAccumulateExercise00(unittest.TestCase):
-    """Accumulate a Option operation, and then its Exercise operation."""
+class TestAccumulateExercise(unittest.TestCase):
 
     def setUp(self):
-        # create a accumultor for the options, a accumulator for the asset
         self.option_accumulator = trade.Accumulator(OPTION1)
         self.subject_accumulator = trade.Accumulator(ASSET)
-        self.option_accumulator.accumulate(
-            copy.deepcopy(OPTION_OPERATION3)
-        )
-
-        # Accumulate a exercise operation on the asset accumulator
-        # and on the option accumulator
-        # When accumulating operations, the Operation object should
-        # be passed to the accumulator of all its assets
         self.exercise = copy.deepcopy(EXERCISE_OPERATION5)
+
+    def fetch_and_accumulate(self):
+        """Accumulate a exercise operation on the asset accumulator.
+
+        and on the option accumulator When accumulating operations,
+        the Operation object should be passed to the accumulator
+        of all its assets.
+        """
         self.exercise.fetch_operations()
         for operation in self.exercise.operations:
             self.subject_accumulator.accumulate(operation)
             self.option_accumulator.accumulate(operation)
+
+class TestAccumulateExercise00(TestAccumulateExercise):
+    """Accumulate a Option operation, and then its Exercise operation."""
+
+    def setUp(self):
+        super(TestAccumulateExercise00, self).setUp()
+        self.option_accumulator.accumulate(
+            copy.deepcopy(OPTION_OPERATION3)
+        )
+        self.fetch_and_accumulate()
 
     def test_accumulator1_price(self):
         self.assertEqual(self.subject_accumulator.data['price'], 10)
@@ -52,39 +61,17 @@ class TestAccumulateExercise00(unittest.TestCase):
         self.assertEqual(self.option_accumulator.data['results'], {})
 
 
-class TestAccumulateExercise01(unittest.TestCase):
+class TestAccumulateExercise01(TestAccumulateExercise):
     """Accumulate a operation, an option and then the exericse."""
 
     def setUp(self):
-
-        # create a accumultor for the options, a accumulator for the asset
-        self.option_accumulator = trade.Accumulator(OPTION1)
-        self.subject_accumulator = trade.Accumulator(ASSET)
-
-        # create and accumulate a operation
-        # with the Asset
+        super(TestAccumulateExercise01, self).setUp()
         self.operation0 = copy.deepcopy(OPERATION54)
         self.subject_accumulator.accumulate(self.operation0)
-
-        # Accumulate and accumulate an operation
-        # with the Option
         self.operation1 = copy.deepcopy(OPTION_OPERATION3)
         self.option_accumulator.accumulate(self.operation1)
-
-        # Accumulate a exercise operation on the asset accumulator
-        # and on the option accumulator
-        # When accumulating operations, the Operation object should
-        # be passed to the accumulator of all its assets
-        self.exercise = trade.plugins.Exercise(
-            quantity=100,
-            price=10,
-            subject=OPTION1,
-            date='2015-01-01'
-        )
-        self.exercise.fetch_operations()
-        for operation in self.exercise.operations:
-            self.subject_accumulator.accumulate(operation)
-            self.option_accumulator.accumulate(operation)
+        self.exercise = copy.deepcopy(EXERCISE_OPERATION5)
+        self.fetch_and_accumulate()
 
     def test_accumulator1_price(self):
         self.assertEqual(self.subject_accumulator.data['price'], 7.5)

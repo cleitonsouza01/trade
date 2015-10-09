@@ -26,9 +26,7 @@ class TestFetchExercisesCase00(TestFetchExercises):
 
     def setUp(self):
         super(TestFetchExercisesCase00, self).setUp()
-        self.container.operations = [
-            copy.deepcopy(EXERCISE_OPERATION2),
-        ]
+        self.container.operations = [copy.deepcopy(EXERCISE_OPERATION2)]
         self.container.fetch_positions()
 
     def test_container_volume(self):
@@ -36,8 +34,7 @@ class TestFetchExercisesCase00(TestFetchExercises):
 
     def test_container_exercises_len(self):
         self.assertEqual(
-            len(self.container.positions['exercises'].values()),
-            2
+            len(self.container.positions['exercises'].values()), 2
         )
 
     def test_option_consuming_quantity(self):
@@ -48,20 +45,17 @@ class TestFetchExercisesCase00(TestFetchExercises):
 
     def test_option_consuming_price(self):
         self.assertEqual(
-            self.container.positions['exercises'][OPTION1.symbol].price,
-            0
+            self.container.positions['exercises'][OPTION1.symbol].price, 0
         )
 
     def test_asset_purchase_quantity(self):
         self.assertEqual(
-            self.container.positions['exercises'][ASSET.symbol].quantity,
-            100
+            self.container.positions['exercises'][ASSET.symbol].quantity, 100
         )
 
     def test_asset_purchase_price(self):
         self.assertEqual(
-            self.container.positions['exercises'][ASSET.symbol].price,
-            1
+            self.container.positions['exercises'][ASSET.symbol].price, 1
         )
 
 
@@ -78,8 +72,7 @@ class TestFetchExercisesCase01(TestFetchExercises):
 
     def test_container_exercises_len(self):
         self.assertEqual(
-            len(self.container.positions['exercises'].values()),
-            2
+            len(self.container.positions['exercises'].values()), 2
         )
 
     def test_option_consuming_quantity(self):
@@ -90,18 +83,15 @@ class TestFetchExercisesCase01(TestFetchExercises):
 
     def test_option_consuming_price(self):
         self.assertEqual(
-            self.container.positions['exercises'][OPTION1.symbol].price,
-            0
+            self.container.positions['exercises'][OPTION1.symbol].price, 0
         )
 
     def test_asset_purchase_quantity(self):
         self.assertEqual(
-            self.container.positions['exercises'][ASSET.symbol].quantity,
-            200
+            self.container.positions['exercises'][ASSET.symbol].quantity, 200
         )
 
     def test_asset_purchase_price(self):
         self.assertEqual(
-            self.container.positions['exercises'][ASSET.symbol].price,
-            2
+            self.container.positions['exercises'][ASSET.symbol].price, 2
         )

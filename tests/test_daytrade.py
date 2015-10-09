@@ -20,9 +20,9 @@ class TestDaytradeCreation(unittest.TestCase):
     """
 
     def setUp(self):
-        operation_a = copy.deepcopy(OPERATION24)
-        operation_b = copy.deepcopy(OPERATION25)
-        self.daytrade = trade.plugins.Daytrade(operation_a, operation_b)
+        self.daytrade = trade.plugins.Daytrade(
+            copy.deepcopy(OPERATION24), copy.deepcopy(OPERATION25)
+        )
 
     def test_daytrade_asset(self):
         self.assertEqual(self.daytrade.subject.symbol, ASSET.symbol)
@@ -70,9 +70,9 @@ class TestDaytradeResultCase01(unittest.TestCase):
     """
 
     def setUp(self):
-        operation_a = copy.deepcopy(OPERATION60)
-        operation_b = copy.deepcopy(OPERATION39)
-        self.daytrade = trade.plugins.Daytrade(operation_a, operation_b)
+        self.daytrade = trade.plugins.Daytrade(
+            copy.deepcopy(OPERATION60), copy.deepcopy(OPERATION39)
+        )
 
     def test_daytrade_result(self):
         self.assertEqual(self.daytrade.results, {'daytrades': -10})

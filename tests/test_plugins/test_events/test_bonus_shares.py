@@ -25,13 +25,13 @@ class TestBonusSharesCase00(TestBonusShares):
         super(TestBonusSharesCase00, self).setUp()
         self.accumulator.accumulate(EVENT6)
 
-    def test_check_quantity_after_split(self):
+    def test_check_quantity(self):
         self.assertEqual(self.accumulator.data['quantity'], 200)
 
-    def test_check_price_after_split(self):
+    def test_check_price(self):
         self.assertEqual(self.accumulator.data['price'], 5)
 
-    def test_check_results_after_split(self):
+    def test_check_results(self):
         self.assertEqual(self.accumulator.data['results'], {'trades': 1200})
 
 
@@ -42,13 +42,13 @@ class TestBonusSharesCase01(TestBonusShares):
         super(TestBonusSharesCase01, self).setUp()
         self.accumulator.accumulate(EVENT8)
 
-    def test_check_quantity_after_split(self):
+    def test_check_quantity(self):
         self.assertEqual(self.accumulator.data['quantity'], 300)
 
-    def test_check_price_after_split(self):
+    def test_check_price(self):
         self.assertEqual(round(self.accumulator.data['price'], 2), 3.33)
 
-    def test_check_results_after_split(self):
+    def test_check_results(self):
         self.assertEqual(self.accumulator.data['results'], {'trades': 1200})
 
 
@@ -59,11 +59,11 @@ class TestBonusSharesCase02(TestBonusShares):
         super(TestBonusSharesCase02, self).setUp()
         self.accumulator.accumulate(EVENT7)
 
-    def test_check_quantity_after_split(self):
+    def test_check_quantity(self):
         self.assertEqual(self.accumulator.data['quantity'], 150)
 
-    def test_check_price_after_split(self):
+    def test_check_price(self):
         self.assertEqual(round(self.accumulator.data['price'], 2), 6.67)
 
-    def test_check_results_after_split(self):
+    def test_check_results(self):
         self.assertEqual(self.accumulator.data['results'], {'trades': 1200})
