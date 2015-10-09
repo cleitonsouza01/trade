@@ -6,7 +6,7 @@ from abc import ABCMeta, abstractmethod
 import copy
 
 import trade
-from trade.plugins import TradingFees, find_trading_fees_for_positions
+from .fixture_tasks import find_trading_fees_for_positions
 
 from tests.fixtures.assets import (
     ASSET, ASSET2,
@@ -14,7 +14,7 @@ from tests.fixtures.assets import (
 from tests.fixtures.operation_sequences import OPERATION_SEQUENCE2
 
 
-class TaxManagerForTests(TradingFees):
+class TaxManagerForTests(object):
     """A TradingFees object for the tests."""
 
     __metaclass__ = ABCMeta

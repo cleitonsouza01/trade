@@ -22,6 +22,7 @@ from tests.fixtures.operation_sequences import (
 
 
 class TestProrateCommissions(unittest.TestCase):
+    "Base class to test prorate of commissions."
 
     def setUp(self):
         self.operation = copy.deepcopy(OPERATION39)

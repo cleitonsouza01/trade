@@ -8,8 +8,9 @@ import copy
 import trade
 
 from trade.plugins import (
-    prorate_commissions, TradingFees, find_trading_fees_for_positions
+    prorate_commissions,
 )
+from .fixture_tasks import find_trading_fees_for_positions
 
 from tests.fixtures.assets import (
     ASSET, ASSET2, ASSET3,
@@ -22,7 +23,7 @@ from tests.fixtures.operation_sequences import (
 )
 
 
-class TaxManagerForTests(TradingFees):
+class TaxManagerForTests(object):
     """A TradingFees class for the tests."""
 
     __metaclass__ = ABCMeta

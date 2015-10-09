@@ -23,11 +23,13 @@ TASKS = [
     trade.plugins.fetch_daytrades,
 ]
 
-class TestIdentifyDaytrades(unittest.TestCase):
 
+class TestIdentifyDaytrades(unittest.TestCase):
+    "Base class for daytrade identification tests."
     def setUp(self):
         self.container = trade.OperationContainer()
         self.container.tasks = TASKS
+
 
 class TestContainerIndentifyDaytradesCase00(TestIdentifyDaytrades):
     """Test the identification of daytrade operations."""
