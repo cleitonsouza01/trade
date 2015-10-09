@@ -248,6 +248,12 @@ OPERATION34 = Operation(
     quantity=5,
     price=4
 )
+OPERATION62 = Operation(
+    date='2015-09-21',
+    subject=ASSET3,
+    quantity=5,
+    price=4
+)
 OPERATION35 = Operation(
     date='2015-09-21',
     subject=ASSET3,

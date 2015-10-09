@@ -20,59 +20,49 @@ class TestDaytradeCreation(unittest.TestCase):
     """
 
     def setUp(self):
-        self.daytrade = trade.plugins.Daytrade(
+        self.daytrade1 = trade.plugins.Daytrade(
             copy.deepcopy(OPERATION24), copy.deepcopy(OPERATION25)
         )
-
-    def test_daytrade_asset(self):
-        self.assertEqual(self.daytrade.subject.symbol, ASSET.symbol)
-
-    def test_daytrade_quantity(self):
-        self.assertEqual(self.daytrade.quantity, 10)
-
-    def test_daytrade_buy(self):
-        self.assertTrue(self.daytrade.operations[0])
-
-    def test_daytrade_buy_asset(self):
-        self.assertEqual(
-            self.daytrade.operations[0].subject.symbol,
-            self.daytrade.subject.symbol)
-
-    def test_daytrade_buy_quantity(self):
-        self.assertEqual(self.daytrade.operations[0].quantity, 10)
-
-    def test_daytrade_buy_price(self):
-        self.assertEqual(self.daytrade.operations[0].price, 2)
-
-    def test_daytrade_sale_should_exist(self):
-        self.assertTrue(self.daytrade.operations[1])
-
-    def test_daytrade_sale_asset(self):
-        self.assertEqual(
-            self.daytrade.operations[1].subject.symbol, ASSET.symbol
-        )
-
-    def test_daytrade_sale_quantity(self):
-        self.assertEqual(self.daytrade.operations[1].quantity, -10)
-
-    def test_daytrade_sale_price(self):
-        self.assertEqual(self.daytrade.operations[1].price, 3)
-
-    def test_daytrade_result(self):
-        self.assertEqual(self.daytrade.results, {'daytrades': 10})
-
-
-class TestDaytradeResultCase01(unittest.TestCase):
-    """Tests the results of a Daytrade operation.
-
-    Daytrade results are based on the prices of the sale
-    and purchase operations.
-    """
-
-    def setUp(self):
-        self.daytrade = trade.plugins.Daytrade(
+        self.daytrade2 = trade.plugins.Daytrade(
             copy.deepcopy(OPERATION60), copy.deepcopy(OPERATION39)
         )
 
-    def test_daytrade_result(self):
-        self.assertEqual(self.daytrade.results, {'daytrades': -10})
+    def test_daytrade1_asset(self):
+        self.assertEqual(self.daytrade1.subject.symbol, ASSET.symbol)
+
+    def test_daytrade1_quantity(self):
+        self.assertEqual(self.daytrade1.quantity, 10)
+
+    def test_daytrade1_buy(self):
+        self.assertTrue(self.daytrade1.operations[0])
+
+    def test_daytrade1_buy_asset(self):
+        self.assertEqual(
+            self.daytrade1.operations[0].subject.symbol,
+            self.daytrade1.subject.symbol)
+
+    def test_daytrade1_buy_quantity(self):
+        self.assertEqual(self.daytrade1.operations[0].quantity, 10)
+
+    def test_daytrade1_buy_price(self):
+        self.assertEqual(self.daytrade1.operations[0].price, 2)
+
+    def test_daytrade1_sale_should_exist(self):
+        self.assertTrue(self.daytrade1.operations[1])
+
+    def test_daytrade1_sale_asset(self):
+        self.assertEqual(
+            self.daytrade1.operations[1].subject.symbol, ASSET.symbol
+        )
+
+    def test_daytrade1_sale_quantity(self):
+        self.assertEqual(self.daytrade1.operations[1].quantity, -10)
+
+    def test_daytrade1_sale_price(self):
+        self.assertEqual(self.daytrade1.operations[1].price, 3)
+
+    def test_daytrade1_result(self):
+        self.assertEqual(self.daytrade1.results, {'daytrades': 10})
+
+    def test_daytrade2_result(self):
+        self.assertEqual(self.daytrade2.results, {'daytrades': -10})

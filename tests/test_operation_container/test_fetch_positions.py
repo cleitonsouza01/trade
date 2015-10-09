@@ -11,15 +11,14 @@ from trade.plugins import (
     prorate_commissions, TradingFees, find_trading_fees_for_positions
 )
 
-from tests.fixtures.operations import (
-    OPERATION24, OPERATION26, OPERATION27, OPERATION28,
-    OPERATION34, OPERATION35, OPERATION37, OPERATION38
-)
 from tests.fixtures.assets import (
     ASSET, ASSET2, ASSET3,
 )
 from tests.fixtures.commissions import (
     COMMISSIONS13, COMMISSIONS8
+)
+from tests.fixtures.operation_sequences import (
+    OPERATION_SEQUENCE2, OPERATION_SEQUENCE8
 )
 
 
@@ -57,11 +56,7 @@ class TestContainerFetchPositionsCase00(TestFetchPositions):
     def setUp(self):
         super(TestContainerFetchPositionsCase00, self).setUp()
         self.container.commissions = COMMISSIONS13
-        self.container.operations = [
-            copy.deepcopy(OPERATION24),
-            copy.deepcopy(OPERATION26),
-            copy.deepcopy(OPERATION27)
-        ]
+        self.container.operations = copy.deepcopy(OPERATION_SEQUENCE2)
         self.container.fetch_positions()
         prorate_commissions(self.container)
 
@@ -151,17 +146,7 @@ class TestContainerFetchPositionsCase01(TestFetchPositions):
 
     def setUp(self):
         super(TestContainerFetchPositionsCase01, self).setUp()
-        self.container.operations = [
-            copy.deepcopy(OPERATION24),
-            copy.deepcopy(OPERATION26),
-            copy.deepcopy(OPERATION27),
-            copy.deepcopy(OPERATION28),
-            copy.deepcopy(OPERATION38),
-            copy.deepcopy(OPERATION34),
-            copy.deepcopy(OPERATION35),
-            copy.deepcopy(OPERATION34),
-            copy.deepcopy(OPERATION37)
-        ]
+        self.container.operations = copy.deepcopy(OPERATION_SEQUENCE8)
         self.container.fetch_positions()
 
     def test_operations_len(self):

@@ -7,12 +7,15 @@ import copy
 import trade
 
 from tests.fixtures.operations import (
-    OPERATION24, OPERATION25, OPERATION26, OPERATION27, OPERATION28,
-    OPERATION29, OPERATION30, OPERATION26, OPERATION32, OPERATION32,
-    OPERATION34, OPERATION35, OPERATION34, OPERATION37,
+    OPERATION32, OPERATION26
 )
 from tests.fixtures.assets import (
     ASSET, ASSET2, ASSET3,
+)
+
+from tests.fixtures.operation_sequences import (
+    OPERATION_SEQUENCE0, OPERATION_SEQUENCE1, OPERATION_SEQUENCE2,
+    OPERATION_SEQUENCE3, OPERATION_SEQUENCE4, OPERATION_SEQUENCE5
 )
 
 TASKS = [
@@ -25,32 +28,13 @@ class TestIdentifyDaytrades(unittest.TestCase):
     def setUp(self):
         self.container = trade.OperationContainer()
         self.container.tasks = TASKS
-        self.operation_set1 = [
-            copy.deepcopy(OPERATION24),
-            copy.deepcopy(OPERATION25)
-        ]
-        self.operation_set2 = [
-            copy.deepcopy(OPERATION24),
-            copy.deepcopy(OPERATION26)
-        ]
-        self.operation_set3 = [
-            copy.deepcopy(OPERATION24),
-            copy.deepcopy(OPERATION26),
-            copy.deepcopy(OPERATION27)
-        ]
-        self.operation_set4 = [
-            copy.deepcopy(OPERATION24),
-            copy.deepcopy(OPERATION26),
-            copy.deepcopy(OPERATION27),
-            copy.deepcopy(OPERATION28)
-        ]
 
 class TestContainerIndentifyDaytradesCase00(TestIdentifyDaytrades):
     """Test the identification of daytrade operations."""
 
     def setUp(self):
         super(TestContainerIndentifyDaytradesCase00, self).setUp()
-        self.container.operations = self.operation_set1
+        self.container.operations = copy.deepcopy(OPERATION_SEQUENCE0)
         self.container.fetch_positions()
 
     def test_common_trades_len(self):
@@ -105,7 +89,7 @@ class TestContainerIndentifyDaytradesCase01(TestIdentifyDaytrades):
 
     def setUp(self):
         super(TestContainerIndentifyDaytradesCase01, self).setUp()
-        self.container.operations = self.operation_set2
+        self.container.operations = copy.deepcopy(OPERATION_SEQUENCE1)
         self.container.fetch_positions()
 
     def test_common_trades_len(self):
@@ -169,7 +153,7 @@ class TestContainerIndentifyDaytradesCase02(TestIdentifyDaytrades):
 
     def setUp(self):
         super(TestContainerIndentifyDaytradesCase02, self).setUp()
-        self.container.operations = self.operation_set3
+        self.container.operations = copy.deepcopy(OPERATION_SEQUENCE2)
         self.container.fetch_positions()
 
     def test_common_trades_len(self):
@@ -249,7 +233,7 @@ class TestContainerIndentifyDaytradesCase03(TestIdentifyDaytrades):
 
     def setUp(self):
         super(TestContainerIndentifyDaytradesCase03, self).setUp()
-        self.container.operations = self.operation_set4
+        self.container.operations = copy.deepcopy(OPERATION_SEQUENCE3)
         self.container.fetch_positions()
 
     def test_common_trades_len(self):
@@ -353,7 +337,7 @@ class TestContainerIndentifyDaytradesCase04(TestIdentifyDaytrades):
 
     def setUp(self):
         super(TestContainerIndentifyDaytradesCase04, self).setUp()
-        self.container.operations = self.operation_set4
+        self.container.operations = copy.deepcopy(OPERATION_SEQUENCE3)
         self.container.operations.append(copy.deepcopy(OPERATION26))
         self.container.fetch_positions()
 
@@ -449,14 +433,7 @@ class TestContainerIndentifyDaytradesCase05(TestIdentifyDaytrades):
 
     def setUp(self):
         super(TestContainerIndentifyDaytradesCase05, self).setUp()
-
-        self.container.operations = [
-            copy.deepcopy(OPERATION24),
-            copy.deepcopy(OPERATION29),
-            copy.deepcopy(OPERATION27),
-            copy.deepcopy(OPERATION28),
-            copy.deepcopy(OPERATION30)
-        ]
+        self.container.operations = copy.deepcopy(OPERATION_SEQUENCE4)
         self.container.fetch_positions()
 
     def test_for_no_common_trades(self):
@@ -546,7 +523,7 @@ class TestContainerIndentifyDaytradesCase06(TestIdentifyDaytrades):
 
     def setUp(self):
         super(TestContainerIndentifyDaytradesCase06, self).setUp()
-        self.container.operations = self.operation_set4
+        self.container.operations = copy.deepcopy(OPERATION_SEQUENCE3)
         self.container.operations.append(copy.deepcopy(OPERATION32))
         self.container.fetch_positions()
 
@@ -651,14 +628,8 @@ class TestContainerIndentifyDaytradesCase07(TestIdentifyDaytrades):
 
     def setUp(self):
         super(TestContainerIndentifyDaytradesCase07, self).setUp()
-        self.container.operations = self.operation_set4
-        self.container.operations += [
-            copy.deepcopy(OPERATION32),
-            copy.deepcopy(OPERATION34),
-            copy.deepcopy(OPERATION35),
-            copy.deepcopy(OPERATION34),
-            copy.deepcopy(OPERATION37)
-        ]
+        self.container.operations = copy.deepcopy(OPERATION_SEQUENCE3)
+        self.container.operations += copy.deepcopy(OPERATION_SEQUENCE5)
         self.container.fetch_positions()
 
     def test_common_trades_len(self):

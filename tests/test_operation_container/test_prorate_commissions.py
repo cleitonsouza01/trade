@@ -9,13 +9,15 @@ from trade.plugins import prorate_commissions, prorate_commissions_by_position
 
 from tests.fixtures.operations import (
     OPERATION39, OPERATION42, OPERATION43, OPERATION44,
-    OPERATION24, OPERATION26, OPERATION27,
 )
 from tests.fixtures.commissions import (
     COMMISSIONS9, COMMISSIONS10, COMMISSIONS11,
 )
 from tests.fixtures.assets import (
     ASSET, ASSET2,
+)
+from tests.fixtures.operation_sequences import (
+    OPERATION_SEQUENCE2
 )
 
 
@@ -83,7 +85,6 @@ class TestProrateCommissionsByPositionCase03(TestProrateCommissions):
         self.container.fetch_positions()
 
     def test_check_trade1_discount(self):
-        #self.container.prorate_commissions_by_position(self.operation)
         prorate_commissions_by_position(self.container, self.operation)
         self.assertEqual(
             round(self.operation.commissions['some discount'], 8),
@@ -131,11 +132,8 @@ class TestProrateCommissionsByPositionCase05(TestProrateCommissions):
 
     def setUp(self):
         super(TestProrateCommissionsByPositionCase05, self).setUp()
-        trade1 = copy.deepcopy(OPERATION24)
-        trade2 = copy.deepcopy(OPERATION26)
-        trade3 = copy.deepcopy(OPERATION27)
         self.container = trade.OperationContainer(
-            operations=[trade1, trade2, trade3],
+            operations=copy.deepcopy(OPERATION_SEQUENCE2)
         )
         self.container.commissions = COMMISSIONS9
         self.container.tasks = [trade.plugins.fetch_daytrades]

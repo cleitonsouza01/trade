@@ -13,46 +13,22 @@ from . fixture_logs import (
 )
 
 
-class TestLogDaytradesAndOperations(unittest.TestCase):
+class TestLogDaytradesAndOperationsCase00(unittest.TestCase):
+    """Tests the logging of Operation and Daytrade objects."""
 
     def setUp(self):
         self.accumulator = trade.Accumulator(ASSET, logging=True)
-
-
-class TestLogDaytradesAndOperationsCase00(TestLogDaytradesAndOperations):
-    """Tests the logging of Operation and Daytrade objects.
-
-    Try to log a daytrade and a operation on the same date.
-    """
-
-    def test_log_occurrences(self):
         self.accumulator.accumulate(DAYTRADE0)
+
+    def test_log_case_00(self):
         self.accumulator.accumulate(OPERATION18)
         self.assertEqual(self.accumulator.log, EXPECTED_LOG22)
 
-
-class TestLogDaytradesAndOperationsCase01(TestLogDaytradesAndOperations):
-    """Tests the logging of Operation and Daytrade objects.
-
-    Logs one daytrade and then one operation on a posterior
-    date.
-    """
-
-    def test_log_occurrences(self):
-        self.accumulator.accumulate(DAYTRADE0)
-        self.accumulator.accumulate(OPERATION1)
-        self.assertEqual(self.accumulator.log, EXPECTED_LOG23)
-
-
-class TestLogDaytradesAndOperationsCase02(TestLogDaytradesAndOperations):
-    """Tests the logging of Operation and Daytrade objects.
-
-    One daytrade first,
-    then one operation and one daytrade on a posterior date.
-    """
-
-    def test_log_occurrences(self):
-        self.accumulator.accumulate(DAYTRADE0)
+    def test_log_case_01(self):
         self.accumulator.accumulate(OPERATION1)
         self.accumulator.accumulate(DAYTRADE1)
         self.assertEqual(self.accumulator.log, EXPECTED_LOG24)
+
+    def test_log_case_02(self):
+        self.accumulator.accumulate(OPERATION1)
+        self.assertEqual(self.accumulator.log, EXPECTED_LOG23)

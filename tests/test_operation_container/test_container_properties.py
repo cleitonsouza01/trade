@@ -6,8 +6,9 @@ import copy
 
 import trade
 
-from tests.fixtures.operations import (
-    OPERATION39, OPERATION40, OPERATION41
+from tests.fixtures.operations import OPERATION39
+from tests.fixtures.operation_sequences import (
+    OPERATION_SEQUENCE6, OPERATION_SEQUENCE7
 )
 
 
@@ -15,7 +16,31 @@ class TestContainerProperties(unittest.TestCase):
     """A base class with all operations used in the test cases."""
 
     def setUp(self):
-        pass
+        self.container = trade.OperationContainer()
+
+
+class TestContainerPropertiesCase00(TestContainerProperties):
+    """Test the volume property of the Container."""
+
+    def setUp(self):
+        super(TestContainerPropertiesCase00, self).setUp()
+        self.container.operations = [copy.deepcopy(OPERATION39)]
+        self.container.fetch_positions()
+
+    def test_volume_00(self):
+        self.assertEqual(self.container.volume, 20)
+
+
+class TestContainerPropertiesCase01(TestContainerProperties):
+    """Test the volume property of the Container."""
+
+    def setUp(self):
+        super(TestContainerPropertiesCase01, self).setUp()
+        self.container.operations = copy.deepcopy(OPERATION_SEQUENCE6)
+        self.container.fetch_positions()
+
+    def test_volume_01(self):
+        self.assertEqual(self.container.volume, 25)
 
 
 class TestContainerPropertiesCase02(TestContainerProperties):
@@ -23,47 +48,8 @@ class TestContainerPropertiesCase02(TestContainerProperties):
 
     def setUp(self):
         super(TestContainerPropertiesCase02, self).setUp()
-        self.trade_container = trade.OperationContainer(
-            operations=[
-                copy.deepcopy(OPERATION39)
-            ]
-        )
-        self.trade_container.fetch_positions()
+        self.container.operations = copy.deepcopy(OPERATION_SEQUENCE7)
+        self.container.fetch_positions()
 
-    def test_volume(self):
-        self.assertEqual(self.trade_container.volume, 20)
-
-
-class TestContainerPropertiesCase03(TestContainerProperties):
-    """Test the volume property of the Container."""
-
-    def setUp(self):
-        super(TestContainerPropertiesCase03, self).setUp()
-        self.trade_container = trade.OperationContainer(
-            operations=[
-                copy.deepcopy(OPERATION39),
-                copy.deepcopy(OPERATION40)
-            ]
-        )
-        self.trade_container.fetch_positions()
-
-    def test_volume(self):
-        self.assertEqual(self.trade_container.volume, 25)
-
-
-class TestContainerPropertiesCase05(TestContainerProperties):
-    """Test the volume property of the Container."""
-
-    def setUp(self):
-        super(TestContainerPropertiesCase05, self).setUp()
-        self.trade_container = trade.OperationContainer(
-            operations=[
-                copy.deepcopy(OPERATION39),
-                copy.deepcopy(OPERATION40),
-                copy.deepcopy(OPERATION41)
-            ]
-        )
-        self.trade_container.fetch_positions()
-
-    def test_volume(self):
-        self.assertEqual(self.trade_container.volume, 125)
+    def test_volume_02(self):
+        self.assertEqual(self.container.volume, 125)

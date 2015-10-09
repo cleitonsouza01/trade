@@ -8,12 +8,10 @@ import copy
 import trade
 from trade.plugins import TradingFees, find_trading_fees_for_positions
 
-from tests.fixtures.operations import (
-    OPERATION24, OPERATION26, OPERATION27
-)
 from tests.fixtures.assets import (
     ASSET, ASSET2,
 )
+from tests.fixtures.operation_sequences import OPERATION_SEQUENCE2
 
 
 class TaxManagerForTests(TradingFees):
@@ -35,11 +33,7 @@ class TestFindFeesForPositionsCase00(unittest.TestCase):
 
     def setUp(self):
         self.container = trade.OperationContainer(
-            operations=[
-                copy.deepcopy(OPERATION24),
-                copy.deepcopy(OPERATION26),
-                copy.deepcopy(OPERATION27),
-            ]
+            operations=copy.deepcopy(OPERATION_SEQUENCE2)
         )
         self.container.trading_fees = TaxManagerForTests
         self.container.tasks = [
