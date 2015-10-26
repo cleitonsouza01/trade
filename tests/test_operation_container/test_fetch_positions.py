@@ -2,7 +2,7 @@
 
 from __future__ import absolute_import
 import unittest
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta
 import copy
 
 import trade
@@ -29,7 +29,6 @@ class TaxManagerForTests(object):
     __metaclass__ = ABCMeta
 
     @classmethod
-    @abstractmethod
     def get_fees(cls, operation=None, operation_type=None):
         """A sample implementation of get_fees()."""
         if operation_type == 'daytrades':
@@ -117,8 +116,8 @@ class TestContainerFetchPositionsCase00(TestFetchPositions):
 
     def test_operations1_quantity(self):
         self.assertEqual(
-            self.container.positions['operations'][ASSET2.symbol]\
-                .quantity, -5
+            self.container.positions['operations'][ASSET2.symbol].quantity,
+            -5
         )
 
     def test_operations1_price(self):
@@ -133,8 +132,7 @@ class TestContainerFetchPositionsCase00(TestFetchPositions):
 
     def test_operations1_discounts(self):
         self.assertEqual(
-            self.container.positions['operations'][ASSET2.symbol]\
-                .commissions,
+            self.container.positions['operations'][ASSET2.symbol].commissions,
             {
                 'some discount': 0.5,
                 'other discount': 1.5

@@ -15,8 +15,7 @@ from tests.fixtures.accumulator_states import (
 )
 
 
-class TestLogEvent00(LogTest):
-    """Tests the logging of 1 Event object."""
+class TestLogEvent(LogTest):
 
     initial_state = INITIAL_STATE0
     occurrences = [EVENT5]
@@ -24,19 +23,15 @@ class TestLogEvent00(LogTest):
     expected_state = EXPECTED_STATE0
 
 
-class TestLogEvent01(LogTest):
+class TestLogEvent01(TestLogEvent):
     """Tests the logging of 2 Event objects."""
 
-    initial_state = INITIAL_STATE0
     occurrences = [EVENT5, EVENT3]
     expected_log = EXPECTED_LOG18
-    expected_state = EXPECTED_STATE0
 
 
-class TestLogEvent02(LogTest):
+class TestLogEvent02(TestLogEvent):
     """Tests the logging of multiple Event objects on the same date."""
 
-    initial_state = INITIAL_STATE0
     occurrences = [EVENT5, EVENT4]
     expected_log = EXPECTED_LOG17
-    expected_state = EXPECTED_STATE0

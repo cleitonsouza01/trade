@@ -5,10 +5,7 @@ import unittest
 import copy
 
 import trade
-
-from tests.fixtures.assets import (
-    ASSET
-)
+from tests.fixtures.assets import ASSET
 
 class LogTest(unittest.TestCase):
     """Base class for Accumulator tests."""
@@ -218,7 +215,6 @@ EXPECTED_LOG6 = {
 
 }
 
-
 EXPECTED_LOG7 = {
     '2015-01-02': {
         'quantity': 0,
@@ -280,7 +276,7 @@ EXPECTED_LOG9 = {
 
 EXPECTED_LOG10 = {
     '2015-01-06': {
-        'quantity': 00,
+        'quantity': 0,
         'price': 0,
         'results': {'trades': -3000},
     },
@@ -417,7 +413,6 @@ EXPECTED_LOG17 = {
     }
 }
 
-
 EXPECTED_LOG18 = {
     '2015-09-25': {
         'price': 5.0,
@@ -431,8 +426,6 @@ EXPECTED_LOG18 = {
     }
 }
 
-
-
 EXPECTED_LOG19 = {
     '2015-01-01': {
         'quantity': 100,
@@ -440,7 +433,6 @@ EXPECTED_LOG19 = {
         'results': {'daytrades': 1000},
     }
 }
-
 
 EXPECTED_LOG20 = {
     '2015-01-03': {
@@ -472,9 +464,6 @@ EXPECTED_LOG21 = {
         'results': {'daytrades': 1000}
     }
 }
-
-
-
 
 EXPECTED_LOG23 = {
     '2015-01-02': {
