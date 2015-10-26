@@ -13,7 +13,10 @@ from tests.fixtures.commissions import (
     COMMISSIONS13
 )
 from tests.fixtures.logs import (
-    LogTest, EXPECTED_STATE1, EXPECTED_STATE16,
+    LogTest,
+)
+from tests.fixtures.accumulator_states import (
+    EXPECTED_STATE1, EXPECTED_STATE16,
     EXPECTED_STATE17, EXPECTED_STATE7, EXPECTED_STATE26
 )
 

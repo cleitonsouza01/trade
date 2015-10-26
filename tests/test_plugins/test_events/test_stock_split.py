@@ -2,8 +2,11 @@
 
 from __future__ import absolute_import
 
-from tests.fixtures.logs import INITIAL_STATE0, LogTest, EXPECTED_STATE0
+from tests.fixtures.logs import LogTest
 from tests.fixtures.events import EVENT5
+from tests.fixtures.accumulator_states import (
+    EXPECTED_STATE0, INITIAL_STATE0,
+)
 
 
 class TestStockSplitCase00(LogTest):

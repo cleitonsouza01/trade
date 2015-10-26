@@ -4,7 +4,10 @@ from __future__ import absolute_import
 
 from tests.fixtures.events import EVENT9
 from tests.fixtures.logs import (
-    LogTest, INITIAL_STATE0, EXPECTED_STATE20
+    LogTest,
+)
+from tests.fixtures.accumulator_states import (
+    INITIAL_STATE0, EXPECTED_STATE20
 )
 
 

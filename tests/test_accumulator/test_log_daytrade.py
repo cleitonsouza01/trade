@@ -4,7 +4,10 @@ from __future__ import absolute_import
 
 from tests.fixtures.operations import DAYTRADE0
 from tests.fixtures.logs import (
-    EXPECTED_LOG16, LogTest, EXPECTED_STATE25
+    EXPECTED_LOG16, LogTest,
+)
+from tests.fixtures.accumulator_states import (
+    EXPECTED_STATE25
 )
 
 

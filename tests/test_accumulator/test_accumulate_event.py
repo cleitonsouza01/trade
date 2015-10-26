@@ -8,7 +8,10 @@ import trade.plugins
 
 from tests.fixtures.operations import ASSET
 from tests.fixtures.logs import (
-    LogTest, INITIAL_STATE0, EXPECTED_STATE14
+    LogTest,
+)
+from tests.fixtures.accumulator_states import (
+    INITIAL_STATE0, EXPECTED_STATE14
 )
 
 

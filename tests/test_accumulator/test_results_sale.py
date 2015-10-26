@@ -9,9 +9,11 @@ from tests.fixtures.operations import (
 from tests.fixtures.logs import (
     EXPECTED_LOG0, EXPECTED_LOG1, EXPECTED_LOG2, EXPECTED_LOG3,
     EXPECTED_LOG4, EXPECTED_LOG5, EXPECTED_LOG6,
+    LogTest
+)
+from tests.fixtures.accumulator_states import (
     EXPECTED_STATE1, EXPECTED_STATE9, EXPECTED_STATE7, EXPECTED_STATE10,
     EXPECTED_STATE11, EXPECTED_STATE12, EXPECTED_STATE13,
-    LogTest
 )
 
 

@@ -7,8 +7,10 @@ from tests.fixtures.operations import (
 )
 from tests.fixtures.logs import (
     EXPECTED_LOG19, EXPECTED_LOG23, EXPECTED_LOG21,
-    EXPECTED_STATE23, EXPECTED_STATE24,
     LogTest
+)
+from tests.fixtures.accumulator_states import (
+    EXPECTED_STATE23, EXPECTED_STATE24,
 )
 
 

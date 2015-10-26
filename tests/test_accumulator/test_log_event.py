@@ -8,7 +8,10 @@ from tests.fixtures.events import (
 )
 from tests.fixtures.logs import (
     EXPECTED_LOG17, EXPECTED_LOG18,
-    LogTest, INITIAL_STATE0, EXPECTED_STATE0,
+    LogTest,
+)
+from tests.fixtures.accumulator_states import (
+    INITIAL_STATE0, EXPECTED_STATE0,
 )
 
 
