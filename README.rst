@@ -15,8 +15,8 @@ What is it?
 trade is Python framework to ease the creation of investment management
 applications. It is focused in, but not limited to, stock exchange markets.
 
-The trade module provides notions of assets, purchases, sales, daytrades,
-cost deduction, rates, options, option exercises, asset accumulation and more.
+The trade module provides notions of assets, purchases, sales, day trades,
+cost deduction, options, option exercises, asset accumulation and more.
 
 Installation
 ------------
@@ -106,12 +106,6 @@ A basic example of the trade module in action:
 
     print(accumulator.results)
     #>> {'trades': 30.199999999999818}
-
-Operation objects may include rates and commissions that are considered
-by the accumulator when it calculates results and average prices.
-
-The Accumulator can also log the accumulated operations and their
-results.
 
 Check the `documentation`_ for all the available features.
 
