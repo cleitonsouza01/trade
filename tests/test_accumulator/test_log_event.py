@@ -7,7 +7,7 @@ from tests.fixtures.events import (
     EVENT3, EVENT5, EVENT4
 )
 from tests.fixtures.logs import (
-    EXPECTED_LOG17, EXPECTED_LOG18, EXPECTED_LOG25,
+    EXPECTED_LOG17, EXPECTED_LOG18,
     LogTest, INITIAL_STATE0, EXPECTED_STATE0,
 )
 
@@ -35,5 +35,5 @@ class TestLogEvent02(LogTest):
 
     initial_state = INITIAL_STATE0
     occurrences = [EVENT5, EVENT4]
-    expected_log = EXPECTED_LOG25
+    expected_log = EXPECTED_LOG17
     expected_state = EXPECTED_STATE0

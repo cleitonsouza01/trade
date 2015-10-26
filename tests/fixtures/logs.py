@@ -561,6 +561,7 @@ EXPECTED_LOG17 = {
     }
 }
 
+
 EXPECTED_LOG18 = {
     '2015-09-25': {
         'price': 5.0,
@@ -573,13 +574,7 @@ EXPECTED_LOG18 = {
         'results': {'trades': 1200},
     }
 }
-EXPECTED_LOG25 = {
-    '2015-09-24': {
-        'price': 5.0,
-        'quantity': 200,
-        'results': {'trades': 1200},
-    }
-}
+
 
 
 EXPECTED_LOG19 = {
@@ -622,33 +617,14 @@ EXPECTED_LOG21 = {
     }
 }
 
-EXPECTED_LOG22 = {
-    '2015-01-01': {
-        'quantity': 100,
-        'price': 10,
-        'results': {'daytrades': 1000}
-    }
-}
+
+
 
 EXPECTED_LOG23 = {
     '2015-01-02': {
         'quantity': 100,
         'price': 10,
         'results': {'daytrades': 1000}
-    },
-    '2015-01-01': {
-        'quantity': 0,
-        'price': 0,
-        'results': {'daytrades': 1000}
-    }
-}
-
-
-EXPECTED_LOG24 = {
-    '2015-01-02': {
-        'quantity': 100,
-        'price': 10,
-        'results': {'daytrades': 2000}
     },
     '2015-01-01': {
         'quantity': 0,
