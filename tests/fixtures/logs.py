@@ -6,16 +6,6 @@ import copy
 
 import trade
 
-from tests.fixtures.operations import (
-    OPERATION0, OPERATION1, OPERATION2, OPERATION3, OPERATION4, OPERATION5,
-    OPERATION6, OPERATION7, OPERATION8, OPERATION9, OPERATION10, OPERATION11,
-    OPERATION12, OPERATION13, OPERATION14, OPERATION15, OPERATION16,
-    OPERATION17, OPERATION18,
-    DAYTRADE0, DAYTRADE2, DAYTRADE3, DAYTRADE1,
-)
-from tests.fixtures.events import (
-    EVENT0, EVENT1, EVENT2, EVENT3, EVENT4, EVENT5,
-)
 from tests.fixtures.assets import (
     ASSET
 )
@@ -72,246 +62,162 @@ class LogTest(unittest.TestCase):
 
 EXPECTED_LOG0 = {
     '2015-01-02': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {},
-        },
-        'occurrences': [OPERATION10]
+        'quantity': 0,
+        'price': 0,
+        'results': {},
     },
     '2015-01-01': {
-        'data': {
-            'quantity': 100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION9]
+        'quantity': 100,
+        'price': 10,
+        'results': {},
     }
 }
 
 EXPECTED_LOG1 = {
     '2015-01-03': {
-        'data': {
-            'quantity': 100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION11]
+        'quantity': 100,
+        'price': 10,
+        'results': {},
     },
     '2015-01-02': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {},
-        },
-        'occurrences': [OPERATION10]
+        'quantity': 0,
+        'price': 0,
+        'results': {},
     },
     '2015-01-01': {
-        'data': {
-            'quantity': 100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION9]
+        'quantity': 100,
+        'price': 10,
+        'results': {},
     }
 }
 
 EXPECTED_LOG2 = {
     '2015-01-04': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {'trades': 1000},
-        },
-        'occurrences': [OPERATION12]
+        'quantity': 0,
+        'price': 0,
+        'results': {'trades': 1000},
     },
     '2015-01-03': {
-        'data': {
-            'quantity': 100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION11]
+        'quantity': 100,
+        'price': 10,
+        'results': {},
     },
     '2015-01-02': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {},
-        },
-        'occurrences': [OPERATION10]
+        'quantity': 0,
+        'price': 0,
+        'results': {},
     },
     '2015-01-01': {
-        'data': {
-            'quantity': 100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION9]
+        'quantity': 100,
+        'price': 10,
+        'results': {},
     }
 }
 
 EXPECTED_LOG3 = {
     '2015-01-05': {
-        'data': {
-            'quantity': 100,
-            'price': 20,
-            'results': {'trades': 1000},
-        },
-        'occurrences': [OPERATION13]
+        'quantity': 100,
+        'price': 20,
+        'results': {'trades': 1000},
     },
     '2015-01-04': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {'trades': 1000},
-        },
-        'occurrences': [OPERATION12]
+        'quantity': 0,
+        'price': 0,
+        'results': {'trades': 1000},
     },
     '2015-01-03': {
-        'data': {
-            'quantity': 100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION11]
+        'quantity': 100,
+        'price': 10,
+        'results': {},
     },
     '2015-01-02': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {},
-        },
-        'occurrences': [OPERATION10]
+        'quantity': 0,
+        'price': 0,
+        'results': {},
     },
     '2015-01-01': {
-        'data': {
-            'quantity': 100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION9]
+        'quantity': 100,
+        'price': 10,
+        'results': {},
     }
 }
 
 EXPECTED_LOG4 = {
     '2015-01-06': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {'trades': 3000},
-        },
-        'occurrences': [OPERATION14]
+        'quantity': 0,
+        'price': 0,
+        'results': {'trades': 3000},
     },
     '2015-01-05': {
-        'data': {
-            'quantity': 100,
-            'price': 20,
-            'results': {'trades': 1000},
-        },
-        'occurrences': [OPERATION13]
+        'quantity': 100,
+        'price': 20,
+        'results': {'trades': 1000},
     },
     '2015-01-04': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {'trades': 1000},
-        },
-        'occurrences': [OPERATION12]
+        'quantity': 0,
+        'price': 0,
+        'results': {'trades': 1000},
     },
     '2015-01-03': {
-        'data': {
-            'quantity': 100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION11]
+        'quantity': 100,
+        'price': 10,
+        'results': {},
     },
     '2015-01-02': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {},
-        },
-        'occurrences': [OPERATION10]
+        'quantity': 0,
+        'price': 0,
+        'results': {},
     },
     '2015-01-01': {
-        'data': {
-            'quantity': 100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION9]
+        'quantity': 100,
+        'price': 10,
+        'results': {},
     }
 }
 
 EXPECTED_LOG5 = {
     '2015-01-06': {
-        'data': {
-            'quantity': 50,
-            'price': 20,
-            'results': {'trades': 2000},
-        },
-        'occurrences': [OPERATION15]
+        'quantity': 50,
+        'price': 20,
+        'results': {'trades': 2000},
     },
     '2015-01-05': {
-        'data': {
-            'quantity': 100,
-            'price': 20,
-            'results': {'trades': 1000},
-        },
-        'occurrences': [OPERATION13]
+        'quantity': 100,
+        'price': 20,
+        'results': {'trades': 1000},
     },
     '2015-01-04': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {'trades': 1000},
-        },
-        'occurrences': [OPERATION12]
+        'quantity': 0,
+        'price': 0,
+        'results': {'trades': 1000},
     },
     '2015-01-03': {
-        'data': {
-            'quantity': 100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION11]
+        'quantity': 100,
+        'price': 10,
+        'results': {},
     },
     '2015-01-02': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {},
-        },
-        'occurrences': [OPERATION10]
+        'quantity': 0,
+        'price': 0,
+        'results': {},
     },
     '2015-01-01': {
-        'data': {
-            'quantity': 100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION9]
+        'quantity': 100,
+        'price': 10,
+        'results': {},
     }
 }
 
 EXPECTED_LOG6 = {
     '2015-01-02': {
-        'data': {
-            'quantity': -50,
-            'price': 20,
-            'results': {'trades': 500},
-        },
-        'occurrences': [OPERATION17]
+        'quantity': -50,
+        'price': 20,
+        'results': {'trades': 500},
     },
     '2015-01-01': {
-        'data': {
-            'quantity': 50,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION16]
+        'quantity': 50,
+        'price': 10,
+        'results': {},
     },
 
 }
@@ -319,435 +225,294 @@ EXPECTED_LOG6 = {
 
 EXPECTED_LOG7 = {
     '2015-01-02': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {},
-        },
-        'occurrences': [OPERATION1]
+        'quantity': 0,
+        'price': 0,
+        'results': {},
     },
     '2015-01-01': {
-        'data': {
-            'quantity': -100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION0]
+        'quantity': -100,
+        'price': 10,
+        'results': {},
     }
 }
 
 EXPECTED_LOG8 = {
     '2015-01-03': {
-        'data': {
-            'quantity': -100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION2]
+        'quantity': -100,
+        'price': 10,
+        'results': {},
     },
     '2015-01-02': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {},
-        },
-        'occurrences': [OPERATION1]
+        'quantity': 0,
+        'price': 0,
+        'results': {},
     },
     '2015-01-01': {
-        'data': {
-            'quantity': -100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION0]
+        'quantity': -100,
+        'price': 10,
+        'results': {},
     }
 }
 
 EXPECTED_LOG9 = {
     '2015-01-05': {
-        'data': {
-            'quantity': -100,
-            'price': 20,
-            'results': {'trades': -1000},
-        },
-        'occurrences': [OPERATION4]
+        'quantity': -100,
+        'price': 20,
+        'results': {'trades': -1000},
     },
     '2015-01-04': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {'trades': -1000},
-        },
-        'occurrences': [OPERATION3]
+        'quantity': 0,
+        'price': 0,
+        'results': {'trades': -1000},
     },
     '2015-01-03': {
-        'data': {
-            'quantity': -100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION2]
+        'quantity': -100,
+        'price': 10,
+        'results': {},
     },
     '2015-01-02': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {},
-        },
-        'occurrences': [OPERATION1]
+        'quantity': 0,
+        'price': 0,
+        'results': {},
     },
     '2015-01-01': {
-        'data': {
-            'quantity': -100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION0]
+        'quantity': -100,
+        'price': 10,
+        'results': {},
     }
 }
 
 EXPECTED_LOG10 = {
     '2015-01-06': {
-        'data': {
-            'quantity': 00,
-            'price': 0,
-            'results': {'trades': -3000},
-        },
-        'occurrences': [OPERATION5]
+        'quantity': 00,
+        'price': 0,
+        'results': {'trades': -3000},
     },
     '2015-01-05': {
-        'data': {
-            'quantity': -100,
-            'price': 20,
-            'results': {'trades': -1000},
-        },
-        'occurrences': [OPERATION4]
+        'quantity': -100,
+        'price': 20,
+        'results': {'trades': -1000},
     },
     '2015-01-04': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {'trades': -1000},
-        },
-        'occurrences': [OPERATION3]
+        'quantity': 0,
+        'price': 0,
+        'results': {'trades': -1000},
     },
     '2015-01-03': {
-        'data': {
-            'quantity': -100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION2]
+        'quantity': -100,
+        'price': 10,
+        'results': {},
     },
     '2015-01-02': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {},
-        },
-        'occurrences': [OPERATION1]
+        'quantity': 0,
+        'price': 0,
+        'results': {},
     },
     '2015-01-01': {
-        'data': {
-            'quantity': -100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION0]
+        'quantity': -100,
+        'price': 10,
+        'results': {},
     }
 }
 
 EXPECTED_LOG11 = {
     '2015-01-04': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {'trades': -1000},
-        },
-        'occurrences': [OPERATION3]
+        'quantity': 0,
+        'price': 0,
+        'results': {'trades': -1000},
     },
     '2015-01-03': {
-        'data': {
-            'quantity': -100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION2]
+        'quantity': -100,
+        'price': 10,
+        'results': {},
     },
     '2015-01-02': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {},
-        },
-        'occurrences': [OPERATION1]
+        'quantity': 0,
+        'price': 0,
+        'results': {},
     },
     '2015-01-01': {
-        'data': {
-            'quantity': -100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION0]
+        'quantity': -100,
+        'price': 10,
+        'results': {},
     }
 }
 
 EXPECTED_LOG12 = {
     '2015-01-06': {
-        'data': {
-            'quantity': -50,
-            'price': 20,
-            'results': {'trades': -2000},
-        },
-        'occurrences': [OPERATION6]
+        'quantity': -50,
+        'price': 20,
+        'results': {'trades': -2000},
     },
     '2015-01-05': {
-        'data': {
-            'quantity': -100,
-            'price': 20,
-            'results': {'trades': -1000},
-        },
-        'occurrences': [OPERATION4]
+        'quantity': -100,
+        'price': 20,
+        'results': {'trades': -1000},
     },
     '2015-01-04': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {'trades': -1000},
-        },
-        'occurrences': [OPERATION3]
+        'quantity': 0,
+        'price': 0,
+        'results': {'trades': -1000},
     },
     '2015-01-03': {
-        'data': {
-            'quantity': -100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION2]
+        'quantity': -100,
+        'price': 10,
+        'results': {},
     },
     '2015-01-02': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {},
-        },
-        'occurrences': [OPERATION1]
+        'quantity': 0,
+        'price': 0,
+        'results': {},
     },
     '2015-01-01': {
-        'data': {
-            'quantity': -100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION0]
+        'quantity': -100,
+        'price': 10,
+        'results': {},
     }
 }
 
 EXPECTED_LOG13 = {
     '2015-01-02': {
-        'data': {
-            'quantity': 50,
-            'price': 10,
-            'results': {'trades': 500},
-        },
-        'occurrences': [OPERATION1]
+        'quantity': 50,
+        'price': 10,
+        'results': {'trades': 500},
     },
     '2015-01-01': {
-        'data': {
-            'quantity': -50,
-            'price': 20,
-            'results': {},
-        },
-        'occurrences': [OPERATION8]
+        'quantity': -50,
+        'price': 20,
+        'results': {},
     },
 }
 
 EXPECTED_LOG14 = {
     '2015-01-02': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {'trades': 1000},
-        },
-        'occurrences': [OPERATION1]
+        'quantity': 0,
+        'price': 0,
+        'results': {'trades': 1000},
     },
     '2015-01-01': {
-        'data': {
-            'quantity': -100,
-            'price': 20,
-            'results': {},
-        },
-        'occurrences': [OPERATION7]
+        'quantity': -100,
+        'price': 20,
+        'results': {},
     },
 }
 
 EXPECTED_LOG15 = {
     '2015-01-01': {
-        'data': {
-            'quantity': 100,
-            'price': 10,
-            'results': {},
-        },
-        'occurrences': [OPERATION18]
+        'quantity': 100,
+        'price': 10,
+        'results': {},
     }
 }
 
 EXPECTED_LOG16 = {
     '2015-01-01': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {'daytrades': 1000},
-        },
-        'occurrences': [DAYTRADE0]
+        'quantity': 0,
+        'price': 0,
+        'results': {'daytrades': 1000},
     }
 }
 
 EXPECTED_LOG17 = {
     '2015-09-24': {
-        'data': {
-            'price': 5.0,
-            'quantity': 200,
-            'results': {'trades': 1200},
-        },
-        'occurrences': [EVENT5]
+        'price': 5.0,
+        'quantity': 200,
+        'results': {'trades': 1200},
     }
 }
 
 EXPECTED_LOG18 = {
     '2015-09-25': {
-        'data': {
-            'price': 5.0,
-            'quantity': 200,
-            'results': {'trades': 1200},
-        },
-        'occurrences': [EVENT3]
+        'price': 5.0,
+        'quantity': 200,
+        'results': {'trades': 1200},
     },
     '2015-09-24': {
-        'data': {
-            'price': 5.0,
-            'quantity': 200,
-            'results': {'trades': 1200},
-        },
-        'occurrences': [EVENT5]
+        'price': 5.0,
+        'quantity': 200,
+        'results': {'trades': 1200},
     }
 }
 EXPECTED_LOG25 = {
     '2015-09-24': {
-        'data': {
-            'price': 5.0,
-            'quantity': 200,
-            'results': {'trades': 1200},
-        },
-        'occurrences': [EVENT5, EVENT4]
+        'price': 5.0,
+        'quantity': 200,
+        'results': {'trades': 1200},
     }
 }
 
 
 EXPECTED_LOG19 = {
     '2015-01-01': {
-        'data': {
-            'quantity': 100,
-            'price': 10,
-            'results': {'daytrades': 1000},
-        },
-        'occurrences': [DAYTRADE2, OPERATION18, EVENT0]
+        'quantity': 100,
+        'price': 10,
+        'results': {'daytrades': 1000},
     }
 }
 
 
 EXPECTED_LOG20 = {
     '2015-01-03': {
-        'data': {
-            'quantity': 100,
-            'price': 10,
-            'results': {'daytrades': 1000},
-        },
-        'occurrences': [EVENT1]
+        'quantity': 100,
+        'price': 10,
+        'results': {'daytrades': 1000},
     },
     '2015-01-02': {
-        'data': {
-            'quantity': 100,
-            'price': 10,
-            'results': {'daytrades': 1000},
-        },
-        'occurrences': [OPERATION1]
+        'quantity': 100,
+        'price': 10,
+        'results': {'daytrades': 1000},
     },
     '2015-01-01': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {'daytrades': 1000},
-        },
-        'occurrences': [DAYTRADE2]
+        'quantity': 0,
+        'price': 0,
+        'results': {'daytrades': 1000},
     }
 }
 
 EXPECTED_LOG21 = {
     '2015-01-02': {
-        'data': {
-            'quantity': 100,
-            'price': 10,
-            'results': {'daytrades': 2000}
-        },
-        'occurrences': [OPERATION1, DAYTRADE3, EVENT2]
+        'quantity': 100,
+        'price': 10,
+        'results': {'daytrades': 2000}
     },
     '2015-01-01': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {'daytrades': 1000}
-        },
-        'occurrences': [DAYTRADE2]
+        'quantity': 0,
+        'price': 0,
+        'results': {'daytrades': 1000}
     }
 }
 
 EXPECTED_LOG22 = {
     '2015-01-01': {
-        'data': {
-            'quantity': 100,
-            'price': 10,
-            'results': {'daytrades': 1000}
-        },
-        'occurrences': [DAYTRADE0, OPERATION18]
+        'quantity': 100,
+        'price': 10,
+        'results': {'daytrades': 1000}
     }
 }
 
 EXPECTED_LOG23 = {
     '2015-01-02': {
-        'data': {
-            'quantity': 100,
-            'price': 10,
-            'results': {'daytrades': 1000}
-        },
-        'occurrences': [OPERATION1]
+        'quantity': 100,
+        'price': 10,
+        'results': {'daytrades': 1000}
     },
     '2015-01-01': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {'daytrades': 1000}
-        },
-        'occurrences': [DAYTRADE0]
+        'quantity': 0,
+        'price': 0,
+        'results': {'daytrades': 1000}
     }
 }
 
 
 EXPECTED_LOG24 = {
     '2015-01-02': {
-        'data': {
-            'quantity': 100,
-            'price': 10,
-            'results': {'daytrades': 2000}
-        },
-        'occurrences': [OPERATION1, DAYTRADE1]
+        'quantity': 100,
+        'price': 10,
+        'results': {'daytrades': 2000}
     },
     '2015-01-01': {
-        'data': {
-            'quantity': 0,
-            'price': 0,
-            'results': {'daytrades': 1000}
-        },
-        'occurrences': [DAYTRADE0]
+        'quantity': 0,
+        'price': 0,
+        'results': {'daytrades': 1000}
     }
 }

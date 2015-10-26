@@ -40,6 +40,7 @@ import copy
 from .utils import average_price, same_sign, merge_operations
 from .trade import Occurrence, Subject
 
+
 class Asset(Subject):
     """An asset represents anything that can be traded.
 
@@ -74,14 +75,12 @@ class Operation(Occurrence):
             update the results of the accumulator or not.
     """
 
-    # By default every operation update
-    # accumulator position; this can be
-    # changed on-spot if needed
+    # By default every operation
+    # updates the accumulator position
     update_position = True
 
-    # By default every operation update
-    # accumulator results; this can be
-    # changed on-spot if needed
+    # By default every operation
+    # updates the accumulator results
     update_results = True
 
     def __init__(self, subject=None, date=None, quantity=0, price=0):
@@ -126,12 +125,7 @@ class Operation(Occurrence):
 
     def update_accumulator(self, accumulator):
         """Update the accumulator status with the operation data."""
-        # Update the state of the accumulator with
-        # this operation data
         self.update_positions(accumulator)
-
-        # Add whatever result was informed with or generated
-        # by this operation to the accumulator results dict
         if self.update_results:
             self.update_accumulator_results(accumulator)
 

@@ -128,23 +128,19 @@ class Accumulator(object):
             self.log_occurrence(occurrence)
 
     def log_occurrence(self, operation):
-        """Log Operation, Daytrade and Event objects.
+        """Log the state of the accumulator.
 
         If logging, this method is called behind the scenes every
-        time accumulate() is called. The occurrences are logged
+        time accumulate() is called. The states are logged by day
         like this:
         {
             'YYYY-mm-dd': {
                 'data': {}
-                'occurrences': [operation, ...],
             },
             ...
         }
         """
-        if operation.date not in self.log:
-            self.log[operation.date] = {'occurrences': []}
-        self.log[operation.date]['data'] = copy.deepcopy(self.data)
-        self.log[operation.date]['occurrences'].append(operation)
+        self.log[operation.date] = copy.deepcopy(self.data)
 
 
 class Portfolio(object):
