@@ -3,8 +3,11 @@
 from __future__ import absolute_import
 
 from tests.fixtures.operations import (
-    OPERATION9, OPERATION10, OPERATION11, OPERATION12, OPERATION13,
-    OPERATION14, OPERATION15, OPERATION16, OPERATION17,
+    OPERATION16, OPERATION17,
+)
+from tests.fixtures.operation_sequences import (
+    OPERATION_SEQUENCE14, OPERATION_SEQUENCE15, OPERATION_SEQUENCE16,
+    OPERATION_SEQUENCE17, OPERATION_SEQUENCE18, OPERATION_SEQUENCE19
 )
 from tests.fixtures.logs import (
     EXPECTED_LOG0, EXPECTED_LOG1, EXPECTED_LOG2, EXPECTED_LOG3,
@@ -20,9 +23,7 @@ from tests.fixtures.accumulator_states import (
 class TestAccumulatorResultsSaleCase00(LogTest):
     """Test profits or losses originating from sale operations."""
 
-    occurrences = [
-        OPERATION9, OPERATION10
-    ]
+    occurrences = OPERATION_SEQUENCE14
     expected_log = EXPECTED_LOG0
     expected_state = EXPECTED_STATE1
 
@@ -30,9 +31,7 @@ class TestAccumulatorResultsSaleCase00(LogTest):
 class TestAccumulatorResultsSaleCase01(LogTest):
     """Test profits or losses originating from sale operations."""
 
-    occurrences = [
-        OPERATION9, OPERATION10, OPERATION11
-    ]
+    occurrences = OPERATION_SEQUENCE15
     expected_log = EXPECTED_LOG1
     expected_state = EXPECTED_STATE9
 
@@ -40,9 +39,7 @@ class TestAccumulatorResultsSaleCase01(LogTest):
 class TestAccumulatorResultsSaleCase02(LogTest):
     """Test profits or losses originating from sale operations."""
 
-    occurrences = [
-        OPERATION9, OPERATION10, OPERATION11, OPERATION12
-    ]
+    occurrences = OPERATION_SEQUENCE16
     expected_log = EXPECTED_LOG2
     expected_state = EXPECTED_STATE7
 
@@ -50,9 +47,7 @@ class TestAccumulatorResultsSaleCase02(LogTest):
 class TestAccumulatorResultsSaleCase04(LogTest):
     """Test profits or losses originating from sale operations."""
 
-    occurrences = [
-        OPERATION9, OPERATION10, OPERATION11, OPERATION12, OPERATION13
-    ]
+    occurrences = OPERATION_SEQUENCE17
     expected_log = EXPECTED_LOG3
     expected_state = EXPECTED_STATE10
 
@@ -60,10 +55,7 @@ class TestAccumulatorResultsSaleCase04(LogTest):
 class TestAccumulatorResultsSaleCase05(LogTest):
     """Test profits or losses originating from sale operations."""
 
-    occurrences = [
-        OPERATION9, OPERATION10, OPERATION11, OPERATION12, OPERATION13,
-        OPERATION14
-    ]
+    occurrences = OPERATION_SEQUENCE18
     expected_log = EXPECTED_LOG4
     expected_state = EXPECTED_STATE11
 
@@ -71,10 +63,7 @@ class TestAccumulatorResultsSaleCase05(LogTest):
 class TestAccumulatorResultsSaleCase06(LogTest):
     """Test profits or losses originating from sale operations."""
 
-    occurrences = [
-        OPERATION9, OPERATION10, OPERATION11, OPERATION12, OPERATION13,
-        OPERATION15
-    ]
+    occurrences = OPERATION_SEQUENCE19
     expected_log = EXPECTED_LOG5
     expected_state = EXPECTED_STATE12
 
@@ -82,8 +71,6 @@ class TestAccumulatorResultsSaleCase06(LogTest):
 class TestAccumulatorResultsSaleCase07(LogTest):
     """Test profits or losses originating from sale operations."""
 
-    occurrences = [
-        OPERATION16, OPERATION17
-    ]
+    occurrences = [OPERATION16, OPERATION17]
     expected_log = EXPECTED_LOG6
     expected_state = EXPECTED_STATE13
