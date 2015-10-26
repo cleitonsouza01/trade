@@ -3,7 +3,9 @@
 from __future__ import absolute_import
 
 from tests.fixtures.operations import DAYTRADE0
-from tests.fixtures.logs import EXPECTED_LOG16, LogTest
+from tests.fixtures.logs import (
+    EXPECTED_LOG16, LogTest, EXPECTED_STATE25
+)
 
 
 class TestLogDaytrade(LogTest):
@@ -11,9 +13,7 @@ class TestLogDaytrade(LogTest):
 
     occurrences = [DAYTRADE0]
     expected_log = EXPECTED_LOG16
-    expected_quantity = 0
-    expected_price = 0
-    expected_results = {'daytrades': 1000}
+    expected_state = EXPECTED_STATE25
 
     def test_log_keys(self):
         self.assertEqual(list(self.accumulator.log), ['2015-01-01'])

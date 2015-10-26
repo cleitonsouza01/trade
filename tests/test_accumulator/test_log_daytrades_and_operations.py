@@ -7,6 +7,7 @@ from tests.fixtures.operations import (
 )
 from tests.fixtures.logs import (
     EXPECTED_LOG22, EXPECTED_LOG23, EXPECTED_LOG24,
+    EXPECTED_STATE23, EXPECTED_STATE24,
     LogTest
 )
 
@@ -19,9 +20,7 @@ class TestLogDaytradesAndOperationsCase00(LogTest):
 
     occurrences = [DAYTRADE0, OPERATION18]
     expected_log = EXPECTED_LOG22
-    expected_quantity = 100
-    expected_price = 10
-    expected_results = {'daytrades': 1000}
+    expected_state = EXPECTED_STATE23
 
 
 class TestLogDaytradesAndOperationsCase01(LogTest):
@@ -29,9 +28,7 @@ class TestLogDaytradesAndOperationsCase01(LogTest):
 
     occurrences = [DAYTRADE0, OPERATION1, DAYTRADE1]
     expected_log = EXPECTED_LOG24
-    expected_quantity = 100
-    expected_price = 10
-    expected_results = {'daytrades': 2000}
+    expected_state = EXPECTED_STATE24
 
 
 class TestLogDaytradesAndOperationsCase02(LogTest):
@@ -39,6 +36,4 @@ class TestLogDaytradesAndOperationsCase02(LogTest):
 
     occurrences = [DAYTRADE0, OPERATION1]
     expected_log = EXPECTED_LOG23
-    expected_quantity = 100
-    expected_price = 10
-    expected_results = {'daytrades': 1000}
+    expected_state = EXPECTED_STATE23

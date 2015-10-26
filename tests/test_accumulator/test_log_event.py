@@ -8,7 +8,7 @@ from tests.fixtures.events import (
 )
 from tests.fixtures.logs import (
     EXPECTED_LOG17, EXPECTED_LOG18, EXPECTED_LOG25,
-    LogTest, INITIAL_STATE0
+    LogTest, INITIAL_STATE0, EXPECTED_STATE0,
 )
 
 
@@ -18,9 +18,7 @@ class TestLogEvent00(LogTest):
     initial_state = INITIAL_STATE0
     occurrences = [EVENT5]
     expected_log = EXPECTED_LOG17
-    expected_quantity = 200
-    expected_price = 5
-    expected_results = {'trades': 1200}
+    expected_state = EXPECTED_STATE0
 
 
 class TestLogEvent01(LogTest):
@@ -29,9 +27,7 @@ class TestLogEvent01(LogTest):
     initial_state = INITIAL_STATE0
     occurrences = [EVENT5, EVENT3]
     expected_log = EXPECTED_LOG18
-    expected_quantity = 200
-    expected_price = 5
-    expected_results = {'trades': 1200}
+    expected_state = EXPECTED_STATE0
 
 
 class TestLogEvent02(LogTest):
@@ -40,6 +36,4 @@ class TestLogEvent02(LogTest):
     initial_state = INITIAL_STATE0
     occurrences = [EVENT5, EVENT4]
     expected_log = EXPECTED_LOG25
-    expected_quantity = 200
-    expected_price = 5
-    expected_results = {'trades': 1200}
+    expected_state = EXPECTED_STATE0

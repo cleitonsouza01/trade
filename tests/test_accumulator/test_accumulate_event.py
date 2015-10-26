@@ -8,7 +8,7 @@ import trade.plugins
 
 from tests.fixtures.operations import ASSET
 from tests.fixtures.logs import (
-    LogTest, INITIAL_STATE0
+    LogTest, INITIAL_STATE0, EXPECTED_STATE14
 )
 
 
@@ -31,6 +31,4 @@ class TestEventThatChangeResultsCase00(LogTest):
     occurrences = [
         EventThatChangeResults(ASSET, '2015-09-27', 2)
     ]
-    expected_quantity = 100
-    expected_price = 10
-    expected_results = {'trades': 1202}
+    expected_state = EXPECTED_STATE14

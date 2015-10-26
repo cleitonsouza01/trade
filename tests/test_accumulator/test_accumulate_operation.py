@@ -13,7 +13,8 @@ from tests.fixtures.commissions import (
     COMMISSIONS13
 )
 from tests.fixtures.logs import (
-    LogTest
+    LogTest, EXPECTED_STATE1, EXPECTED_STATE16,
+    EXPECTED_STATE17, EXPECTED_STATE7, EXPECTED_STATE26
 )
 
 
@@ -25,17 +26,13 @@ class TestAccumulateOperationCase00(LogTest):
     """
 
     occurrences = [OPERATION28]
-    expected_quantity = 0
-    expected_price = 0
-    expected_results = {}
+    expected_state = EXPECTED_STATE1
 
 
 class TestAccumulateOperationCase01(LogTest):
     """Test the accumulation of 1 operation with commissions."""
 
-    expected_quantity = 20
-    expected_price = 10.2
-    expected_results = {}
+    expected_state = EXPECTED_STATE26
 
     def setUp(self):
         container = trade.OperationContainer(
@@ -53,9 +50,7 @@ class TestAccumulateOperationCase01(LogTest):
 class TestAccumulateOperationCase02(LogTest):
     """Test the accumulation of 1 operation with zero price."""
 
-    expected_quantity = 20
-    expected_price = 0
-    expected_results = {}
+    expected_state = EXPECTED_STATE16
 
     def setUp(self):
         container = trade.OperationContainer(
@@ -71,9 +66,7 @@ class TestAccumulateOperationCase02(LogTest):
 class TestAccumulateOperationCase03(LogTest):
     """Test the accumulation of 2 operations in consecutive dates."""
 
-    expected_quantity = 0
-    expected_price = 0
-    expected_results = {'trades': -200}
+    expected_state = EXPECTED_STATE17
 
     def setUp(self):
         container = trade.OperationContainer(
@@ -90,14 +83,12 @@ class TestAccumulateOperationCase03(LogTest):
 class TestAccumulateOperationCase04(LogTest):
     """Test the accumulation of empty operations."""
 
-    expected_quantity = 0
-    expected_price = 0
-    expected_results = {'some result': 1000}
+    expected_state = EXPECTED_STATE7
 
     def setUp(self):
         operation2 = copy.deepcopy(OPERATION23)
         operation2.raw_results = {
-            'some result': 1000
+            'trades': 1000
         }
         self.occurrences = [OPERATION22, operation2]
         super(TestAccumulateOperationCase04, self).setUp()

@@ -9,6 +9,8 @@ from tests.fixtures.operations import (
 from tests.fixtures.logs import (
     EXPECTED_LOG0, EXPECTED_LOG1, EXPECTED_LOG2, EXPECTED_LOG3,
     EXPECTED_LOG4, EXPECTED_LOG5, EXPECTED_LOG6,
+    EXPECTED_STATE1, EXPECTED_STATE9, EXPECTED_STATE7, EXPECTED_STATE10,
+    EXPECTED_STATE11, EXPECTED_STATE12, EXPECTED_STATE13,
     LogTest
 )
 
@@ -20,9 +22,7 @@ class TestAccumulatorResultsSaleCase00(LogTest):
         OPERATION9, OPERATION10
     ]
     expected_log = EXPECTED_LOG0
-    expected_quantity = 0
-    expected_price = 0
-    expected_results = {}
+    expected_state = EXPECTED_STATE1
 
 
 class TestAccumulatorResultsSaleCase01(LogTest):
@@ -32,9 +32,7 @@ class TestAccumulatorResultsSaleCase01(LogTest):
         OPERATION9, OPERATION10, OPERATION11
     ]
     expected_log = EXPECTED_LOG1
-    expected_quantity = 100
-    expected_price = 10
-    expected_results = {}
+    expected_state = EXPECTED_STATE9
 
 
 class TestAccumulatorResultsSaleCase02(LogTest):
@@ -44,9 +42,7 @@ class TestAccumulatorResultsSaleCase02(LogTest):
         OPERATION9, OPERATION10, OPERATION11, OPERATION12
     ]
     expected_log = EXPECTED_LOG2
-    expected_quantity = 0
-    expected_price = 0
-    expected_results = {'trades': 1000}
+    expected_state = EXPECTED_STATE7
 
 
 class TestAccumulatorResultsSaleCase04(LogTest):
@@ -56,9 +52,7 @@ class TestAccumulatorResultsSaleCase04(LogTest):
         OPERATION9, OPERATION10, OPERATION11, OPERATION12, OPERATION13
     ]
     expected_log = EXPECTED_LOG3
-    expected_quantity = 100
-    expected_price = 20
-    expected_results = {'trades': 1000}
+    expected_state = EXPECTED_STATE10
 
 
 class TestAccumulatorResultsSaleCase05(LogTest):
@@ -69,9 +63,7 @@ class TestAccumulatorResultsSaleCase05(LogTest):
         OPERATION14
     ]
     expected_log = EXPECTED_LOG4
-    expected_quantity = 0
-    expected_price = 0
-    expected_results = {'trades': 3000}
+    expected_state = EXPECTED_STATE11
 
 
 class TestAccumulatorResultsSaleCase06(LogTest):
@@ -82,9 +74,7 @@ class TestAccumulatorResultsSaleCase06(LogTest):
         OPERATION15
     ]
     expected_log = EXPECTED_LOG5
-    expected_quantity = 50
-    expected_price = 20
-    expected_results = {'trades': 2000}
+    expected_state = EXPECTED_STATE12
 
 
 class TestAccumulatorResultsSaleCase07(LogTest):
@@ -94,6 +84,4 @@ class TestAccumulatorResultsSaleCase07(LogTest):
         OPERATION16, OPERATION17
     ]
     expected_log = EXPECTED_LOG6
-    expected_quantity = -50
-    expected_price = 20
-    expected_results = {'trades': 500}
+    expected_state = EXPECTED_STATE13

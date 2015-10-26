@@ -10,24 +10,18 @@ from tests.fixtures.assets import (
     ASSET
 )
 
-
-INITIAL_STATE0 = {
-    'quantity': 100,
-    'price': 10,
-    'results': {'trades': 1200},
-}
-
 class LogTest(unittest.TestCase):
     """Base class for Accumulator tests."""
 
     maxDiff = None
-
+    initial_state = {}
     occurrences = []
     expected_log = {}
-    expected_quantity = 0
-    expected_price = 0
-    expected_results = {}
-    initial_state = {}
+    expected_state = {
+        'quantity': 0,
+        'price': 0,
+        'results': {},
+    }
 
     def setUp(self):
         self.accumulator = trade.Accumulator(ASSET, logging=True)
@@ -48,16 +42,162 @@ class LogTest(unittest.TestCase):
     def test_accumulated_result(self):
         """Test the results for the defined occurrences."""
         self.assertEqual(
-            self.accumulator.data['results'], self.expected_results)
+            self.accumulator.data['results'], self.expected_state['results'])
 
     def test_current_quantity(self):
         """Test the quantity for the defined occurrences."""
         self.assertEqual(
-            self.accumulator.data['quantity'], self.expected_quantity)
+            self.accumulator.data['quantity'], self.expected_state['quantity'])
 
     def test_current_price(self):
         self.assertEqual(
-            round(self.accumulator.data['price'], 2), self.expected_price)
+            round(self.accumulator.data['price'], 2), self.expected_state['price'])
+
+
+INITIAL_STATE0 = {
+    'quantity': 100,
+    'price': 10,
+    'results': {'trades': 1200},
+}
+
+
+
+
+EXPECTED_STATE0 = {
+    'quantity': 200,
+    'price': 5,
+    'results': {'trades': 1200},
+}
+EXPECTED_STATE1 = {
+    'quantity': 0,
+    'price': 0,
+    'results': {},
+}
+EXPECTED_STATE2 = {
+    'quantity': -100,
+    'price': 10,
+    'results': {},
+}
+EXPECTED_STATE3 = {
+    'quantity': 0,
+    'price': 0,
+    'results': {'trades': -1000},
+}
+EXPECTED_STATE4 = {
+    'quantity': -100,
+    'price': 20,
+    'results': {'trades': -1000},
+}
+EXPECTED_STATE5 = {
+    'quantity': 0,
+    'price': 0,
+    'results': {'trades': -3000},
+}
+EXPECTED_STATE6 = {
+    'quantity': -50,
+    'price': 20,
+    'results': {'trades': -2000},
+}
+EXPECTED_STATE7 = {
+    'quantity': 0,
+    'price': 0,
+    'results': {'trades': 1000},
+}
+EXPECTED_STATE8 = {
+    'quantity': 50,
+    'price': 10,
+    'results': {'trades': 500},
+}
+EXPECTED_STATE9 = {
+    'quantity': 100,
+    'price': 10,
+    'results': {},
+}
+EXPECTED_STATE10 = {
+    'quantity': 100,
+    'price': 20,
+    'results': {'trades': 1000},
+}
+EXPECTED_STATE11 = {
+    'quantity': 0,
+    'price': 0,
+    'results': {'trades': 3000},
+}
+EXPECTED_STATE12 = {
+    'quantity': 50,
+    'price': 20,
+    'results': {'trades': 2000},
+}
+EXPECTED_STATE13 = {
+    'quantity': -50,
+    'price': 20,
+    'results': {'trades': 500},
+}
+EXPECTED_STATE14 = {
+    'quantity': 100,
+    'price': 10,
+    'results': {'trades': 1202},
+}
+EXPECTED_STATE15 = {
+    'quantity': 10,
+    'price': 10.2,
+    'results': {},
+}
+EXPECTED_STATE16 = {
+    'quantity': 20,
+    'price': 0,
+    'results': {},
+}
+EXPECTED_STATE17 = {
+    'quantity': 0,
+    'price': 0,
+    'results': {'trades': -200},
+}
+EXPECTED_STATE18 = {
+    'quantity': 100,
+    'price': 10,
+    'results': {'trades': 1000},
+}
+EXPECTED_STATE19 = {
+    'quantity': 100,
+    'price': 10,
+    'results': {'trades': 2000},
+}
+EXPECTED_STATE20 = {
+    'quantity': 50,
+    'price': 20,
+    'results': {'trades': 1200},
+}
+EXPECTED_STATE21 = {
+    'quantity': 300,
+    'price': 3.33,
+    'results': {'trades': 1200},
+}
+EXPECTED_STATE22 = {
+    'quantity': 150,
+    'price': 6.67,
+    'results': {'trades': 1200},
+}
+EXPECTED_STATE23 = {
+    'quantity': 100,
+    'price': 10,
+    'results': {'daytrades': 1000},
+}
+EXPECTED_STATE24 = {
+    'quantity': 100,
+    'price': 10,
+    'results': {'daytrades': 2000},
+}
+EXPECTED_STATE25 = {
+    'quantity': 0,
+    'price': 0,
+    'results': {'daytrades': 1000},
+}
+EXPECTED_STATE26 = {
+    'quantity': 20,
+    'price': 10.2,
+    'results': {},
+}
 
 
 EXPECTED_LOG0 = {
