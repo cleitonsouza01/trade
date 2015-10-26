@@ -134,35 +134,33 @@ class Daytrade(Operation):
         """
         if 'daytrades' not in container.positions:
             container.positions['daytrades'] = {}
-        symbol = self.subject.symbol
 
         # If the container already have
         # a daytrade position with this asset,
         # then we must merge this daytrade
         # with the existing daytrade
-        if symbol in container.positions['daytrades']:
-
-            # Merges the purchase operation
-            merge_operations(
-                container.positions['daytrades'][symbol].operations[0],
-                self.operations[0]
-            )
-
-            # Merges the sale operation
-            merge_operations(
-                container.positions['daytrades'][symbol].operations[1],
-                self.operations[1]
-            )
+        if self.subject.symbol in container.positions['daytrades']:
+            self.merge_underlying(container, 0)
+            self.merge_underlying(container, 1)
 
             # Update the daytraded quantity with the
             # quantity of this daytrade
-            container.positions['daytrades'][symbol].quantity += self.quantity
+            container.positions['daytrades'][self.subject.symbol].quantity +=\
+                self.quantity
 
         # If this is the first found daytrade
         # with this asset on the container, then
         # place this daytrade on the container
         else:
-            container.positions['daytrades'][symbol] = self
+            container.positions['daytrades'][self.subject.symbol] = self
+
+    def merge_underlying(self, container, operation_index):
+        """Merges one daytrade underlying operation."""
+        merge_operations(
+            container.positions['daytrades'][self.subject.symbol]\
+                .operations[operation_index],
+            self.operations[operation_index]
+        )
 
 
 def fetch_daytrades(container):
