@@ -3,12 +3,12 @@
 from __future__ import absolute_import
 from __future__ import division
 
+from tests.fixtures.logtest import LogTest
 from tests.fixtures.events import (
     EVENT3, EVENT5, EVENT4
 )
 from tests.fixtures.logs import (
     EXPECTED_LOG17, EXPECTED_LOG18,
-    LogTest,
 )
 from tests.fixtures.accumulator_states import (
     INITIAL_STATE0, EXPECTED_STATE0,

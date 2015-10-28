@@ -40,6 +40,7 @@ class TaxManagerForTests(object):
         return {}
 
 
+
 class TestFetchPositions(unittest.TestCase):
     """Create the default operations for the test cases."""
 

@@ -2,6 +2,7 @@
 
 from __future__ import absolute_import
 
+from tests.fixtures.logtest import LogTest
 from tests.fixtures.operations import (
     OPERATION1, OPERATION18, DAYTRADE2, DAYTRADE3,
 )
@@ -10,7 +11,6 @@ from tests.fixtures.events import (
 )
 from tests.fixtures.logs import (
     EXPECTED_LOG19, EXPECTED_LOG20, EXPECTED_LOG21,
-    LogTest
 )
 from tests.fixtures.accumulator_states import (
     EXPECTED_STATE23, EXPECTED_STATE24,

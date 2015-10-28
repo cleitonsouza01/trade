@@ -5,15 +5,13 @@ import copy
 
 import trade
 from trade.plugins import prorate_commissions
+from tests.fixtures.logtest import LogTest
 from tests.fixtures.operations import (
     ASSET, OPERATION19, OPERATION20, OPERATION21, OPERATION22,
     OPERATION23, OPERATION28
 )
 from tests.fixtures.commissions import (
     COMMISSIONS13
-)
-from tests.fixtures.logs import (
-    LogTest,
 )
 from tests.fixtures.accumulator_states import (
     EXPECTED_STATE1, EXPECTED_STATE16,
