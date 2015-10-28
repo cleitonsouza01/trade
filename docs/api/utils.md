@@ -1,25 +1,22 @@
 # utils
-
-
-## Functions:
-
-### utils.average_price(quantity_1, price_1, quantity_2, price_2):
-Calculates the average price between two positions.
-A position is the quantity of an asset and its average price.  
-Returns the calculated average price.
+http://github.com/rochars/trade  
+http://trade.readthedocs.org  
 
 
 
-### utils.same_sign(x, y):
-Checks if two numbers have the same sign.  
-Return True if they have the same sign,  
-False if they don't have the same sign,
-and None if x or y are not numbers.
-
-
-
-### utils.merge_operations(existing_operation, operation):
+## merge_operations(existing_operation, operation)
 Merges one operation with another operation.
+
+
+
+## average_price(quantity_1, price_1, quantity_2, price_2)
+Calculates the average price between two positions.
+A position is the quantity of an asset and its average price.
+
+
+
+## same_sign(x, y)
+Checks if two numbers have the same sign.
 
 
 

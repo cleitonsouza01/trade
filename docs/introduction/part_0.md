@@ -25,6 +25,8 @@ Now that you have trade installed, you can move on to the next part of the
 tutorial: [Part 1: Creating operations](part_1).
 
 
+
+## License
 Copyright (c) 2015 Rafael da Silva Rocha
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

@@ -1,11 +1,29 @@
-# trade: Tools For Stock Trading Applications.
+# plugins.options
+http://github.com/rochars/trade  
+http://trade.readthedocs.org
 
-THIS SECTION OF THE DOCUMENTATION IS OUTDATED.
-The trade module is still in alpha status and evolving rapidly.
-
-Check the [API docs](../api) for up-to-date information.
+prorate: Commissions pro rata on the OperationContainer.
 
 
+
+## prorate_commissions(container):
+Prorates the container's commissions by its operations.
+
+This method sum the discounts in the commissions dict of the
+container. The total discount value is then prorated by the
+position operations based on their volume.
+
+
+
+## prorate_commissions_by_position(container, operation):
+Prorates the commissions of the container for one position.
+
+The ratio is based on the container volume and the volume of
+the position operation.
+
+
+
+## License
 Copyright (c) 2015 Rafael da Silva Rocha
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

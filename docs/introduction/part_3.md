@@ -46,7 +46,7 @@ rates and operating costs that you need to apply to your operations. You may
 also need to identify certain types of operations and process them differently,
 like daytrades and operations like option exercises.
 
-That's when the OperationContainer comes; it is used to group operations that
+That's where the OperationContainer comes; it is used to group operations that
 happened on the same date, and them perform tasks on them.
 
 After these tasks are performed, all operations with the same asset are grouped
@@ -105,7 +105,7 @@ When fetch_positions() is called the OperationContainer executes all
 the tasks that it is programmed to. By default it just executes 1 task:
 to group all operations with the same asset on a single operation.
 
-This generated positions will be stored on the OperationContainer
+The generated positions will be stored on the OperationContainer
 positions attribute, a dictionary indexed by the type of position. By default
 the operation container identifies all operations as 'operations', so
 the positions attribute now would look like this:
@@ -156,6 +156,8 @@ on to the next part of this tutorial:
 [Pre-processing operations: Daytrades](part_4).
 
 
+
+## License
 Copyright (c) 2015 Rafael da Silva Rocha
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

@@ -7,33 +7,40 @@ of investment applications in Python. It provides notions of assets,
 operations, daytrades, cost deduction, asset accumulation, rates and more.
 
 
-## Classes available:
+## Modules in this package:
++ [trade](trade)
++ [operations](operations)
++ [utils](utils)
++ [plugins](plugins)
 
-+ [trade.Asset](trade)  
-  Representing assets.
-+ [trade.Operation](trade)  
-  Representing operations with assets.
-+ [trade.OperationContainer](trade)  
-  To identify daytrades, prorate comissions and apply taxes to operations.
+
+## trade module:
++ [Subject](trade)  
+  Representing subjects.
++ [Occurrence](trade)  
+  Representing occurrences.
 + [trade.Portfolio](trade)  
-  To represent a portfolio of assets using a series of Accumulator objects.
-+ [trade.TradingFees](trade)  
-  To get the right taxes for the operations on the container.
+  Representing a portfolio of subjects using a collection of Accumulator objects.
 + [trade.Accumulator](trade)  
-  To accumulate the assets and calculate the result from the trades.
-+ [trade.Event](trade)  
-  To change the asset's quantity and price on the accumulator.
+  To accumulate occurrences with subjects and log their consequences.
+
+
+## operations module:
++ [Asset(Subject)](trade)  
+  Representing assets, a subclass of Subject.
++ [Operation(Occurrence)](trade)  
+  A subclass of Occurrence representing operations with assets.
++ [trade.OperationContainer](trade)  
+  To pre-process operations before accumulating, like identifying daytrades.
 
 
 ## Functions available:
-
-+ [utils.merge_operations()](utils)
-+ [utils.average_price()](utils)
-+ [utils.same_sign()](utils)
++ [merge_operations()](utils)
++ [average_price()](utils)
++ [same_sign()](utils)
 
 
 ## Default plugins:
-
 The trade module comes pre-packed with some plugins that add
 functionalities related to common stock market operations.
 
@@ -52,7 +59,6 @@ to create your own plugins.
 
 
 ## Basic example
-
 ```python
 import trade
 
@@ -65,15 +71,9 @@ operation = trade.Operation(
     price=10
 )
 
-# create a container with some
-# commissions associated with it
-commissions = {
-    'some commission': 1,
-    'other commission': 3,
-}
+# create a operation container
 container = trade.OperationContainer(
-    operations=[operation],
-    commissions=commissions
+    operations=[operation]
 )
 
 # identify common operations and daytrades
@@ -96,12 +96,6 @@ print(accumulator.price)
 # the OperationContainer prorated (default taxes are zero)
 ```
 
-
-## Modules in this package:
-
-+ [trade](trade)
-+ [utils](utils)
-+ [plugins](plugins)
 
 
 ## License

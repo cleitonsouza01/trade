@@ -35,7 +35,7 @@ sale = trade.Operation(
 It is now that the trade module really comes to work. We are going to create
 a Portfolio object to hold the operations and calculate their results.
 
-Creating a Portfolio object is very simple:
+Creating a Portfolio object is simple:
 
 ```python
 import trade
@@ -80,9 +80,9 @@ portfolio.accumulate(sale)
 portfolio.accumulate(purchase)
 ```
 
-Portfolios have a attribute called assets, wich is a dictionary indexed
-by Asset object references. Every operation is accumulated on this attribute,
-under the key of the operation's Asset. This process uses a Accumulator
+Portfolios have a collection of Accumulator objects, one for each asset
+the Portfolio accumulates. Every operation is accumulated on its corresponding
+accumualtor according to the operation Asset. This process uses a Accumulator
 object that we will discuss later. Right now, we can check the results of our
 operations by just:
 
@@ -114,6 +114,8 @@ move on to the next part of the tutorial:
 [Part 3: Pre-processing operations](part_3).
 
 
+
+## License
 Copyright (c) 2015 Rafael da Silva Rocha
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

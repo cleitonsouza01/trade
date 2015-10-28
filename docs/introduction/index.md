@@ -51,6 +51,7 @@ on our Portfolio. Daytrades can be accumulated just like a normal operation.
 
 
 
+## License
 Copyright (c) 2015 Rafael da Silva Rocha
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

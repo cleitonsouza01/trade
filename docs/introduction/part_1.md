@@ -59,6 +59,8 @@ Now that you can create purchase and sale operations, you can move on to
 the next part of the tutorial: [Part 2: Accumulating assets](part_2).
 
 
+
+## License
 Copyright (c) 2015 Rafael da Silva Rocha
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

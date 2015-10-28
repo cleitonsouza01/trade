@@ -71,10 +71,10 @@ for position in container.positions['common operations'].values():
 ```
 
 But this is a simple case; real world operations can be much more complex than
-that. On example of a more complex operation is a daytrade.
+that. On example of a more complex operation is a day trade.
 
-A daytrade is the operations of purchase and sale of the same asset on the same
-day. So this would be a daytrade:
+A day trade is the operations of purchase and sale of the same asset on the same
+day. So this would be a day trade:
 
 ```python
 import trade
@@ -98,11 +98,11 @@ sale = trade.Operation(
 )
 ```
 
-Daytrades are often treated very differently from common operations. Their
+Day trades are often treated very differently from common operations. Their
 results usually are taxed differently, among other things. Sometimes they
 are charged with different brokerage commissions, too.
 
-To make things more complicated, this is also a daytrade in some contexts:
+To make things more complicated, this is also a day trade in some contexts:
 
 ```python
 import trade
@@ -126,21 +126,21 @@ sale = trade.Operation(
 )
 ```
 
-Were out of this two operations we have a daytrade of 5 stocks being purchased
+Were out of this two operations we have a day trade of 5 stocks being purchased
 by 50.4 and sold by 52.39, and also a common purchase operation of 5 stocks for
 50.4. In some stock markets around the world the purchase operation would be
 taxed with two different rates; one relative to the purchase of 5 stocks in a
-common operation, and other related to the daytrade purchase of 5 stocks.
+common operation, and other related to the day trade purchase of 5 stocks.
 
-If your context involves daytrades then you need to identify them before
+If your context involves day trades then you need to identify them before
 passing the operations to the OperationContainer. For this the trade framework
-comes pre-packed with a plugin to identify and process daytrades.
+comes pre-packed with a plugin to identify and process day trades.
 
 It is also a nice way of getting started using plugins; the trade module comes
 pre-packed with a series of plugins, and you can create your own plugins or use
 third-party plugins to suit your needs.
 
-While all of this may have sounded complicated, to identify daytrades in the
+While all of this may have sounded complicated, to identify day trades in the
 trade module you just have to append a task to the operation container:
 
 ```python
@@ -154,11 +154,11 @@ container = trade.OperationContainer()
 container.tasks.append(trade.plugins.fetch_daytrades)
 ```
 
-And now your container will identify all daytrades among your operations.
-Daytrades create different positions on the OperationContainer positions
-dictionary; they are indexed under the 'daytrades' key, and the Operations
+And now your container will identify all day trades among your operations.
+Day trades create different positions on the OperationContainer positions
+dictionary; they are indexed under the 'day trades' key, and the Operations
 are not Operation objects, but Daytrade objects. But you can treat them
-the same way you treat opeations.
+the same way you treat operations.
 
 Using the previous example it would look like this:
 
@@ -211,6 +211,8 @@ print(portfolio.assets['ATVI'].results)
 ```
 
 
+
+## License
 Copyright (c) 2015 Rafael da Silva Rocha
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
