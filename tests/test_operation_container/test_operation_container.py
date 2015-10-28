@@ -49,6 +49,10 @@ class TestContainerCreationCase01(unittest.TestCase):
 class TestContainerAddToPositions(TestFetchPositions):
     """Test add_to_position_operations method."""
 
+    # add_to_position_operations should not change
+    # the container volume
+    volume = 20
+
     operations = [OPERATION24]
     positions = {
         ASSET.symbol: {
@@ -61,6 +65,3 @@ class TestContainerAddToPositions(TestFetchPositions):
     def setUp(self):
         super(TestContainerAddToPositions, self).setUp()
         self.container.add_to_position_operations(copy.deepcopy(OPERATION45))
-
-    def test_common_trades_len(self):
-        self.assertEqual(len(self.container.positions['operations'].keys()), 1)

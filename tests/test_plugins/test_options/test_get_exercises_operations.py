@@ -1,11 +1,8 @@
 """Test the trade.plugins.fetch_exercises task from the Option plugin."""
 
 from __future__ import absolute_import
-import unittest
-import copy
 
-import trade
-
+from tests.test_operation_container.container_test_base import TestFetchPositions
 from tests.fixtures.operations import (
     EXERCISE_OPERATION2, EXERCISE_OPERATION3
 )
@@ -14,85 +11,39 @@ from tests.fixtures.assets import (
 )
 
 
-class TestFetchExercises(unittest.TestCase):
-    """Base class for the fetch_exercises() task."""
-
-    def setUp(self):
-        self.container = trade.OperationContainer()
-        self.container.tasks = [trade.plugins.fetch_exercises]
-
-
-class TestFetchExercisesCase00(TestFetchExercises):
+class TestFetchExercisesCase00(TestFetchPositions):
     """Test the fetch_exercises() task of the Accumulator."""
 
-    def setUp(self):
-        super(TestFetchExercisesCase00, self).setUp()
-        self.container.operations = [copy.deepcopy(EXERCISE_OPERATION2)]
-        self.container.fetch_positions()
-
-    def test_container_volume(self):
-        self.assertEqual(self.container.volume, 100)
-
-    def test_container_exercises_len(self):
-        self.assertEqual(
-            len(self.container.positions['exercises'].values()), 2
-        )
-
-    def test_option_consuming_quantity(self):
-        self.assertEqual(
-            self.container.positions['exercises'][OPTION1.symbol].quantity,
-            -100
-        )
-
-    def test_option_consuming_price(self):
-        self.assertEqual(
-            self.container.positions['exercises'][OPTION1.symbol].price, 0
-        )
-
-    def test_asset_purchase_quantity(self):
-        self.assertEqual(
-            self.container.positions['exercises'][ASSET.symbol].quantity, 100
-        )
-
-    def test_asset_purchase_price(self):
-        self.assertEqual(
-            self.container.positions['exercises'][ASSET.symbol].price, 1
-        )
+    volume = 100
+    operations = [EXERCISE_OPERATION2]
+    exercises = {
+        OPTION1.symbol: {
+            'quantity': -100,
+            'price': 0,
+            'volume': 0,
+        },
+        ASSET.symbol: {
+            'quantity': 100,
+            'price': 1,
+            'volume': 100
+        }
+    }
 
 
-class TestFetchExercisesCase01(TestFetchExercises):
+class TestFetchExercisesCase01(TestFetchPositions):
     """Test the fetch_exercises() task of the Accumulator."""
 
-    def setUp(self):
-        super(TestFetchExercisesCase01, self).setUp()
-        self.container.operations = [
-            copy.deepcopy(EXERCISE_OPERATION2),
-            copy.deepcopy(EXERCISE_OPERATION3)
-        ]
-        self.container.fetch_positions()
-
-    def test_container_exercises_len(self):
-        self.assertEqual(
-            len(self.container.positions['exercises'].values()), 2
-        )
-
-    def test_option_consuming_quantity(self):
-        self.assertEqual(
-            self.container.positions['exercises'][OPTION1.symbol].quantity,
-            -200
-        )
-
-    def test_option_consuming_price(self):
-        self.assertEqual(
-            self.container.positions['exercises'][OPTION1.symbol].price, 0
-        )
-
-    def test_asset_purchase_quantity(self):
-        self.assertEqual(
-            self.container.positions['exercises'][ASSET.symbol].quantity, 200
-        )
-
-    def test_asset_purchase_price(self):
-        self.assertEqual(
-            self.container.positions['exercises'][ASSET.symbol].price, 2
-        )
+    volume = 400
+    operations = [EXERCISE_OPERATION2, EXERCISE_OPERATION3]
+    exercises = {
+        OPTION1.symbol: {
+            'quantity': -200,
+            'price': 0,
+            'volume': 0,
+        },
+        ASSET.symbol: {
+            'quantity': 200,
+            'price': 2,
+            'volume': 400
+        }
+    }

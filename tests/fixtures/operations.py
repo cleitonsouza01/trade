@@ -8,6 +8,14 @@ from trade.plugins import Daytrade, Exercise
 from .assets import ASSET, ASSET2, ASSET3, OPTION1
 
 
+OPERATION77 = Operation(
+    quantity=200,
+    price=10,
+    date='2015-01-01',
+    subject=ASSET
+)
+
+
 # 2015-01-01
 OPERATION54 = Operation(
     quantity=100,

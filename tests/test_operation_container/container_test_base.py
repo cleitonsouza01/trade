@@ -17,6 +17,8 @@ class TestFetchPositions(unittest.TestCase):
     operations = []
     positions = {}
     daytrades = {}
+    exercises = {}
+    volume = 0
 
     def setUp(self):
         self.container = trade.OperationContainer()
@@ -28,6 +30,9 @@ class TestFetchPositions(unittest.TestCase):
         ]
         self.container.fetch_positions()
         prorate_commissions(self.container)
+
+    def test_container_volume(self):
+        self.assertEqual(self.container.volume, self.volume)
 
     def test_operations_quantity(self):
         """Test the quantity for all positions in the container."""
@@ -119,4 +124,44 @@ class TestFetchPositions(unittest.TestCase):
             self.assertEqual(
                 self.container.positions['daytrades'][asset].results,
                 self.daytrades[asset]['result']
+            )
+
+    def test_daytrades_buy_discounts(self):
+        """Test the discounts for all daytrades buy operations."""
+        for asset in self.daytrades.keys():
+            self.assertEqual(
+                self.container.positions['daytrades'][asset]\
+                    .operations[0].commissions,
+                self.daytrades[asset]['buy commissions']
+            )
+
+    def test_daytrades_sale_discounts(self):
+        """Test the discounts for all daytrades sale operations."""
+        for asset in self.daytrades.keys():
+            self.assertEqual(
+                self.container.positions['daytrades'][asset]\
+                    .operations[1].commissions,
+                self.daytrades[asset]['sale commissions']
+            )
+
+
+    def test_container_exercises_len(self):
+        if 'exercises' in self.container.positions:
+            self.assertEqual(
+                len(self.container.positions['exercises'].keys()),
+                len(self.exercises.keys()),
+            )
+
+    def test_option_consuming_quantity(self):
+        for asset in self.exercises.keys():
+            self.assertEqual(
+                self.container.positions['exercises'][asset].quantity,
+                self.exercises[asset]['quantity']
+            )
+
+    def test_option_consuming_price(self):
+        for asset in self.exercises.keys():
+            self.assertEqual(
+                self.container.positions['exercises'][asset].price,
+                self.exercises[asset]['price']
             )

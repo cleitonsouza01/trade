@@ -130,6 +130,7 @@ class Exercise(Operation):
     """
 
     update_position = False
+    update_container = False
 
     def update_portfolio(self, portfolio):
         """A Portfolio task.
@@ -182,8 +183,9 @@ class Exercise(Operation):
 def fetch_exercises(container):
     """A OperationContainer task.
 
-    After this task, all operations created by Exercise objects
-    will be on the container positions under the key 'exercises'.
+    After this task is executed, all operations created by Exercise
+    objects will be on the container positions under the key
+    'exercises'.
     """
     for operation in container.operations:
         if isinstance(operation, Exercise):

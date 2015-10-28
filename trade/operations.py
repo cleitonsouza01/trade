@@ -83,6 +83,11 @@ class Operation(Occurrence):
     # updates the accumulator results
     update_results = True
 
+    # By default every operation
+    # updates the OperationContainer
+    # positions
+    update_container = True
+
     def __init__(self, subject=None, date=None, quantity=0, price=0):
         super(Operation, self).__init__(subject, date)
         self.quantity = quantity
@@ -293,7 +298,7 @@ class OperationContainer(object):
 
         # fetch the positions from the remaining operations
         for operation in self.operations:
-            if operation.quantity != 0:
+            if operation.quantity != 0 and operation.update_container:
                 self.add_to_position_operations(operation)
 
         self.operations = raw_operations

@@ -144,36 +144,20 @@ class TestProrateCommissionsByPositionCase05(TestFetchPositions):
             'buy price': 2,
             'sale quantity': -5,
             'sale price': 3,
-            'result': {'daytrades': 2.1428571428571423}
+            'result': {'daytrades': 2.1428571428571423},
+            'buy commissions': {
+                'some discount': 0.2857142857142857,
+                'other discount': 0.8571428571428571
+            },
+            'sale commissions': {
+                'some discount': 0.42857142857142855,
+                'other discount': 1.2857142857142856
+            }
         }
     }
 
     def test_container_volume(self):
         self.assertEqual(self.container.volume, 70)
-
-    def test_daytrade0_buy_discounts(self):
-        self.assertEqual(
-            round(self.container.positions['daytrades'][ASSET.symbol]\
-                .operations[0].commissions['some discount'], 2),
-            0.29
-        )
-        self.assertEqual(
-            round(self.container.positions['daytrades'][ASSET.symbol]\
-                .operations[0].commissions['other discount'], 2),
-            0.86
-        )
-
-    def test_daytrade0_sale_discounts(self):
-        self.assertEqual(
-            round(self.container.positions['daytrades'][ASSET.symbol]\
-                .operations[1].commissions['some discount'], 2),
-            0.43
-        )
-        self.assertEqual(
-            round(self.container.positions['daytrades'][ASSET.symbol]\
-                .operations[1].commissions['other discount'], 2),
-            1.29
-        )
 
     def test_operations0_discounts(self):
         self.assertEqual(

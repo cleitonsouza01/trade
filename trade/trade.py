@@ -36,8 +36,8 @@ class Subject(object):
     """A subject of an occurrence.
 
     Attributes:
-        name: A string representing the name of the subject.
         symbol: A string representing the symbol of the subject.
+        name: A string representing the name of the subject.
         expiration_date: A string 'YYYY-mm-dd' representing the
             expiration date of the subject, if any.
         default_state: a dictionary with the default state
@@ -110,7 +110,7 @@ class Accumulator(object):
             occurrences.
         logging: A boolean indicating if the accumulator should log
             the data passed to accumulate().
-        log: A dict with all the operations performed with the subject,
+        log: A dict with all the occurrences performed with the subject,
             provided that self.logging is True.
     """
 
@@ -122,7 +122,7 @@ class Accumulator(object):
         self.log = {}
 
     def accumulate(self, occurrence):
-        """Accumulates an occurrence to the existing position."""
+        """Accumulates an occurrence."""
         occurrence.update_accumulator(self)
         if self.logging:
             self.log_occurrence(occurrence)
@@ -147,18 +147,19 @@ class Portfolio(object):
     """A portfolio of subjects.
 
     A portfolio is a collection of Accumulator objects.
-    It can receive Occurrence subclass objects and update the
-    its accumulators with them.
+    It receives Occurrence objects and update its accumulators
+    with them.
 
     Attributes:
         subjects: A dict {Asset.symbol: Accumulator}.
     """
 
     def __init__(self):
+        """Creates a Portfolio object with a empty list of subjects."""
         self.subjects = {}
 
     def accumulate(self, occurrence):
-        """Accumulate an operation on its corresponding accumulator."""
+        """Accumulate an occurrence on its corresponding accumulator."""
         occurrence.update_portfolio(self)
         self.accumulate_occurrence(occurrence)
 

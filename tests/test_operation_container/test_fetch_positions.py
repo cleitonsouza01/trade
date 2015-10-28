@@ -45,6 +45,7 @@ class TaxManagerForTests(object):
 class TestContainerFetchPositionsCase00(TestFetchPositions):
     """Test the fetch_positions() method of Accumulator."""
 
+    volume = 70
     commissions = COMMISSIONS13
     operations = OPERATION_SEQUENCE2
     positions = POSITION1
@@ -55,53 +56,35 @@ class TestContainerFetchPositionsCase00(TestFetchPositions):
             'buy price': 2,
             'sale quantity': -5,
             'sale price': 3,
-            'result': {'daytrades': 3.571428571428573}
+            'result': {'daytrades': 3.571428571428573},
+            'buy commissions': {
+                'some discount': 0.14285714285714285,
+                'other discount': 0.42857142857142855
+            },
+            'sale commissions': {
+                'some discount': 0.21428571428571427,
+                'other discount': 0.6428571428571428
+            }
         }
     }
 
-    def test_container_volume(self):
-        self.assertEqual(self.container.volume, 70)
-
-    def test_daytrade0_buy_discounts(self):
-        self.assertEqual(
-            round(self.container.positions['daytrades'][ASSET.symbol]\
-                .operations[0].commissions['some discount'], 2),
-            0.14
-        )
-        self.assertEqual(
-            round(self.container.positions['daytrades'][ASSET.symbol]\
-                .operations[0].commissions['other discount'], 2),
-            0.43
-        )
-
-    def test_daytrade0_sale_discounts(self):
-        self.assertEqual(
-            round(self.container.positions['daytrades'][ASSET.symbol]\
-                .operations[1].commissions['some discount'], 2),
-            0.21
-        )
-        self.assertEqual(
-            round(self.container.positions['daytrades'][ASSET.symbol]\
-                .operations[1].commissions['other discount'], 2),
-            0.64
-        )
-
     def test_operations0_discounts(self):
         self.assertEqual(
-            round(self.container.positions['operations'][ASSET.symbol]\
-                .commissions['some discount'], 2),
-            0.14
+            self.container.positions['operations'][ASSET.symbol]\
+                .commissions['some discount'],
+            0.14285714285714285
         )
         self.assertEqual(
-            round(self.container.positions['operations'][ASSET.symbol]\
-                .commissions['other discount'], 2),
-            0.43
+            self.container.positions['operations'][ASSET.symbol]\
+                .commissions['other discount'],
+            0.42857142857142855
         )
 
 
 class TestContainerFetchPositionsCase01(TestFetchPositions):
     """Test the fetch_positions() method of Accumulator."""
 
+    volume = 210
     operations = OPERATION_SEQUENCE8
     positions = {
         ASSET.symbol: {

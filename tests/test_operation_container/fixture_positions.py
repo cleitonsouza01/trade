@@ -41,7 +41,9 @@ DT_POSITION0 = {
     'buy price': 2,
     'sale quantity': -5,
     'sale price': 3,
-    'result': {'daytrades': 5}
+    'result': {'daytrades': 5},
+    'buy commissions': {},
+    'sale commissions': {}
 }
 DT_POSITION1 = {
     'quantity': 5,
@@ -49,7 +51,9 @@ DT_POSITION1 = {
     'buy price': 10,
     'sale quantity': -5,
     'sale price': 7,
-    'result': {'daytrades': -15}
+    'result': {'daytrades': -15},
+    'buy commissions': {},
+    'sale commissions': {}
 }
 DT_POSITION2 = {
     'quantity': 10,
@@ -57,7 +61,9 @@ DT_POSITION2 = {
     'buy price': 4,
     'sale quantity': -10,
     'sale price': 3,
-    'result': {'daytrades': -10}
+    'result': {'daytrades': -10},
+    'buy commissions': {},
+    'sale commissions': {}
 }
 DT_POSITION4 = {
     'quantity': 10,
@@ -65,7 +71,9 @@ DT_POSITION4 = {
     'buy price': 2,
     'sale quantity': -10,
     'sale price': 3,
-    'result': {'daytrades': 10}
+    'result': {'daytrades': 10},
+    'buy commissions': {},
+    'sale commissions': {}
 }
 DT_POSITION5 = {
     'quantity': 10,
@@ -73,5 +81,7 @@ DT_POSITION5 = {
     'buy price': 2,
     'sale quantity': -10,
     'sale price': 15,
-    'result': {'daytrades': 130}
+    'result': {'daytrades': 130},
+    'buy commissions': {},
+    'sale commissions': {}
 }
