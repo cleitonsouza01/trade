@@ -59,6 +59,7 @@ class TestContainerAddToPositions(TestFetchPositions):
             'quantity': 20,
             'price': 3,
             'volume': 60,
+            'commissions': {}
         },
     }
 

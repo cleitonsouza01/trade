@@ -32,7 +32,16 @@ class TestFetchPositions(unittest.TestCase):
         prorate_commissions(self.container)
 
     def test_container_volume(self):
+        """Check the volume of the OperationContainer."""
         self.assertEqual(self.container.volume, self.volume)
+
+    def test_operations_discount(self):
+        """Check the commissions of all position operations."""
+        for asset in self.positions.keys():
+            self.assertEqual(
+                self.container.positions['operations'][asset].commissions,
+                self.positions[asset]['commissions']
+            )
 
     def test_operations_quantity(self):
         """Test the quantity for all positions in the container."""
@@ -143,7 +152,6 @@ class TestFetchPositions(unittest.TestCase):
                     .operations[1].commissions,
                 self.daytrades[asset]['sale commissions']
             )
-
 
     def test_container_exercises_len(self):
         if 'exercises' in self.container.positions:

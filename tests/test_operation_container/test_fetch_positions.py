@@ -7,7 +7,8 @@ from abc import ABCMeta
 import trade
 from .container_test_base import TestFetchPositions
 from .fixture_positions import (
-    POSITION1, DT_POSITION0, DT_POSITION1, DT_POSITION2
+    DT_POSITION0, DT_POSITION1, DT_POSITION2, POSITION4, POSITION2,
+    DT_POSITION6,
 )
 from trade.plugins import (
     prorate_commissions,
@@ -48,37 +49,10 @@ class TestContainerFetchPositionsCase00(TestFetchPositions):
     volume = 70
     commissions = COMMISSIONS13
     operations = OPERATION_SEQUENCE2
-    positions = POSITION1
+    positions = POSITION4
     daytrades = {
-        ASSET.symbol: {
-            'quantity': 5,
-            'buy quantity': 5,
-            'buy price': 2,
-            'sale quantity': -5,
-            'sale price': 3,
-            'result': {'daytrades': 3.571428571428573},
-            'buy commissions': {
-                'some discount': 0.14285714285714285,
-                'other discount': 0.42857142857142855
-            },
-            'sale commissions': {
-                'some discount': 0.21428571428571427,
-                'other discount': 0.6428571428571428
-            }
-        }
+        ASSET.symbol: DT_POSITION6
     }
-
-    def test_operations0_discounts(self):
-        self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol]\
-                .commissions['some discount'],
-            0.14285714285714285
-        )
-        self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol]\
-                .commissions['other discount'],
-            0.42857142857142855
-        )
 
 
 class TestContainerFetchPositionsCase01(TestFetchPositions):
@@ -86,13 +60,7 @@ class TestContainerFetchPositionsCase01(TestFetchPositions):
 
     volume = 210
     operations = OPERATION_SEQUENCE8
-    positions = {
-        ASSET.symbol: {
-            'quantity': 10,
-            'price': 3,
-            'volume': 30,
-        }
-    }
+    positions = POSITION2
     daytrades = {
         ASSET.symbol: DT_POSITION0,
         ASSET2.symbol: DT_POSITION1,
