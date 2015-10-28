@@ -3,12 +3,13 @@ trade: Tools For Stock Trading Applications.
 
 | Copyright (c) 2015 Rafael da Silva Rocha
 | rocha.rafaelsilva@gmail.com
-| http://rochars.github.io/trade/
+| http://rochars.github.io/trade
 | http://trade.readthedocs.org
 
 --------------
 
-|Build| |Coverage Status| |Documentation| |License| |Python Versions|
+|Build| |Coverage Status| |Documentation| |Code Climate| |Codacy| |Python Versions|
+
 
 What is it?
 -----------
@@ -117,7 +118,7 @@ trade is compatible with Python 2.7, 3.3, 3.4 and 3.5.
 Version
 -------
 
-The current version is 0.1.7 alpha.
+The current version is 0.1.8 alpha.
 
 License
 -------
@@ -154,4 +155,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 .. |License| image:: https://img.shields.io/pypi/l/trade.png
    :target: https://opensource.org/licenses/MIT
 .. |Python Versions| image:: https://img.shields.io/pypi/pyversions/trade.png
+   :target: https://pypi.python.org/pypi/trade/
+.. |Codacy| image:: https://img.shields.io/codacy/56eea28216b74e5eabb1a7ec858e9a6e.svg
+   :target: https://www.codacy.com/app/rocha-rafaelsilva/trade/dashboard
+.. |Code Climate| image:: https://img.shields.io/codeclimate/github/rochars/trade.svg
+   :target: https://codeclimate.com/github/rochars/trade
+.. |Downloads| image:: https://img.shields.io/pypi/dm/trade.svg
    :target: https://pypi.python.org/pypi/trade/
