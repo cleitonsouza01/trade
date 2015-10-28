@@ -6,6 +6,9 @@ from abc import ABCMeta
 
 import trade
 from .container_test_base import TestFetchPositions
+from .fixture_positions import (
+    POSITION1, DT_POSITION0, DT_POSITION1, DT_POSITION2
+)
 from trade.plugins import (
     prorate_commissions,
 )
@@ -44,18 +47,7 @@ class TestContainerFetchPositionsCase00(TestFetchPositions):
 
     commissions = COMMISSIONS13
     operations = OPERATION_SEQUENCE2
-    positions = {
-        ASSET.symbol: {
-            'quantity': 5,
-            'price': 2,
-            'volume': 10,
-        },
-        ASSET2.symbol: {
-            'quantity': -5,
-            'price': 7,
-            'volume': 35,
-        }
-    }
+    positions = POSITION1
     daytrades = {
         ASSET.symbol: {
             'quantity': 5,
@@ -119,30 +111,9 @@ class TestContainerFetchPositionsCase01(TestFetchPositions):
         }
     }
     daytrades = {
-        ASSET.symbol: {
-            'quantity': 5,
-            'buy quantity': 5,
-            'buy price': 2,
-            'sale quantity': -5,
-            'sale price': 3,
-            'result': {'daytrades': 5}
-        },
-        ASSET2.symbol: {
-            'quantity': 5,
-            'buy quantity': 5,
-            'buy price': 10,
-            'sale quantity': -5,
-            'sale price': 7,
-            'result': {'daytrades': -15}
-        },
-        ASSET3.symbol: {
-            'quantity': 10,
-            'buy quantity': 10,
-            'buy price': 4,
-            'sale quantity': -10,
-            'sale price': 3,
-            'result': {'daytrades': -10}
-        }
+        ASSET.symbol: DT_POSITION0,
+        ASSET2.symbol: DT_POSITION1,
+        ASSET3.symbol: DT_POSITION2
     }
 
 

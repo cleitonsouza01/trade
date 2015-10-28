@@ -6,7 +6,10 @@ import copy
 
 import trade
 from trade.plugins import prorate_commissions, prorate_commissions_by_position
-
+from .container_test_base import TestFetchPositions
+from .fixture_positions import (
+    POSITION1,
+)
 from tests.fixtures.operations import (
     OPERATION39, OPERATION42, OPERATION43, OPERATION44,
 )
@@ -128,18 +131,22 @@ class TestProrateCommissionsByPositionCase04(TestProrateCommissions):
         self.assertEqual(self.operation3.commissions['some discount'], 1)
 
 
-class TestProrateCommissionsByPositionCase05(TestProrateCommissions):
+class TestProrateCommissionsByPositionCase05(TestFetchPositions):
     """Test pro rata of 1 commission for daytrades."""
 
-    def setUp(self):
-        super(TestProrateCommissionsByPositionCase05, self).setUp()
-        self.container = trade.OperationContainer(
-            operations=copy.deepcopy(OPERATION_SEQUENCE2)
-        )
-        self.container.commissions = COMMISSIONS9
-        self.container.tasks = [trade.plugins.fetch_daytrades]
-        self.container.fetch_positions()
-        prorate_commissions(self.container)
+    commissions = COMMISSIONS9
+    operations = OPERATION_SEQUENCE2
+    positions = POSITION1
+    daytrades = {
+        ASSET.symbol: {
+            'quantity': 5,
+            'buy quantity': 5,
+            'buy price': 2,
+            'sale quantity': -5,
+            'sale price': 3,
+            'result': {'daytrades': 2.1428571428571423}
+        }
+    }
 
     def test_container_volume(self):
         self.assertEqual(self.container.volume, 70)
@@ -168,24 +175,6 @@ class TestProrateCommissionsByPositionCase05(TestProrateCommissions):
             1.29
         )
 
-    def test_operations0_quantity(self):
-        self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol].quantity,
-            5
-        )
-
-    def test_operations0_price(self):
-        self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol].price,
-            2
-        )
-
-    def test_operations0_volume(self):
-        self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol].volume,
-            10
-        )
-
     def test_operations0_discounts(self):
         self.assertEqual(
             round(self.container.positions['operations'][ASSET.symbol]\
@@ -196,24 +185,6 @@ class TestProrateCommissionsByPositionCase05(TestProrateCommissions):
             round(self.container.positions['operations'][ASSET.symbol]\
                 .commissions['other discount'], 2),
             0.86
-        )
-
-    def test_operations1_quantity(self):
-        self.assertEqual(
-            self.container.positions['operations'][ASSET2.symbol].quantity,
-            -5
-        )
-
-    def test_operations1_price(self):
-        self.assertEqual(
-            self.container.positions['operations'][ASSET2.symbol].price,
-            7
-        )
-
-    def test_operations1_volume(self):
-        self.assertEqual(
-            self.container.positions['operations'][ASSET2.symbol].volume,
-            35
         )
 
     def test_operations1_discounts(self):

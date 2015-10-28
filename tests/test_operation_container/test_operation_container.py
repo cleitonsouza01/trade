@@ -5,7 +5,7 @@ import unittest
 import copy
 
 import trade
-
+from .container_test_base import TestFetchPositions
 from tests.fixtures.operations import (
     OPERATION24, OPERATION45
 )
@@ -46,34 +46,21 @@ class TestContainerCreationCase01(unittest.TestCase):
         self.assertEqual(self.container.commissions, COMMISSIONS12)
 
 
-class TestContainerAddToPositions(unittest.TestCase):
+class TestContainerAddToPositions(TestFetchPositions):
     """Test add_to_position_operations method."""
 
+    operations = [OPERATION24]
+    positions = {
+        ASSET.symbol: {
+            'quantity': 20,
+            'price': 3,
+            'volume': 60,
+        },
+    }
+
     def setUp(self):
-        self.container = trade.OperationContainer(
-            operations=[
-                copy.deepcopy(OPERATION24)
-            ]
-        )
-        self.container.fetch_positions_tasks = [
-            trade.plugins.fetch_exercises,
-            trade.plugins.fetch_daytrades,
-        ]
-        self.container.fetch_positions()
-        self.container.add_to_position_operations(
-            copy.deepcopy(OPERATION45)
-        )
+        super(TestContainerAddToPositions, self).setUp()
+        self.container.add_to_position_operations(copy.deepcopy(OPERATION45))
 
     def test_common_trades_len(self):
         self.assertEqual(len(self.container.positions['operations'].keys()), 1)
-
-    def test_for_no_daytrades(self):
-        self.assertEqual(len(self.container.positions), 1)
-
-    def test_operations0_quantity(self):
-        self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol].quantity, 20)
-
-    def test_operations0_price(self):
-        self.assertEqual(
-            self.container.positions['operations'][ASSET.symbol].price, 3)

@@ -32,3 +32,46 @@ POSITION2 = {
         'volume': 30
     }
 }
+
+
+
+DT_POSITION0 = {
+    'quantity': 5,
+    'buy quantity': 5,
+    'buy price': 2,
+    'sale quantity': -5,
+    'sale price': 3,
+    'result': {'daytrades': 5}
+}
+DT_POSITION1 = {
+    'quantity': 5,
+    'buy quantity': 5,
+    'buy price': 10,
+    'sale quantity': -5,
+    'sale price': 7,
+    'result': {'daytrades': -15}
+}
+DT_POSITION2 = {
+    'quantity': 10,
+    'buy quantity':10,
+    'buy price': 4,
+    'sale quantity': -10,
+    'sale price': 3,
+    'result': {'daytrades': -10}
+}
+DT_POSITION4 = {
+    'quantity': 10,
+    'buy quantity': 10,
+    'buy price': 2,
+    'sale quantity': -10,
+    'sale price': 3,
+    'result': {'daytrades': 10}
+}
+DT_POSITION5 = {
+    'quantity': 10,
+    'buy quantity': 10,
+    'buy price': 2,
+    'sale quantity': -10,
+    'sale price': 15,
+    'result': {'daytrades': 130}
+}
