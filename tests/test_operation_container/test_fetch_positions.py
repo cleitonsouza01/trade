@@ -35,18 +35,21 @@ class TaxManagerForTests(object):
     def get_fees(cls, operation=None, operation_type=None):
         """A sample implementation of get_fees()."""
         if operation_type == 'daytrades':
-            return {
-                'emoluments': operation.volume * 0.005 / 100,
-                'liquidation': operation.volume * 0.02 / 100,
-                'registry': 0,
-            }
+            return cls.get_fees_for_daytrades(operation)
         return {}
 
+    @classmethod
+    def get_fees_for_daytrades(cls, operation):
+        """Get the fees for a daytrade operation."""
+        return {
+            'emoluments': operation.volume * 0.005 / 100,
+            'liquidation': operation.volume * 0.02 / 100,
+            'registry': 0,
+        }
 
 class TestContainerFetchPositionsCase00(TestFetchPositions):
     """Test the fetch_positions() method of Accumulator."""
 
-    volume = 70
     commissions = COMMISSIONS13
     operations = OPERATION_SEQUENCE2
     positions = POSITION4
@@ -58,7 +61,6 @@ class TestContainerFetchPositionsCase00(TestFetchPositions):
 class TestContainerFetchPositionsCase01(TestFetchPositions):
     """Test the fetch_positions() method of Accumulator."""
 
-    volume = 210
     operations = OPERATION_SEQUENCE8
     positions = POSITION2
     daytrades = {

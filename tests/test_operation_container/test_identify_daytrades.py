@@ -32,7 +32,7 @@ TASKS = [
 class TestContainerIndentifyDaytradesCase00(TestFetchPositions):
     """Test the identification of daytrade operations."""
 
-    volume = 50
+    #volume = 50
     operations = OPERATION_SEQUENCE0
     daytrades = {
         ASSET.symbol: DT_POSITION4,
@@ -42,7 +42,7 @@ class TestContainerIndentifyDaytradesCase00(TestFetchPositions):
 class TestContainerIndentifyDaytradesCase01(TestFetchPositions):
     """Test the identification of daytrade operations."""
 
-    volume = 35
+    #volume = 35
     operations = OPERATION_SEQUENCE1
     positions = POSITION0
     daytrades = {
@@ -53,7 +53,7 @@ class TestContainerIndentifyDaytradesCase01(TestFetchPositions):
 class TestContainerIndentifyDaytradesCase02(TestFetchPositions):
     """Test the identification of daytrade operations."""
 
-    volume = 70
+    #volume = 70
     operations = OPERATION_SEQUENCE2
     positions = POSITION1
     daytrades = {
@@ -64,7 +64,7 @@ class TestContainerIndentifyDaytradesCase02(TestFetchPositions):
 class TestContainerIndentifyDaytradesCase03(TestFetchPositions):
     """Test the identification of daytrade operations."""
 
-    volume = 120
+    #volume = 120
     operations = OPERATION_SEQUENCE3
     positions = POSITION0
     daytrades = {
@@ -76,7 +76,7 @@ class TestContainerIndentifyDaytradesCase03(TestFetchPositions):
 class TestContainerIndentifyDaytradesCase04(TestFetchPositions):
     """Test the identification of daytrade operations."""
 
-    volume = 135
+    #volume = 135
     operations = OPERATION_SEQUENCE3 + [copy.deepcopy(OPERATION26)]
     daytrades = {
         ASSET.symbol: DT_POSITION4,
@@ -87,7 +87,7 @@ class TestContainerIndentifyDaytradesCase04(TestFetchPositions):
 class TestContainerIndentifyDaytradesCase05(TestFetchPositions):
     """Test the identification of daytrade operations."""
 
-    volume = 255
+    #volume = 255
     operations = OPERATION_SEQUENCE4
     daytrades = {
         ASSET.symbol: DT_POSITION5,
@@ -98,7 +98,7 @@ class TestContainerIndentifyDaytradesCase05(TestFetchPositions):
 class TestContainerIndentifyDaytradesCase06(TestFetchPositions):
     """Test the identification of daytrade operations."""
 
-    volume = 140
+    #volume = 140
     operations = OPERATION_SEQUENCE3 + [copy.deepcopy(OPERATION32)]
     positions = POSITION2
     daytrades = {
@@ -110,7 +110,7 @@ class TestContainerIndentifyDaytradesCase06(TestFetchPositions):
 class TestContainerIndentifyDaytradesCase07(TestFetchPositions):
     """Test the identification of daytrade operations."""
 
-    volume = 210
+    #volume = 210
     operations = OPERATION_SEQUENCE3 + copy.deepcopy(OPERATION_SEQUENCE5)
     positions = POSITION2
     daytrades = {

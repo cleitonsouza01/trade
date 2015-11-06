@@ -20,7 +20,6 @@ from tests.fixtures.operation_sequences import (
 class TestProrateCommissionsByPositionCase01(TestFetchPositions):
     """Test pro rata of one commission for one operation."""
 
-    volume = 20
     commissions = COMMISSIONS11
     operations = [OPERATION39]
     positions = {
@@ -38,7 +37,6 @@ class TestProrateCommissionsByPositionCase01(TestFetchPositions):
 class TestProrateCommissionsByPositionCase02(TestFetchPositions):
     """Test pro rata of 1 commission for 3 operations."""
 
-    volume = 40
     commissions = COMMISSIONS11
     operations = [OPERATION39, OPERATION42]
     positions = {
@@ -64,7 +62,6 @@ class TestProrateCommissionsByPositionCase02(TestFetchPositions):
 class TestProrateCommissionsByPositionCase03(TestFetchPositions):
     """Test pro rata of 1 commission for 2 operations."""
 
-    volume = 60
     commissions = COMMISSIONS11
     operations = [OPERATION39, OPERATION43]
     positions = {
@@ -90,7 +87,6 @@ class TestProrateCommissionsByPositionCase03(TestFetchPositions):
 class TestProrateCommissionsByPositionCase04(TestFetchPositions):
     """Test pro rata of 1 commission for 3 sale operations."""
 
-    volume = 80
     commissions = COMMISSIONS10
     operations = [OPERATION39, OPERATION44, OPERATION42]
     positions = {
@@ -124,7 +120,6 @@ class TestProrateCommissionsByPositionCase04(TestFetchPositions):
 class TestProrateCommissionsByPositionCase05(TestFetchPositions):
     """Test pro rata of 1 commission for daytrades."""
 
-    volume = 70
     commissions = COMMISSIONS9
     operations = OPERATION_SEQUENCE2
     positions = {

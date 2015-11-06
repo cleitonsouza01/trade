@@ -18,12 +18,16 @@ class TestFetchPositions(unittest.TestCase):
     positions = {}
     daytrades = {}
     exercises = {}
-    volume = 0
+    volume = False
 
     def setUp(self):
         self.container = trade.OperationContainer()
         self.container.commissions = self.commissions
         self.container.operations = copy.deepcopy(self.operations)
+        if not self.volume:
+            self.volume = sum(
+                operation.volume for operation in self.container.operations
+            )
         self.container.tasks = [
             trade.plugins.fetch_exercises,
             trade.plugins.fetch_daytrades,

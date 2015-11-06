@@ -113,12 +113,12 @@ EXPECTED_STATE20 = {
 }
 EXPECTED_STATE21 = {
     'quantity': 300,
-    'price': 3.33,
+    'price': 3.3333333333333335,
     'results': {'trades': 1200},
 }
 EXPECTED_STATE22 = {
     'quantity': 150,
-    'price': 6.67,
+    'price': 6.666666666666667,
     'results': {'trades': 1200},
 }
 EXPECTED_STATE23 = {

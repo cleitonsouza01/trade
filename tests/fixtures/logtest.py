@@ -33,22 +33,14 @@ class LogTest(unittest.TestCase):
         for occurrence in self.occurrences:
             self.accumulator.accumulate(occurrence)
 
-    def test_purchase_result_log(self):
+    def test_log(self):
         """Test the log for the defined occurrences."""
         if self.expected_log:
             self.assertEqual(self.accumulator.log, self.expected_log)
 
-    def test_accumulated_result(self):
-        """Test the results for the defined occurrences."""
-        self.assertEqual(
-            self.accumulator.data['results'], self.expected_state['results'])
-
-    def test_current_quantity(self):
-        """Test the quantity for the defined occurrences."""
-        self.assertEqual(
-            self.accumulator.data['quantity'], self.expected_state['quantity'])
-
-    def test_current_price(self):
-        """Test the price for the defined occurrences."""
-        self.assertEqual(
-            round(self.accumulator.data['price'], 2), self.expected_state['price'])
+    def test_accumulator_state(self):
+        """Verifies the state of the accumulator data."""
+        for key in self.accumulator.data.keys():
+            self.assertEqual(
+                self.accumulator.data[key], self.expected_state[key]
+            )
