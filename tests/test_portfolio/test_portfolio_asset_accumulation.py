@@ -3,8 +3,11 @@
 from __future__ import absolute_import
 
 from tests.fixtures.operations import (
-    ASSET, ASSET2, ASSET3, OPERATION48, OPERATION49, OPERATION50, OPERATION51,
+    ASSET, ASSET2, ASSET3, OPERATION48, OPERATION49, OPERATION50,
     OPERATION52, OPERATION53,
+)
+from tests.fixtures.operation_sequences import (
+    OPERATION_SEQUENCE22, OPERATION_SEQUENCE23,
 )
 from tests.fixtures.assets import (
     ASSET, ASSET2, ASSET3
@@ -76,12 +79,7 @@ class TestPortfolioAssetAccumulationCase03(TestPortfolio):
 class TestPortfolioAssetAccumulationCase04(TestPortfolio):
     """Accumulation of multiple operations with different assets."""
 
-    operations = [
-        OPERATION48,
-        OPERATION49,
-        OPERATION50,
-        OPERATION51,
-    ]
+    operations = OPERATION_SEQUENCE22
     state = {
         ASSET.symbol: {
             'quantity': 10,
@@ -97,13 +95,7 @@ class TestPortfolioAssetAccumulationCase04(TestPortfolio):
 class TestPortfolioAssetAccumulationCase05(TestPortfolio):
     """Accumulation of multiple operations with different assets."""
 
-    operations = [
-        OPERATION48,
-        OPERATION49,
-        OPERATION50,
-        OPERATION51,
-        OPERATION52,
-    ]
+    operations = OPERATION_SEQUENCE23
     state = {
         ASSET.symbol: {
             'quantity': 20,

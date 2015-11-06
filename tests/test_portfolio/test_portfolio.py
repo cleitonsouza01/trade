@@ -16,21 +16,14 @@ class TestPortfolio(unittest.TestCase):
         for operation in self.operations:
             self.portfolio.accumulate(copy.deepcopy(operation))
 
-    def test_accumulators_quantities(self):
-        """Test the quantity of each accumulator."""
+    def test_accumulators_states(self):
+        """Test the state of each accumulator."""
         for asset, state in self.state.items():
-            self.assertEqual(
-                self.portfolio.subjects[asset].data['quantity'],
-                state['quantity']
-            )
-
-    def test_accumulators_prices(self):
-        """Test the price of each accumulator."""
-        for asset, state in self.state.items():
-            self.assertEqual(
-                self.portfolio.subjects[asset].data['price'],
-                state['price']
-            )
+            for key in state.keys():
+                self.assertEqual(
+                    self.portfolio.subjects[asset].data[key],
+                    state[key]
+                )
 
     def test_keys(self):
         """Test the each accumulator key."""
