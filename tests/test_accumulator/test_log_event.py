@@ -16,6 +16,7 @@ from tests.fixtures.accumulator_states import (
 
 
 class TestLogEvent(LogTest):
+    """Base class for accumulator event logging tests."""
 
     initial_state = INITIAL_STATE0
     occurrences = [EVENT5]
