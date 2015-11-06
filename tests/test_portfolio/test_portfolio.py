@@ -6,6 +6,7 @@ import unittest
 import trade
 
 class TestPortfolio(unittest.TestCase):
+    """Base class for Portfolio tests."""
 
     operations = []
     state = {}

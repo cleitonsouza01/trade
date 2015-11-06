@@ -6,7 +6,7 @@ import unittest
 import trade
 
 
-class TestSubjectCase00(unittest.TestCase):
+class TestPortfolioCase00(unittest.TestCase):
     """Test the Subject class and its default behavior."""
 
     def setUp(self):

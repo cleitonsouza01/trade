@@ -14,6 +14,7 @@ class TestOptionCreation(unittest.TestCase):
 
 
 class TestOptionCretionCase00(TestOptionCreation):
+    """Test the creation of an option."""
 
     def test_no_underlying_assets(self):
         option = trade.plugins.Option(
