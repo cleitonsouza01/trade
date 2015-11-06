@@ -8,7 +8,7 @@ trade: Tools For Stock Trading Applications.
 
 --------------
 
-|Build| |Coverage Status| |Documentation| |Code Climate| |Codacy| |Python Versions|
+|Build| |Coverage Status| |Code Climate| |Downloads| |License| |Python Versions|
 
 
 What is it?
@@ -32,9 +32,7 @@ module:
 .. code:: python
 
     import trade
-    asset = trade.Asset(symbol='AAPL')
-    print(asset.symbol)
-    #>> AAPL
+    asset = trade.Asset(symbol='ATVI')
 
 Example
 -------
@@ -156,9 +154,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    :target: https://opensource.org/licenses/MIT
 .. |Python Versions| image:: https://img.shields.io/pypi/pyversions/trade.png
    :target: https://pypi.python.org/pypi/trade/
+.. |Code Climate| image:: https://codeclimate.com/github/rochars/trade/badges/gpa.png
+   :target: https://codeclimate.com/github/rochars/trade
 .. |Codacy| image:: https://img.shields.io/codacy/56eea28216b74e5eabb1a7ec858e9a6e.svg
    :target: https://www.codacy.com/app/rocha-rafaelsilva/trade/dashboard
-.. |Code Climate| image:: https://img.shields.io/codeclimate/github/rochars/trade.svg
-   :target: https://codeclimate.com/github/rochars/trade
-.. |Downloads| image:: https://img.shields.io/pypi/dm/trade.svg
+.. |Downloads| image:: https://img.shields.io/pypi/dm/trade.png
    :target: https://pypi.python.org/pypi/trade/
