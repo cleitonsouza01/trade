@@ -88,42 +88,32 @@ class TestFetchPositions(unittest.TestCase):
         self.len_check('daytrades')
 
     def test_daytrades_states(self):
+        """Check the state of the daytrade positions."""
         self.state_check('daytrades')
 
     def test_daytrades_buy_state(self):
-        """Test the buy price for all daytrades in the container."""
-        for asset in self.daytrades.keys():
-            self.assertEqual(
-                (
-                    self.container.positions['daytrades'][asset]\
-                        .operations[0].price,
-                    self.container.positions['daytrades'][asset]\
-                        .operations[0].quantity,
-                    self.container.positions['daytrades'][asset]\
-                        .operations[0].commissions,
-                ),
-                (
-                    self.daytrades[asset]['buy price'],
-                    self.daytrades[asset]['buy quantity'],
-                    self.daytrades[asset]['buy commissions']
-                )
-            )
+        """Check the state of the daytrade positions purchases."""
+        self.check_daytrade_suboperation(0, 'buy')
 
     def test_daytrades_sale_state(self):
-        """Test the sale price for all daytrades in the container."""
+        """Check the state of the daytrade positions sales."""
+        self.check_daytrade_suboperation(1, 'sale')
+
+    def check_daytrade_suboperation(self, operation_index, operation_type):
+        """Check the state of the daytrade suboperations."""
         for asset in self.daytrades.keys():
             self.assertEqual(
                 (
                     self.container.positions['daytrades'][asset]\
-                        .operations[1].price,
+                        .operations[operation_index].price,
                     self.container.positions['daytrades'][asset]\
-                        .operations[1].quantity,
+                        .operations[operation_index].quantity,
                     self.container.positions['daytrades'][asset]\
-                        .operations[1].commissions,
+                        .operations[operation_index].commissions,
                 ),
                 (
-                    self.daytrades[asset]['sale price'],
-                    self.daytrades[asset]['sale quantity'],
-                    self.daytrades[asset]['sale commissions']
+                    self.daytrades[asset][operation_type + ' price'],
+                    self.daytrades[asset][operation_type + ' quantity'],
+                    self.daytrades[asset][operation_type + ' commissions']
                 )
             )
