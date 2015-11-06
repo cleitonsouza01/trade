@@ -7,6 +7,19 @@ from trade import Operation
 from trade.plugins import Daytrade, Exercise
 from .assets import ASSET, ASSET2, ASSET3, OPTION1
 
+OPERATION78 = Operation(
+    quantity=10,
+    price=10,
+    date='2015-02-03',
+    subject=ASSET
+)
+OPERATION79 = Operation(
+    quantity=-10,
+    price=10,
+    date='2015-02-03',
+    subject=ASSET
+)
+
 
 OPERATION77 = Operation(
     quantity=200,

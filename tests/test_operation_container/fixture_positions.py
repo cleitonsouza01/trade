@@ -105,3 +105,29 @@ DT_POSITION5 = {
     'buy commissions': {},
     'sale commissions': {}
 }
+
+
+DT_POSITION9 = {
+    'quantity': 10,
+    'buy quantity': 10,
+    'buy price': 10,
+    'sale quantity': -10,
+    'sale price': 10,
+    'result': {'daytrades': -4.549999999999983},
+    'buy commissions': {
+        'some': 1,
+        'other': 0.75,
+        'and other': 0.5,
+        'emoluments': 0.005,
+        'liquidation': 0.02,
+        'registry': 0,
+    },
+    'sale commissions': {
+        'some': 1,
+        'other': 0.75,
+        'and other': 0.5,
+        'emoluments': 0.005,
+        'liquidation': 0.02,
+        'registry': 0,
+    }
+}
