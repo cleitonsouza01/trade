@@ -169,7 +169,7 @@ class Exercise(Operation):
             self.operations = self.subject.exercise(
                 self.quantity,
                 self.price,
-                portfolio.subjects[self.subject.symbol].data['price']
+                portfolio.subjects[self.subject.symbol].state['price']
             )
         else:
             self.operations = self.subject.exercise(

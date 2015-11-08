@@ -61,7 +61,7 @@ class Subject(object):
 
     def expire(self, accumulator):
         """Updates the accumulator with the expiration of this subject."""
-        accumulator.data = copy.deepcopy(self.default_state)
+        accumulator.state = copy.deepcopy(self.default_state)
 
 
 class Occurrence(object):
@@ -105,9 +105,7 @@ class Accumulator(object):
             accumulated.
         date: A string 'YYYY-mm-dd' representing the date of the last
             status change of the accumulator.
-        data: A dictionary with the state of this accumulator. The
-            state is updated according to the accumulation of
-            occurrences.
+        state: A dictionary with the state of this accumulator.
         logging: A boolean indicating if the accumulator should log
             the data passed to accumulate().
         log: A dict with all the occurrences performed with the subject,
@@ -115,7 +113,7 @@ class Accumulator(object):
     """
 
     def __init__(self, subject, logging=False):
-        self.data = subject.get_default_state()
+        self.state = subject.get_default_state()
         self.subject = subject
         self.logging = logging
         self.date = None
@@ -134,13 +132,11 @@ class Accumulator(object):
         time accumulate() is called. The states are logged by day
         like this:
         {
-            'YYYY-mm-dd': {
-                'data': {}
-            },
+            'YYYY-mm-dd': {},
             ...
         }
         """
-        self.log[operation.date] = copy.deepcopy(self.data)
+        self.log[operation.date] = copy.deepcopy(self.state)
 
 
 class Portfolio(object):

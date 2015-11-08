@@ -45,22 +45,22 @@ class TestAccumulateExercise00(TestAccumulateExercise):
         self.fetch_and_accumulate()
 
     def test_accumulator1_price(self):
-        self.assertEqual(self.subject_accumulator.data['price'], 10)
+        self.assertEqual(self.subject_accumulator.state['price'], 10)
 
     def test_accumulator1_quantity(self):
-        self.assertEqual(self.subject_accumulator.data['quantity'], 100)
+        self.assertEqual(self.subject_accumulator.state['quantity'], 100)
 
     def test_accumulator1_results(self):
-        self.assertEqual(self.subject_accumulator.data['results'], {})
+        self.assertEqual(self.subject_accumulator.state['results'], {})
 
     def test_accumulator2_price(self):
-        self.assertEqual(self.option_accumulator.data['price'], 0)
+        self.assertEqual(self.option_accumulator.state['price'], 0)
 
     def test_accumulator2_quantity(self):
-        self.assertEqual(self.option_accumulator.data['quantity'], 0)
+        self.assertEqual(self.option_accumulator.state['quantity'], 0)
 
     def test_accumulator2_results(self):
-        self.assertEqual(self.option_accumulator.data['results'], {})
+        self.assertEqual(self.option_accumulator.state['results'], {})
 
 
 class TestAccumulateExercise01(TestAccumulateExercise):
@@ -76,19 +76,19 @@ class TestAccumulateExercise01(TestAccumulateExercise):
         self.fetch_and_accumulate()
 
     def test_accumulator1_price(self):
-        self.assertEqual(self.subject_accumulator.data['price'], 7.5)
+        self.assertEqual(self.subject_accumulator.state['price'], 7.5)
 
     def test_accumulator1_quantity(self):
-        self.assertEqual(self.subject_accumulator.data['quantity'], 200)
+        self.assertEqual(self.subject_accumulator.state['quantity'], 200)
 
     def test_accumulator1_results(self):
-        self.assertEqual(self.subject_accumulator.data['results'], {})
+        self.assertEqual(self.subject_accumulator.state['results'], {})
 
     def test_accumulator2_price(self):
-        self.assertEqual(self.option_accumulator.data['price'], 0)
+        self.assertEqual(self.option_accumulator.state['price'], 0)
 
     def test_accumulator2_quantity(self):
-        self.assertEqual(self.option_accumulator.data['quantity'], 0)
+        self.assertEqual(self.option_accumulator.state['quantity'], 0)
 
     def test_accumulator2_results(self):
-        self.assertEqual(self.option_accumulator.data['results'], {})
+        self.assertEqual(self.option_accumulator.state['results'], {})

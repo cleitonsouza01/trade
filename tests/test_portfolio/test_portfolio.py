@@ -21,7 +21,7 @@ class TestPortfolio(unittest.TestCase):
         for asset, state in self.state.items():
             for key in state.keys():
                 self.assertEqual(
-                    self.portfolio.subjects[asset].data[key],
+                    self.portfolio.subjects[asset].state[key],
                     state[key]
                 )
 

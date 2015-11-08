@@ -12,11 +12,11 @@ class TestSubjectCase00(unittest.TestCase):
     def setUp(self):
         self.subject = trade.Subject()
         self.accumulator = trade.Accumulator(self.subject)
-        self.accumulator.data = {'something': 0}
+        self.accumulator.state = {'something': 0}
 
     def test_expire(self):
         self.subject.expire(self.accumulator)
-        self.assertEqual(self.accumulator.data, {})
+        self.assertEqual(self.accumulator.state, {})
 
     def test_default_state(self):
         self.assertEqual(self.subject.get_default_state(), {})

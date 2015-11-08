@@ -77,8 +77,8 @@ class StockSplit(Event):
 
     def update_accumulator(self, container):
         """Performs a split or a reverse split on the stock."""
-        container.data['quantity'] = container.data['quantity'] * self.factor
-        container.data['price'] = container.data['price'] / self.factor
+        container.state['quantity'] = container.state['quantity'] * self.factor
+        container.state['price'] = container.state['price'] / self.factor
 
 
 class BonusShares(Event):
@@ -86,9 +86,9 @@ class BonusShares(Event):
 
     def update_accumulator(self, container):
         """Add stocks received as bonus shares do the accumulator."""
-        new_quantity = container.data['quantity'] * self.factor
-        container.data['price'] = average_price(
-            container.data['quantity'], container.data['price'],
+        new_quantity = container.state['quantity'] * self.factor
+        container.state['price'] = average_price(
+            container.state['quantity'], container.state['price'],
             new_quantity, 0
         )
-        container.data['quantity'] += new_quantity
+        container.state['quantity'] += new_quantity

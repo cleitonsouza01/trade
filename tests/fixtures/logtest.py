@@ -25,7 +25,7 @@ class LogTest(unittest.TestCase):
         """Creates an accumulator and accumulates all occurrences."""
         self.accumulator = trade.Accumulator(ASSET, logging=True)
         if self.initial_state:
-            self.accumulator.data = copy.deepcopy(self.initial_state)
+            self.accumulator.state = copy.deepcopy(self.initial_state)
         self.accumulate_occurrences()
 
     def accumulate_occurrences(self):
@@ -40,7 +40,7 @@ class LogTest(unittest.TestCase):
 
     def test_accumulator_state(self):
         """Verifies the state of the accumulator data."""
-        for key in self.accumulator.data.keys():
+        for key in self.accumulator.state.keys():
             self.assertEqual(
-                self.accumulator.data[key], self.expected_state[key]
+                self.accumulator.state[key], self.expected_state[key]
             )

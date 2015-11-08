@@ -18,8 +18,8 @@ class EventThatChangeResults(trade.plugins.Event):
 
     def update_accumulator(self, accumulator):
         """Increment all results in the container with the factor."""
-        for key in accumulator.data['results'].keys():
-            accumulator.data['results'][key] += self.factor
+        for key in accumulator.state['results'].keys():
+            accumulator.state['results'][key] += self.factor
 
 
 class TestEventThatChangeResultsCase00(LogTest):

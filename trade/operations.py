@@ -137,9 +137,9 @@ class Operation(Occurrence):
     def update_accumulator_results(self, accumulator):
         """Update the results stored in the accumulator."""
         for key, value in self.results.items():
-            if key not in accumulator.data['results']:
-                accumulator.data['results'][key] = 0
-            accumulator.data['results'][key] += value
+            if key not in accumulator.state['results']:
+                accumulator.state['results'][key] = 0
+            accumulator.state['results'][key] += value
 
     def update_positions(self, accumulator):
         """Update the position of the asset with the Operation data."""
@@ -155,15 +155,15 @@ class Operation(Occurrence):
         )
         if update_position_condition:
             # Define the new accumualtor quantity
-            new_quantity = accumulator.data['quantity'] + self.quantity
+            new_quantity = accumulator.state['quantity'] + self.quantity
 
             # if the quantity of the operation has the same sign
             # of the accumulated quantity then we need to
             # find out the new average price of the asset
-            if same_sign(accumulator.data['quantity'], self.quantity):
-                accumulator.data['price'] = average_price(
-                    accumulator.data['quantity'],
-                    accumulator.data['price'],
+            if same_sign(accumulator.state['quantity'], self.quantity):
+                accumulator.state['price'] = average_price(
+                    accumulator.state['quantity'],
+                    accumulator.state['price'],
                     self.quantity,
                     self.real_price
                 )
@@ -171,15 +171,15 @@ class Operation(Occurrence):
             # If the traded quantity has an opposite sign of the
             # asset's accumulated quantity and the accumulated
             # quantity is not zero, then there was a result.
-            elif accumulator.data['quantity'] != 0:
+            elif accumulator.state['quantity'] != 0:
 
                 # check if we are trading more than what
                 # we have on our portfolio; if yes,
                 # the result will be calculated based
                 # only on what was traded (the rest create
                 # a new position)
-                if abs(self.quantity) > abs(accumulator.data['quantity']):
-                    result_quantity = accumulator.data['quantity'] * -1
+                if abs(self.quantity) > abs(accumulator.state['quantity']):
+                    result_quantity = accumulator.state['quantity'] * -1
 
                 # If we're not trading more than what we have,
                 # then use the operation quantity to calculate
@@ -190,7 +190,7 @@ class Operation(Occurrence):
                 # calculate the result of this operation and add
                 # the new result to the accumulated results
                 results = \
-                    result_quantity * accumulator.data['price'] - \
+                    result_quantity * accumulator.state['price'] - \
                     result_quantity * self.real_price
                 if results:
                     self.results['trades'] = results
@@ -201,23 +201,23 @@ class Operation(Occurrence):
                 # If the new accumulated quantity is of the same sign
                 # of the old accumulated quantity, the average of price
                 # will not change.
-                if not same_sign(accumulator.data['quantity'], new_quantity):
-                    accumulator.data['price'] = self.real_price
+                if not same_sign(accumulator.state['quantity'], new_quantity):
+                    accumulator.state['price'] = self.real_price
 
             # If the accumulated quantity was zero then
             # there was no result and the new average price
             # is the price of the operation
             else:
-                accumulator.data['price'] = self.real_price
+                accumulator.state['price'] = self.real_price
 
             # update the accumulator quantity
             # with the new quantity
-            accumulator.data['quantity'] = new_quantity
+            accumulator.state['quantity'] = new_quantity
 
             # If the accumulator is empty
             # the price is set back to zero
-            if not accumulator.data['quantity']:
-                accumulator.data['price'] = 0
+            if not accumulator.state['quantity']:
+                accumulator.state['price'] = 0
 
 
 class OperationContainer(object):

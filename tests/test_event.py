@@ -28,18 +28,18 @@ class TestBaseEventBehavior(unittest.TestCase):
 
     def test_event_update_quantity(self):
         self.assertEqual(
-            self.accumulator.data['quantity'],
+            self.accumulator.state['quantity'],
             0
         )
 
     def test_event_update_price(self):
         self.assertEqual(
-            self.accumulator.data['price'],
+            self.accumulator.state['price'],
             0
         )
 
     def test_event_update_results(self):
-        self.assertFalse(self.accumulator.data['results'])
+        self.assertFalse(self.accumulator.state['results'])
 
 
 class TestBaseEventAccumulation(unittest.TestCase):
@@ -48,17 +48,17 @@ class TestBaseEventAccumulation(unittest.TestCase):
 
     def setUp(self):
         self.accumulator = trade.Accumulator(ASSET)
-        self.accumulator.data['quantity'] = 100
-        self.accumulator.data['price'] = 10
-        self.accumulator.data['results'] = {'trades': 1200}
+        self.accumulator.state['quantity'] = 100
+        self.accumulator.state['price'] = 10
+        self.accumulator.state['results'] = {'trades': 1200}
         event = DummyEvent(asset=ASSET, date='2015-09-29')
         self.accumulator.accumulate(event)
 
     def test_quantity_after_event(self):
-        self.assertEqual(self.accumulator.data['quantity'], 100)
+        self.assertEqual(self.accumulator.state['quantity'], 100)
 
     def test_price_after_event(self):
-        self.assertEqual(self.accumulator.data['price'], 10)
+        self.assertEqual(self.accumulator.state['price'], 10)
 
     def test_results_after_event(self):
-        self.assertEqual(self.accumulator.data['results'], {'trades': 1200})
+        self.assertEqual(self.accumulator.state['results'], {'trades': 1200})
