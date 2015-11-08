@@ -51,7 +51,7 @@ A basic example of the trade module in action:
 
 
     print(accumulator.subject.name)
-    #>> Some asset
+    #>> Google Inc
 
     print(accumulator.state['quantity'])
     #>> 0
@@ -116,7 +116,7 @@ trade is compatible with Python 2.7, 3.3, 3.4 and 3.5.
 Version
 -------
 
-The current version is 0.1.9 alpha.
+The current version is 0.2 alpha.
 
 License
 -------
