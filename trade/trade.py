@@ -112,8 +112,11 @@ class Accumulator(object):
             provided that self.logging is True.
     """
 
-    def __init__(self, subject, logging=False):
-        self.state = subject.get_default_state()
+    def __init__(self, subject, state=None, logging=False):
+        if state:
+            self.state = copy.deepcopy(state)
+        else:
+            self.state = subject.get_default_state()
         self.subject = subject
         self.logging = logging
         self.date = None
@@ -151,7 +154,6 @@ class Portfolio(object):
     """
 
     def __init__(self):
-        """Creates a Portfolio object with a empty list of subjects."""
         self.subjects = {}
 
     def accumulate(self, occurrence):

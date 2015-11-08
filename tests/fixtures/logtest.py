@@ -3,7 +3,6 @@
 from __future__ import absolute_import
 
 import unittest
-import copy
 
 import trade
 from tests.fixtures.assets import ASSET
@@ -12,7 +11,7 @@ class LogTest(unittest.TestCase):
     """Base class for Accumulator tests."""
 
     maxDiff = None
-    initial_state = {}
+    initial_state = None
     occurrences = []
     expected_log = {}
     expected_state = {
@@ -23,9 +22,11 @@ class LogTest(unittest.TestCase):
 
     def setUp(self):
         """Creates an accumulator and accumulates all occurrences."""
-        self.accumulator = trade.Accumulator(ASSET, logging=True)
-        if self.initial_state:
-            self.accumulator.state = copy.deepcopy(self.initial_state)
+        self.accumulator = trade.Accumulator(
+            ASSET,
+            state=self.initial_state,
+            logging=True
+        )
         self.accumulate_occurrences()
 
     def accumulate_occurrences(self):
