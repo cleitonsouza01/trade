@@ -17,8 +17,6 @@ console and import the module:
 ```python
 import trade
 asset = trade.Asset(symbol='GOOGL')
-print(asset.symbol)
-#>> GOOGL
 ```
 
 Now that you have trade installed, you can move on to the next part of the

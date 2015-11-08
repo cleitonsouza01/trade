@@ -25,7 +25,7 @@ other_asset = trade.Asset(name='GOOGL')
 
 # create the purchase operation buying 10 stocks
 purchase = trade.Operation(
-    asset=asset,
+    subject=asset,
     quantity=10,
     price=10,
     date='2015-10-01'
@@ -33,7 +33,7 @@ purchase = trade.Operation(
 # create another purchase operation, again buying 10 stocks,
 # but with a different price
 other_purchase = trade.Operation(
-    asset=asset,
+    subject=asset,
     quantity=10,
     price=20,
     date='2015-10-01'
@@ -41,7 +41,7 @@ other_purchase = trade.Operation(
 # create a purchase operation buying 10 stocks
 # of some other asset
 other_asset_purchase = trade.Operation(
-    asset=other_asset,
+    subject=other_asset,
     quantity=10,
     price=10,
     date='2015-10-01'
@@ -65,7 +65,7 @@ portfolio = trade.Portfolio()
 
 # Accumulate every operation on the container positions.
 # Attribute
-for position in container.positions['common operations'].values():
+for position in container.positions['operations'].values():
     portfolio.accumulate(position)
 
 ```
@@ -84,14 +84,14 @@ asset = trade.Asset(symbol='ATVI')
 
 # create the purchase operation buying 10 stocks
 purchase = trade.Operation(
-    asset=asset,
+    subject=asset,
     quantity=10,
     price=50.4,
     date='2015-10-01'
 )
 # create the sale operation selling 5 stocks
 sale = trade.Operation(
-    asset=asset,
+    subject=asset,
     quantity=-10,
     price=52.39,
     date='2015-10-01'
@@ -112,14 +112,14 @@ asset = trade.Asset(symbol='ATVI')
 
 # create the purchase operation buying 10 stocks
 purchase = trade.Operation(
-    asset=asset,
+    subject=asset,
     quantity=10,
     price=50.4,
     date='2015-10-01'
 )
 # create the sale operation selling 5 stocks
 sale = trade.Operation(
-    asset=asset,
+    subject=asset,
     quantity=-5,
     price=52.39,
     date='2015-10-01'
@@ -170,14 +170,14 @@ import trade.plugins
 asset = trade.Asset(symbol='ATVI')
 
 purchase = trade.Operation(
-    asset=asset,
+    subject=asset,
     quantity=10,
     price=50.4,
     date='2015-10-01'
 )
 # create the sale operation selling 5 stocks
 sale = trade.Operation(
-    asset=asset,
+    subject=asset,
     quantity=-5,
     price=52.39,
     date='2015-10-01'
@@ -201,12 +201,12 @@ container.fetch_positions()
 portfolio = trade.Portfolio()
 
 # Accumulate every operation on the container positions.
-for position in container.positions['common operations'].values():
+for position in container.positions['operations'].values():
     portfolio.accumulate(position)
-for position in container.positions['daytrades'].values():
-    portfolio.accumulate(position)
+for daytrade in container.positions['daytrades'].values():
+    portfolio.accumulate(daytrade)
 
-print(portfolio.assets['ATVI'].results)
+print(portfolio.assets['ATVI'].state['results'])
 #> {'daytrades': 9.949999999999989}
 ```
 

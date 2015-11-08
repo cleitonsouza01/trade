@@ -18,14 +18,14 @@ asset = trade.Asset(symbol='GOOGL')
 
 # create the purchase operation buying 10 stocks
 purchase = trade.Operation(
-    asset=asset,
+    subject=asset,
     quantity=10,
     price=50.4,
     date='2015-10-01'
 )
 # create the sale operation selling 5 stocks
 sale = trade.Operation(
-    asset=asset,
+    subject=asset,
     quantity=-5,
     price=52.39,
     date='2015-10-02'
@@ -59,14 +59,14 @@ asset = trade.Asset(symbol='GOOGL')
 
 # create the purchase operation buying 10 stocks
 purchase = trade.Operation(
-    asset=asset,
+    subject=asset,
     quantity=10,
     price=50.4,
     date='2015-10-01'
 )
 # create the sale operation selling 5 stocks
 sale = trade.Operation(
-    asset=asset,
+    subject=asset,
     quantity=-5,
     price=52.39,
     date='2015-10-02'
@@ -92,20 +92,20 @@ operations by just:
 # asset in 2015-10-01, and a second operations selling
 # 5 stocks of that same asset on 2015-10-02. Now
 # we check the asset's quantity on the accumulator:
-print(portfolio.assets['GOOGL'].quantity)
+print(portfolio.subjects['GOOGL'].state['quantity'])
 #> 5
 
 # The portfolio also calcultates the average price of the
 # assets it is accumulating. In this case, as we just made
 # a purchase and a sale, the average price still the same
 # price of the purchase.
-print(portfolio.assets['GOOGL'].price)
+print(portfolio.subjects['GOOGL'].state['price'])
 #> 50.4
 
 # We sold the asset for a higher price than what it was bought;
 # this generated a profit. We can check the results relative
 # to each asset that is being accumulated on the Portfolio:
-print(portfolio.assets['GOOGL'].results)
+print(portfolio.subjects['GOOGL'].state['results'])
 #> {'trades': 9.949999999999989}
 ```
 

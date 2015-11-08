@@ -26,7 +26,7 @@ asset = trade.Asset(symbol='GOOGL')
 
 # create the operation
 operation = trade.Operation(
-    asset=asset,
+    subject=asset,
     quantity=10,
     price=50.4,
     date='2015-10-01'
@@ -45,7 +45,7 @@ asset = trade.Asset(symbol='GOOGL')
 
 # create the operation
 operation = trade.Operation(
-    asset=asset,
+    subject=asset,
     quantity=-10,
     price=52.39,
     date='2015-10-01'

@@ -19,14 +19,14 @@ asset = trade.Asset(symbol='GOOGL')
 
 # create the purchase operation buying 10 stocks
 purchase = trade.Operation(
-    asset=asset,
+    subject=asset,
     quantity=10,
     price=50.4,
     date='2015-10-01'
 )
 # create the sale operation selling 5 stocks
 sale = trade.Operation(
-    asset=asset,
+    subject=asset,
     quantity=-5,
     price=52.39,
     date='2015-10-02'
@@ -65,7 +65,7 @@ other_asset = trade.Asset(symbol='AAPL')
 
 # create the purchase operation buying 10 stocks
 purchase = trade.Operation(
-    asset=asset,
+    subject=asset,
     quantity=10,
     price=10,
     date='2015-10-01'
@@ -73,7 +73,7 @@ purchase = trade.Operation(
 # create another purchase operation, again buying 10 stocks,
 # but with a different price
 other_purchase = trade.Operation(
-    asset=asset,
+    subject=asset,
     quantity=10,
     price=20,
     date='2015-10-01'
@@ -81,7 +81,7 @@ other_purchase = trade.Operation(
 # create a purchase operation buying 10 stocks
 # of some other asset
 other_asset_purchase = trade.Operation(
-    asset=other_asset,
+    subject=other_asset,
     quantity=10,
     price=10,
     date='2015-10-01'
@@ -131,14 +131,14 @@ check our OperationContainer object positions we would see this:
 ```python
 
 # Check each position
-print(container.positions['operations']['GOOGL'].asset.symbol)
+print(container.positions['operations']['GOOGL'].subject.symbol)
 #> GOOGL
 print(container.positions['operations']['GOOGL'].quantity)
 #> 20
 print(container.positions['operations']['GOOGL'].price)
 #> 15
 
-print(container.positions['operations']['AAPL'].asset.symbol)
+print(container.positions['operations']['AAPL'].subject.symbol)
 #> AAPL
 print(container.positions['operations']['AAPL'].quantity)
 #> 10
