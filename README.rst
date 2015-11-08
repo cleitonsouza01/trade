@@ -116,7 +116,7 @@ trade is compatible with Python 2.7, 3.3, 3.4 and 3.5.
 Version
 -------
 
-The current version is 0.1.8 alpha.
+The current version is 0.1.9 alpha.
 
 License
 -------
