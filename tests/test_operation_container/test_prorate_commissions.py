@@ -2,6 +2,10 @@
 
 from __future__ import absolute_import
 
+from .fixture_positions import (
+    POSITION01, POSITION02, POSITION03, POSITION04, POSITION05, POSITION06,
+    POSITION07, DT_POSITION10
+)
 from .container_test_base import TestFetchPositions
 from tests.fixtures.operations import (
     OPERATION39, OPERATION42, OPERATION43, OPERATION44,
@@ -23,14 +27,7 @@ class TestProrateCommissionsByPositionCase01(TestFetchPositions):
     commissions = COMMISSIONS11
     operations = [OPERATION39]
     positions = {
-        ASSET.symbol: {
-            'quantity': -10,
-            'price': 2,
-            'volume': 20,
-            'commissions': {
-                'some discount': 1,
-            }
-        },
+        ASSET.symbol: POSITION01,
     }
 
 
@@ -40,22 +37,8 @@ class TestProrateCommissionsByPositionCase02(TestFetchPositions):
     commissions = COMMISSIONS11
     operations = [OPERATION39, OPERATION42]
     positions = {
-        ASSET.symbol: {
-            'quantity': -10,
-            'price': 2,
-            'volume': 20,
-            'commissions': {
-                'some discount': 0.5,
-            }
-        },
-        ASSET2.symbol: {
-            'quantity': -10,
-            'price': 2,
-            'volume': 20,
-            'commissions': {
-                'some discount': 0.5,
-            }
-        },
+        ASSET.symbol: POSITION02,
+        ASSET2.symbol: POSITION02,
     }
 
 
@@ -65,22 +48,8 @@ class TestProrateCommissionsByPositionCase03(TestFetchPositions):
     commissions = COMMISSIONS11
     operations = [OPERATION39, OPERATION43]
     positions = {
-        ASSET.symbol: {
-            'quantity': -10,
-            'price': 2,
-            'volume': 20,
-            'commissions': {
-                'some discount': 0.33333333333333326,
-            }
-        },
-        ASSET2.symbol: {
-            'quantity': -20,
-            'price': 2,
-            'volume': 40,
-            'commissions': {
-                'some discount': 0.6666666666666665,
-            }
-        },
+        ASSET.symbol: POSITION04,
+        ASSET2.symbol: POSITION05,
     }
 
 
@@ -90,30 +59,9 @@ class TestProrateCommissionsByPositionCase04(TestFetchPositions):
     commissions = COMMISSIONS10
     operations = [OPERATION39, OPERATION44, OPERATION42]
     positions = {
-        ASSET.symbol: {
-            'quantity': -10,
-            'price': 2,
-            'volume': 20,
-            'commissions': {
-                'some discount': 1,
-            }
-        },
-        ASSET2.symbol: {
-            'quantity': -10,
-            'price': 2,
-            'volume': 20,
-            'commissions': {
-                'some discount': 1,
-            }
-        },
-        ASSET3.symbol: {
-            'quantity': -20,
-            'price': 2,
-            'volume': 40,
-            'commissions': {
-                'some discount': 2,
-            }
-        }
+        ASSET.symbol: POSITION01,
+        ASSET2.symbol: POSITION01,
+        ASSET3.symbol: POSITION03
     }
 
 
@@ -123,40 +71,9 @@ class TestProrateCommissionsByPositionCase05(TestFetchPositions):
     commissions = COMMISSIONS9
     operations = OPERATION_SEQUENCE2
     positions = {
-        ASSET.symbol: {
-            'quantity': 5,
-            'price': 2,
-            'volume': 10,
-            'commissions': {
-                'other discount': 0.8571428571428571,
-                'some discount': 0.2857142857142857
-            }
-        },
-        ASSET2.symbol: {
-            'quantity': -5,
-            'price': 7,
-            'volume': 35,
-            'commissions': {
-                'other discount': 3,
-                'some discount': 1
-            }
-        }
+        ASSET.symbol: POSITION06,
+        ASSET2.symbol: POSITION07
     }
     daytrades = {
-        ASSET.symbol: {
-            'quantity': 5,
-            'buy quantity': 5,
-            'buy price': 2,
-            'sale quantity': -5,
-            'sale price': 3,
-            'result': {'daytrades': 2.1428571428571423},
-            'buy commissions': {
-                'some discount': 0.2857142857142857,
-                'other discount': 0.8571428571428571
-            },
-            'sale commissions': {
-                'some discount': 0.42857142857142855,
-                'other discount': 1.2857142857142856
-            }
-        }
+        ASSET.symbol: DT_POSITION10
     }

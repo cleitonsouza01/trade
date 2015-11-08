@@ -7,6 +7,57 @@ from tests.fixtures.assets import (
 )
 
 
+POSITION01 = {
+    'quantity': -10,
+    'price': 2,
+    'volume': 20,
+    'commissions': {
+        'some discount': 1,
+    }
+}
+POSITION02 = copy.deepcopy(POSITION01)
+POSITION02['commissions'] = {
+    'some discount': 0.5,
+}
+
+POSITION03 = {
+    'quantity': -20,
+    'price': 2,
+    'volume': 40,
+    'commissions': {
+        'some discount': 2,
+    }
+}
+
+POSITION04 = copy.deepcopy(POSITION01)
+POSITION04['commissions'] = {
+    'some discount': 0.33333333333333326,
+}
+
+POSITION05 = copy.deepcopy(POSITION03)
+POSITION05['commissions'] = {
+    'some discount': 0.6666666666666665,
+}
+
+POSITION06 = {
+    'quantity': 5,
+    'price': 2,
+    'volume': 10,
+    'commissions': {
+        'other discount': 0.8571428571428571,
+        'some discount': 0.2857142857142857
+    }
+}
+POSITION07 = {
+    'quantity': -5,
+    'price': 7,
+    'volume': 35,
+    'commissions': {
+        'other discount': 3,
+        'some discount': 1
+    }
+}
+
 POSITION0 = {
     ASSET.symbol: {
         'quantity': 5,
@@ -43,6 +94,7 @@ POSITION2 = {
         'commissions': {}
     }
 }
+
 
 DT_POSITION0 = {
     'quantity': 5,
@@ -130,4 +182,15 @@ DT_POSITION9 = {
         'liquidation': 0.02,
         'registry': 0,
     }
+}
+
+DT_POSITION10 = copy.deepcopy(DT_POSITION0)
+DT_POSITION10['results'] = {'daytrades': 2.1428571428571423}
+DT_POSITION10['buy commissions'] = {
+    'some discount': 0.2857142857142857,
+    'other discount': 0.8571428571428571
+}
+DT_POSITION10['sale commissions'] = {
+    'some discount': 0.42857142857142855,
+    'other discount': 1.2857142857142856
 }
