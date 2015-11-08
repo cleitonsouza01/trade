@@ -268,12 +268,14 @@ class OperationContainer(object):
             daytrades from other operations).
     """
 
-    def __init__(self, operations=None):
+    def __init__(self, operations=None, tasks=None):
         if operations is None:
             operations = []
         self.operations = operations
         self.positions = {}
-        self.tasks = []
+        if tasks is None:
+            tasks = []
+        self.tasks = tasks
         self.volume = 0
 
     def fetch_positions(self):

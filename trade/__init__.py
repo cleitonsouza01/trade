@@ -44,6 +44,7 @@ from .operations import (
 )
 from .utils import average_price, same_sign, merge_operations
 from . import plugins
+from .trade_json import TradeJSON
 
 
 __author__ = 'rocha.rafaelsilva@gmail.com'
