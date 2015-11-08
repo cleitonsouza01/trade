@@ -1,3 +1,5 @@
+"""Example of the use of Accumulators"""
+
 from __future__ import absolute_import
 from __future__ import print_function
 
@@ -10,58 +12,58 @@ asset = trade.Asset(name='Google Inc', symbol='GOOGL')
 accumulator = trade.Accumulator(asset)
 
 
-print(accumulator.asset.name)
+print(accumulator.subject.name)
 #>> Some asset
 
-print(accumulator.quantity)
+print(accumulator.state['quantity'])
 #>> 0
 
-print(accumulator.price)
+print(accumulator.state['price'])
 #>> 0
 
-print(accumulator.results)
-#>> {'trades': 0}
+print(accumulator.state['results'])
+#>> {}
 
 
 # create a trade operation buying the asset
 purchase = trade.Operation(
-                asset=asset,
-                quantity=10,
-                price=650.73,
-                date='2015-09-23'
-            )
+    subject=asset,
+    quantity=10,
+    price=650.73,
+    date='2015-09-23'
+)
 
 # accumulate the trade
-accumulator.accumulate_occurrence(purchase)
+accumulator.accumulate(purchase)
 
 
-print(accumulator.quantity)
+print(accumulator.state['quantity'])
 #>> 10
 
-print(accumulator.price)
+print(accumulator.state['price'])
 #>> 650.73
 
-print(accumulator.results)
-#>> {'daytrades': 0, 'trades': 0}
+print(accumulator.state['results'])
+#>> {}
 
 
 # create a new trade operation selling the asset
 sale = trade.Operation(
-            asset=asset,
-            quantity=-5,
-            price=656.77,
-            date='2015-09-24'
-        )
+    subject=asset,
+    quantity=-5,
+    price=656.77,
+    date='2015-09-24'
+)
 
 # accumulate the new trade
-accumulator.accumulate_occurrence(sale)
+accumulator.accumulate(sale)
 
 
-print(accumulator.quantity)
+print(accumulator.state['quantity'])
 #>> 5
 
-print(accumulator.price)
+print(accumulator.state['price'])
 #>> 650.73
 
-print(accumulator.results)
-#>> {'daytrades': 0, 'trades': 30.199999999999818}
+print(accumulator.state['results'])
+#>> {'trades': 30.199999999999818}

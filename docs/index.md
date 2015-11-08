@@ -25,9 +25,7 @@ To check if everything went OK, open the Python console and import the module:
 
 ```python
 import trade
-asset = trade.Asset(symbol='GOOG')
-print(asset.symbol)
-#>> GOOG
+asset = trade.Asset(symbol='ATVI')
 ```
 
 
@@ -48,22 +46,22 @@ asset = trade.Asset(name='Google Inc', symbol='GOOGL')
 accumulator = trade.Accumulator(asset)
 
 
-print(accumulator.asset.name)
-#>> Google Inc
+print(accumulator.subject.name)
+#>> Some asset
 
-print(accumulator.quantity)
+print(accumulator.state['quantity'])
 #>> 0
 
-print(accumulator.price)
+print(accumulator.state['price'])
 #>> 0
 
-print(accumulator.results)
-#>> {'trades': 0}
+print(accumulator.state['results'])
+#>> {}
 
 
 # create a trade operation buying the asset
 purchase = trade.Operation(
-    asset=asset,
+    subject=asset,
     quantity=10,
     price=650.73,
     date='2015-09-23'
@@ -73,19 +71,19 @@ purchase = trade.Operation(
 accumulator.accumulate(purchase)
 
 
-print(accumulator.quantity)
+print(accumulator.state['quantity'])
 #>> 10
 
-print(accumulator.price)
+print(accumulator.state['price'])
 #>> 650.73
 
-print(accumulator.results)
+print(accumulator.state['results'])
 #>> {}
 
 
 # create a new trade operation selling the asset
 sale = trade.Operation(
-    asset=asset,
+    subject=asset,
     quantity=-5,
     price=656.77,
     date='2015-09-24'
@@ -95,20 +93,15 @@ sale = trade.Operation(
 accumulator.accumulate(sale)
 
 
-print(accumulator.quantity)
+print(accumulator.state['quantity'])
 #>> 5
 
-print(accumulator.price)
+print(accumulator.state['price'])
 #>> 650.73
 
-print(accumulator.results)
+print(accumulator.state['results'])
 #>> {'trades': 30.199999999999818}
 ```
-
-Operation objects may include rates and commissions that are considered by the
-accumulator when it calculates results and average prices.
-
-The Accumulator can also log the accumulated operations and their results.
 
 Check the [API docs](api) for all the available features.
 
