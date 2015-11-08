@@ -8,6 +8,9 @@ from tests.fixtures.operation_sequences import (
 from tests.fixtures.assets import (
     ASSET, OPTION1,
 )
+from tests.fixtures.accumulator_states import (
+    STATE06, STATE07, STATE08,
+)
 from .test_portfolio import TestPortfolio
 
 
@@ -16,14 +19,8 @@ class TestUnderlyingAssetAccumulationCase00(TestPortfolio):
 
     operations = OPERATION_SEQUENCE20
     state = {
-        ASSET.symbol: {
-            'quantity': 20,
-            'price': 8
-        },
-        OPTION1.symbol: {
-            'quantity': 0,
-            'price': 0
-        },
+        ASSET.symbol: STATE07,
+        OPTION1.symbol: STATE06,
     }
 
 
@@ -32,12 +29,6 @@ class TestUnderlyingAssetAccumulationCase01(TestPortfolio):
 
     operations = OPERATION_SEQUENCE21
     state = {
-        ASSET.symbol: {
-            'quantity': 30,
-            'price': 7.833333333333333
-        },
-        OPTION1.symbol: {
-            'quantity': 0,
-            'price': 0
-        },
+        ASSET.symbol: STATE08,
+        OPTION1.symbol: STATE06,
     }

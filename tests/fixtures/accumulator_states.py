@@ -1,5 +1,38 @@
 """A set of states for the accumulator tests."""
 
+STATE01 = {
+    'quantity': 10,
+    'price': 1
+}
+STATE02 = {
+    'quantity': 20,
+    'price': 1.5
+}
+STATE03 = {
+    'quantity': 20,
+    'price': 2
+}
+STATE04 = {
+    'quantity': 40,
+    'price': 3
+}
+STATE05 = {
+    'quantity': 60,
+    'price': 3
+}
+STATE06 = {
+    'quantity': 0,
+    'price': 0
+}
+STATE07 = {
+    'quantity': 20,
+    'price': 8
+}
+STATE08 = {
+    'quantity': 30,
+    'price': 7.833333333333333
+}
+
 INITIAL_STATE0 = {
     'quantity': 100,
     'price': 10,

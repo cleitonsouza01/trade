@@ -12,6 +12,9 @@ from tests.fixtures.operation_sequences import (
 from tests.fixtures.assets import (
     ASSET, ASSET2, ASSET3
 )
+from tests.fixtures.accumulator_states import (
+    STATE01, STATE02, STATE03, STATE04, STATE05
+)
 from .test_portfolio import TestPortfolio
 
 
@@ -20,10 +23,7 @@ class TestPortfolioAssetAccumulationCase00(TestPortfolio):
 
     operations = [OPERATION48]
     state = {
-        ASSET.symbol: {
-            'quantity': 10,
-            'price': 1
-        }
+        ASSET.symbol: STATE01
     }
 
 
@@ -32,10 +32,7 @@ class TestPortfolioAssetAccumulationCase01(TestPortfolio):
 
     operations = [OPERATION48, OPERATION52]
     state = {
-        ASSET.symbol: {
-            'quantity': 20,
-            'price': 1.5
-        }
+        ASSET.symbol: STATE02
     }
 
 
@@ -44,14 +41,8 @@ class TestPortfolioAssetAccumulationCase02(TestPortfolio):
 
     operations = [OPERATION48, OPERATION53]
     state = {
-        ASSET.symbol: {
-            'quantity': 10,
-            'price': 1
-        },
-        ASSET3.symbol: {
-            'quantity': 20,
-            'price': 2
-        },
+        ASSET.symbol: STATE01,
+        ASSET3.symbol: STATE03,
     }
 
 
@@ -63,16 +54,9 @@ class TestPortfolioAssetAccumulationCase03(TestPortfolio):
         OPERATION49,
         OPERATION50,
     ]
-
     state = {
-        ASSET.symbol: {
-            'quantity': 10,
-            'price': 1
-        },
-        ASSET2.symbol: {
-            'quantity': 40,
-            'price': 3
-        },
+        ASSET.symbol: STATE01,
+        ASSET2.symbol: STATE04,
     }
 
 
@@ -81,14 +65,8 @@ class TestPortfolioAssetAccumulationCase04(TestPortfolio):
 
     operations = OPERATION_SEQUENCE22
     state = {
-        ASSET.symbol: {
-            'quantity': 10,
-            'price': 1
-        },
-        ASSET2.symbol: {
-            'quantity': 60,
-            'price': 3
-        },
+        ASSET.symbol: STATE01,
+        ASSET2.symbol: STATE05,
     }
 
 
@@ -97,12 +75,6 @@ class TestPortfolioAssetAccumulationCase05(TestPortfolio):
 
     operations = OPERATION_SEQUENCE23
     state = {
-        ASSET.symbol: {
-            'quantity': 20,
-            'price': 1.5
-        },
-        ASSET2.symbol: {
-            'quantity': 60,
-            'price': 3
-        },
+        ASSET.symbol: STATE02,
+        ASSET2.symbol: STATE05,
     }
