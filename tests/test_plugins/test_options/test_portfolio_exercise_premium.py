@@ -7,8 +7,9 @@ from tests.fixtures.operations import  (
     EXERCISE_OPERATION4,
     OPTION_OPERATION1, OPTION_OPERATION2
 )
-from tests.fixtures.assets import (
-    ASSET, OPTION1,
+from tests.fixtures.assets import ASSET, OPTION1
+from tests.fixtures.accumulator_states import (
+    STATE01, STATE06, STATE09,
 )
 from tests.test_portfolio.test_portfolio import TestPortfolio
 
@@ -22,14 +23,8 @@ class TestExercisePremiumCase00(TestPortfolio):
         EXERCISE_OPERATION4
     ]
     state = {
-        ASSET.symbol: {
-            'quantity': 20,
-            'price': 5.5
-        },
-        OPTION1.symbol: {
-            'quantity': 0,
-            'price': 0
-        }
+        ASSET.symbol: STATE09,
+        OPTION1.symbol: STATE06
     }
 
 
@@ -42,12 +37,6 @@ class TestExercisePremiumCase01(TestPortfolio):
         EXERCISE_OPERATION4
     ]
     state = {
-        ASSET.symbol: {
-            'quantity': 20,
-            'price': 5.5
-        },
-        OPTION1.symbol: {
-            'quantity': 10,
-            'price': 1
-        }
+        ASSET.symbol: STATE09,
+        OPTION1.symbol: STATE01
     }

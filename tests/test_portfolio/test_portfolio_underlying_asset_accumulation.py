@@ -5,9 +5,7 @@ from __future__ import absolute_import
 from tests.fixtures.operation_sequences import (
     OPERATION_SEQUENCE20, OPERATION_SEQUENCE21,
 )
-from tests.fixtures.assets import (
-    ASSET, OPTION1,
-)
+from tests.fixtures.assets import ASSET, OPTION1
 from tests.fixtures.accumulator_states import (
     STATE06, STATE07, STATE08,
 )

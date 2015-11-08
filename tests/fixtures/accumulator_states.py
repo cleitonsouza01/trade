@@ -32,6 +32,10 @@ STATE08 = {
     'quantity': 30,
     'price': 7.833333333333333
 }
+STATE09 = {
+    'quantity': 20,
+    'price': 5.5
+}
 
 INITIAL_STATE0 = {
     'quantity': 100,
