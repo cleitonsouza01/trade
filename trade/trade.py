@@ -112,7 +112,7 @@ class Accumulator(object):
             provided that self.logging is True.
     """
 
-    def __init__(self, subject, state=None, logging=False):
+    def __init__(self, subject, state=None, logging=True):
         if state:
             self.state = copy.deepcopy(state)
         else:
@@ -153,8 +153,14 @@ class Portfolio(object):
         subjects: A dict {Asset.symbol: Accumulator}.
     """
 
-    def __init__(self):
+    def __init__(self, state=None):
         self.subjects = {}
+        if state:
+            for subject, subject_state in state.items():
+                self.subjects[subject.symbol] = Accumulator(
+                    subject,
+                    subject_state
+                )
 
     def accumulate(self, occurrence):
         """Accumulate an occurrence on its corresponding accumulator."""

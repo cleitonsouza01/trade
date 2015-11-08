@@ -8,11 +8,12 @@ import trade
 class TestPortfolio(unittest.TestCase):
     """Base class for Portfolio tests."""
 
+    initial_state = None
     operations = []
     state = {}
 
     def setUp(self):
-        self.portfolio = trade.Portfolio()
+        self.portfolio = trade.Portfolio(state=self.initial_state)
         for operation in self.operations:
             self.portfolio.accumulate(copy.deepcopy(operation))
 
