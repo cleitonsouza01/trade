@@ -18,26 +18,54 @@ class TradeJSON(object):
                 "type": "Asset",
                 "name": "Google Inc",
                 "expiration_date": "2019-01-01"
-            }
+            },
+            "AAPL": {
+                "type": "Asset",
+                "name": "Apple Inc.",
+                "expiration_date": ""
+            },
+            ...
         },
         "occurrences": [
             {
                 "type": "Operation",
                 "subject": "GOOG",
                 "date": "2015-01-01",
-                "quantity": 100,
-                "price": 1,
+                "quantity": 10,
+                "price": 650.11,
                 "commissions": {},
                 "raw_results": {},
                 "operations": []
-            }
+            },
+            ...
         ],
-        "initial state": {}
+        "initial state": {
+            "AAPL": {
+                "date": "2015-11-09",
+                "quantity": 92,
+                "price": 31.21,
+                "results": {"trades": 5000.72}
+            },
+            ...
+        }
     }
 
     return = {
-        ASSET.symbol: {
-            log...
+        "GOOG": {
+            "2015-01-01": {
+                "quantity": 10,
+                "price": 650.11,
+                "results": {}
+            },
+            ...
+        },
+        "AAPL": {
+            "2015-11-09": {
+                "quantity": 92,
+                "price": 31.21,
+                "results": {"trades": 5000.72}
+            },
+            ...
         }
     }
     """
@@ -70,9 +98,6 @@ class TradeJSON(object):
         # creates an object for all subjects in the json
         self.create_subjects(data)
 
-        # get the initial state, if any
-        initial_state = None
-
         # Get all the occurrences described in the json
         self.occurrences = []
         for occurrence in data['occurrences']:
@@ -92,6 +117,10 @@ class TradeJSON(object):
                     tasks=[fetch_daytrades, fetch_exercises]
                 )
             self.containers[occurrence.date].operations.append(occurrence)
+
+        initial_state = {}
+        for asset_name, asset_state in data['initial state'].items():
+            initial_state[self.subjects[asset_name]] = asset_state
 
         # create a Portfolio with the initial state
         portfolio = Portfolio(state=initial_state)

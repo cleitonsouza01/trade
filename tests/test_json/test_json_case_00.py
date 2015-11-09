@@ -5,7 +5,7 @@ from __future__ import absolute_import
 from .test_json import TestJSON
 
 
-class TestJSONCase00(TestJSON):
+class TestJSONCase0000(TestJSON):
     """One operation."""
 
     json_input = '''{
@@ -42,7 +42,7 @@ class TestJSONCase00(TestJSON):
     }'''
 
 
-class TestJSONCase01(TestJSON):
+class TestJSONCase0001(TestJSON):
     """Two operations with the same asset."""
 
     json_input = '''{
@@ -94,7 +94,7 @@ class TestJSONCase01(TestJSON):
     }'''
 
 
-class TestJSONCase02(TestJSON):
+class TestJSONCase0002(TestJSON):
     """Two operations with different assets on the same date."""
 
     json_input = '''{
@@ -153,7 +153,7 @@ class TestJSONCase02(TestJSON):
     }'''
 
 
-class TestJSONCase03(TestJSON):
+class TestJSONCase0003(TestJSON):
     """Multiple operations with multiple assets."""
 
     json_input = '''{
@@ -227,7 +227,7 @@ class TestJSONCase03(TestJSON):
     }'''
 
 
-class TestJSONCase04(TestJSON):
+class TestJSONCase0004(TestJSON):
     """Multiple operations with multiple assets."""
 
     json_input = '''{

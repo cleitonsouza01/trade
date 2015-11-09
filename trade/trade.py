@@ -101,11 +101,11 @@ class Accumulator(object):
     It accumualates occurrences of a single subject.
 
     Attributes:
-        subject: An subject instance, the subject whose data are being
+        subject: An subject instance, the subject whose data is being
             accumulated.
         date: A string 'YYYY-mm-dd' representing the date of the last
             status change of the accumulator.
-        state: A dictionary with the state of this accumulator.
+        state: A dictionary with the initial state of this accumulator.
         logging: A boolean indicating if the accumulator should log
             the data passed to accumulate().
         log: A dict with all the occurrences performed with the subject,
@@ -113,14 +113,18 @@ class Accumulator(object):
     """
 
     def __init__(self, subject, state=None, logging=True):
+        self.log = {}
         if state:
             self.state = copy.deepcopy(state)
+            if 'date' in state:
+                self.log[state['date']] = {}
+                for key in [x for x in state.keys() if x != 'date']:
+                    self.log[state['date']][key] = state[key]
         else:
             self.state = subject.get_default_state()
         self.subject = subject
         self.logging = logging
         self.date = None
-        self.log = {}
 
     def accumulate(self, occurrence):
         """Accumulates an occurrence."""
