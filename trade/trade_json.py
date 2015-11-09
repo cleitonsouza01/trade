@@ -12,7 +12,7 @@ from .plugins import Option, Exercise, fetch_daytrades, fetch_exercises
 class TradeJSON(object):
     """trade module JSON interface.
 
-    data = {
+    json_input = {
         "subjects": {
             "GOOG": {
                 "type": "Asset",
@@ -50,7 +50,7 @@ class TradeJSON(object):
         }
     }
 
-    return = {
+    json_output = {
         "GOOG": {
             "2015-01-01": {
                 "quantity": 10,

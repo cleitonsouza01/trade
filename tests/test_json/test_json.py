@@ -14,7 +14,7 @@ class TestJSON(unittest.TestCase):
     json_output = None
 
     def setUp(self):
-        self.interface = trade.trade_json.TradeJSON()
+        self.interface = trade.TradeJSON()
 
     def test_json_interface(self):
         """Test the json response."""
