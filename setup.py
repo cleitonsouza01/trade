@@ -32,6 +32,6 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
     keywords='asset stock securities market finance investment money currency',
-    packages=['trade', 'trade/plugins'],
     install_requires='accumulator==0.1',
+    packages=['trade'],
 )
