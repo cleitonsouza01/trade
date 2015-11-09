@@ -38,7 +38,12 @@ from .operations import (
     OperationContainer,
 )
 from .utils import average_price, same_sign, merge_operations
-from . import plugins
+from .daytrades import (
+    Daytrade, fetch_daytrades, find_purchase_and_sale, daytrade_condition
+)
+from .events import Event, StockSplit, BonusShares
+from .options import Option, Exercise, fetch_exercises
+from .prorate import prorate_commissions
 from .trade_json import TradeJSON
 
 

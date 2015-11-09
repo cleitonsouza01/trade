@@ -46,7 +46,7 @@ from __future__ import absolute_import
 from abc import ABCMeta
 
 from accumulator import Occurrence
-from ..utils import average_price
+from .utils import average_price
 
 
 class Event(Occurrence):

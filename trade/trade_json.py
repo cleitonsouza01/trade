@@ -6,7 +6,8 @@ import json
 
 from .operations import Asset, Operation, OperationContainer
 from accumulator import Portfolio
-from .plugins import Option, Exercise, fetch_daytrades, fetch_exercises
+from .options import Option, Exercise, fetch_exercises
+from .daytrades import fetch_daytrades
 
 
 class TradeJSON(object):

@@ -34,8 +34,8 @@ class TestContainerCreationCase01(unittest.TestCase):
         self.container = trade.OperationContainer()
         self.container.commissions = COMMISSIONS12
         self.container.fetch_positions_tasks = [
-            trade.plugins.fetch_exercises,
-            trade.plugins.fetch_daytrades,
+            trade.fetch_exercises,
+            trade.fetch_daytrades,
         ]
         self.container.fetch_positions()
 

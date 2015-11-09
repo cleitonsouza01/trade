@@ -2,8 +2,7 @@
 
 from __future__ import absolute_import
 
-from trade import Asset
-from trade.plugins import Option
+from trade import Asset, Option
 
 
 ASSET = Asset(symbol='some asset')

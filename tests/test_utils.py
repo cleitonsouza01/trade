@@ -54,42 +54,42 @@ class TestDaytradeCondition(unittest.TestCase):
 
     def test_case_00(self):
         self.assertTrue(
-            trade.plugins.daytrade_condition(OPERATION55, OPERATION46)
+            trade.daytrade_condition(OPERATION55, OPERATION46)
         )
 
     def test_case_01(self):
         self.assertTrue(
-            trade.plugins.daytrade_condition(OPERATION46, OPERATION55)
+            trade.daytrade_condition(OPERATION46, OPERATION55)
         )
 
     def test_case_02(self):
         self.assertFalse(
-            trade.plugins.daytrade_condition(OPERATION57, OPERATION57)
+            trade.daytrade_condition(OPERATION57, OPERATION57)
         )
 
     def test_case_03(self):
         self.assertFalse(
-            trade.plugins.daytrade_condition(OPERATION57, OPERATION55)
+            trade.daytrade_condition(OPERATION57, OPERATION55)
         )
 
     def test_case_04(self):
         self.assertFalse(
-            trade.plugins.daytrade_condition(OPERATION55, OPERATION59)
+            trade.daytrade_condition(OPERATION55, OPERATION59)
         )
 
     def test_case_05(self):
         self.assertFalse(
-            trade.plugins.daytrade_condition(OPERATION55, OPERATION57)
+            trade.daytrade_condition(OPERATION55, OPERATION57)
         )
 
     def test_case_06(self):
         self.assertFalse(
-            trade.plugins.daytrade_condition(OPERATION57, OPERATION46)
+            trade.daytrade_condition(OPERATION57, OPERATION46)
         )
 
     def test_case_09(self):
         self.assertFalse(
-            trade.plugins.daytrade_condition(OPERATION46, OPERATION46)
+            trade.daytrade_condition(OPERATION46, OPERATION46)
         )
 
 
@@ -104,53 +104,49 @@ class TestFindPurchaseAndSale(unittest.TestCase):
 
     def test_case_00(self):
         self.assertEqual(
-            trade.plugins.find_purchase_and_sale(OPERATION46, OPERATION55),
+            trade.find_purchase_and_sale(OPERATION46, OPERATION55),
             (OPERATION46, OPERATION55)
         )
 
     def test_case_01(self):
         self.assertEqual(
-            trade.plugins.find_purchase_and_sale(OPERATION55, OPERATION46),
+            trade.find_purchase_and_sale(OPERATION55, OPERATION46),
             (OPERATION46, OPERATION55)
         )
 
     def test_case_02(self):
         self.assertEqual(
-            trade.plugins.find_purchase_and_sale(OPERATION46, OPERATION46),
+            trade.find_purchase_and_sale(OPERATION46, OPERATION46),
             (None, None)
         )
 
     def test_case_03(self):
         self.assertEqual(
-            trade.plugins.find_purchase_and_sale(
-                OPERATION55, OPERATION55
-            ),
+            trade.find_purchase_and_sale(OPERATION55, OPERATION55),
             (None, None)
         )
 
     def test_case_04(self):
         self.assertEqual(
-            trade.plugins.find_purchase_and_sale(OPERATION46, OPERATION45),
+            trade.find_purchase_and_sale(OPERATION46, OPERATION45),
             (None, None)
         )
 
     def test_case_05(self):
         self.assertEqual(
-            trade.plugins.find_purchase_and_sale(OPERATION56, OPERATION43),
+            trade.find_purchase_and_sale(OPERATION56, OPERATION43),
             (OPERATION56, OPERATION43)
         )
 
     def test_case_06(self):
         self.assertEqual(
-            trade.plugins.find_purchase_and_sale(OPERATION20, OPERATION57),
+            trade.find_purchase_and_sale(OPERATION20, OPERATION57),
             (None, None)
         )
 
     def test_case_07(self):
 
         self.assertEqual(
-            trade.plugins.find_purchase_and_sale(
-                OPERATION58, OPERATION57
-            ),
+            trade.find_purchase_and_sale(OPERATION58, OPERATION57),
             (OPERATION57, OPERATION58)
         )

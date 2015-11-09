@@ -3,8 +3,7 @@
 from __future__ import absolute_import
 import copy
 
-from trade import Operation
-from trade.plugins import Daytrade, Exercise
+from trade import Operation, Daytrade, Exercise
 from .assets import ASSET, ASSET2, ASSET3, OPTION1
 
 OPERATION78 = Operation(

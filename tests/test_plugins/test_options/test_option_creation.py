@@ -17,7 +17,7 @@ class TestOptionCretionCase00(TestOptionCreation):
     """Test the creation of an option."""
 
     def test_no_underlying_assets(self):
-        option = trade.plugins.Option(
+        option = trade.Option(
             symbol='OPTIOSYMBOL', expiration_date='2015-12-21'
         )
         self.assertEqual(option.underlying_assets, {})

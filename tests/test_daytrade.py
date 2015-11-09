@@ -20,10 +20,10 @@ class TestDaytradeCreation(unittest.TestCase):
     """
 
     def setUp(self):
-        self.daytrade1 = trade.plugins.Daytrade(
+        self.daytrade1 = trade.Daytrade(
             copy.deepcopy(OPERATION24), copy.deepcopy(OPERATION25)
         )
-        self.daytrade2 = trade.plugins.Daytrade(
+        self.daytrade2 = trade.Daytrade(
             copy.deepcopy(OPERATION60), copy.deepcopy(OPERATION39)
         )
 

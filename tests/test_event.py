@@ -2,8 +2,7 @@
 
 from __future__ import absolute_import
 import unittest
-from trade import Accumulator
-from trade.plugins import Event
+from trade import Accumulator, Event
 from tests.fixtures.assets import ASSET
 
 

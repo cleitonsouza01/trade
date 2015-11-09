@@ -3,7 +3,7 @@
 from __future__ import absolute_import
 
 from .assets import ASSET
-from trade.plugins import  Event, StockSplit, BonusShares
+from trade import  Event, StockSplit, BonusShares
 
 
 # EVENTS

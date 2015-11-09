@@ -5,9 +5,6 @@ import unittest
 import copy
 
 import trade
-from trade.plugins import (
-    prorate_commissions,
-)
 
 
 class TestFetchPositions(unittest.TestCase):
@@ -29,11 +26,11 @@ class TestFetchPositions(unittest.TestCase):
                 operation.volume for operation in self.container.operations
             )
         self.container.tasks = [
-            trade.plugins.fetch_exercises,
-            trade.plugins.fetch_daytrades,
+            trade.fetch_exercises,
+            trade.fetch_daytrades,
         ]
         self.container.fetch_positions()
-        prorate_commissions(self.container)
+        trade.prorate_commissions(self.container)
 
         self.state = {
             'operations': self.positions,

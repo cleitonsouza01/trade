@@ -24,8 +24,8 @@ from tests.fixtures.operation_sequences import (
 )
 
 TASKS = [
-    trade.plugins.fetch_exercises,
-    trade.plugins.fetch_daytrades,
+    trade.fetch_exercises,
+    trade.fetch_daytrades,
 ]
 
 
