@@ -38,7 +38,7 @@ import math
 import copy
 
 from .utils import average_price, same_sign, merge_operations
-from .trade import Occurrence, Subject
+from accumulator import Occurrence, Subject
 
 
 class Asset(Subject):

@@ -3,7 +3,7 @@
 from __future__ import absolute_import
 import copy
 import unittest
-import trade
+import accumulator
 
 class TestPortfolio(unittest.TestCase):
     """Base class for Portfolio tests."""
@@ -13,7 +13,7 @@ class TestPortfolio(unittest.TestCase):
     state = {}
 
     def setUp(self):
-        self.portfolio = trade.Portfolio(state=self.initial_state)
+        self.portfolio = accumulator.Portfolio(state=self.initial_state)
         for operation in self.operations:
             self.portfolio.accumulate(copy.deepcopy(operation))
 

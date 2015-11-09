@@ -30,13 +30,8 @@ THE SOFTWARE.
 """
 
 from __future__ import absolute_import
+from accumulator import Subject, Occurrence, Accumulator, Portfolio
 
-from .trade import (
-    Subject,
-    Occurrence,
-    Accumulator,
-    Portfolio,
-)
 from .operations import (
     Asset,
     Operation,
@@ -48,4 +43,4 @@ from .trade_json import TradeJSON
 
 
 __author__ = 'rocha.rafaelsilva@gmail.com'
-__version__ = '0.2.1'
+__version__ = '0.2.2'

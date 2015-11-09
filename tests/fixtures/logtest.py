@@ -1,10 +1,9 @@
 """Base class for Accumulator tests."""
 
 from __future__ import absolute_import
-
 import unittest
-
 import trade
+
 from tests.fixtures.assets import ASSET
 
 class LogTest(unittest.TestCase):

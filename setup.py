@@ -14,7 +14,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='trade',
-    version='0.2.1',
+    version='0.2.2',
     description='Tools For Stock Trading Applications.',
     long_description=long_description,
     url='https://github.com/rochars/trade',
@@ -33,4 +33,5 @@ setup(
     ],
     keywords='asset stock securities market finance investment money currency',
     packages=['trade', 'trade/plugins'],
+    install_requires='accumulator==0.1',
 )
