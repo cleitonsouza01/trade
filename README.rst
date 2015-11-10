@@ -8,16 +8,8 @@ trade: Tools For Stock Trading Applications.
 
 --------------
 
-|Build| |Coverage Status| |Code Climate| |Downloads| |License| |Python Versions|
+|Build| |Coverage Status| |Code Climate| |Downloads| |Python Versions| |Live Demo|
 
-
-What is it?
------------
-trade is Python framework to ease the creation of investment management
-applications. It is focused in, but not limited to, stock exchange markets.
-
-The trade module provides notions of assets, purchases, sales, day trades,
-cost deduction, options, option exercises, asset accumulation and more.
 
 Installation
 ------------
@@ -225,3 +217,5 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    :target: https://www.codacy.com/app/rocha-rafaelsilva/trade/dashboard
 .. |Downloads| image:: https://img.shields.io/pypi/dm/trade.png
    :target: https://pypi.python.org/pypi/trade/
+.. |Live Demo| image:: https://img.shields.io/badge/try-live%20demo-blue.png
+   :target: https://python-trade.appspot.com/
