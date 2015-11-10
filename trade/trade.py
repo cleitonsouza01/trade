@@ -1,10 +1,7 @@
-"""Operations.
+"""trade: Tools For Stock Trading Applications.
 
 This module provides the default funciontalities related to purchase
 and sale operations of subjects for the trade module.
-
-It is part of the trade framework core, but implemented just like a
-plugin.
 
 http://trade.readthedocs.org/
 https://github.com/rochars/trade

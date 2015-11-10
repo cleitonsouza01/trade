@@ -44,7 +44,7 @@ THE SOFTWARE.
 from __future__ import absolute_import
 
 from .utils import same_sign, merge_operations
-from .operations import Operation
+from .trade import Operation
 
 
 class Daytrade(Operation):

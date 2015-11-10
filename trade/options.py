@@ -40,7 +40,7 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from .operations import Asset, Operation
+from .trade import Asset, Operation
 from .utils import merge_operations
 
 

@@ -2,10 +2,8 @@
 
 from __future__ import absolute_import
 
-from tests.fixtures.operations import  (
-    OPERATION46,
-    EXERCISE_OPERATION4,
-    OPTION_OPERATION1, OPTION_OPERATION2
+from tests.fixtures.operation_sequences import (
+    OPERATION_SEQUENCE25, OPERATION_SEQUENCE26
 )
 from tests.fixtures.assets import ASSET, OPTION1
 from tests.fixtures.accumulator_states import (
@@ -17,11 +15,7 @@ from tests.test_portfolio.test_portfolio import TestPortfolio
 class TestExercisePremiumCase00(TestPortfolio):
     """Test the accumulation of one operation with underlying assets."""
 
-    operations = [
-        OPERATION46,
-        OPTION_OPERATION1,
-        EXERCISE_OPERATION4
-    ]
+    operations = OPERATION_SEQUENCE25
     state = {
         ASSET.symbol: STATE09,
         OPTION1.symbol: STATE06
@@ -31,11 +25,7 @@ class TestExercisePremiumCase00(TestPortfolio):
 class TestExercisePremiumCase01(TestPortfolio):
     """Test the accumulation of one operation with underlying assets."""
 
-    operations = [
-        OPERATION46,
-        OPTION_OPERATION2,
-        EXERCISE_OPERATION4
-    ]
+    operations = OPERATION_SEQUENCE26
     state = {
         ASSET.symbol: STATE09,
         OPTION1.symbol: STATE01

@@ -4,7 +4,7 @@ from __future__ import absolute_import
 
 import json
 
-from .operations import Asset, Operation, OperationContainer
+from .trade import Asset, Operation, OperationContainer
 from accumulator import Portfolio
 from .options import Option, Exercise, fetch_exercises
 from .daytrades import fetch_daytrades

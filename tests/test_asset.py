@@ -3,73 +3,96 @@
 from __future__ import absolute_import
 import unittest
 
-from tests.fixtures.assets import ASSET, ASSET2, ASSET3, ASSET4, OPTION1
+import trade
+from tests.fixtures.assets import ASSET
 
 
-class TestAssetCreationCase00(unittest.TestCase):
-    """Test the creation of Asset objects.
+class TestAsset(unittest.TestCase):
+    """Base class for Asset tests."""
 
-    - Test the creation of an Asset object with a name.
-    - Test the creation of an Asset object without any argument.
-    - Test the creation of an Asset object with a name and a symbol.
-    - Test the creation of an Asset object with a name, a symbol and
-      a expiration date.
-    """
+    KINDS = {
+        'option': trade.Option,
+        'asset': trade.Asset,
+    }
 
-    def test_asset1_should_exist(self):
-        self.assertTrue(ASSET)
+    kind = 'asset'
+    symbol = None
+    name = None
+    expiration_date = None
+    underlying_assets = {}
 
-    def test_asset1_name(self):
-        self.assertEqual(ASSET.name, None)
+    def setUp(self):
+        """Create the asset described in the class attrs"""
+        self.asset = self.KINDS[self.kind](
+            symbol=self.symbol,
+            name=self.name,
+            expiration_date=self.expiration_date,
+        )
+        if self.underlying_assets:
+            self.asset.underlying_assets = self.underlying_assets
 
-    def test_asset1_symbol(self):
-        self.assertEqual(ASSET.symbol, 'some asset')
+    def test_asset_should_exist(self):
+        """Asset should have been created."""
+        self.assertTrue(self.asset)
 
-    def test_asset1_expiration_date(self):
-        self.assertEqual(ASSET.expiration_date, None)
+    def test_name(self):
+        """Check the asset name."""
+        self.assertEqual(self.asset.name, self.name)
 
-    def test_asset2_exists(self):
-        self.assertTrue(ASSET2)
+    def test_symbol(self):
+        """Check the asset symbol."""
+        self.assertEqual(self.asset.symbol, self.symbol)
 
-    def test_asset2_name(self):
-        self.assertEqual(ASSET2.name, None)
+    def test_expiration_date(self):
+        """Check the asset expiration date."""
+        self.assertEqual(self.asset.expiration_date, self.expiration_date)
 
-    def test_asset2_symbol(self):
-        self.assertEqual(ASSET2.symbol, 'some other asset')
+    def test_underlying_assets(self):
+        """Check the underlying assets of the asset, if any."""
+        if self.underlying_assets:
+            self.assertEqual(
+                self.underlying_assets,
+                self.asset.underlying_assets
+            )
 
-    def test_asset2_expiration_date(self):
-        self.assertEqual(ASSET2.expiration_date, None)
-
-    def test_asset3_name(self):
-        self.assertEqual(ASSET3.name, None)
-
-    def test_asset3_symbol(self):
-        self.assertEqual(ASSET3.symbol, 'even other asset')
-
-    def test_asset3_expiration_date(self):
-        self.assertEqual(ASSET3.expiration_date, None)
-
-    def test_asset4_name(self):
-        self.assertEqual(ASSET4.name, 'asset that expires')
-
-    def test_asset4_symbol(self):
-        self.assertEqual(ASSET4.symbol, 'EXPR')
-
-    def test_asset4_expiration_date(self):
-        self.assertEqual(ASSET4.expiration_date, '2015-12-31')
+    def test_ratio(self):
+        """Check the ratio of the underlying assets of the asset."""
+        if self.underlying_assets:
+            for asset, ratio in self.underlying_assets.items():
+                self.assertEqual(
+                    self.asset.underlying_assets[asset],
+                    ratio
+                )
 
 
-class TestDerivativeCreationCase00(unittest.TestCase):
-    """Test the creation of Derivatives."""
+class TestAssetCase00(TestAsset):
+    """Teste Asset Case 00 - Asset"""
+    symbol = 'GOOG'
+    name = None
+    expiration_date = None
 
-    def test_asset5_symbol(self):
-        self.assertEqual(OPTION1.symbol, 'some option')
 
-    def test_asset5_expiration_date(self):
-        self.assertEqual(OPTION1.expiration_date, '2015-10-02')
+class TestAssetCase01(TestAsset):
+    """Teste Asset Case 01 - Asset"""
 
-    def test_asset5_underlying_assets(self):
-        self.assertTrue(ASSET in OPTION1.underlying_assets)
+    symbol = 'ATVI'
+    name = 'Activision Blizzard, Inc'
+    expiration_date = None
 
-    def test_asset5_ratio(self):
-        self.assertEqual(OPTION1.underlying_assets[ASSET], 1)
+
+class TestAssetCase02(TestAsset):
+    """Teste Asset Case 02 - Asset"""
+
+    symbol = 'TEST'
+    name = 'Some asset that expires'
+    expiration_date = '2015-11-10'
+
+
+class TestAssetCase03(TestAsset):
+    """Teste Asset Case 03 - Option"""
+
+    kind = 'option'
+    symbol = 'OPTN'
+    name = 'some option'
+    expiration_date = '2015-12-23'
+    underlying_assets = {ASSET: 1}

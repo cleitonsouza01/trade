@@ -32,7 +32,7 @@ THE SOFTWARE.
 from __future__ import absolute_import
 from accumulator import Subject, Occurrence, Accumulator, Portfolio
 
-from .operations import (
+from .trade import (
     Asset,
     Operation,
     OperationContainer,
