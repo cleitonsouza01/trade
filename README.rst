@@ -3,8 +3,8 @@ trade: Tools For Stock Trading Applications.
 
 | Copyright (c) 2015 Rafael da Silva Rocha
 | rocha.rafaelsilva@gmail.com
-| http://rochars.github.io/trade
 | http://trade.readthedocs.org
+| https://python-trade.appspot.com
 
 --------------
 
