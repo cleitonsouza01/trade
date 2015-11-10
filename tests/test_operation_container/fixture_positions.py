@@ -3,7 +3,7 @@
 import copy
 
 from tests.fixtures.assets import (
-    ASSET, ASSET2,
+    ASSET, ASSET2, ASSET3
 )
 
 
@@ -193,4 +193,34 @@ DT_POSITION10['buy commissions'] = {
 DT_POSITION10['sale commissions'] = {
     'some discount': 0.42857142857142855,
     'other discount': 1.2857142857142856
+}
+
+
+CONTAINER_POSITION0 = {
+    ASSET.symbol: POSITION01,
+}
+
+CONTAINER_POSITION1 = {
+    ASSET.symbol: POSITION02,
+    ASSET2.symbol: POSITION02,
+}
+
+CONTAINER_POSITION2 = {
+    ASSET.symbol: POSITION04,
+    ASSET2.symbol: POSITION05,
+}
+
+CONTAINER_POSITION3 = {
+    ASSET.symbol: POSITION01,
+    ASSET2.symbol: POSITION01,
+    ASSET3.symbol: POSITION03
+}
+
+CONTAINER_POSITION4 = {
+    ASSET.symbol: POSITION06,
+    ASSET2.symbol: POSITION07
+}
+
+CONTAINER_DAYTRADE_POSITION0 = {
+    ASSET.symbol: DT_POSITION10
 }
