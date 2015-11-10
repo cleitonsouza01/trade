@@ -233,3 +233,78 @@ class TestJSONCase0103(TestJSON):
             }
         }
     }'''
+
+
+class TestJSONCase0104(TestJSON):
+    """One operation and multiple initial states."""
+
+    json_input = '''{
+    "subjects": {
+        "GOOG": {
+            "type": "Asset",
+            "name": "Google Inc",
+            "expiration_date": ""
+        },
+        "AAPL": {
+            "type": "Asset",
+            "name": "Apple Inc.",
+            "expiration_date": ""
+        }
+    },
+    "occurrences": [
+        {
+            "type": "Operation",
+            "subject": "AAPL",
+            "date": "2015-11-10",
+            "quantity": 10,
+            "price": 120.15,
+            "commissions": {},
+            "raw_results": {},
+            "operations": []
+        },
+        {
+            "type": "Operation",
+            "subject": "GOOG",
+            "date": "2015-11-10",
+            "quantity": 10,
+            "price": 724.89,
+            "commissions": {},
+            "raw_results": {},
+            "operations": []
+        }
+    ],
+    "initial state": {
+        "AAPL": {
+            "date": "2015-10-09",
+            "quantity": 92,
+            "price": 119.27,
+            "results": {"trades": 5021.72}
+        }
+    }
+}'''
+
+    json_output = '''{
+  "AAPL": {
+    "2015-10-09": {
+      "price": 119.27,
+      "quantity": 92,
+      "results": {
+        "trades": 5021.7200000000003
+      }
+    },
+    "2015-11-10": {
+      "price": 119.35627450980392,
+      "quantity": 102,
+      "results": {
+        "trades": 5021.7200000000003
+      }
+    }
+  },
+  "GOOG": {
+    "2015-11-10": {
+      "price": 724.88999999999999,
+      "quantity": 10,
+      "results": {}
+    }
+  }
+}'''

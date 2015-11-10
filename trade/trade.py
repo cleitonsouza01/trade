@@ -1,7 +1,7 @@
 """trade: Tools For Stock Trading Applications.
 
-This module provides the default funciontalities related to purchase
-and sale operations of subjects for the trade module.
+This module provides the default functionalities related to operations of
+purchase and sale of assets.
 
 http://trade.readthedocs.org/
 https://github.com/rochars/trade
@@ -39,10 +39,7 @@ from accumulator import Occurrence, Subject
 
 
 class Asset(Subject):
-    """An asset represents anything that can be traded.
-
-    This class can represent both main assets and derivatives.
-    """
+    """An asset represents anything that can be traded."""
 
     default_state = {
         'quantity': 0,
@@ -52,7 +49,7 @@ class Asset(Subject):
 
 
 class Operation(Occurrence):
-    """An operation represents the purchase or the sale of an asset.
+    """An Operation represents the purchase or sale of an asset.
 
     Attributes:
         date: A string 'YYYY-mm-dd', the date the operation occurred.

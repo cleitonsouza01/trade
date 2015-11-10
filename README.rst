@@ -114,7 +114,7 @@ JSON Interface
             "GOOG": {
                 "type": "Asset",
                 "name": "Google Inc",
-                "expiration_date": "2019-01-01"
+                "expiration_date": ""
             },
             "AAPL": {
                 "type": "Asset",
@@ -125,10 +125,20 @@ JSON Interface
         "occurrences": [
             {
                 "type": "Operation",
-                "subject": "GOOG",
-                "date": "2015-01-01",
+                "subject": "AAPL",
+                "date": "2015-11-10",
                 "quantity": 10,
-                "price": 650.11,
+                "price": 120.15,
+                "commissions": {},
+                "raw_results": {},
+                "operations": []
+            },
+            {
+                "type": "Operation",
+                "subject": "GOOG",
+                "date": "2015-11-10",
+                "quantity": 10,
+                "price": 724.89,
                 "commissions": {},
                 "raw_results": {},
                 "operations": []
@@ -136,10 +146,10 @@ JSON Interface
         ],
         "initial state": {
             "AAPL": {
-                "date": "2015-11-09",
+                "date": "2015-10-09",
                 "quantity": 92,
-                "price": 31.21,
-                "results": {"trades": 5000.72}
+                "price": 119.27,
+                "results": {"trades": 5021.72}
             }
         }
     }'''
@@ -148,18 +158,28 @@ JSON Interface
 
     print(json_output)
     #>> {
-    #    "GOOG": {
-    #        "2015-01-01": {
-    #            "quantity": 10,
-    #            "price": 650.11,
-    #            "results": {}
+    #    "AAPL": {
+    #        "2015-10-09": {
+    #            "price": 119.27,
+    #            "quantity": 92,
+    #            "results": {
+    #                "trades": 5021.7200000000003
+    #            }
+    #        },
+    #        "2015-11-10": {
+    #            "date": "2015-10-09",
+    #            "price": 119.35627450980392,
+    #            "quantity": 102,
+    #            "results": {
+    #                "trades": 5021.7200000000003
+    #            }
     #        }
     #    },
-    #    "AAPL": {
-    #        "2015-11-09": {
-    #            "quantity": 92,
-    #            "price": 31.21,
-    #            "results": {"trades": 5000.72}
+    #    "GOOG": {
+    #        "2015-11-10": {
+    #            "price": 724.88999999999999,
+    #            "quantity": 10,
+    #            "results": {}
     #        }
     #    }
     #}
@@ -173,7 +193,7 @@ trade is compatible with Python 2.7, 3.3, 3.4 and 3.5.
 Version
 -------
 
-The current version is 0.2.2 alpha.
+The current version is 0.2.4 alpha.
 
 License
 -------

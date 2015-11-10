@@ -1,9 +1,5 @@
 """trade: Tools For Stock Trading Applications.
 
-trade is Python framework to ease the development of investment
-management applications. It is focused in, but not limited to,
-stock exchange markets.
-
 http://trade.readthedocs.org/
 https://github.com/rochars/trade
 License: MIT
@@ -32,11 +28,7 @@ THE SOFTWARE.
 from __future__ import absolute_import
 from accumulator import Subject, Occurrence, Accumulator, Portfolio
 
-from .trade import (
-    Asset,
-    Operation,
-    OperationContainer,
-)
+from .trade import Asset, Operation, OperationContainer
 from .utils import average_price, same_sign, merge_operations
 from .daytrades import (
     Daytrade, fetch_daytrades, find_purchase_and_sale, daytrade_condition
@@ -48,4 +40,4 @@ from .trade_json import TradeJSON
 
 
 __author__ = 'rocha.rafaelsilva@gmail.com'
-__version__ = '0.2.2'
+__version__ = '0.2.4'
