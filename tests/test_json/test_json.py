@@ -12,6 +12,7 @@ class TestJSON(unittest.TestCase):
 
     json_input = None
     json_output = None
+    maxDiff = None
 
     def setUp(self):
         self.interface = trade.TradeJSON()
