@@ -1,6 +1,7 @@
 """JSON interface example"""
 
 import trade
+import json
 
 interface = trade.TradeJSON()
 
@@ -9,11 +10,11 @@ json_input = '''{
         "GOOG": {
             "type": "Asset",
             "name": "Google Inc",
-            "expiration_date": "2019-01-01"
+            "expiration_date": ""
         },
-        "AAPL": {
+        "ATVI": {
             "type": "Asset",
-            "name": "Apple Inc.",
+            "name": "Activision Blizzard, Inc.",
             "expiration_date": ""
         }
     },
@@ -23,38 +24,84 @@ json_input = '''{
             "subject": "GOOG",
             "date": "2015-01-01",
             "quantity": 10,
-            "price": 650.11,
+            "price": 650.33,
             "commissions": {},
             "raw_results": {},
             "operations": []
         }
     ],
     "initial state": {
-        "AAPL": {
-            "date": "2015-11-09",
-            "quantity": 92,
+        "ATVI": {
+            "date": "2014-06-09",
+            "quantity": 100,
             "price": 31.21,
-            "results": {"trades": 5000.72}
+            "results": {
+                "trades": 1200
+            }
         }
     }
 }'''
 
-json_output = interface.get_trade_results(json_input)
+json_output = json.dumps(
+    json.loads(interface.get_trade_results(json_input)),
+    sort_keys=True,
+    indent=2,
+    separators=(',', ': ')
+)
 
 print(json_output)
 #>> {
-#    "GOOG": {
-#        "2015-01-01": {
-#            "quantity": 10,
-#            "price": 650.11,
-#            "results": {}
+#    "totals": {
+#        "sales": {
+#            "volume": 0,
+#            "operations": 0
+#        },
+#        "purchases": {
+#            "volume": 6503.3,
+#            "operations": 1
+#        },
+#        "operations": 1,
+#        "daytrades": 0,
+#        "results": {
+#            "trades": 1200
 #        }
 #    },
-#    "AAPL": {
-#        "2015-11-09": {
-#            "quantity": 92,
-#            "price": 31.21,
-#            "results": {"trades": 5000.72}
+#    "assets": {
+#        "GOOG": {
+#            "totals": {
+#                "sales": 0,
+#                "purchases": 1,
+#                "operations": 1,
+#                "daytrades": 0,
+#                "results": {}
+#            },
+#            "states": {
+#                "2015-01-01": {
+#                    "quantity": 10,
+#                    "price": 650.33,
+#                    "results": {}
+#                }
+#            }
+#        },
+#        "ATVI": {
+#            "totals": {
+#                "sales": 0,
+#                "purchases": 0,
+#                "operations": 0,
+#                "daytrades": 0,
+#                "results": {
+#                    "trades": 1200
+#                }
+#            },
+#            "states": {
+#                "2014-06-09": {
+#                    "quantity": 100,
+#                    "price": 31.21,
+#                    "results": {
+#                        "trades": 1200
+#                    }
+#                }
+#            }
 #        }
 #    }
 #}

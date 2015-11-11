@@ -116,40 +116,32 @@ JSON Interface
                 "name": "Google Inc",
                 "expiration_date": ""
             },
-            "AAPL": {
+            "ATVI": {
                 "type": "Asset",
-                "name": "Apple Inc.",
+                "name": "Activision Blizzard, Inc.",
                 "expiration_date": ""
             }
         },
         "occurrences": [
             {
                 "type": "Operation",
-                "subject": "AAPL",
-                "date": "2015-11-10",
-                "quantity": 10,
-                "price": 120.15,
-                "commissions": {},
-                "raw_results": {},
-                "operations": []
-            },
-            {
-                "type": "Operation",
                 "subject": "GOOG",
-                "date": "2015-11-10",
+                "date": "2015-01-01",
                 "quantity": 10,
-                "price": 724.89,
+                "price": 650.33,
                 "commissions": {},
                 "raw_results": {},
                 "operations": []
             }
         ],
         "initial state": {
-            "AAPL": {
-                "date": "2015-10-09",
-                "quantity": 92,
-                "price": 119.27,
-                "results": {"trades": 5021.72}
+            "ATVI": {
+                "date": "2014-06-09",
+                "quantity": 100,
+                "price": 31.21,
+                "results": {
+                    "trades": 1200
+                }
             }
         }
     }'''
@@ -158,27 +150,57 @@ JSON Interface
 
     print(json_output)
     #>> {
-    #    "AAPL": {
-    #        "2015-10-09": {
-    #            "price": 119.27,
-    #            "quantity": 92,
-    #            "results": {
-    #                "trades": 5021.7200000000003
-    #            }
+    #    "totals": {
+    #        "sales": {
+    #            "volume": 0,
+    #            "operations": 0
     #        },
-    #        "2015-11-10": {
-    #            "price": 119.35627450980392,
-    #            "quantity": 102,
-    #            "results": {
-    #                "trades": 5021.7200000000003
-    #            }
+    #        "purchases": {
+    #            "volume": 6503.3,
+    #            "operations": 1
+    #        },
+    #        "operations": 1,
+    #        "daytrades": 0,
+    #        "results": {
+    #            "trades": 1200
     #        }
     #    },
-    #    "GOOG": {
-    #        "2015-11-10": {
-    #            "price": 724.88999999999999,
-    #            "quantity": 10,
-    #            "results": {}
+    #    "assets": {
+    #        "GOOG": {
+    #            "totals": {
+    #                "sales": 0,
+    #                "purchases": 1,
+    #                "operations": 1,
+    #                "daytrades": 0,
+    #                "results": {}
+    #            },
+    #            "states": {
+    #                "2015-01-01": {
+    #                    "quantity": 10,
+    #                    "price": 650.33,
+    #                    "results": {}
+    #                }
+    #            }
+    #        },
+    #        "ATVI": {
+    #            "totals": {
+    #                "sales": 0,
+    #                "purchases": 0,
+    #                "operations": 0,
+    #                "daytrades": 0,
+    #                "results": {
+    #                    "trades": 1200
+    #                }
+    #            },
+    #            "states": {
+    #                "2014-06-09": {
+    #                    "quantity": 100,
+    #                    "price": 31.21,
+    #                    "results": {
+    #                        "trades": 1200
+    #                    }
+    #                }
+    #            }
     #        }
     #    }
     #}
@@ -192,7 +214,7 @@ trade is compatible with Python 2.7, 3.3, 3.4 and 3.5.
 Version
 -------
 
-The current version is 0.2.4 alpha.
+The current version is 0.2.5 alpha.
 
 License
 -------

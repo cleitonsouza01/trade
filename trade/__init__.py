@@ -40,4 +40,4 @@ from .trade_json import TradeJSON
 
 
 __author__ = 'rocha.rafaelsilva@gmail.com'
-__version__ = '0.2.4'
+__version__ = '0.2.5'
