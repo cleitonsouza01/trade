@@ -1,4 +1,4 @@
-# trade 0.2.5
+# trade 0.2.6
 Copyright (c) 2015 Rafael da Silva Rocha  
 https://github.com/rochars/trade  
 https://python-trade.appspot.com
