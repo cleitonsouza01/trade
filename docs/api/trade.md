@@ -1,120 +1,96 @@
 # trade
-http://github.com/rochars/trade  
-http://trade.readthedocs.org  
+Copyright (c) 2015 Rafael da Silva Rocha  
+https://github.com/rochars/trade  
+https://python-trade.appspot.com
 
 
+## Asset(Subject)
+An asset represents anything that can be traded.
 
-## Subject
-A subject of an occurrence.
-
-### Attributes:
-+ symbol: A string representing the symbol of the subject.
-+ name: A string representing the name of the subject.
-+ expiration_date: A string 'YYYY-mm-dd' representing the expiration date of the subject, if any.
-+ default_state: a dictionary with the default state of this subject.
-
-### Methods:
-
-#### ``__init__(self, symbol=None, name=None, expiration_date=None)``
-Creates a Subject instance.
-
-#### get_default_state(self):
-Should set the default state of the Accumulator.
-
-Every time an Accumulator object is created it calls this
-method from the Asset object it is accumulating data from.
-
-#### expire(self, accumulator):
-Updates the accumulator with the expiration of this subject.
+### Class Attributes:
++ default_state: { 'quantity': 0, 'price': 0, 'results': {} }
 
 
-
-## Occurrence(object):
-An occurrence with an subject in a date.
-
-This is a base class for any occurrence. An occurrence is
-anything that interferes with an subject accumulation, like
-a purchase or sale operation of the subject or a stock split.
+## Operation(Occurrence)
++ date: A string 'YYYY-mm-dd', the date the operation occurred.
++ subject: An Asset instance, the asset that is being traded.
++ quantity: A number representing the quantity being traded. Positive quantities represent a purchase. Negative quantities represent a sale.
++ price: The raw unitary price of the asset being traded.
++ commissions: A dict of discounts. String keys and float values representing the name of the discounts and the values to be deducted added to the the operation value.
++ operations: A list of underlying occurrences that the might may have.
++ update_position: A boolean indication if the operation should update the position of the accumulator or not. By default set to True.
++ update_results: A boolean indication if the operation should update the results of the accumulator or not. By default set to True.
++ update_container: A boolean indication if the operation should update the state of the container. By default set to True.
 
 ### Attributes:
 + subject: An Asset object.
 + date: A string 'YYYY-mm-dd'
 
+### Properties:
++ results: Return the results associated with the operation.
++ real_value: Returns the quantity * the real price of the operation.
++ real_price: Returns the real price of the operation. The real price is the price with all commission and costs already deducted or added.
++ total_commissions: Return the sum of all commissions of this operation.
++ volume: Returns the quantity of the operation * its raw price.
+
 ### Methods:
-
-#### ``__init__(self, subject, date)``
-Creates an Occurrence instance.
-
-#### update_portfolio(self, portfolio)
-Should udpate the portfolio data.
 
 #### update_accumulator(self, accumulator)
-Should udpate the accumulator data.
+Update the accumulator status with the operation data.
+
+#### update_accumulator_results(self, accumulator)
+Update the results stored in the accumulator.
+
+#### update_positions(self, accumulator)
+Update the position of the asset with the Operation data.
 
 
+## OperationContainer(object)
+A container for operations.
 
-## Accumulator
-An accumulator of occurrences with an subject.
+An OperationContainer is used to group operations that occurred on
+the same date and then perform tasks on them.
 
-It can accumulate a series of occurrence objects and update its
-state based on the occurrences it accumulates.
+The main task task of the OperationContainer is to fetch the
+resulting positions from a group of Operations.
 
-The update of the accumulator object state is responsibility
-of the occurrence it accumulates.
+This is achieved by calling this method:
+- fetch_positions()
 
-It accumualates occurrences of a single subject.
+Every time fetch_positions() is called the OperationContainer
+execute this tasks behind the scenes:
+
+- Execute all tasks defined in self.tasks. By default, no task is
+  listed. Tasks are functions like this:
+        def some_task(container)
+  that receive an OperationContainer object and perform some work
+  on the container data.
+
+- Create positions in self.positions for all operations in
+  the container. Positions are all the operations with the same
+  asset grouped in a single operation.
+
 
 ### Attributes:
-+ subject: An subject instance, the subject whose data are being accumulated.
-+ date: A string 'YYYY-mm-dd' representing the date of the last status change of the accumulator.
-+ data: A dictionary with the state of this accumulator. The state is updated according to the accumulation of occurrences.
-+ logging: A boolean indicating if the accumulator should log the data passed to accumulate().
-+ log: A dict with all the occurrences performed with the subject, provided that self.logging is True.
++ date: A string 'YYYY-mm-dd' representing the date of the operations on the container.
++ operations: A list of Operation instances.
++ positions: a dict of positions with this format
++ tasks: a list of functions. The functions will be called in the order they are defined in this list when fetch_positions() is called. Every listed function must receive a OperationContainer object. The functions may change the Operation objects in self.operations, if needed (like when you separate day trades from other operations).
 
 ### Methods:
 
-#### ``__init__(subject, logging=False):``
-Creates a instance of the accumulator.
+#### def fetch_positions(self)
+Fetch the positions resulting from the operations.
 
-#### accumulate(self, operation):
-Accumulates an occurrence.
+This method executes all the methods defined in self.tasks
+in the order they are listed.
 
-#### log_occurrence(self, occurrence):
-Log the state of the accumulator.
-
-If logging, this method is called behind the scenes every
-time accumulate() is called. The states are logged by day
-like this:
-{
-    'YYYY-mm-dd': {
-        'data': {}
-    },
-    ...
-}
+Then it reads the self.operations list and add any remaining
+operation to the self.positions.
 
 
-
-## Portfolio
-A portfolio of subjects.
-
-A portfolio is a collection of Accumulator objects.
-It receives Occurrence objects and update its accumulators
-with them.
-
-### Attributes:
-+ subjects: A dict {Asset.symbol: Accumulator}.
-
-### Methods
-
-#### ``__init__(self):``
-Creates a Portfolio object with a empty list of subjects.
-
-#### accumulate(self, operation):
-Accumulates an occurrence on its corresponding accumulator.
-
-#### ``accumulate_occurrence(self, operation):``
-Accumulates an occurrence on its corresponding accumulator.
-
+#### def add_to_position_operations(self, operation):
+Adds an operation to the common operations list.
 
 
 ## License

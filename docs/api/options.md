@@ -1,6 +1,7 @@
-# plugins.options
-http://github.com/rochars/trade  
-http://trade.readthedocs.org
+# options
+Copyright (c) 2015 Rafael da Silva Rocha  
+https://github.com/rochars/trade  
+https://python-trade.appspot.com
 
 options: Options plugin for the trade module.
 
@@ -16,7 +17,6 @@ It provides:
 - Exercise, a subclass of trade.Operation
 - the fetch_exercises() task to the OperationContainer
 - the fetch_exercise_operations() task to the Portfolio
-
 
 
 ## Option(Asset):
@@ -49,18 +49,18 @@ Returns a list of operations:
 
 
 
-## Exercise(Occurrence):
+## Exercise(Operation):
 An exercise operation.
 
 Exercise operations are operations that involve more than one
-asset, usually a derivative like a Option and an underlying asset.
+asset, usually a derivative like a Option and one or more underlying assets.
 
-An exercise will likely change the accumulated quantity of both the
-derivative and its underlyings assets.
+An exercise will likely change the state of both the derivative and its
+underlying assets.
 
 ### Attributes:
 + update_position set to False.
-  In a exercise operation it is the underlying operations that will change the position on the portfolio, not the operation itself.
++ update_container set to False.
 
 ### Methods:
 
@@ -90,12 +90,12 @@ An exercise creates multiple operations:
 - operations to represent the sale or the purchase of each of its underlying assets, if any.
 
 
-
 ## fetch_exercises(container)
-A OperationContainer task.
-After this task is executed, all operations created by Exercise objects
-will be on the container positions under the key 'exercises'.
+An OperationContainer task.
 
+Fetch all exercise operations on the container into a single
+exercise (by asset) on the container positions dictionary under
+the key 'exercises'.
 
 
 ## License

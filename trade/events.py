@@ -7,14 +7,13 @@ Accumulator and Porfolio objects to change asset accumulation data.
 It contains the definitions of:
 - Event
 - StockSplit
-- ReverseStockSplit
 - BonusShares
 
 Events can be accumulated by Portfolio objects just like any other
-occurrence. Just like any other Occurrence subclass, each event must
+occurrence. Like any other Occurrence subclass, each event must
 for implement a update_container() method that receives a
 trade.Accumulator object. This method will contain the logic for the
-update on the accumulator data.
+update on the accumulator state.
 
 http://trade.readthedocs.org/
 https://github.com/rochars/trade
@@ -50,10 +49,9 @@ from .utils import average_price
 
 
 class Event(Occurrence):
-    """An occurrence that change one or more asset's position.
+    """An occurrence that change the state of one or more assets.
 
-    This is a base class for Events. Events can change the quantity,
-    the price and the results stored on a asset accumulator.
+    This is a base class for events.
 
     Attributes:
         date: A string 'YYYY-mm-dd', the date the event occurred.

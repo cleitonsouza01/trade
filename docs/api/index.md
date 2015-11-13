@@ -1,101 +1,68 @@
-# trade
-http://github.com/rochars/trade  
-http://trade.readthedocs.org  
-
-trade is a Python module with functions and classes for the development
-of investment applications in Python. It provides notions of assets,
-operations, daytrades, cost deduction, asset accumulation, rates and more.
-
+# trade 0.2.5
+Copyright (c) 2015 Rafael da Silva Rocha  
+https://github.com/rochars/trade  
+https://python-trade.appspot.com
 
 ## Modules in this package:
++ [daytrades](daytrades)
++ [events](events)
++ [options](options)
++ [prorate](prorate)
++ [trade_json](trade_json)
 + [trade](trade)
-+ [operations](operations)
 + [utils](utils)
-+ [plugins](plugins)
 
+### trade:
++ [Asset](trade)  
+  An asset represents anything that can be traded.
++ [Operation](trade)  
+  An Operation represents the purchase or sale of an asset.
++ [OperationContainer](trade)  
+  A container for operations.
 
-## trade module:
-+ [Subject](trade)  
-  Representing subjects.
-+ [Occurrence](trade)  
-  Representing occurrences.
-+ [trade.Portfolio](trade)  
-  Representing a portfolio of subjects using a collection of Accumulator objects.
-+ [trade.Accumulator](trade)  
-  To accumulate occurrences with subjects and log their consequences.
+### daytrades:
++ [Daytrade](daytrades)  
+  Representing day trades.
++ [fetch_daytrades](daytrades)  
+  An OperationContainer task.
++ [daytrade_condition](daytrades)  
+  Checks if two operations are day trades.
++ [find_purchase_and_sale](daytrades)  
+  Find which operation is a purchase and which is a sale.
 
+### events:
++ [Event](events)  
+  An occurrence that change the state of one or more assets.
++ [StockSplit](events)  
+  Representing both stock splits and reverse stock splits.
++ [BonusShares](events)  
+  Representing bonus shares.
 
-## operations module:
-+ [Asset(Subject)](trade)  
-  Representing assets, a subclass of Subject.
-+ [Operation(Occurrence)](trade)  
-  A subclass of Occurrence representing operations with assets.
-+ [trade.OperationContainer](trade)  
-  To pre-process operations before accumulating, like identifying daytrades.
+### options:
++ [Option](options)  
+  Represents a vanilla option.
++ [Exercise](options)  
+  An option exercise operation.
++ [fetch_exercises](options)  
+  An OperationContainer task.
 
+### prorate:
++ [prorate_commissions](prorate)  
+  Prorates the container's commissions by its operations.
++ [prorate_commissions_by_position](prorate)  
+  Prorates the commissions of the container for one position.
 
-## Functions available:
+### trade_json:
++ [TradeJSON](trade_json)  
+  trade module JSON interface.
+
+### utils:
 + [merge_operations()](utils)
+  Merges two operations.
 + [average_price()](utils)
+  Calculates the average price between two asset states.
 + [same_sign()](utils)
-
-
-## Default plugins:
-The trade module comes pre-packed with some plugins that add
-functionalities related to common stock market operations.
-
-You may use this plugins in your project or use them as a base
-to create your own plugins.
-
-+ [plugins.options](plugins/trade.plugins.options)
-  with classes for Options and Exercises and tasks for the
-  OperationContainer and Portfolio.
-+ [plugins.daytrades](plugins/trade.plugins.daytrades)
-  with the Daytrade class, a task for the OperationContainer
-  and some helper functions.
-+ [plugins.events](plugins/trade.plugins.events)
-  with classes representing stock splits, reverse stock splits and
-  bonus shares.
-
-
-## Basic example
-```python
-import trade
-
-# create the asset and the operation
-asset = trade.Asset(name='some asset')
-operation = trade.Operation(
-    date='2015-09-18',
-    asset=asset,
-    quantity=20,
-    price=10
-)
-
-# create a operation container
-container = trade.OperationContainer(
-    operations=[operation]
-)
-
-# identify common operations and daytrades
-# and prorate the comissions
-container.fetch_positions()
-
-# create an accumulator for the asset
-accumulator = trade.Accumulator(asset)
-
-# accumulate the operation
-operation = container.common_operations[asset]
-accumulator.accumulate(operation)
-
-print(accumulator.quantity)
-#>>20
-
-print(accumulator.price)
-#>>10.2
-# the original price (10) plus the commissions
-# the OperationContainer prorated (default taxes are zero)
-```
-
+  Checks if two numbers have the same sign.
 
 
 ## License

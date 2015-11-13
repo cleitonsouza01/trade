@@ -1,4 +1,4 @@
-"""trade: Tools For Stock Trading Applications.
+"""trade: Tools For Trade Management Applications.
 
 http://trade.readthedocs.org/
 https://github.com/rochars/trade
@@ -39,5 +39,6 @@ from .prorate import prorate_commissions
 from .trade_json import TradeJSON
 
 
-__author__ = 'rocha.rafaelsilva@gmail.com'
 __version__ = '0.2.5'
+__author__ = 'Rafael da Silva Rocha'
+__licence__ = 'MIT'

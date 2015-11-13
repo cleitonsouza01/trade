@@ -120,7 +120,7 @@ class Option(Asset):
 
 
 class Exercise(Operation):
-    """An exercise operation.
+    """An option exercise operation.
 
     Exercise operations are operations that involve more than one
     asset, usually a derivative like a Option and an underlying asset.
@@ -181,11 +181,11 @@ class Exercise(Operation):
 
 
 def fetch_exercises(container):
-    """A OperationContainer task.
+    """An OperationContainer task.
 
-    After this task is executed, all operations created by Exercise
-    objects will be on the container positions under the key
-    'exercises'.
+    Fetch all exercise operations on the container into a single
+    exercise (by asset) on the container positions dictionary under
+    the key 'exercises'.
     """
     for operation in container.operations:
         if isinstance(operation, Exercise):

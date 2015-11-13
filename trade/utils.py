@@ -29,7 +29,7 @@ from __future__ import division
 
 
 def merge_operations(existing_operation, operation):
-    """Merges one operation with another operation."""
+    """Merges two operations."""
     existing_operation.price = average_price(
         existing_operation.quantity,
         existing_operation.price,
@@ -40,10 +40,7 @@ def merge_operations(existing_operation, operation):
 
 
 def average_price(quantity_1, price_1, quantity_2, price_2):
-    """Calculates the average price between two positions.
-
-    A position is the quantity of an asset and its average price.
-    """
+    """Calculates the average price between two asset states."""
     return (quantity_1 * price_1 + quantity_2 * price_2) / \
             (quantity_1 + quantity_2)
 

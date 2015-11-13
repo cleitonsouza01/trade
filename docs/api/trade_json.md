@@ -1,26 +1,11 @@
-# plugins.options
-http://github.com/rochars/trade  
-http://trade.readthedocs.org
-
-prorate: Commissions pro rata on the OperationContainer.
-
+# trade_json
+Copyright (c) 2015 Rafael da Silva Rocha  
+https://github.com/rochars/trade  
+https://python-trade.appspot.com
 
 
-## prorate_commissions(container):
-Prorates the container's commissions by its operations.
-
-This method sum the discounts in the commissions dict of the
-container. The total discount value is then prorated by the
-position operations based on their volume.
-
-
-
-## prorate_commissions_by_position(container, operation):
-Prorates the commissions of the container for one position.
-
-The ratio is based on the container volume and the volume of
-the position operation.
-
+## Asset(object)
+trade module JSON interface.
 
 
 ## License

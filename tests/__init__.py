@@ -1,5 +1,8 @@
 """Tests for the trade module.
 
+$ python -m unittest discover tests
+https://coveralls.io/github/rochars/trade?branch=master
+
 http://trade.readthedocs.org/
 https://github.com/rochars/trade
 License: MIT

@@ -1,23 +1,19 @@
 # utils
-http://github.com/rochars/trade  
-http://trade.readthedocs.org  
-
+Copyright (c) 2015 Rafael da Silva Rocha  
+https://github.com/rochars/trade  
+https://python-trade.appspot.com
 
 
 ## merge_operations(existing_operation, operation)
-Merges one operation with another operation.
-
+Merges two operations.
 
 
 ## average_price(quantity_1, price_1, quantity_2, price_2)
-Calculates the average price between two positions.
-A position is the quantity of an asset and its average price.
+Calculates the average price between two asset states.
 
 
-
-## same_sign(x, y)
+## same_sign(number_1, number_2)
 Checks if two numbers have the same sign.
-
 
 
 ## License

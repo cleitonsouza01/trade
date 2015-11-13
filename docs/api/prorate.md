@@ -1,27 +1,24 @@
-# trade: Tools For Stock Trading Applications.
+# prorate
+Copyright (c) 2015 Rafael da Silva Rocha  
+https://github.com/rochars/trade  
+https://python-trade.appspot.com
 
-## Part 0: Installing trade
-Trade can be installed with pip:
+prorate: Commissions pro rata on the OperationContainer.
 
-| pip install trade
 
-You can also get it from the website:
-http://rochars.github.io/trade/
+## prorate_commissions(container):
+Prorates the container's commissions by its operations.
 
-Or from the github repository:
-https://github.com/rochars/trade/
+This method sum the discounts in the commissions dict of the
+container. The total discount value is then prorated by the
+position operations based on their volume.
 
-After installation, to check if everything went OK, open the Python
-console and import the module:
 
-```python
-import trade
-asset = trade.Asset(symbol='GOOGL')
-```
+## prorate_commissions_by_position(container, operation):
+Prorates the commissions of the container for one position.
 
-Now that you have trade installed, you can move on to the next part of the
-tutorial: [Part 1: Creating operations](part_1).
-
+The ratio is based on the container volume and the volume of
+the position operation.
 
 
 ## License

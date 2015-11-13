@@ -1,6 +1,7 @@
-# plugins.daytrades
-http://github.com/rochars/trade  
-http://trade.readthedocs.org
+# daytrades
+Copyright (c) 2015 Rafael da Silva Rocha  
+https://github.com/rochars/trade  
+https://python-trade.appspot.com
 
 daytrades: Daytrades plugin for the trade module.
 
@@ -17,9 +18,8 @@ It provides:
 - the fetch_daytrades() task to the OperationContainer
 
 Daytrades can be accumulated just like any other Operation object.
-They will update the accumulated results, but will not change the
-quantity or the price of the asset on the Portfolio.
-
+They will update the asset state adding results but will not change the
+quantity or the price of the asset.
 
 
 ## Daytrade(Operation):
@@ -66,12 +66,11 @@ If there is already a daytrade with the same asset on the
 container's position, then the daytrades are merged.
 
 #### merge_underlying(self, container, operation_index)
-Merges one daytrade underlying operation.
-
+Merges one day trade underlying operation.
 
 
 ## fetch_daytrades(container):
-A OperationContainer task.
+An OperationContainer task.
 
 Fetch the daytrades from the OperationContainer operations.
 
@@ -79,15 +78,12 @@ The daytrades are placed on the container positions under the
 'daytrades' key, inexed by the Daytrade asset's symbol.
 
 
-
 ## daytrade_condition(operation_a, operation_b):
-Checks if the operations are day trades.
-
+Checks if two operations are day trades.
 
 
 ## find_purchase_and_sale(operation_a, operation_b):
 Find which operation is a purchase and which is a sale.
-
 
 
 ## License

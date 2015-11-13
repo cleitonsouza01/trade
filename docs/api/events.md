@@ -1,6 +1,7 @@
-# plugins.events
-http://github.com/rochars/trade  
-http://trade.readthedocs.org
+# events
+Copyright (c) 2015 Rafael da Silva Rocha  
+https://github.com/rochars/trade  
+https://python-trade.appspot.com
 
 events: A default set of events for the trade module.
 
@@ -11,26 +12,23 @@ Accumulator and Porfolio objects to change asset accumulation data.
 It contains the definitions of:
 - Event
 - StockSplit
-- ReverseStockSplit
 - BonusShares
 
 Events can be accumulated by Portfolio objects just like any other
-occurrence. Just like any other Occurrence subclass, each event must
+occurrence. Like any other Occurrence subclass, each event must
 for implement a update_container() method that receives a
 trade.Accumulator object. This method will contain the logic for the
-update on the accumulator data.
+update on the accumulator state.
 
 
 ## Event(Occurrence)
-An occurrence that change one or more asset's position.
+An occurrence that change the state of one or more assets.
 
-This is a base class for Events. Events can change the quantity,
-the price and the results stored on a asset accumulator.
+This is a base class for events.
 
 ### Attributes:
 + date: A string 'YYYY-mm-dd', the date the event occurred.
 + asset: The target asset of the event.
-
 
 
 ## StockSplit(Event)
@@ -46,7 +44,6 @@ Reverse stock splits are represented by values between 0 and 1.
 Performs a split or a reverse split on the stock.
 
 
-
 ## class BonusShares(Event)
 Bonus shares.
 
@@ -54,7 +51,6 @@ Bonus shares.
 
 #### update_container(self, accumulator)
 Add stocks received as bonus shares do the accumulator.
-
 
 
 ## License

@@ -1,7 +1,4 @@
-"""trade: Tools For Stock Trading Applications.
-
-This module provides the default functionalities related to operations of
-purchase and sale of assets.
+"""trade: Tools For Trade Management Applications.
 
 http://trade.readthedocs.org/
 https://github.com/rochars/trade

@@ -1,25 +1,24 @@
 # trade: Tools For Stock Trading Applications.
 Copyright (c) 2015 Rafael da Silva Rocha  
-rocha.rafaelsilva@gmail.com  
-http://rochars.github.io/trade/  
-http://trade.readthedocs.org  
+https://github.com/rochars/trade  
+https://python-trade.appspot.com
 
 
-## What is it?
-trade is Python framework to ease the creation of investment management
-applications. It is focused in, but not limited to, stock exchange markets.
+What problem does it solve?
+---------------------------
+trade calculates the results of investments. You inform a series of assets, a
+series of operations with those assets, and trade tells the money you
+invested in each asset, the profits from buying and selling each asset, and
+more. It is focused in, but not limited to, stock exchange operations.
 
-The trade module provides notions of assets, purchases, sales, daytrades,
-cost deduction, rates, options, option exercises, asset accumulation and more.
-
-Check the tutorials on [Introduction](introduction) to get started using
-the trade framework.
+trade is still in early development, but you can already try it
+[live](https://python-trade.appspot.com)!
 
 
 ## Installation
 The trade module can be installed with pip:
 
-> pip install trade
+$ pip install trade
 
 To check if everything went OK, open the Python console and import the module:
 
@@ -31,82 +30,7 @@ asset = trade.Asset(symbol='ATVI')
 
 ## Quickstart
 
-Check the tutorials on [Introduction](introduction) to get started using
-the trade framework.
-
 A basic example of the trade module in action:
-
-```python
-import trade
-
-# create the asset that we are going to trade
-asset = trade.Asset(name='Google Inc', symbol='GOOGL')
-
-# create the accumulator to accumulate trades with the asset
-accumulator = trade.Accumulator(asset)
-
-
-print(accumulator.subject.name)
-#>> Google Inc
-
-print(accumulator.state['quantity'])
-#>> 0
-
-print(accumulator.state['price'])
-#>> 0
-
-print(accumulator.state['results'])
-#>> {}
-
-
-# create a trade operation buying the asset
-purchase = trade.Operation(
-    subject=asset,
-    quantity=10,
-    price=650.73,
-    date='2015-09-23'
-)
-
-# accumulate the trade
-accumulator.accumulate(purchase)
-
-
-print(accumulator.state['quantity'])
-#>> 10
-
-print(accumulator.state['price'])
-#>> 650.73
-
-print(accumulator.state['results'])
-#>> {}
-
-
-# create a new trade operation selling the asset
-sale = trade.Operation(
-    subject=asset,
-    quantity=-5,
-    price=656.77,
-    date='2015-09-24'
-)
-
-# accumulate the new trade
-accumulator.accumulate(sale)
-
-
-print(accumulator.state['quantity'])
-#>> 5
-
-print(accumulator.state['price'])
-#>> 650.73
-
-print(accumulator.state['results'])
-#>> {'trades': 30.199999999999818}
-```
-
-Check the [API docs](api) for all the available features.
-
-
-## JSON Interface
 
 ```python
 import trade
@@ -117,7 +41,7 @@ json_input = '''{
         "GOOG": {
             "type": "Asset",
             "name": "Google Inc",
-            "expiration_date": "2019-01-01"
+            "expiration_date": ""
         },
         "AAPL": {
             "type": "Asset",
@@ -128,10 +52,30 @@ json_input = '''{
     "occurrences": [
         {
             "type": "Operation",
-            "subject": "GOOG",
-            "date": "2015-01-01",
+            "subject": "AAPL",
+            "date": "2015-11-10",
             "quantity": 10,
-            "price": 650.11,
+            "price": 120.15,
+            "commissions": {},
+            "raw_results": {},
+            "operations": []
+        },
+        {
+            "type": "Operation",
+            "subject": "GOOG",
+            "date": "2015-11-10",
+            "quantity": 10,
+            "price": 724.89,
+            "commissions": {},
+            "raw_results": {},
+            "operations": []
+        },
+        {
+            "type": "Operation",
+            "subject": "GOOG",
+            "date": "2015-11-10",
+            "quantity": -5,
+            "price": 724.98,
             "commissions": {},
             "raw_results": {},
             "operations": []
@@ -139,10 +83,10 @@ json_input = '''{
     ],
     "initial state": {
         "AAPL": {
-            "date": "2015-11-09",
+            "date": "2015-10-09",
             "quantity": 92,
-            "price": 31.21,
-            "results": {"trades": 5000.72}
+            "price": 119.27,
+            "results": {"trades": 5021.72}
         }
     }
 }'''
@@ -150,23 +94,76 @@ json_input = '''{
 json_output = interface.get_trade_results(json_input)
 
 print(json_output)
-#>> {
-#    "GOOG": {
-#        "2015-01-01": {
-#            "quantity": 10,
-#            "price": 650.11,
-#            "results": {}
-#        }
-#    },
+#$ {
+#  "assets": {
 #    "AAPL": {
-#        "2015-11-09": {
-#            "quantity": 92,
-#            "price": 31.21,
-#            "results": {"trades": 5000.72}
+#      "states": {
+#        "2015-10-09": {
+#          "price": 119.27,
+#          "quantity": 92,
+#          "results": {
+#            "trades": 5021.7200000000003
+#          }
+#        },
+#        "2015-11-10": {
+#          "price": 119.35627450980392,
+#          "quantity": 102,
+#          "results": {
+#            "trades": 5021.7200000000003
+#          }
 #        }
+#      },
+#      "totals": {
+#        "daytrades": 0,
+#        "operations": 1,
+#        "purchases": 1,
+#        "results": {
+#          "trades": 5021.7200000000003
+#        },
+#        "sales": 0
+#      }
+#    },
+#    "GOOG": {
+#      "states": {
+#        "2015-11-10": {
+#          "price": 724.88999999999999,
+#          "quantity": 5,
+#          "results": {
+#            "daytrades": 0.45000000000027285
+#          }
+#        }
+#      },
+#      "totals": {
+#        "daytrades": 1,
+#        "operations": 2,
+#        "purchases": 1,
+#        "results": {
+#          "daytrades": 0.45000000000027285
+#        },
+#        "sales": 1
+#      }
 #    }
+#  },
+#  "totals": {
+#    "daytrades": 1,
+#    "operations": 3,
+#    "purchases": {
+#      "operations": 2,
+#      "volume": 8450.3999999999996
+#    },
+#    "results": {
+#      "daytrades": 0.45000000000027285,
+#      "trades": 5021.7200000000003
+#    },
+#    "sales": {
+#      "operations": 1,
+#      "volume": 3624.9000000000001
+#    }
+#  }
 #}
 ```
+
+Check the [API docs](api) for all the available features.
 
 
 ## Compatibility
@@ -174,7 +171,7 @@ The trade module is compatible with Python 2.7, 3.3, 3.4 and 3.5.
 
 
 ## Version
-The current version is 0.2.1 alpha.
+The current version is 0.2.5 alpha.
 
 
 ## License

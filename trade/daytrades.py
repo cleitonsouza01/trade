@@ -13,7 +13,7 @@ It provides:
 - the fetch_daytrades() task to the OperationContainer
 
 Daytrades can be accumulated just like any other Operation object.
-They will update the accumulated results, but will not change the
+They will update the asset state adding results but will not change the
 quantity or the price of the asset on the Portfolio.
 
 http://trade.readthedocs.org/
@@ -156,7 +156,7 @@ class Daytrade(Operation):
             container.positions['daytrades'][self.subject.symbol] = self
 
     def merge_underlying(self, container, operation_index):
-        """Merges one daytrade underlying operation."""
+        """Merges one day trade underlying operation."""
         merge_operations(
             container.positions['daytrades'][self.subject.symbol]\
                 .operations[operation_index],
@@ -165,7 +165,7 @@ class Daytrade(Operation):
 
 
 def fetch_daytrades(container):
-    """A OperationContainer task.
+    """An OperationContainer task.
 
     Fetch the daytrades from the OperationContainer operations.
 
@@ -180,7 +180,7 @@ def fetch_daytrades(container):
 
 
 def daytrade_condition(operation_a, operation_b):
-    """Checks if the operations are day trades."""
+    """Checks if two operations are day trades."""
     return (
         operation_a.subject.symbol == operation_b.subject.symbol and
         not same_sign(operation_a.quantity, operation_b.quantity) and
