@@ -14,11 +14,11 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='trade',
-    version=trade.__version__,
+    version="0.2.5",
     description='Tools For Trade Management Applications',
     long_description=long_description,
     url='https://github.com/rochars/trade',
-    author=trade.__author__,
+    author="Rafael da Silva Rocha",
     author_email='rocha.rafaelsilva@gmail.com',
     license='MIT',
     classifiers=[
