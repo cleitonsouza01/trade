@@ -7,7 +7,7 @@ trade: Tools For Trade Management Applications |Live Demo|
 
 --------------
 
-|Unix Build| |Windows Build| |Coverage Status| |Code Climate| |Python Versions|
+|Build| |Windows Build| |Coverage Status| |Code Climate| |Python Versions|
 
 
 What problem does it solve?
@@ -212,8 +212,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 .. _documentation: http://trade.readthedocs.org
 .. _accumulator: https://github.com/rochars/accumulator
 .. _live: https://python-trade.appspot.com
-
-.. |Unix Build| image:: https:/img.shields.io/travis/rochars/trade.svg?label=unix%20build
+.. |Build| image:: https:/img.shields.io/travis/rochars/trade.svg?label=unix%20build
    :target: https://travis-ci.org/rochars/trade
 .. |Windows Build| image:: https://img.shields.io/appveyor/ci/rochars/trade.svg?label=windows%20build
    :target: https://ci.appveyor.com/project/rochars/trade
