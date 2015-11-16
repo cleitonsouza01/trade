@@ -10,8 +10,8 @@ install:
   - pip install -r requirements.txt
   - pip install coveralls
 script:
-  - setup.py build
   coverage run --source=trade -m unittest discover tests
+  - setup.py build
 after_success:
   coveralls
 branches:
