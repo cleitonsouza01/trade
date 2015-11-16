@@ -1,4 +1,4 @@
-# trade: Tools For Stock Trading Applications.
+# trade: Tools For Trade Management Applications
 Copyright (c) 2015 Rafael da Silva Rocha  
 https://github.com/rochars/trade  
 https://python-trade.appspot.com
@@ -171,7 +171,7 @@ The trade module is compatible with Python 2.7, 3.3, 3.4 and 3.5.
 
 
 ## Version
-The current version is 0.2.6 alpha.
+The current version is 0.2.7 alpha.
 
 
 ## License

@@ -40,6 +40,6 @@ from .prorate import prorate_commissions
 from .trade_json import TradeJSON
 
 
-__version__ = '0.2.6'
+__version__ = '0.2.7'
 __author__ = 'Rafael da Silva Rocha'
 __licence__ = 'MIT'
