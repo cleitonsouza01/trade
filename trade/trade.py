@@ -79,13 +79,13 @@ class Operation(Occurrence):
     # positions
     update_container = True
 
-    def __init__(self, subject=None, date=None, quantity=0, price=0):
+    def __init__(self, subject=None, date=None, **kwargs):
         super(Operation, self).__init__(subject, date)
-        self.quantity = quantity
-        self.price = price
-        self.commissions = {}
-        self.raw_results = {}
-        self.operations = []
+        self.quantity = kwargs.get('quantity', 0)
+        self.price = kwargs.get('price', 0)
+        self.commissions = kwargs.get('commissions', {})
+        self.raw_results = kwargs.get('raw_results', {})
+        self.operations = kwargs.get('operations', [])
 
     @property
     def results(self):
