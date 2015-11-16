@@ -49,13 +49,11 @@ A basic example of the trade module in action:
         "subjects": {
             "GOOG": {
                 "type": "Asset",
-                "name": "Google Inc",
-                "expiration_date": ""
+                "name": "Google Inc"
             },
             "AAPL": {
                 "type": "Asset",
-                "name": "Apple, Inc.",
-                "expiration_date": ""
+                "name": "Apple, Inc."
             }
         },
         "occurrences": [
@@ -64,30 +62,21 @@ A basic example of the trade module in action:
                 "subject": "AAPL",
                 "date": "2015-11-10",
                 "quantity": 10,
-                "price": 120.15,
-                "commissions": {},
-                "raw_results": {},
-                "operations": []
+                "price": 120.15
             },
             {
                 "type": "Operation",
                 "subject": "GOOG",
                 "date": "2015-11-10",
                 "quantity": 10,
-                "price": 724.89,
-                "commissions": {},
-                "raw_results": {},
-                "operations": []
+                "price": 724.89
             },
             {
                 "type": "Operation",
                 "subject": "GOOG",
                 "date": "2015-11-10",
                 "quantity": -5,
-                "price": 724.98,
-                "commissions": {},
-                "raw_results": {},
-                "operations": []
+                "price": 724.98
             }
         ],
         "initial state": {

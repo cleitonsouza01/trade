@@ -117,7 +117,7 @@ class TradeJSON(object):
                 'object': self.TYPES[details['type']](
                     name=details['name'],
                     symbol=subject,
-                    expiration_date=details['expiration_date']
+                    expiration_date=details.get('expiration_date', None)
                 ),
                 'sales': 0,
                 'purchases': 0,
@@ -144,7 +144,7 @@ class TradeJSON(object):
                 self.totals['purchase_operations'] += 1
                 self.totals['purchase_volume'] += volume
                 self.subjects[occurrence['subject']]['purchases'] += 1
-            elif occurrence['quantity'] < 0: #operations can have 0 quantity
+            else:
                 self.totals['sale_operations'] += 1
                 self.totals['sale_volume'] += volume
                 self.subjects[occurrence['subject']]['sales'] += 1
@@ -229,6 +229,7 @@ class TradeJSON(object):
 
     def get_trade_results(self, data):
         """json in, json out"""
+
         data = json.loads(data)
 
         # creates an object for all subjects in the json

@@ -12,13 +12,11 @@ class TestJSONCase0200(TestJSON):
         "subjects": {
             "GOOG": {
                 "type": "Asset",
-                "name": "Google Inc",
-                "expiration_date": ""
+                "name": "Google Inc"
             },
             "AAPL": {
                 "type": "Asset",
-                "name": "Apple, Inc",
-                "expiration_date": ""
+                "name": "Apple, Inc"
             }
         },
         "occurrences": [
@@ -27,20 +25,14 @@ class TestJSONCase0200(TestJSON):
                 "subject": "AAPL",
                 "date": "2015-01-01",
                 "quantity": 10,
-                "price": 650.33,
-                "commissions": {},
-                "raw_results": {},
-                "operations": []
+                "price": 650.33
             },
             {
                 "type": "Operation",
                 "subject": "AAPL",
                 "date": "2015-01-02",
                 "quantity": 10,
-                "price": 650.33,
-                "commissions": {},
-                "raw_results": {},
-                "operations": []
+                "price": 650.33
             },
             {
                 "type": "Operation",
@@ -134,10 +126,7 @@ class TestJSONCase0201(TestJSON):
                 "subject": "AAPL",
                 "date": "2015-01-02",
                 "quantity": 10,
-                "price": 650.33,
-                "commissions": {},
-                "raw_results": {},
-                "operations": []
+                "price": 650.33
             },
             {
                 "type": "Operation",

@@ -34,13 +34,11 @@ json_input = '''{
     "subjects": {
         "GOOG": {
             "type": "Asset",
-            "name": "Google Inc",
-            "expiration_date": ""
+            "name": "Google Inc"
         },
         "ATVI": {
             "type": "Asset",
-            "name": "Activision Blizzard, Inc.",
-            "expiration_date": ""
+            "name": "Activision Blizzard, Inc."
         }
     },
     "occurrences": [
@@ -49,10 +47,7 @@ json_input = '''{
             "subject": "GOOG",
             "date": "2015-01-01",
             "quantity": 10,
-            "price": 650.33,
-            "commissions": {},
-            "raw_results": {},
-            "operations": []
+            "price": 650.33
         }
     ],
     "initial state": {
