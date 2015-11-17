@@ -1,4 +1,10 @@
-"""A setuptools based setup module.
+"""trade: Tools For Trade Management Applications.
+
+Copyright (c) 2015 Rafael da Silva Rocha
+https://github.com/rochars/trade
+http://trade.readthedocs.org/
+License: MIT
+
 See:
 https://packaging.python.org/en/latest/distributing.html
 https://github.com/pypa/sampleproject
@@ -14,7 +20,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='trade',
-    version="0.2.7",
+    version="0.2.8",
     description='Tools For Trade Management Applications',
     long_description=long_description,
     url='https://github.com/rochars/trade',
@@ -31,7 +37,7 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
     ],
-    keywords='asset stock securities market finance investment money currency',
+    keywords='asset stock exchange securities market finance investment money currency',
     install_requires='accumulator==0.2',
     packages=['trade'],
 )

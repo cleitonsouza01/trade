@@ -115,7 +115,7 @@ class Daytrade(Operation):
         """Extract the daytraded quantity from 2 operations."""
         # Find the daytraded quantity; the daytraded
         # quantity is always the smallest absolute quantity
-        self.quantity = min([abs(purchase.quantity), abs(sale.quantity)])
+        self.quantity = min([purchase.quantity, abs(sale.quantity)])
 
         # Update the operations that originated the
         # daytrade with the new quantity after the
@@ -127,7 +127,7 @@ class Daytrade(Operation):
         purchase.quantity -= self.quantity
         sale.quantity += self.quantity
 
-    def append_to_container_positions(self, container):
+    def append_to_positions(self, container):
         """Save a Daytrade object in the container positions.
 
         If there is already a daytrade with the same asset on the
@@ -163,7 +163,6 @@ class Daytrade(Operation):
             self.operations[operation_index]
         )
 
-
 def fetch_daytrades(container):
     """An OperationContainer task.
 
@@ -173,26 +172,22 @@ def fetch_daytrades(container):
     'daytrades' key, inexed by the Daytrade asset's symbol.
     """
     for i, operation_a in enumerate(container.operations):
-        for operation_b in container.operations[i:]:
-            if daytrade_condition(operation_a, operation_b):
-                Daytrade(operation_a, operation_b)\
-                    .append_to_container_positions(container)
-
+        for operation_b in [
+                x for x in container.operations[i:] if\
+                    daytrade_condition(x, operation_a)
+            ]:
+            Daytrade(operation_a, operation_b).append_to_positions(container)
 
 def daytrade_condition(operation_a, operation_b):
     """Checks if two operations are day trades."""
     return (
         operation_a.subject.symbol == operation_b.subject.symbol and
-        not same_sign(operation_a.quantity, operation_b.quantity) and
-        operation_a.quantity != 0 and
-        operation_b.quantity != 0
+        not same_sign(operation_a.quantity, operation_b.quantity)
     )
 
 
 def find_purchase_and_sale(operation_a, operation_b):
     """Find which operation is a purchase and which is a sale."""
-    if same_sign(operation_a.quantity, operation_b.quantity):
-        return None, None
-    if operation_a.quantity > operation_b.quantity:
-        return operation_a, operation_b
-    return operation_b, operation_a
+    if operation_b.quantity > operation_a.quantity:
+        return operation_b, operation_a
+    return operation_a, operation_b

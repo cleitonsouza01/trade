@@ -1,7 +1,7 @@
 """trade: Tools For Trade Management Applications.
 
-http://trade.readthedocs.org/
 https://github.com/rochars/trade
+http://trade.readthedocs.org/
 License: MIT
 
 Copyright (c) 2015 Rafael da Silva Rocha
@@ -40,6 +40,6 @@ from .prorate import prorate_commissions
 from .trade_json import TradeJSON
 
 
-__version__ = '0.2.7'
+__version__ = '0.2.8'
 __author__ = 'Rafael da Silva Rocha'
 __licence__ = 'MIT'

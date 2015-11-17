@@ -57,23 +57,11 @@ class Option(Asset):
         symbol: A string representing the symbol of the asset.
         expiration_date: A string 'YYYY-mm-dd' representing the
             expiration date of the asset, if any.
-        underlying_assets: A dict of Asset objects representing the
+        underlying_assets: A dict of Assets representing the
             underlying assets of this asset and the ratio to which
             the asset relates to the Option. It looks like this:
             {Asset: float}
     """
-
-    def __init__(
-            self,
-            symbol=None,
-            name=None,
-            expiration_date=None,
-            underlying_assets=None
-        ):
-        super(Option, self).__init__(symbol, name, expiration_date)
-        if underlying_assets is None:
-            underlying_assets = {}
-        self.underlying_assets = underlying_assets
 
     def exercise(self, quantity, price, premium=0):
         """Exercises the option.
@@ -191,13 +179,11 @@ def fetch_exercises(container):
         if isinstance(operation, Exercise):
             if 'exercises' not in container.positions:
                 container.positions['exercises'] = {}
-            operation.fetch_operations()
-            for operation in operation.operations:
-                symbol = operation.subject.symbol
-                if symbol in container.positions['exercises'].keys():
-                    merge_operations(
-                        container.positions['exercises'][symbol],
-                        operation
-                    )
-                else:
-                    container.positions['exercises'][symbol] = operation
+            symbol = operation.subject.symbol
+            if symbol in container.positions['exercises'].keys():
+                merge_operations(
+                    container.positions['exercises'][symbol],
+                    operation
+                )
+            else:
+                container.positions['exercises'][symbol] = operation

@@ -1,7 +1,8 @@
-# trade 0.2.7
+# trade 0.2.8
 Copyright (c) 2015 Rafael da Silva Rocha  
+https://python-trade.appspot.com  
 https://github.com/rochars/trade  
-https://python-trade.appspot.com
+http://trade.readthedocs.org
 
 ## Modules in this package:
 + [daytrades](daytrades)
@@ -63,7 +64,6 @@ https://python-trade.appspot.com
   Calculates the average price between two asset states.
 + [same_sign()](utils)
   Checks if two numbers have the same sign.
-
 
 ## License
 Copyright (c) 2015 Rafael da Silva Rocha

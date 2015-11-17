@@ -1,7 +1,8 @@
 # events
 Copyright (c) 2015 Rafael da Silva Rocha  
+https://python-trade.appspot.com  
 https://github.com/rochars/trade  
-https://python-trade.appspot.com
+http://trade.readthedocs.org
 
 events: A default set of events for the trade module.
 

@@ -1,92 +1,42 @@
-"""Prototype for a trade module JSON interface."""
+"""trade JSON interface.
+
+https://github.com/rochars/trade
+http://trade.readthedocs.org/
+License: MIT
+
+Copyright (c) 2015 Rafael da Silva Rocha
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+"""
 
 from __future__ import absolute_import
 
 import json
+from accumulator import Portfolio
 
 from .trade import Asset, Operation, OperationContainer
-from accumulator import Portfolio
 from .options import Option, Exercise, fetch_exercises
 from .daytrades import fetch_daytrades
 
 
 class TradeJSON(object):
-    """trade module JSON interface.
-
-    json_input = {
-        "subjects": {
-            "GOOG": {
-                "type": "Asset",
-                "name": "Google Inc",
-                "expiration_date": "2019-01-01"
-            },
-            "AAPL": {
-                "type": "Asset",
-                "name": "Apple Inc.",
-                "expiration_date": ""
-            },
-            ...
-        },
-        "occurrences": [
-            {
-                "type": "Operation",
-                "subject": "GOOG",
-                "date": "2015-01-01",
-                "quantity": 10,
-                "price": 650.11,
-                "commissions": {},
-                "raw_results": {},
-                "operations": []
-            },
-            ...
-        ],
-        "initial state": {
-            "AAPL": {
-                "date": "2015-11-09",
-                "quantity": 92,
-                "price": 31.21,
-                "results": {"trades": 5000.72}
-            },
-            ...
-        }
-    }
-
-    json_output = {
-        "totals": {
-            "sales": {
-                "volume": 0,
-                "operations": 0,
-            }
-            "purchases": {
-                "volume": 0,
-                "operations": 0
-            }
-            "operations": 0,
-            "daytrades": 0,
-            "results": {}
-        },
-        "traded assets": {
-            "GOOG": {
-                "totals": {
-                    "sales": 0,
-                    "purchases": 0,
-                    "operations": 0,
-                    "daytrades": 0,
-                    "results": {}
-                }
-                "states": {
-                    "2015-01-01": {
-                        "quantity": 10,
-                        "price": 650.11,
-                        "results": {}
-                    },
-                    ...
-                }
-            },
-            ...
-        }
-    }
-    """
+    """trade JSON interface."""
 
     TYPES = {
         'Asset': Asset,
@@ -94,7 +44,6 @@ class TradeJSON(object):
         'Operation': Operation,
         'Exercise': Exercise
     }
-    portfolio = None
 
     def __init__(self):
         self.subjects = {}
@@ -110,6 +59,8 @@ class TradeJSON(object):
             'total_daytrades': 0
         }
 
+        self.portfolio = None
+
     def create_subjects(self, data):
         """creates a subject object for all subjects in the json."""
         for subject, details in data['subjects'].items():
@@ -117,13 +68,23 @@ class TradeJSON(object):
                 'object': self.TYPES[details['type']](
                     name=details['name'],
                     symbol=subject,
-                    expiration_date=details.get('expiration_date', None)
+                    expiration_date=details.get('expiration_date', None),
+                    underlying_assets=details.get('underlying_assets', {})
                 ),
                 'sales': 0,
                 'purchases': 0,
                 'daytrades': 0,
                 'operations': 0
             }
+
+        for subject, obj in self.subjects.items():
+            if obj['object'].underlying_assets:
+                original_underlying = obj['object'].underlying_assets
+                underlying_assets = {}
+                for underlying, ratio in original_underlying.items():
+                    underlying_assets\
+                        [self.subjects[underlying]['object']] = ratio
+                obj['object'].underlying_assets = underlying_assets
 
     def create_occurrences(self, data):
         """Creates all the occurrences described in the json."""
@@ -238,11 +199,11 @@ class TradeJSON(object):
         # Get all the occurrences described in the json
         self.create_occurrences(data)
 
-        # Put the operations in containers
-        self.create_containers()
-
         # create a Portfolio with the initial state
         self.create_portfolio(data)
+
+        # Put the operations in containers
+        self.create_containers()
 
         # Fetch the positions on each container
         # and accumulates the positions
