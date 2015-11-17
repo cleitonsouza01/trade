@@ -44,6 +44,10 @@ class Asset(Subject):
         'results': {}
     }
 
+    def __init__(self, symbol=None, name=None, expiration_date=None, **kwargs):
+        super(Asset, self).__init__(symbol, name, expiration_date)
+        self.underlying_assets = kwargs.get('underlying_assets', {})
+
 
 class Operation(Occurrence):
     """An Operation represents the purchase or sale of an asset.

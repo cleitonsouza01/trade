@@ -6,7 +6,7 @@ import unittest
 import trade
 from tests.fixtures.operations import (
     OPERATION46, OPERATION55, OPERATION56, OPERATION57, OPERATION58,
-    OPERATION59, OPERATION43, OPERATION45, OPERATION20
+    OPERATION59, OPERATION43
 )
 
 
@@ -67,19 +67,9 @@ class TestDaytradeCondition(unittest.TestCase):
             trade.daytrade_condition(OPERATION57, OPERATION57)
         )
 
-    def test_case_03(self):
-        self.assertFalse(
-            trade.daytrade_condition(OPERATION57, OPERATION55)
-        )
-
     def test_case_04(self):
         self.assertFalse(
             trade.daytrade_condition(OPERATION55, OPERATION59)
-        )
-
-    def test_case_05(self):
-        self.assertFalse(
-            trade.daytrade_condition(OPERATION55, OPERATION57)
         )
 
     def test_case_06(self):
@@ -114,38 +104,13 @@ class TestFindPurchaseAndSale(unittest.TestCase):
             (OPERATION46, OPERATION55)
         )
 
-    def test_case_02(self):
-        self.assertEqual(
-            trade.find_purchase_and_sale(OPERATION46, OPERATION46),
-            (None, None)
-        )
-
-    def test_case_03(self):
-        self.assertEqual(
-            trade.find_purchase_and_sale(OPERATION55, OPERATION55),
-            (None, None)
-        )
-
-    def test_case_04(self):
-        self.assertEqual(
-            trade.find_purchase_and_sale(OPERATION46, OPERATION45),
-            (None, None)
-        )
-
     def test_case_05(self):
         self.assertEqual(
             trade.find_purchase_and_sale(OPERATION56, OPERATION43),
             (OPERATION56, OPERATION43)
         )
 
-    def test_case_06(self):
-        self.assertEqual(
-            trade.find_purchase_and_sale(OPERATION20, OPERATION57),
-            (None, None)
-        )
-
     def test_case_07(self):
-
         self.assertEqual(
             trade.find_purchase_and_sale(OPERATION58, OPERATION57),
             (OPERATION57, OPERATION58)

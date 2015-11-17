@@ -1,7 +1,8 @@
 # daytrades
 Copyright (c) 2015 Rafael da Silva Rocha  
+https://python-trade.appspot.com  
 https://github.com/rochars/trade  
-https://python-trade.appspot.com
+http://trade.readthedocs.org
 
 daytrades: Daytrades plugin for the trade module.
 

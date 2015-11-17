@@ -1,5 +1,5 @@
-trade: Tools For Trade Management Applications |Live Demo|
-==========================================================
+trade: Tools For Trade Management Applications
+==============================================
 
 | Copyright (c) 2015 Rafael da Silva Rocha
 | https://python-trade.appspot.com
@@ -8,27 +8,29 @@ trade: Tools For Trade Management Applications |Live Demo|
 
 --------------
 
-|Build| |Windows Build| |Coverage Status| |Code Climate| |Python Versions|
+|Build| |Windows Build| |Coverage Status| |Code Climate| |Python Versions| |Live Demo|
 
 
 What problem does it solve?
 ---------------------------
-trade calculates the results of investments. You inform a series of assets, a
-series of operations with those assets, and trade tells the money you
-invested in each asset, the profits from buying and selling each asset, and
-more. It is focused in, but not limited to, stock exchange operations.
+trade calculates the state of your assets after a series of market operations.
+You inform a series of assets and derivatives, a series of operations with them,
+and trade tells how much money you invested in each asset, the profit and loss
+from buying, selling, day trading, performing option exercises and more.
 
-trade is still in early development, but you can already try it `live`_!
+trade is focused in stock exchange, but not limited to it.
+
+trade is in alpha status, but you can already try it `live`_!
 
 
 Installation
 ------------
 
-The trade module can be installed with pip:
+The module can be installed with pip:
 
     $ pip install trade
 
-To check if everything went OK, open the Python console and import the module:
+To check if everything went OK, open the Python console and try:
 
 .. code:: python
 
@@ -162,6 +164,105 @@ A basic example of the trade module in action:
     #}
 
 
+An Example With Options And Exercise Operations
+-----------------------------------------------
+
+.. code:: python
+
+    import trade
+    interface = trade.TradeJSON()
+
+    json_input = '''{
+        "subjects": {
+            "ASSET": {
+                "type": "Asset",
+                "name": "Some Asset"
+            },
+            "OPTION": {
+                "type": "Option",
+                "name": "Some Option",
+                "expiration_date": "2016-12-23",
+                "underlying_assets": {"ASSET": 1}
+            }
+        },
+        "occurrences": [
+            {
+                "type": "Operation",
+                "subject": "OPTION",
+                "date": "2015-01-01",
+                "quantity": 10,
+                "price": 1
+            },
+            {
+                "type": "Exercise",
+                "subject": "OPTION",
+                "date": "2015-01-03",
+                "quantity": 10,
+                "price": 4
+            }
+        ],
+        "initial state": {}
+    }'''
+
+    json_output = interface.get_trade_results(json_input)
+
+    print(json_output)
+    #$ {
+    #    "totals": {
+    #        "sales": {
+    #            "volume": 0,
+    #            "operations": 0
+    #        },
+    #        "purchases": {
+    #            "volume": 50,
+    #            "operations": 2
+    #        },
+    #        "operations": 2,
+    #        "daytrades": 0,
+    #        "results": {}
+    #    },
+    #    "assets": {
+    #        "OPTION": {
+    #            "totals": {
+    #                "sales": 0,
+    #                "purchases": 2,
+    #                "operations": 2,
+    #                "daytrades": 0,
+    #                "results": {}
+    #            },
+    #            "states": {
+    #                "2015-01-01": {
+    #                    "quantity": 10,
+    #                    "price": 1.0,
+    #                    "results": {}
+    #                },
+    #                "2015-01-03": {
+    #                    "quantity": 0,
+    #                    "price": 0,
+    #                    "results": {}
+    #                }
+    #            }
+    #        },
+    #        "ASSET": {
+    #            "totals": {
+    #                "sales": 0,
+    #                "purchases": 0,
+    #                "operations": 0,
+    #                "daytrades": 0,
+    #                "results": {}
+    #            },
+    #            "states": {
+    #                "2015-01-03": {
+    #                    "quantity": 10,
+    #                    "price": 5, # 4 + 1 (exercise price + premium)
+    #                    "results": {}
+    #                }
+    #            }
+    #        }
+    #    }
+    #}
+
+
 Compatibility
 -------------
 
@@ -171,7 +272,7 @@ trade is compatible with Python 2.7, 3.3, 3.4 and 3.5.
 Version
 -------
 
-The current version is 0.2.7 alpha.
+The current version is 0.2.8 alpha.
 
 
 License

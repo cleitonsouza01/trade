@@ -1,4 +1,4 @@
-"""Tests for the default plugins.
+"""JSON interface example with Options and Exercise operations.
 
 http://trade.readthedocs.org/
 https://github.com/rochars/trade
@@ -24,3 +24,49 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
+
+import trade
+import json
+
+interface = trade.TradeJSON()
+
+json_input = '''{
+    "subjects": {
+        "ASSET": {
+            "type": "Asset",
+            "name": "Some Asset"
+        },
+        "OPTION": {
+            "type": "Option",
+            "name": "Some Option",
+            "expiration_date": "2016-12-23",
+            "underlying_assets": {"ASSET": 1}
+        }
+    },
+    "occurrences": [
+        {
+            "type": "Operation",
+            "subject": "OPTION",
+            "date": "2015-01-01",
+            "quantity": 10,
+            "price": 1
+        },
+        {
+            "type": "Exercise",
+            "subject": "OPTION",
+            "date": "2015-01-03",
+            "quantity": 10,
+            "price": 4
+        }
+    ],
+    "initial state": {}
+}'''
+
+json_output = json.dumps(
+    json.loads(interface.get_trade_results(json_input)),
+    sort_keys=True,
+    indent=2,
+    separators=(',', ': ')
+)
+
+print(json_output)

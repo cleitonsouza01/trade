@@ -6,9 +6,7 @@ from tests.test_operation_container.container_test_base import TestFetchPosition
 from tests.fixtures.operations import (
     EXERCISE_OPERATION2, EXERCISE_OPERATION3
 )
-from tests.fixtures.assets import (
-    ASSET, OPTION1,
-)
+from tests.fixtures.assets import OPTION1
 
 
 class TestFetchExercisesCase00(TestFetchPositions):
@@ -18,14 +16,9 @@ class TestFetchExercisesCase00(TestFetchPositions):
     operations = [EXERCISE_OPERATION2]
     exercises = {
         OPTION1.symbol: {
-            'quantity': -100,
-            'price': 0,
-            'volume': 0,
-        },
-        ASSET.symbol: {
             'quantity': 100,
             'price': 1,
-            'volume': 100
+            'volume': 0,
         }
     }
 
@@ -37,13 +30,8 @@ class TestFetchExercisesCase01(TestFetchPositions):
     operations = [EXERCISE_OPERATION2, EXERCISE_OPERATION3]
     exercises = {
         OPTION1.symbol: {
-            'quantity': -200,
-            'price': 0,
-            'volume': 0,
-        },
-        ASSET.symbol: {
             'quantity': 200,
             'price': 2,
-            'volume': 400
+            'volume': 0,
         }
     }
