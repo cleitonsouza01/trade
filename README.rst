@@ -1,5 +1,5 @@
-trade: Tools For Trade Management Applications |Live Demo|
-==========================================================
+trade: Tools For Trade Management Applications
+==============================================
 
 | Copyright (c) 2015 Rafael da Silva Rocha
 | https://python-trade.appspot.com
@@ -8,7 +8,7 @@ trade: Tools For Trade Management Applications |Live Demo|
 
 --------------
 
-|Build| |Windows Build| |Coverage Status| |Code Climate| |Python Versions|
+|Build| |Windows Build| |Coverage Status| |Code Climate| |Python Versions| |Live Demo|
 
 
 What problem does it solve?
