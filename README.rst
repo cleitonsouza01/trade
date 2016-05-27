@@ -1,7 +1,7 @@
 trade: Tools For Trade Management Applications |Live Demo|
 ==========================================================
 
-| Copyright (c) 2015 Rafael da Silva Rocha
+| Copyright (c) 2016 Rafael da Silva Rocha
 | https://python-trade.appspot.com
 | https://github.com/rochars/trade
 | http://trade.readthedocs.org
@@ -13,12 +13,7 @@ trade: Tools For Trade Management Applications |Live Demo|
 
 What problem does it solve?
 ---------------------------
-trade calculates the state of your assets after a series of market operations.
-You inform a series of assets and derivatives, a series of operations with them,
-and trade tells how much money you invested in each asset, the profit and loss
-from buying, selling, day trading, performing option exercises and more.
-
-trade is focused in stock exchange, but not limited to it.
+trade calculates the state of assets after a series of occurrences with them.
 
 trade is in alpha status, but you can already try it `live`_!
 
@@ -30,12 +25,9 @@ The module can be installed with pip:
 
     $ pip install trade
 
-To check if everything went OK, open the Python console and try:
+Run the tests:
 
-.. code:: python
-
-    import trade
-    asset = trade.Asset(symbol='AMZN')
+    $ coverage run -m unittest discover tests
 
 
 Quickstart
@@ -278,7 +270,7 @@ The current version is 0.2.8 alpha.
 License
 -------
 
-Copyright (c) 2015 Rafael da Silva Rocha
+Copyright (c) 2016 Rafael da Silva Rocha
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the

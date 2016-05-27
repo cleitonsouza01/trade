@@ -1,6 +1,7 @@
 *.pyc
 .DS_Store
 .gitconfig
+.coverage
 
 # Packages
 *.egg
