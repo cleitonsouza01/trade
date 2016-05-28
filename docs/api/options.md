@@ -1,23 +1,21 @@
 # options
-Copyright (c) 2015 Rafael da Silva Rocha  
+Copyright (c) 2016 Rafael da Silva Rocha  
 https://python-trade.appspot.com  
 https://github.com/rochars/trade  
 http://trade.readthedocs.org
 
-options: Options plugin for the trade module.
-
-This plugin provides Options functionalities to the trade module.
+This plugin is an example of vanilla call and put operations on the trade module.
 
 With this plugin you can:
-- Create option assets that references underlying assets
+- Create calls and puts that references underlying assets
 - Create exercise operations that change both the option and underlying
   asset position on the portfolio
 
 It provides:
-- Option, a subclass of trade.Derivative
-- Exercise, a subclass of trade.Operation
-- the fetch_exercises() task to the OperationContainer
-- the fetch_exercise_operations() task to the Portfolio
+- Option, a subclass of Asset
+- Exercise, a subclass of Operation
+- the fetch_exercises() task for the OperationContainer
+- the fetch_exercise_operations() task for the Portfolio
 
 
 ## Option(Asset):
@@ -40,7 +38,7 @@ for classes that represent exotic options.
 Exercises the option.
 
 If a premium is informed, then it will be considered on the
-underlying asset operation price.
+underlying asset operation cost.
 
 Returns a list of operations:
     - one operation with zero value representing the option
@@ -49,12 +47,8 @@ Returns a list of operations:
       underlying assets
 
 
-
 ## Exercise(Operation):
 An exercise operation.
-
-Exercise operations are operations that involve more than one
-asset, usually a derivative like a Option and one or more underlying assets.
 
 An exercise will likely change the state of both the derivative and its
 underlying assets.
@@ -72,7 +66,7 @@ Fetch the operations in a exercise operations and  get the premium
 of the option that is being exercised.
 
 It searches on the Portfolio object for an Accumulator of the option
-and then use the accumulator price as the premium to be included
+and then use the accumulator cost as the premium to be included
 on the exercise operation price.
 
 #### update_accumulator(self, accumulator)

@@ -1,23 +1,18 @@
 """events: A default set of events for the trade module.
 
+http://trade.readthedocs.org/
+https://github.com/rochars/trade
+License: MIT
+
 This plugin provides a standard set of events for the trade module.
-Events are subclasses of trade.Occurrence. They are passed to
-Accumulator and Porfolio objects to change asset accumulation data.
+Events are subclasses of the Occurrence class. They are passed to
+Accumulator and Porfolio objects to change asset data.
 
 It contains the definitions of:
 - Event
 - StockSplit
 - BonusShares
 
-Events can be accumulated by Portfolio objects just like any other
-occurrence. Like any other Occurrence subclass, each event must
-for implement a update_container() method that receives a
-trade.Accumulator object. This method will contain the logic for the
-update on the accumulator state.
-
-http://trade.readthedocs.org/
-https://github.com/rochars/trade
-License: MIT
 
 Copyright (c) 2015 Rafael da Silva Rocha
 
@@ -49,13 +44,14 @@ from .utils import average_price
 
 
 class Event(Occurrence):
-    """An occurrence that change the state of one or more assets.
+    """An occurrence that changes the state of one or more assets.
 
     This is a base class for events.
 
     Attributes:
         date: A string 'YYYY-mm-dd', the date the event occurred.
         asset: The target asset of the event.
+        factor: the factor of the change on the asset state.
     """
 
     __metaclass__ = ABCMeta

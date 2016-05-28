@@ -1,13 +1,8 @@
 # daytrades
-Copyright (c) 2015 Rafael da Silva Rocha  
+Copyright (c) 2016 Rafael da Silva Rocha  
 https://python-trade.appspot.com  
 https://github.com/rochars/trade  
 http://trade.readthedocs.org
-
-daytrades: Daytrades plugin for the trade module.
-
-This plugin provides the Daytrade class, a subclass of Operation, and
-the fetch_daytrades() task for the OperationContainer.
 
 With this plugin the trade module can:
 - Identify daytrades in a group of operations
@@ -15,12 +10,11 @@ With this plugin the trade module can:
 - Accumulate Daytrades on the portfolio
 
 It provides:
-- Daytrade, a subclass of trade.Operation
-- the fetch_daytrades() task to the OperationContainer
+- Daytrade, a subclass of Operation
+- the fetch_daytrades() task for the OperationContainer
 
-Daytrades can be accumulated just like any other Operation object.
-They will update the asset state adding results but will not change the
-quantity or the price of the asset.
+Daytrades will update the asset state adding results but will not change the
+quantity or the cost of the asset on the Portfolio.
 
 
 ## Daytrade(Operation):
@@ -49,22 +43,21 @@ Creates the daytrade object.
 Based on the informed values this method creates 2 operations:
 - a purchase operation
 - a sale operation
-and them appends them to the Daytrade object operations list.
 
 Both operations can be treated like any other operation when it
 comes to taxes and the prorate of commissions.
 
 #### update_accumulator(self, accumulator)
-Update the accumulator state with this day trade result.
+Updates the accumulator state with the day trade result.
 
 #### extract_daytrade(self, purchase, sale)
-Extract the daytraded quantity from 2 operations.
+Extracts the daytraded quantity from 2 operations.
 
 #### append_to_container_positions(self, container)
-Save a Daytrade object in the container positions.
+Saves a Daytrade object in the container positions.
 
-If there is already a daytrade with the same asset on the
-container's position, then the daytrades are merged.
+If there is already a day trade with the same asset on the
+container, then the day trades are merged.
 
 #### merge_underlying(self, container, operation_index)
 Merges one day trade underlying operation.
@@ -73,7 +66,7 @@ Merges one day trade underlying operation.
 ## fetch_daytrades(container):
 An OperationContainer task.
 
-Fetch the daytrades from the OperationContainer operations.
+Fetches the daytrades from the OperationContainer operations.
 
 The daytrades are placed on the container positions under the
 'daytrades' key, inexed by the Daytrade asset's symbol.
@@ -84,7 +77,7 @@ Checks if two operations are day trades.
 
 
 ## find_purchase_and_sale(operation_a, operation_b):
-Find which operation is a purchase and which is a sale.
+Finds which operation is a purchase and which is a sale.
 
 
 ## License

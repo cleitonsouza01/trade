@@ -1,5 +1,5 @@
-trade: Tools For Trade Management Applications |Live Demo|
-==========================================================
+trade: Financial Application Framework |Live Demo|
+==================================================
 
 | Copyright (c) 2016 Rafael da Silva Rocha
 | https://python-trade.appspot.com
@@ -11,29 +11,45 @@ trade: Tools For Trade Management Applications |Live Demo|
 |Build| |Windows Build| |Coverage Status| |Code Climate| |Python Versions|
 
 
-What problem does it solve?
----------------------------
-trade calculates the state of assets after a series of occurrences with them.
+trade
+-----
+**trade** is a framework for the development of financial applications. It operates
+on the concept of *subjects* and *occurrences*. A *subject* represents anything that
+can be traded, while an *occurrence* represents anything that affects one or more
+subjects, like a stock exchange operation or a stock split.
 
-trade is in alpha status, but you can already try it `live`_!
+It was developed to work with any kind of *subject* and *occurrence* related to
+the financial market, and also to work under specific rules of different markets
+across the World, by following these principles:
+
+- different subjects may have different attributes
+- a subject may be related to none or many other subjects
+- an occurrence must involve one or many subjects
+- there may be an existing context for any subject
+- different occurrences can implement different processes with their subjects
+- an occurrence may update the state of none or many subjects
+
+Extending the framework with market-specific rules and operations should be as
+simple as creating new types of subjects and occurrences.
+
+You can try it `live <https://python-trade.appspot.com>`_.
+
+There is an ongoing effort in
+`documenting this project <http://trade.readthedocs.org>`_. Check it out.
 
 
-Installation
-------------
-
-The module can be installed with pip:
-
-    $ pip install trade
-
-Run the tests:
-
-    $ coverage run -m unittest discover tests
+In a nutshell
+-------------
+**trade** works like a service. The user informs the items he have in stock and a series
+of subsequent occurrences (purchases, sales, whatsoever) with those or other items.
+**trade** then calculates the effects of those occurrences and gives back the
+new amounts and costs of the items in stock.
 
 
 Quickstart
 ----------
 
-A basic example of the trade module in action:
+An example of the JSON interface:
 
 .. code:: python
 
@@ -156,105 +172,6 @@ A basic example of the trade module in action:
     #}
 
 
-An Example With Options And Exercise Operations
------------------------------------------------
-
-.. code:: python
-
-    import trade
-    interface = trade.TradeJSON()
-
-    json_input = '''{
-        "subjects": {
-            "ASSET": {
-                "type": "Asset",
-                "name": "Some Asset"
-            },
-            "OPTION": {
-                "type": "Option",
-                "name": "Some Option",
-                "expiration_date": "2016-12-23",
-                "underlying_assets": {"ASSET": 1}
-            }
-        },
-        "occurrences": [
-            {
-                "type": "Operation",
-                "subject": "OPTION",
-                "date": "2015-01-01",
-                "quantity": 10,
-                "price": 1
-            },
-            {
-                "type": "Exercise",
-                "subject": "OPTION",
-                "date": "2015-01-03",
-                "quantity": 10,
-                "price": 4
-            }
-        ],
-        "initial state": {}
-    }'''
-
-    json_output = interface.get_trade_results(json_input)
-
-    print(json_output)
-    #$ {
-    #    "totals": {
-    #        "sales": {
-    #            "volume": 0,
-    #            "operations": 0
-    #        },
-    #        "purchases": {
-    #            "volume": 50,
-    #            "operations": 2
-    #        },
-    #        "operations": 2,
-    #        "daytrades": 0,
-    #        "results": {}
-    #    },
-    #    "assets": {
-    #        "OPTION": {
-    #            "totals": {
-    #                "sales": 0,
-    #                "purchases": 2,
-    #                "operations": 2,
-    #                "daytrades": 0,
-    #                "results": {}
-    #            },
-    #            "states": {
-    #                "2015-01-01": {
-    #                    "quantity": 10,
-    #                    "price": 1.0,
-    #                    "results": {}
-    #                },
-    #                "2015-01-03": {
-    #                    "quantity": 0,
-    #                    "price": 0,
-    #                    "results": {}
-    #                }
-    #            }
-    #        },
-    #        "ASSET": {
-    #            "totals": {
-    #                "sales": 0,
-    #                "purchases": 0,
-    #                "operations": 0,
-    #                "daytrades": 0,
-    #                "results": {}
-    #            },
-    #            "states": {
-    #                "2015-01-03": {
-    #                    "quantity": 10,
-    #                    "price": 5, # 4 + 1 (exercise price + premium)
-    #                    "results": {}
-    #                }
-    #            }
-    #        }
-    #    }
-    #}
-
-
 Compatibility
 -------------
 
@@ -265,6 +182,14 @@ Version
 -------
 
 The current version is 0.2.8 alpha.
+
+
+Installation
+------------
+
+The module can be installed with pip:
+
+    $ pip install trade
 
 
 License
@@ -292,9 +217,7 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-.. _documentation: http://trade.readthedocs.org
-.. _accumulator: https://github.com/rochars/accumulator
-.. _live: https://python-trade.appspot.com
+
 .. |Build| image:: https://img.shields.io/travis/rochars/trade.svg?label=unix%20build
    :target: https://travis-ci.org/rochars/trade
 .. |Windows Build| image:: https://img.shields.io/appveyor/ci/rochars/trade.svg?label=windows%20build

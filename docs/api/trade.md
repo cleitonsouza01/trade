@@ -1,5 +1,5 @@
 # trade
-Copyright (c) 2015 Rafael da Silva Rocha  
+Copyright (c) 2016 Rafael da Silva Rocha  
 https://python-trade.appspot.com  
 https://github.com/rochars/trade  
 http://trade.readthedocs.org
@@ -59,7 +59,7 @@ This is achieved by calling this method:
 - fetch_positions()
 
 Every time fetch_positions() is called the OperationContainer
-execute this tasks behind the scenes:
+execute these tasks:
 
 - Execute all tasks defined in self.tasks. By default, no task is
   listed. Tasks are functions like this:

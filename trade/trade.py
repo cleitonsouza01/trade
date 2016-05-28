@@ -4,7 +4,7 @@ http://trade.readthedocs.org/
 https://github.com/rochars/trade
 License: MIT
 
-Copyright (c) 2015 Rafael da Silva Rocha
+Copyright (c) 2016 Rafael da Silva Rocha
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -93,7 +93,7 @@ class Operation(Occurrence):
 
     @property
     def results(self):
-        """Return the results associated with the operation."""
+        """Returns the results associated with the operation."""
         return self.raw_results
 
     @property
@@ -115,7 +115,7 @@ class Operation(Occurrence):
 
     @property
     def total_commissions(self):
-        """Return the sum of all commissions of this operation."""
+        """Returns the sum of all commissions of this operation."""
         return sum(self.commissions.values())
 
     @property
@@ -124,20 +124,20 @@ class Operation(Occurrence):
         return abs(self.quantity) * self.price
 
     def update_accumulator(self, accumulator):
-        """Update the accumulator status with the operation data."""
+        """Updates the accumulator with the operation data."""
         self.update_positions(accumulator)
         if self.update_results:
             self.update_accumulator_results(accumulator)
 
     def update_accumulator_results(self, accumulator):
-        """Update the results stored in the accumulator."""
+        """Updates the results stored in the accumulator."""
         for key, value in self.results.items():
             if key not in accumulator.state['results']:
                 accumulator.state['results'][key] = 0
             accumulator.state['results'][key] += value
 
     def update_positions(self, accumulator):
-        """Update the position of the asset with the Operation data."""
+        """Updates the state of the asset with the operation data."""
         # Here we check if the operation asset is the same
         # asset of this Accumulator object; the accumulator
         # only accumulates operations that trade its asset.

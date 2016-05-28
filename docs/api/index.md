@@ -1,5 +1,5 @@
 # trade 0.2.8
-Copyright (c) 2015 Rafael da Silva Rocha  
+Copyright (c) 2016 Rafael da Silva Rocha  
 https://python-trade.appspot.com  
 https://github.com/rochars/trade  
 http://trade.readthedocs.org
@@ -29,7 +29,7 @@ http://trade.readthedocs.org
 + [daytrade_condition](daytrades)  
   Checks if two operations are day trades.
 + [find_purchase_and_sale](daytrades)  
-  Find which operation is a purchase and which is a sale.
+  Finds which operation is a purchase and which is a sale.
 
 ### events:
 + [Event](events)  
@@ -43,7 +43,7 @@ http://trade.readthedocs.org
 + [Option](options)  
   Represents a vanilla option.
 + [Exercise](options)  
-  An option exercise operation.
+  Representing option exercises.
 + [fetch_exercises](options)  
   An OperationContainer task.
 
@@ -66,7 +66,7 @@ http://trade.readthedocs.org
   Checks if two numbers have the same sign.
 
 ## License
-Copyright (c) 2015 Rafael da Silva Rocha
+Copyright (c) 2016 Rafael da Silva Rocha
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
