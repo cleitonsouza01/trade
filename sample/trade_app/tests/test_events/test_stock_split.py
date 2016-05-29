@@ -2,9 +2,9 @@
 
 from __future__ import absolute_import
 
-from tests.fixtures.logtest import LogTest
-from tests.fixtures.events import EVENT5
-from tests.fixtures.accumulator_states import (
+from fixtures.logtest import LogTest
+from fixtures.events import EVENT5
+from fixtures.accumulator_states import (
     EXPECTED_STATE0, INITIAL_STATE0,
 )
 

@@ -3,7 +3,7 @@
 from __future__ import absolute_import
 import copy
 
-import trade
+from trade.trade import fetch_daytrades
 
 from .container_test_base import TestFetchPositions
 from .fixture_positions import (
@@ -24,8 +24,7 @@ from tests.fixtures.operation_sequences import (
 )
 
 TASKS = [
-    trade.fetch_exercises,
-    trade.fetch_daytrades,
+    fetch_daytrades,
 ]
 
 

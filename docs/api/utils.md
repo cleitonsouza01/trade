@@ -17,6 +17,14 @@ Calculates the average price between two asset states.
 Checks if two numbers have the same sign.
 
 
+## daytrade_condition(operation_a, operation_b):
+Checks if two operations are day trades.
+
+
+## find_purchase_and_sale(operation_a, operation_b):
+Finds which operation is a purchase and which is a sale.
+
+
 ## License
 Copyright (c) 2015 Rafael da Silva Rocha
 

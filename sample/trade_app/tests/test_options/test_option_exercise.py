@@ -3,7 +3,7 @@
 from __future__ import absolute_import
 import unittest
 
-from tests.fixtures.assets import OPTION1
+from fixtures.assets import OPTION1
 
 
 class TestOptionExerciseCase00(unittest.TestCase):

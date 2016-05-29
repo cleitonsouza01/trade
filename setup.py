@@ -20,7 +20,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='trade',
-    version="0.2.8",
+    version="0.2.9",
     description='Tools For Trade Management Applications',
     long_description=long_description,
     url='https://github.com/rochars/trade',

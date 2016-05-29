@@ -4,7 +4,7 @@ from __future__ import absolute_import
 import unittest
 import copy
 
-import trade
+from trade import trade
 
 from tests.fixtures.operations import OPERATION39
 from tests.fixtures.operation_sequences import (

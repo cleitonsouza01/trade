@@ -1,69 +1,8 @@
-# trade 0.2.8
+# trade 0.2.9
 Copyright (c) 2016 Rafael da Silva Rocha  
-https://python-trade.appspot.com  
 https://github.com/rochars/trade  
 http://trade.readthedocs.org
 
-## Modules in this package:
-+ [daytrades](daytrades)
-+ [events](events)
-+ [options](options)
-+ [prorate](prorate)
-+ [trade_json](trade_json)
-+ [trade](trade)
-+ [utils](utils)
-
-### trade:
-+ [Asset](trade)  
-  An asset represents anything that can be traded.
-+ [Operation](trade)  
-  An Operation represents the purchase or sale of an asset.
-+ [OperationContainer](trade)  
-  A container for operations.
-
-### daytrades:
-+ [Daytrade](daytrades)  
-  Representing day trades.
-+ [fetch_daytrades](daytrades)  
-  An OperationContainer task.
-+ [daytrade_condition](daytrades)  
-  Checks if two operations are day trades.
-+ [find_purchase_and_sale](daytrades)  
-  Finds which operation is a purchase and which is a sale.
-
-### events:
-+ [Event](events)  
-  An occurrence that change the state of one or more assets.
-+ [StockSplit](events)  
-  Representing both stock splits and reverse stock splits.
-+ [BonusShares](events)  
-  Representing bonus shares.
-
-### options:
-+ [Option](options)  
-  Represents a vanilla option.
-+ [Exercise](options)  
-  Representing option exercises.
-+ [fetch_exercises](options)  
-  An OperationContainer task.
-
-### prorate:
-+ [prorate_commissions](prorate)  
-  Prorates the container's commissions by its operations.
-+ [prorate_commissions_by_position](prorate)  
-  Prorates the commissions of the container for one position.
-
-### trade_json:
-+ [TradeJSON](trade_json)  
-  trade module JSON interface.
-
-### utils:
-+ [merge_operations()](utils)
-  Merges two operations.
-+ [average_price()](utils)
-  Calculates the average price between two asset states.
-+ [same_sign()](utils)
-  Checks if two numbers have the same sign.
 
 ## License
 Copyright (c) 2016 Rafael da Silva Rocha

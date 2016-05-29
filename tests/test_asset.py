@@ -3,15 +3,13 @@
 from __future__ import absolute_import
 import unittest
 
-import trade
-from tests.fixtures.assets import ASSET
+from trade import trade
 
 
 class TestAsset(unittest.TestCase):
     """Base class for Asset tests."""
 
     KINDS = {
-        'option': trade.Option,
         'asset': trade.Asset,
     }
 
@@ -86,13 +84,3 @@ class TestAssetCase02(TestAsset):
     symbol = 'TEST'
     name = 'Some asset that expires'
     expiration_date = '2015-11-10'
-
-
-class TestAssetCase03(TestAsset):
-    """Teste Asset Case 03 - Option"""
-
-    kind = 'option'
-    symbol = 'OPTN'
-    name = 'some option'
-    expiration_date = '2015-12-23'
-    underlying_assets = {ASSET: 1}

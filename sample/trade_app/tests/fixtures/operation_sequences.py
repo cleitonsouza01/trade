@@ -1,0 +1,33 @@
+"""A set of operation sequences for the tests."""
+
+from __future__ import absolute_import
+
+from fixtures.operations import (
+    OPTION_OPERATION1,
+    EXERCISE_OPERATION1,
+    EXERCISE_OPERATION4,
+    OPTION_OPERATION2,
+)
+from fixtures.operations import (
+    OPERATION46, OPERATION47
+)
+
+OPERATION_SEQUENCE20 = [
+    OPERATION46,
+    OPTION_OPERATION1,
+    EXERCISE_OPERATION1
+]
+
+OPERATION_SEQUENCE25 = [
+    OPERATION46,
+    OPTION_OPERATION1,
+    EXERCISE_OPERATION4
+]
+OPERATION_SEQUENCE26 = [
+    OPERATION46,
+    OPTION_OPERATION2,
+    EXERCISE_OPERATION4
+]
+
+
+OPERATION_SEQUENCE21 = OPERATION_SEQUENCE20 + [OPERATION47]

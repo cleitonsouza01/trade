@@ -1,10 +1,10 @@
-"""Example of the use of Accumulators.
+"""trade: Financial Application Framework
 
 http://trade.readthedocs.org/
 https://github.com/rochars/trade
 License: MIT
 
-Copyright (c) 2015 Rafael da Silva Rocha
+Copyright (c) 2016 Rafael da Silva Rocha
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,50 +25,129 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
 
-from __future__ import print_function
+from trade import trade
+from trade.trade_json import TradeJSON
 
-import trade
 
-asset = trade.Asset(name='Google Inc', symbol='GOOGL')
-accumulator = trade.Accumulator(asset)
-print(accumulator.subject.name)
-#>> Some asset
-
-print(accumulator.state['quantity'])
-#>> 0
-print(accumulator.state['price'])
-#>> 0
-print(accumulator.state['results'])
-#>> {}
-
-# create a trade operation buying the asset
-purchase = trade.Operation(
-    subject=asset,
-    quantity=10,
-    price=650.73,
-    date='2015-09-23'
+interface = TradeJSON(
+    [trade.fetch_daytrades],
+    {
+        'Asset': trade.Asset,
+        'Operation': trade.Operation,
+    }
 )
-accumulator.accumulate(purchase)
 
-print(accumulator.state['quantity'])
-#>> 10
-print(accumulator.state['price'])
-#>> 650.73
-print(accumulator.state['results'])
-#>> {}
+json_input = '''{
+    "subjects": {
+        "GOOG": {
+            "type": "Asset",
+            "name": "Google Inc"
+        },
+        "AAPL": {
+            "type": "Asset",
+            "name": "Apple, Inc."
+        }
+    },
+    "occurrences": [
+        {
+            "type": "Operation",
+            "subject": "AAPL",
+            "date": "2015-11-10",
+            "quantity": 10,
+            "price": 120.15
+        },
+        {
+            "type": "Operation",
+            "subject": "GOOG",
+            "date": "2015-11-10",
+            "quantity": 10,
+            "price": 724.89
+        },
+        {
+            "type": "Operation",
+            "subject": "GOOG",
+            "date": "2015-11-10",
+            "quantity": -5,
+            "price": 724.98
+        }
+    ],
+    "initial state": {
+        "AAPL": {
+            "date": "2015-10-09",
+            "quantity": 92,
+            "price": 119.27,
+            "results": {"trades": 5021.72}
+        }
+    }
+}'''
 
-# create a new trade operation selling the asset
-sale = trade.Operation(
-    subject=asset,
-    quantity=-5,
-    price=656.77,
-    date='2015-09-24'
-)
-accumulator.accumulate(sale)
+json_output = interface.get_trade_results(json_input)
 
-print(accumulator.state['quantity'])
-#>> 5
-print(accumulator.state['price'])
-#>> 650.73
-print(accumulator.state['results'])
-#>> {'trades': 30.199999999999818}
+print(json_output)
+#$ {
+#  "assets": {
+#    "AAPL": {
+#      "states": {
+#        "2015-10-09": {
+#          "price": 119.27,
+#          "quantity": 92,
+#          "results": {
+#            "trades": 5021.7200000000003
+#          }
+#        },
+#        "2015-11-10": {
+#          "price": 119.35627450980392,
+#          "quantity": 102,
+#          "results": {
+#            "trades": 5021.7200000000003
+#          }
+#        }
+#      },
+#      "totals": {
+#        "daytrades": 0,
+#        "operations": 1,
+#        "purchases": 1,
+#        "results": {
+#          "trades": 5021.7200000000003
+#        },
+#        "sales": 0
+#      }
+#    },
+#    "GOOG": {
+#      "states": {
+#        "2015-11-10": {
+#          "price": 724.88999999999999,
+#          "quantity": 5,
+#          "results": {
+#            "daytrades": 0.45000000000027285
+#          }
+#        }
+#      },
+#      "totals": {
+#        "daytrades": 1,
+#        "operations": 2,
+#        "purchases": 1,
+#        "results": {
+#          "daytrades": 0.45000000000027285
+#        },
+#        "sales": 1
+#      }
+#    }
+#  },
+#  "totals": {
+#    "daytrades": 1,
+#    "operations": 3,
+#    "purchases": {
+#      "operations": 2,
+#      "volume": 8450.3999999999996
+#    },
+#    "results": {
+#      "daytrades": 0.45000000000027285,
+#      "trades": 5021.7200000000003
+#    },
+#    "sales": {
+#      "operations": 1,
+#      "volume": 3624.9000000000001
+#    }
+#  }
+#}

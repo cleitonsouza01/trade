@@ -25,21 +25,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
 
-from __future__ import absolute_import
-
-from accumulator import Subject, Occurrence, Accumulator, Portfolio
-
-from .trade import Asset, Operation, OperationContainer
-from .utils import average_price, same_sign, merge_operations
-from .daytrades import (
-    Daytrade, fetch_daytrades, find_purchase_and_sale, daytrade_condition
-)
-from .events import Event, StockSplit, BonusShares
-from .options import Option, Exercise, fetch_exercises
-from .prorate import prorate_commissions
-from .trade_json import TradeJSON
-
-
 __version__ = '0.2.8'
 __author__ = 'Rafael da Silva Rocha'
 __licence__ = 'MIT'

@@ -30,25 +30,18 @@ from __future__ import absolute_import
 import json
 from accumulator import Portfolio
 
-from .trade import Asset, Operation, OperationContainer
-from .options import Option, Exercise, fetch_exercises
-from .daytrades import fetch_daytrades
+from . trade import OperationContainer
 
 
 class TradeJSON(object):
     """trade JSON interface."""
 
-    TYPES = {
-        'Asset': Asset,
-        'Option': Option,
-        'Operation': Operation,
-        'Exercise': Exercise
-    }
-
-    def __init__(self):
+    def __init__(self, container_tasks, types):
         self.subjects = {}
         self.occurrences = []
         self.containers = {}
+        self.container_tasks = container_tasks
+        self.types = types
 
         self.totals = {
             'total_operations': 0,
@@ -65,7 +58,7 @@ class TradeJSON(object):
         """creates a subject object for all subjects in the json."""
         for subject, details in data['subjects'].items():
             self.subjects[subject] = {
-                'object': self.TYPES[details['type']](
+                'object': self.types[details['type']](
                     name=details['name'],
                     symbol=subject,
                     expiration_date=details.get('expiration_date', None),
@@ -91,7 +84,7 @@ class TradeJSON(object):
         self.occurrences = []
         for occurrence in data['occurrences']:
             self.occurrences.append(
-                self.TYPES[occurrence['type']](
+                self.types[occurrence['type']](
                     quantity=occurrence['quantity'],
                     price=occurrence['price'],
                     date=occurrence['date'],
@@ -118,7 +111,8 @@ class TradeJSON(object):
         for occurrence in self.occurrences:
             if occurrence.date not in self.containers:
                 self.containers[occurrence.date] = OperationContainer(
-                    tasks=[fetch_daytrades, fetch_exercises]
+                    #tasks=[fetch_daytrades]
+                    tasks=self.container_tasks
                 )
             self.containers[occurrence.date].operations.append(occurrence)
 

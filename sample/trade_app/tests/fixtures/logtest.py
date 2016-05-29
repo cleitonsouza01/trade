@@ -4,8 +4,7 @@ from __future__ import absolute_import
 import unittest
 from accumulator import Accumulator
 
-from tests.fixtures.assets import ASSET
-
+from fixtures.assets import ASSET
 
 class LogTest(unittest.TestCase):
     """Base class for Accumulator tests."""

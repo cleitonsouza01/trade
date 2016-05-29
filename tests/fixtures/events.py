@@ -2,11 +2,9 @@
 
 from __future__ import absolute_import
 
-from .assets import ASSET
-from trade import  Event, StockSplit, BonusShares
+from . assets import ASSET
+from trade.trade import  Event
 
-
-# EVENTS
 
 class TestEvent(Event):
     """A dummy event for the tests."""
@@ -40,31 +38,4 @@ EVENT4 = TestEvent(
     ASSET,
     '2015-09-24',
     factor=1,
-)
-
-EVENT5 = StockSplit(
-    asset=ASSET,
-    date='2015-09-24',
-    factor=2
-)
-
-EVENT6 = BonusShares(
-    asset=ASSET,
-    date='2015-09-24',
-    factor=1
-)
-EVENT7 = BonusShares(
-    asset=ASSET,
-    date='2015-09-24',
-    factor=0.5
-)
-EVENT8 = BonusShares(
-    asset=ASSET,
-    date='2015-09-24',
-    factor=2
-)
-EVENT9 = StockSplit(
-    asset=ASSET,
-    date='2015-09-24',
-    factor=0.5
 )

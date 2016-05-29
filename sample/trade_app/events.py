@@ -1,10 +1,8 @@
-# events
-Copyright (c) 2016 Rafael da Silva Rocha  
-https://python-trade.appspot.com  
-https://github.com/rochars/trade  
-http://trade.readthedocs.org
+"""Some sample events.
 
-A default set of events for the trade module.
+http://trade.readthedocs.org/
+https://github.com/rochars/trade
+License: MIT
 
 This plugin provides a standard set of events for the trade module.
 Events are subclasses of the Occurrence class. They are passed to
@@ -16,40 +14,6 @@ It contains the definitions of:
 - BonusShares
 
 
-## Event(Occurrence)
-An occurrence that changes the state of one or more assets.
-
-This is a base class for events.
-
-### Attributes:
-+ date: A string 'YYYY-mm-dd', the date the event occurred.
-+ asset: The target asset of the event.
-+ factor: the factor of the change on the asset state.
-
-
-## StockSplit(Event)
-A stock split.
-
-This class represents both stock splits and reverse stock splits.
-Stock splits are represented by values greater than 1.
-Reverse stock splits are represented by values between 0 and 1.
-
-### Methods:
-
-#### update_container(self, accumulator)
-Performs a split or a reverse split on the stock.
-
-
-## class BonusShares(Event)
-Bonus shares.
-
-### Methods:
-
-#### update_container(self, accumulator)
-Add stocks received as bonus shares do the accumulator.
-
-
-## License
 Copyright (c) 2015 Rafael da Silva Rocha
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -69,3 +33,36 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+"""
+
+from __future__ import absolute_import
+
+from trade.trade import Event
+from trade.utils import average_price
+
+
+class StockSplit(Event):
+    """A stock split.
+
+    This class represents both stock splits and reverse stock splits.
+    Stock splits are represented by values greater than 1.
+    Reverse stock splits are represented by values between 0 and 1.
+    """
+
+    def update_accumulator(self, container):
+        """Performs a split or a reverse split on the stock."""
+        container.state['quantity'] = container.state['quantity'] * self.factor
+        container.state['price'] = container.state['price'] / self.factor
+
+
+class BonusShares(Event):
+    """Bonus shares."""
+
+    def update_accumulator(self, container):
+        """Add stocks received as bonus shares do the accumulator."""
+        new_quantity = container.state['quantity'] * self.factor
+        container.state['price'] = average_price(
+            container.state['quantity'], container.state['price'],
+            new_quantity, 0
+        )
+        container.state['quantity'] += new_quantity

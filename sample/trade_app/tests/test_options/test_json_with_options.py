@@ -1,11 +1,60 @@
 """Tests for the JSON interface with options and exercise operations."""
 
 from __future__ import absolute_import
+import unittest
+import json
 
-from .test_json import TestJSON
+from trade.trade import fetch_daytrades, Asset, Operation
+from trade_app.options import fetch_exercises, Option, Exercise
+from trade.trade_json import TradeJSON
 
 
-class TestJSONCase0300(TestJSON):
+class TestJSON(unittest.TestCase):
+    """Base class for the JSON tests."""
+
+    json_input = None
+    json_output = None
+    maxDiff = None
+
+    def setUp(self):
+        types = {
+            'Asset': Asset,
+            'Operation': Operation,
+        }
+        self.interface = TradeJSON([fetch_daytrades], types)
+
+    def test_json_interface(self):
+        """Test the json response."""
+        if self.json_input:
+            self.assertEqual(
+                json.loads(self.interface.get_trade_results(self.json_input)),
+                json.loads(self.json_output)
+            )
+
+
+
+
+
+class TestJSONWithOptionsBase(TestJSON):
+    """Base class for the JSON tests."""
+
+    json_input = None
+    json_output = None
+    maxDiff = None
+
+    def setUp(self):
+        """Include the fetch_exercises function and the new types."""
+        types = {
+            'Asset': Asset,
+            'Operation': Operation,
+            'Option': Option,
+            'Exercise': Exercise,
+        }
+        self.interface = TradeJSON([fetch_daytrades, fetch_exercises], types)
+
+
+
+class TestJSONWithOptions(TestJSONWithOptionsBase):
     """Option operations."""
 
     json_input = """{
@@ -104,7 +153,7 @@ class TestJSONCase0300(TestJSON):
     }"""
 
 
-class TestJSONCase0301(TestJSON):
+class TestJSONCase0301(TestJSONWithOptionsBase):
     """An exercise operation."""
 
     json_input = """{
@@ -197,7 +246,7 @@ class TestJSONCase0301(TestJSON):
 
 
 
-class TestJSONCase0302(TestJSON):
+class TestJSONCase0302(TestJSONWithOptionsBase):
     """An exercise operation that generates results."""
 
     json_input = """{

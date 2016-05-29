@@ -3,10 +3,10 @@
 from __future__ import absolute_import
 import unittest
 import copy
-import trade
+from accumulator import Accumulator
 
-from tests.fixtures.assets import ASSET, OPTION1
-from tests.fixtures.operations import (
+from fixtures.assets import ASSET, OPTION1
+from fixtures.operations import (
     OPTION_OPERATION3, EXERCISE_OPERATION5, OPERATION54,
     EXERCISE_OPERATION5
 )
@@ -16,8 +16,8 @@ class TestAccumulateExercise(unittest.TestCase):
     """Base class for Exercise accumulation tests."""
 
     def setUp(self):
-        self.option_accumulator = trade.Accumulator(OPTION1)
-        self.subject_accumulator = trade.Accumulator(ASSET)
+        self.option_accumulator = Accumulator(OPTION1)
+        self.subject_accumulator = Accumulator(ASSET)
         self.exercise = copy.deepcopy(EXERCISE_OPERATION5)
 
     def fetch_and_accumulate(self):
@@ -44,21 +44,27 @@ class TestAccumulateExercise00(TestAccumulateExercise):
         self.fetch_and_accumulate()
 
     def test_accumulator1_price(self):
+        """Check the cost of the asset on the accumulator."""
         self.assertEqual(self.subject_accumulator.state['price'], 10)
 
     def test_accumulator1_quantity(self):
+        """Check the quantity of the asset on the accumulator."""
         self.assertEqual(self.subject_accumulator.state['quantity'], 100)
 
     def test_accumulator1_results(self):
+        """Check the results of the asset on the accumulator."""
         self.assertEqual(self.subject_accumulator.state['results'], {})
 
     def test_accumulator2_price(self):
+        """Check the cost of the option on the accumulator."""
         self.assertEqual(self.option_accumulator.state['price'], 0)
 
     def test_accumulator2_quantity(self):
+        """Check the quantity of the option on the accumulator."""
         self.assertEqual(self.option_accumulator.state['quantity'], 0)
 
     def test_accumulator2_results(self):
+        """Check the results of the option on the accumulator."""
         self.assertEqual(self.option_accumulator.state['results'], {})
 
 
@@ -75,19 +81,25 @@ class TestAccumulateExercise01(TestAccumulateExercise):
         self.fetch_and_accumulate()
 
     def test_accumulator1_price(self):
+        """Check the cost of the asset on the accumulator."""
         self.assertEqual(self.subject_accumulator.state['price'], 7.5)
 
     def test_accumulator1_quantity(self):
+        """Check the quantity of the asset on the accumulator."""
         self.assertEqual(self.subject_accumulator.state['quantity'], 200)
 
     def test_accumulator1_results(self):
+        """Check the results of the asset on the accumulator."""
         self.assertEqual(self.subject_accumulator.state['results'], {})
 
     def test_accumulator2_price(self):
+        """Check the cost of the option on the accumulator."""
         self.assertEqual(self.option_accumulator.state['price'], 0)
 
     def test_accumulator2_quantity(self):
+        """Check the quantity of the option on the accumulator."""
         self.assertEqual(self.option_accumulator.state['quantity'], 0)
 
     def test_accumulator2_results(self):
+        """Check the results of the option on the accumulator."""
         self.assertEqual(self.option_accumulator.state['results'], {})

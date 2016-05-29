@@ -1,6 +1,5 @@
 # trade: Financial Application Framework
 Copyright (c) 2016 Rafael da Silva Rocha  
-https://python-trade.appspot.com  
 https://github.com/rochars/trade  
 http://trade.readthedocs.org
 
@@ -10,7 +9,7 @@ http://trade.readthedocs.org
 **trade** is a framework for the development of financial applications. It operates
 on the concept of *subjects* and *occurrences*. A *subject* represents anything that
 can be traded, while an *occurrence* represents anything that affects one or more
-subjects, like a stock exchange operation or a stock split.
+subjects, like a stock market operation or a stock split.
 
 It was developed to work with any kind of *subject* and *occurrence* related to
 the financial market, and also to work under specific rules of different markets
@@ -46,8 +45,17 @@ An example of the JSON interface:
 
 ```python
 
-    import trade
-    interface = trade.TradeJSON()
+    from trade import trade
+    from trade.trade_json import TradeJSON
+
+
+    interface = TradeJSON(
+        [trade.fetch_daytrades],
+        {
+            'Asset': trade.Asset,
+            'Operation': trade.Operation,
+        }
+    )
 
     json_input = '''{
         "subjects": {
@@ -172,7 +180,7 @@ trade is compatible with Python 2.7, 3.3, 3.4 and 3.5.
 
 ## Version
 
-The current version is 0.2.8 alpha.
+The current version is 0.2.9 alpha.
 
 
 ## Installation

@@ -2,14 +2,16 @@
 
 from __future__ import absolute_import
 
-from tests.fixtures.operation_sequences import (
+from fixtures.operation_sequences import (
     OPERATION_SEQUENCE25, OPERATION_SEQUENCE26
 )
-from tests.fixtures.assets import ASSET, OPTION1
-from tests.fixtures.accumulator_states import (
+from fixtures.assets import OPTION1, ASSET
+from fixtures.accumulator_states import (
     STATE01, STATE06, STATE09,
 )
-from tests.test_portfolio.test_portfolio import TestPortfolio
+from test_options.test_portfolio_underlying_asset_accumulation import (
+    TestPortfolio
+)
 
 
 class TestExercisePremiumCase00(TestPortfolio):

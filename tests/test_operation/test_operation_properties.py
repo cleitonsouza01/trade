@@ -15,6 +15,7 @@ from tests.fixtures.operations import (
 
 
 class TestOperationProperties(unittest.TestCase):
+    """Base class for the operation properties tests."""
 
     def setUp(self):
         self.operation1 = copy.deepcopy(OPERATION19)

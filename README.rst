@@ -53,8 +53,17 @@ An example of the JSON interface:
 
 .. code:: python
 
-    import trade
-    interface = trade.TradeJSON()
+    from trade import trade
+    from trade.trade_json import TradeJSON
+
+
+    interface = TradeJSON(
+        [trade.fetch_daytrades],
+        {
+            'Asset': trade.Asset,
+            'Operation': trade.Operation,
+        }
+    )
 
     json_input = '''{
         "subjects": {
@@ -181,7 +190,7 @@ trade is compatible with Python 2.7, 3.3, 3.4 and 3.5.
 Version
 -------
 
-The current version is 0.2.8 alpha.
+The current version is 0.2.9 alpha.
 
 
 Installation

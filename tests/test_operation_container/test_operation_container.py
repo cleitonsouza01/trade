@@ -4,17 +4,12 @@ from __future__ import absolute_import
 import unittest
 import copy
 
-import trade
+from trade import trade
+from trade.trade import fetch_daytrades
 from .container_test_base import TestFetchPositions
-from tests.fixtures.operations import (
-    OPERATION24, OPERATION45
-)
-from tests.fixtures.commissions import (
-    COMMISSIONS12
-)
-from tests.fixtures.assets import (
-    ASSET,
-)
+from tests.fixtures.operations import OPERATION24, OPERATION45
+from tests.fixtures.commissions import COMMISSIONS12
+from tests.fixtures.assets import ASSET
 
 
 class TestContainerCreationCase00(unittest.TestCase):
@@ -33,10 +28,7 @@ class TestContainerCreationCase01(unittest.TestCase):
     def setUp(self):
         self.container = trade.OperationContainer()
         self.container.commissions = COMMISSIONS12
-        self.container.fetch_positions_tasks = [
-            trade.fetch_exercises,
-            trade.fetch_daytrades,
-        ]
+        self.container.fetch_positions_tasks = [fetch_daytrades]
         self.container.fetch_positions()
 
     def test_container_exists(self):

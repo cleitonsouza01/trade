@@ -3,7 +3,7 @@
 from __future__ import absolute_import
 from __future__ import division
 
-import trade
+from trade import trade
 
 from tests.fixtures.operations import ASSET
 from tests.fixtures.logtest import LogTest

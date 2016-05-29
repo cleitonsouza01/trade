@@ -48,3 +48,18 @@ def average_price(quantity_1, price_1, quantity_2, price_2):
 def same_sign(number_1, number_2):
     """Checks if two numbers have the same sign."""
     return (number_1 >= 0) ^ (number_2 < 0)
+
+
+def daytrade_condition(operation_a, operation_b):
+    """Checks if two operations are day trades."""
+    return (
+        operation_a.subject.symbol == operation_b.subject.symbol and
+        not same_sign(operation_a.quantity, operation_b.quantity)
+    )
+
+
+def find_purchase_and_sale(operation_a, operation_b):
+    """Finds which operation is a purchase and which is a sale."""
+    if operation_b.quantity > operation_a.quantity:
+        return operation_b, operation_a
+    return operation_a, operation_b

@@ -4,8 +4,8 @@ from __future__ import absolute_import
 import unittest
 import json
 
-import trade
-
+from trade.trade_json import TradeJSON
+from trade.trade import fetch_daytrades, Asset, Operation
 
 class TestJSON(unittest.TestCase):
     """Base class for the JSON tests."""
@@ -15,7 +15,11 @@ class TestJSON(unittest.TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.interface = trade.TradeJSON()
+        types = {
+            'Asset': Asset,
+            'Operation': Operation,
+        }
+        self.interface = TradeJSON([fetch_daytrades], types)
 
     def test_json_interface(self):
         """Test the json response."""

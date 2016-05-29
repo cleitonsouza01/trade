@@ -1,11 +1,10 @@
 # trade_json
 Copyright (c) 2015 Rafael da Silva Rocha  
-https://python-trade.appspot.com  
 https://github.com/rochars/trade  
 http://trade.readthedocs.org
 
 
-## Asset(object)
+## TradeJSON(object)
 trade module JSON interface.
 
 

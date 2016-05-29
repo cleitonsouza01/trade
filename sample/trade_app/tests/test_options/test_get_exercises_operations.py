@@ -1,12 +1,17 @@
-"""Base class for container tests."""
+"""Test the trade.plugins.fetch_exercises task from the Option plugin."""
 
 from __future__ import absolute_import
+
 import unittest
 import copy
-
 from trade import trade
 from trade.prorate import prorate_commissions
 from trade.trade import fetch_daytrades
+
+from fixtures.operations import (
+    EXERCISE_OPERATION2, EXERCISE_OPERATION3
+)
+from fixtures.assets import OPTION1
 
 
 class TestFetchPositions(unittest.TestCase):
@@ -28,6 +33,7 @@ class TestFetchPositions(unittest.TestCase):
                 operation.volume for operation in self.container.operations
             )
         self.container.tasks = [
+            #fetch_exercises,
             fetch_daytrades,
         ]
         self.container.fetch_positions()
@@ -115,3 +121,31 @@ class TestFetchPositions(unittest.TestCase):
                     self.daytrades[asset][operation_type + ' commissions']
                 )
             )
+
+
+class TestFetchExercisesCase00(TestFetchPositions):
+    """Test the fetch_exercises() task of the Accumulator."""
+
+    volume = 100
+    operations = [EXERCISE_OPERATION2]
+    exercises = {
+        OPTION1.symbol: {
+            'quantity': 100,
+            'price': 1,
+            'volume': 0,
+        }
+    }
+
+
+class TestFetchExercisesCase01(TestFetchPositions):
+    """Test the fetch_exercises() task of the Accumulator."""
+
+    volume = 400
+    operations = [EXERCISE_OPERATION2, EXERCISE_OPERATION3]
+    exercises = {
+        OPTION1.symbol: {
+            'quantity': 200,
+            'price': 2,
+            'volume': 0,
+        }
+    }

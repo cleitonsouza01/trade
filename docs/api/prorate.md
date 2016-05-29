@@ -1,10 +1,7 @@
 # prorate
 Copyright (c) 2015 Rafael da Silva Rocha  
-https://python-trade.appspot.com  
 https://github.com/rochars/trade  
 http://trade.readthedocs.org
-
-prorate: Commissions pro rata on the OperationContainer.
 
 
 ## prorate_commissions(container):

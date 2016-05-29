@@ -8,7 +8,7 @@ from __future__ import absolute_import
 import unittest
 import copy
 
-from tests.fixtures.operations import (
+from fixtures.operations import (
     EXERCISE_OPERATION5, EXERCISE_OPERATION6
 )
 

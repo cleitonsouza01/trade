@@ -2,11 +2,12 @@
 
 from __future__ import absolute_import
 import unittest
-from trade import Accumulator, Event
+from trade import trade
+from accumulator import Accumulator
 from tests.fixtures.assets import ASSET
 
 
-class DummyEvent(Event):
+class DummyEvent(trade.Event):
     """A dummy event for the tests."""
 
     def __init__(self, asset, date, factor=1):

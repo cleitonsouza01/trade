@@ -3,7 +3,8 @@
 from __future__ import absolute_import
 import copy
 
-import trade
+from trade import trade
+from trade.prorate import prorate_commissions
 from tests.fixtures.logtest import LogTest
 from tests.fixtures.operations import (
     ASSET, OPERATION19, OPERATION20, OPERATION21, OPERATION22,
@@ -40,7 +41,7 @@ class TestAccumulateOperationCase01(LogTest):
         )
         container.commissions = COMMISSIONS13
         container.fetch_positions()
-        trade.prorate_commissions(container)
+        prorate_commissions(container)
         self.occurrences = [
             container.positions['operations'][ASSET.symbol]
         ]

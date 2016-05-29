@@ -3,7 +3,8 @@
 from __future__ import absolute_import
 import unittest
 
-import trade
+from trade import trade
+from trade_app.options import Option
 
 
 class TestOptionCreation(unittest.TestCase):
@@ -17,7 +18,7 @@ class TestOptionCretionCase00(TestOptionCreation):
     """Test the creation of an option."""
 
     def test_no_underlying_assets(self):
-        option = trade.Option(
+        option = Option(
             symbol='OPTIOSYMBOL', expiration_date='2015-12-21'
         )
         self.assertEqual(option.underlying_assets, {})
