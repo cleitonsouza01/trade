@@ -1,4 +1,4 @@
-"""trade: Tools For Trade Management Applications.
+"""trade: Financial Application Framework.
 
 https://github.com/rochars/trade
 http://trade.readthedocs.org/
@@ -25,6 +25,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
 
-__version__ = '0.2.8'
+__version__ = '0.2.9'
 __author__ = 'Rafael da Silva Rocha'
 __licence__ = 'MIT'

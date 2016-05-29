@@ -1,5 +1,5 @@
-trade: Financial Application Framework |Live Demo|
-==================================================
+trade: Financial Application Framework
+======================================
 
 | Copyright (c) 2016 Rafael da Silva Rocha
 | https://python-trade.appspot.com
@@ -8,7 +8,7 @@ trade: Financial Application Framework |Live Demo|
 
 --------------
 
-|Build| |Windows Build| |Coverage Status| |Code Climate| |Python Versions|
+|Build| |Windows Build| |Coverage Status| |Code Climate| |Python Versions| |Live Demo|
 
 
 trade

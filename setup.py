@@ -1,6 +1,6 @@
-"""trade: Tools For Trade Management Applications.
+"""trade: Financial Application Framework.
 
-Copyright (c) 2015 Rafael da Silva Rocha
+Copyright (c) 2016 Rafael da Silva Rocha
 https://github.com/rochars/trade
 http://trade.readthedocs.org/
 License: MIT
@@ -21,7 +21,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 setup(
     name='trade',
     version="0.2.9",
-    description='Tools For Trade Management Applications',
+    description='Financial Application Framework',
     long_description=long_description,
     url='https://github.com/rochars/trade',
     author="Rafael da Silva Rocha",
@@ -37,7 +37,7 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
     ],
-    keywords='asset stock exchange securities market finance investment money currency',
+    keywords='asset stock exchange securities market finance investment money currency cost',
     install_requires='accumulator==0.2',
     packages=['trade'],
 )
