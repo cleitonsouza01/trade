@@ -13,13 +13,13 @@ subjects, like a stock market operation or a stock split.
 
 It was developed to work with any kind of *subject* and *occurrence* related to
 the financial market, and also to work under specific rules of different markets
-across the World, by following these principles:
+across the world, by following these principles:
 
 - different subjects may have different attributes
-- a subject may be related to none or many other subjects
+- a subject may relate to none or many other subjects
 - an occurrence must involve one or many subjects
 - there may be an existing context for any subject
-- different occurrences can implement different processes with their subjects
+- different occurrences can implement different processes
 - an occurrence may update the state of none or many subjects
 
 Extending the framework with market-specific rules and operations should be as
@@ -27,16 +27,13 @@ simple as creating new types of subjects and occurrences.
 
 You can try it [live](https://python-trade.appspot.com).
 
-There is an ongoing effort in [documenting this project](http://trade.readthedocs.org).
-Check it out.
-
 
 ## In a nutshell
 
 **trade** works like a service. The user informs the items he have in stock and a series
 of subsequent occurrences (purchases, sales, whatsoever) with those or other items.
 **trade** then calculates the effects of those occurrences and gives back the
-new amounts and costs of the items in stock.
+new amount and cost of each item in stock.
 
 
 ## Quickstart

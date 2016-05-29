@@ -20,13 +20,13 @@ subjects, like a stock exchange operation or a stock split.
 
 It was developed to work with any kind of *subject* and *occurrence* related to
 the financial market, and also to work under specific rules of different markets
-across the World, by following these principles:
+across the world, by following these principles:
 
 - different subjects may have different attributes
-- a subject may be related to none or many other subjects
+- a subject may relate to none or many other subjects
 - an occurrence must involve one or many subjects
 - there may be an existing context for any subject
-- different occurrences can implement different processes with their subjects
+- different occurrences can implement different processes
 - an occurrence may update the state of none or many subjects
 
 Extending the framework with market-specific rules and operations should be as
@@ -34,8 +34,8 @@ simple as creating new types of subjects and occurrences.
 
 You can try it `live <https://python-trade.appspot.com>`_.
 
-There is an ongoing effort in
-`documenting this project <http://trade.readthedocs.org>`_. Check it out.
+There is an ongoing effort to
+`document this project <http://trade.readthedocs.org>`_. Check it out.
 
 
 In a nutshell
@@ -239,13 +239,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    :target: https://pypi.python.org/pypi/trade/
 .. |Live Demo| image:: https://img.shields.io/badge/try-live%20demo-blue.png
    :target: https://python-trade.appspot.com/
-.. |Downloads| image:: https://img.shields.io/pypi/dm/trade.png
-   :target: https://pypi.python.org/pypi/trade/
 .. |Documentation| image:: https://readthedocs.org/projects/trade/badge/
    :target: http://trade.readthedocs.org/en/latest/
 .. |License| image:: https://img.shields.io/pypi/l/trade.png
    :target: https://opensource.org/licenses/MIT
-.. |Codacy| image:: https://img.shields.io/codacy/56eea28216b74e5eabb1a7ec858e9a6e.svg
-   :target: https://www.codacy.com/app/rocha-rafaelsilva/trade/dashboard
-.. |Requirements| image:: https://requires.io/github/rochars/trade/requirements.svg?branch=master
-   :target: https://requires.io/github/rochars/trade/requirements/?branch=master)
