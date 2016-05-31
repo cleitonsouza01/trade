@@ -3,7 +3,7 @@
 from __future__ import absolute_import
 import copy
 
-from trade.trade import fetch_daytrades
+from trade.occurrences import fetch_daytrades
 
 from .container_test_base import TestFetchPositions
 from .fixture_positions import (

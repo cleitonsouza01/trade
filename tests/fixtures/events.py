@@ -3,7 +3,7 @@
 from __future__ import absolute_import
 
 from . assets import ASSET
-from trade.trade import  Event
+from trade.occurrences import Event
 
 
 class TestEvent(Event):

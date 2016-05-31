@@ -6,7 +6,7 @@ import copy
 
 from trade import trade
 from trade.prorate import prorate_commissions
-from trade.trade import fetch_daytrades
+from trade.occurrences import fetch_daytrades
 
 
 class TestFetchPositions(unittest.TestCase):
@@ -31,6 +31,8 @@ class TestFetchPositions(unittest.TestCase):
             fetch_daytrades,
         ]
         self.container.fetch_positions()
+
+        # TODO must be a container task
         prorate_commissions(self.container)
 
         self.state = {

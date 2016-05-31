@@ -3,14 +3,14 @@
 from __future__ import absolute_import
 import unittest
 
-from trade import trade
+from trade.occurrences import Asset
 
 
 class TestAsset(unittest.TestCase):
     """Base class for Asset tests."""
 
     KINDS = {
-        'asset': trade.Asset,
+        'asset': Asset,
     }
 
     kind = 'asset'

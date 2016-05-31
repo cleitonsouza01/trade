@@ -5,7 +5,7 @@ import unittest
 import copy
 
 from trade import trade
-from trade.trade import fetch_daytrades
+from trade.occurrences import fetch_daytrades
 from .container_test_base import TestFetchPositions
 from tests.fixtures.operations import OPERATION24, OPERATION45
 from tests.fixtures.commissions import COMMISSIONS12

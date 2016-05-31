@@ -5,7 +5,7 @@ import unittest
 import json
 
 from trade.trade_json import TradeJSON
-from trade.trade import fetch_daytrades, Asset, Operation
+from trade.occurrences import fetch_daytrades, Asset, Operation
 
 class TestJSON(unittest.TestCase):
     """Base class for the JSON tests."""

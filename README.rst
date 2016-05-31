@@ -29,8 +29,8 @@ across the world, by following these principles:
 - different occurrences can implement different processes
 - an occurrence may update the state of none or many subjects
 
-Extending the framework with market-specific rules and operations should be as
-simple as creating new types of subjects and occurrences.
+Extending the framework with market-specific rules and exotic operations
+should be as simple as creating new types of subjects and occurrences.
 
 You can try it `live <https://python-trade.appspot.com>`_.
 
@@ -40,7 +40,7 @@ There is an ongoing effort to
 
 In a nutshell
 -------------
-**trade** works like a service. The user informs the items he have in stock and a series
+A **trade** app works like a service. The user informs the items he have in stock and a series
 of subsequent occurrences (purchases, sales, whatsoever) with those or other items.
 **trade** then calculates the effects of those occurrences and gives back the
 new amounts and costs of the items in stock.
@@ -195,8 +195,6 @@ The current version is 0.2.9 alpha.
 
 Installation
 ------------
-
-The module can be installed with pip:
 
     $ pip install trade
 
