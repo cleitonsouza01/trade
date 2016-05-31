@@ -5,8 +5,7 @@ import unittest
 import copy
 
 from trade import trade
-from trade.prorate import prorate_commissions
-from trade.occurrences import fetch_daytrades
+from trade.container_tasks import prorate_commissions, fetch_daytrades
 
 
 class TestFetchPositions(unittest.TestCase):

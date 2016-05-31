@@ -325,19 +325,3 @@ class Daytrade(Operation):
                 .operations[operation_index],
             self.operations[operation_index]
         )
-
-
-def fetch_daytrades(container):
-    """An OperationContainer task.
-
-    Fetches the daytrades from the OperationContainer operations.
-
-    The daytrades are placed on the container positions under the
-    'daytrades' key, inexed by the Daytrade asset's symbol.
-    """
-    for i, operation_a in enumerate(container.operations):
-        for operation_b in [
-                x for x in container.operations[i:] if\
-                    daytrade_condition(x, operation_a)
-            ]:
-            Daytrade(operation_a, operation_b).append_to_positions(container)

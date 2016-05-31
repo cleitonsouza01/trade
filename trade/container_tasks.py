@@ -27,7 +27,32 @@ THE SOFTWARE.
 
 from __future__ import division
 
+from . utils import (
+    average_price,
+    same_sign,
+    merge_operations,
+    find_purchase_and_sale,
+    daytrade_condition
+)
+from . occurrences import Daytrade
 
+def fetch_daytrades(container):
+    """An OperationContainer task.
+
+    Fetches the daytrades from the OperationContainer operations.
+
+    The daytrades are placed on the container positions under the
+    'daytrades' key, inexed by the Daytrade asset's symbol.
+    """
+    for i, operation_a in enumerate(container.operations):
+        for operation_b in [
+                x for x in container.operations[i:] if\
+                    daytrade_condition(x, operation_a)
+            ]:
+            Daytrade(operation_a, operation_b).append_to_positions(container)
+
+
+# TODO must be a task
 def prorate_commissions(container):
     """Prorates the container's commissions by its operations.
 
@@ -42,7 +67,6 @@ def prorate_commissions(container):
             else:
                 for operation in position.operations:
                     prorate_commissions_by_position(container, operation)
-
 
 def prorate_commissions_by_position(container, operation):
     """Prorates the commissions of the container for one position.

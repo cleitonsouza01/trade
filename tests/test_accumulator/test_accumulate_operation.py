@@ -4,7 +4,7 @@ from __future__ import absolute_import
 import copy
 
 from trade import trade
-from trade.prorate import prorate_commissions
+from trade.container_tasks import prorate_commissions
 from tests.fixtures.logtest import LogTest
 from tests.fixtures.operations import (
     ASSET, OPERATION19, OPERATION20, OPERATION21, OPERATION22,
