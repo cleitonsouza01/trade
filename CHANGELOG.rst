@@ -2,6 +2,14 @@ Change Log
 ==========
 
 
+0.3 (2016-06-01)
+----------------
+
+* OperatioContainer now runs everything as tasks
+* All tasks are defined in container_tasks.py
+* Events are now defined as subclasses of Operation
+
+
 0.2.9 (2016-05-29)
 ------------------
 

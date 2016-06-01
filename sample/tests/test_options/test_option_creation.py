@@ -1,9 +1,10 @@
 """Test the creation of Option objects."""
 
 from __future__ import absolute_import
-import unittest
 
-from trade import trade
+import unittest
+from trade.occurrences import Asset
+
 from trade_app.options import Option
 
 
@@ -11,7 +12,7 @@ class TestOptionCreation(unittest.TestCase):
     """Base class for the option creation tests."""
 
     def setUp(self):
-        self.asset = trade.Asset(symbol='GOOGL')
+        self.asset = Asset(symbol='GOOGL')
 
 
 class TestOptionCretionCase00(TestOptionCreation):

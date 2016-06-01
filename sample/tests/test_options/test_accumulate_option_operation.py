@@ -1,6 +1,7 @@
 """Test the accumulation of operations with Option objects."""
 
 from __future__ import absolute_import
+
 import unittest
 import copy
 from accumulator import Accumulator

@@ -1,6 +1,7 @@
 """Test the accumulation of Exercise operations."""
 
 from __future__ import absolute_import
+
 import unittest
 import copy
 from accumulator import Accumulator

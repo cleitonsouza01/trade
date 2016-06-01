@@ -1,12 +1,16 @@
 """Tests for the JSON interface with options and exercise operations."""
 
 from __future__ import absolute_import
+
 import unittest
 import json
-
-from trade.trade import fetch_daytrades, Asset, Operation
-from trade_app.options import fetch_exercises, Option, Exercise
+from trade.occurrences import Asset, Operation
+from trade.container_tasks import (
+    find_volume, fetch_daytrades, group_positions
+)
 from trade.trade_json import TradeJSON
+
+from trade_app.options import fetch_exercises, Option, Exercise
 
 
 class TestJSON(unittest.TestCase):
@@ -21,7 +25,10 @@ class TestJSON(unittest.TestCase):
             'Asset': Asset,
             'Operation': Operation,
         }
-        self.interface = TradeJSON([fetch_daytrades], types)
+        self.interface = TradeJSON(
+            [find_volume, fetch_daytrades, group_positions],
+            types
+        )
 
     def test_json_interface(self):
         """Test the json response."""
@@ -30,9 +37,6 @@ class TestJSON(unittest.TestCase):
                 json.loads(self.interface.get_trade_results(self.json_input)),
                 json.loads(self.json_output)
             )
-
-
-
 
 
 class TestJSONWithOptionsBase(TestJSON):
@@ -50,7 +54,11 @@ class TestJSONWithOptionsBase(TestJSON):
             'Option': Option,
             'Exercise': Exercise,
         }
-        self.interface = TradeJSON([fetch_daytrades, fetch_exercises], types)
+        self.interface = TradeJSON(
+            [
+                find_volume, fetch_daytrades, fetch_exercises, group_positions
+            ],
+            types)
 
 
 

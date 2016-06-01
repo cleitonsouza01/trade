@@ -6,7 +6,9 @@ import copy
 import unittest
 import accumulator
 
-from fixtures.operation_sequences import OPERATION_SEQUENCE20, OPERATION_SEQUENCE21
+from fixtures.operation_sequences import (
+    OPERATION_SEQUENCE20, OPERATION_SEQUENCE21
+)
 from fixtures.assets import ASSET, OPTION1
 from fixtures.accumulator_states import (
     STATE06, STATE07, STATE08,

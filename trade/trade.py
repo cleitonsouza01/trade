@@ -43,7 +43,7 @@ class OperationContainer(object):
         """Run the tasks.
 
         This method executes all the methods defined in self.tasks
-        in the order they are listed.
+        in the order that they are listed.
         """
 
         #TODO must not be necessary

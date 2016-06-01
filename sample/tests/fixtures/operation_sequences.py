@@ -12,6 +12,7 @@ from fixtures.operations import (
     OPERATION46, OPERATION47
 )
 
+
 OPERATION_SEQUENCE20 = [
     OPERATION46,
     OPTION_OPERATION1,

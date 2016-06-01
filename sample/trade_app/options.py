@@ -1,5 +1,6 @@
 """options: Options plugin for the trade module.
 
+trade: Financial Application Framework
 http://trade.readthedocs.org/
 https://github.com/rochars/trade
 License: MIT
@@ -16,7 +17,6 @@ It provides:
 - Exercise, a subclass of Operation
 - the fetch_exercises() task for the OperationContainer
 - the fetch_exercise_operations() task for the Portfolio
-
 
 Copyright (c) 2015 Rafael da Silva Rocha
 
@@ -41,7 +41,7 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from trade.trade import Asset, Operation
+from trade.occurrences import Asset, Operation
 from trade.utils import merge_operations
 
 
@@ -173,15 +173,17 @@ def fetch_exercises(container):
     exercise (by asset) on the container positions dictionary under
     the key 'exercises'.
     """
+    if 'positions' not in container.context:
+        container.context['positions'] = {}
     for operation in container.operations:
         if isinstance(operation, Exercise):
-            if 'exercises' not in container.positions:
-                container.positions['exercises'] = {}
+            if 'exercises' not in container.context['positions']:
+                container.context['positions']['exercises'] = {}
             symbol = operation.subject.symbol
-            if symbol in container.positions['exercises'].keys():
+            if symbol in container.context['positions']['exercises'].keys():
                 merge_operations(
-                    container.positions['exercises'][symbol],
+                    container.context['positions']['exercises'][symbol],
                     operation
                 )
             else:
-                container.positions['exercises'][symbol] = operation
+                container.context['positions']['exercises'][symbol] = operation

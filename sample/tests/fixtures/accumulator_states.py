@@ -1,5 +1,6 @@
 """Accumulator states."""
 
+
 STATE01 = {
     'quantity': 10,
     'price': 1

@@ -2,12 +2,12 @@
 
 from __future__ import absolute_import
 
-from trade import trade
+from trade.occurrences import Asset
 
 from trade_app.options import Option
 
 
-ASSET = trade.Asset(symbol='some asset')
+ASSET = Asset(symbol='some asset')
 
 OPTION1 = Option(
     symbol='some option',

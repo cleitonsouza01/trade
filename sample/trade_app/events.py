@@ -1,5 +1,6 @@
 """Some sample events.
 
+trade: Financial Application Framework
 http://trade.readthedocs.org/
 https://github.com/rochars/trade
 License: MIT
@@ -13,8 +14,7 @@ It contains the definitions of:
 - StockSplit
 - BonusShares
 
-
-Copyright (c) 2015 Rafael da Silva Rocha
+Copyright (c) 2016 Rafael da Silva Rocha
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -37,11 +37,19 @@ THE SOFTWARE.
 
 from __future__ import absolute_import
 
-from trade.trade import Event
+from trade.occurrences import Operation
 from trade.utils import average_price
 
 
-class StockSplit(Event):
+class BaseEvent(Operation):
+    """Base class for events."""
+
+    def __init__(self, asset, date, factor):
+        super(BaseEvent, self).__init__(asset, date)
+        self.factor = factor
+
+
+class StockSplit(BaseEvent):
     """A stock split.
 
     This class represents both stock splits and reverse stock splits.
@@ -55,7 +63,7 @@ class StockSplit(Event):
         container.state['price'] = container.state['price'] / self.factor
 
 
-class BonusShares(Event):
+class BonusShares(BaseEvent):
     """Bonus shares."""
 
     def update_accumulator(self, container):
