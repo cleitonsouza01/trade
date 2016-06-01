@@ -4,7 +4,10 @@ from __future__ import absolute_import
 import copy
 
 from trade import trade
-from trade.container_tasks import prorate_commissions
+
+from trade.container_tasks import (
+    prorate_commissions, group_positions, find_volume
+)
 from tests.fixtures.logtest import LogTest
 from tests.fixtures.operations import (
     ASSET, OPERATION19, OPERATION20, OPERATION21, OPERATION22,
@@ -38,13 +41,14 @@ class TestAccumulateOperationCase01(LogTest):
     def setUp(self):
         container = trade.OperationContainer(
             operations=[copy.deepcopy(OPERATION19)],
+            tasks=[find_volume, group_positions, prorate_commissions]
         )
         container.commissions = COMMISSIONS13
         container.fetch_positions()
-        prorate_commissions(container)
-        self.occurrences = [
-            container.positions['operations'][ASSET.symbol]
-        ]
+        if 'positions' in container.context:
+            self.occurrences = [
+                container.context['positions']['operations'][ASSET.symbol]
+            ]
         super(TestAccumulateOperationCase01, self).setUp()
 
 
@@ -55,12 +59,14 @@ class TestAccumulateOperationCase02(LogTest):
 
     def setUp(self):
         container = trade.OperationContainer(
-            operations=[copy.deepcopy(OPERATION20)]
+            operations=[copy.deepcopy(OPERATION20)],
+            tasks=[find_volume, group_positions]
         )
         container.fetch_positions()
-        self.occurrences = [
-            container.positions['operations'][ASSET.symbol]
-        ]
+        if 'positions' in container.context:
+            self.occurrences = [
+                container.context['positions']['operations'][ASSET.symbol]
+            ]
         super(TestAccumulateOperationCase02, self).setUp()
 
 
@@ -71,13 +77,15 @@ class TestAccumulateOperationCase03(LogTest):
 
     def setUp(self):
         container = trade.OperationContainer(
-            operations=[copy.deepcopy(OPERATION19)]
+            operations=[copy.deepcopy(OPERATION19)],
+            tasks=[find_volume, group_positions]
         )
         container.fetch_positions()
-        self.occurrences = [
-            container.positions['operations'][ASSET.symbol],
-            copy.deepcopy(OPERATION21)
-        ]
+        if 'positions' in container.context:
+            self.occurrences = [
+                container.context['positions']['operations'][ASSET.symbol],
+                copy.deepcopy(OPERATION21)
+            ]
         super(TestAccumulateOperationCase03, self).setUp()
 
 
@@ -88,8 +96,6 @@ class TestAccumulateOperationCase04(LogTest):
 
     def setUp(self):
         operation2 = copy.deepcopy(OPERATION23)
-        operation2.raw_results = {
-            'trades': 1000
-        }
+        operation2.raw_results = {'trades': 1000}
         self.occurrences = [OPERATION22, operation2]
         super(TestAccumulateOperationCase04, self).setUp()

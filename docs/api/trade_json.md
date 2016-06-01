@@ -1,5 +1,7 @@
 # trade_json
-Copyright (c) 2015 Rafael da Silva Rocha  
+
+trade: Financial Application Framework
+Copyright (c) 2016 Rafael da Silva Rocha  
 https://github.com/rochars/trade  
 http://trade.readthedocs.org
 

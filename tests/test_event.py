@@ -2,9 +2,10 @@
 
 from __future__ import absolute_import
 import unittest
-from trade import trade
-from trade.occurrences import Event
 from accumulator import Accumulator
+
+from trade.occurrences import Event
+
 from tests.fixtures.assets import ASSET
 
 

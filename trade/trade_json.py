@@ -1,5 +1,6 @@
 """trade JSON interface.
 
+trade: Financial Application Framework
 https://github.com/rochars/trade
 http://trade.readthedocs.org/
 License: MIT
@@ -42,7 +43,9 @@ class TradeJSON(object):
         self.containers = {}
         self.container_tasks = container_tasks
         self.types = types
+        self.portfolio = None
 
+        # TODO can't be hardcoded
         self.totals = {
             'total_operations': 0,
             'sale_operations': 0,
@@ -51,8 +54,6 @@ class TradeJSON(object):
             'purchase_volume': 0,
             'total_daytrades': 0
         }
-
-        self.portfolio = None
 
     def create_subjects(self, data):
         """creates a subject object for all subjects in the json."""
@@ -111,7 +112,7 @@ class TradeJSON(object):
         for occurrence in self.occurrences:
             if occurrence.date not in self.containers:
                 self.containers[occurrence.date] = OperationContainer(
-                    #tasks=[fetch_daytrades]
+                    operations=[],
                     tasks=self.container_tasks
                 )
             self.containers[occurrence.date].operations.append(occurrence)
@@ -127,13 +128,14 @@ class TradeJSON(object):
         """Accumulate each container position on the portoflio."""
         for key in sorted(self.containers.keys()):
             self.containers[key].fetch_positions()
-            for position_type, position_asset in \
-                self.containers[key].positions.items():
-                for asset_symbol, position in position_asset.items():
-                    self.portfolio.accumulate(position)
-                    if position_type == 'daytrades':
-                        self.totals['total_daytrades'] += 1
-                        self.subjects[asset_symbol]['daytrades'] += 1
+            if 'positions' in self.containers[key].context:
+                for position_type, position_asset in \
+                    self.containers[key].context['positions'].items():
+                    for asset_symbol, position in position_asset.items():
+                        self.portfolio.accumulate(position)
+                        if position_type == 'daytrades':
+                            self.totals['total_daytrades'] += 1
+                            self.subjects[asset_symbol]['daytrades'] += 1
 
     def get_base_log(self):
         """Get the structure of the return json."""
@@ -184,7 +186,6 @@ class TradeJSON(object):
 
     def get_trade_results(self, data):
         """json in, json out"""
-
         data = json.loads(data)
 
         # creates an object for all subjects in the json
@@ -207,5 +208,4 @@ class TradeJSON(object):
         # all accumulators
         json_output = json.dumps(self.get_states())
 
-        # returns a json
         return json_output

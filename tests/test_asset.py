@@ -3,7 +3,7 @@
 from __future__ import absolute_import
 import unittest
 
-from trade.occurrences import Asset
+from trade.trade import Asset
 
 
 class TestAsset(unittest.TestCase):

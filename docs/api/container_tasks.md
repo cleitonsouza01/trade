@@ -1,10 +1,29 @@
-# prorate
-Copyright (c) 2015 Rafael da Silva Rocha  
+# container_tasks
+
+trade: Financial Application Framework
+Copyright (c) 2016 Rafael da Silva Rocha  
 https://github.com/rochars/trade  
 http://trade.readthedocs.org
 
 
-## prorate_commissions(container):
+## group_positions(container)
+Group the container operations with the same asset.
+
+
+## add_to_position_group(container, operation)
+Adds an operation to the common operations list.
+
+
+## fetch_daytrades(container)
+An OperationContainer task.
+
+Fetches the daytrades from the OperationContainer operations.
+
+The daytrades are placed on the container positions under the
+'daytrades' key, inexed by the Daytrade asset's symbol.
+
+
+## prorate_commissions(container)
 Prorates the container's commissions by its operations.
 
 This method sum the discounts in the commissions dict of the
@@ -12,7 +31,7 @@ container. The total discount value is then prorated by the
 position operations based on their volume.
 
 
-## prorate_commissions_by_position(container, operation):
+## prorate_commissions_by_position(container, operation)
 Prorates the commissions of the container for one position.
 
 The ratio is based on the container volume and the volume of
@@ -20,7 +39,7 @@ the position operation.
 
 
 ## License
-Copyright (c) 2015 Rafael da Silva Rocha
+Copyright (c) 2016 Rafael da Silva Rocha
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

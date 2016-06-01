@@ -1,5 +1,6 @@
 """Utility functions for the trade module.
 
+trade: Financial Application Framework
 http://trade.readthedocs.org/
 https://github.com/rochars/trade
 License: MIT

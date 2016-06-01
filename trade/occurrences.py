@@ -1,5 +1,6 @@
-"""trade: Financial Application Framework
+"""Occurrences.
 
+trade: Financial Application Framework
 http://trade.readthedocs.org/
 https://github.com/rochars/trade
 License: MIT
@@ -24,34 +25,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
+
 from __future__ import absolute_import
 from __future__ import division
 
 import math
 from abc import ABCMeta
-from accumulator import Occurrence, Subject
+from accumulator import Occurrence
 
 from . utils import (
     average_price,
     same_sign,
     merge_operations,
-    find_purchase_and_sale,
-    daytrade_condition
+    find_purchase_and_sale
 )
-
-
-class Asset(Subject):
-    """An asset represents anything that can be traded."""
-
-    default_state = {
-        'quantity': 0,
-        'price': 0,
-        'results': {}
-    }
-
-    def __init__(self, symbol=None, name=None, expiration_date=None, **kwargs):
-        super(Asset, self).__init__(symbol, name, expiration_date)
-        self.underlying_assets = kwargs.get('underlying_assets', {})
 
 
 class Event(Occurrence):
@@ -161,24 +148,20 @@ class Operation(Occurrence):
 
     def update_positions(self, accumulator):
         """Updates the state of the asset with the operation data."""
-        # Here we check if the operation asset is the same
-        # asset of this Accumulator object; the accumulator
-        # only accumulates operations that trade its asset.
-        # We also check if the operation should update the
-        # position; if all this conditions are met, then
-        # the position is updated.
         update_position_condition = (
             self.subject.symbol == accumulator.subject.symbol and
             self.quantity
         )
         if update_position_condition:
-            # Define the new accumualtor quantity
             new_quantity = accumulator.state['quantity'] + self.quantity
 
-            # if the quantity of the operation has the same sign
-            # of the accumulated quantity then we need to
-            # find out the new average price of the asset
+            # Check if we need to update the asset cost
+            # or update the returns related to the asset;
+            # If the original quantity and the operation
+            # have the same sign, udpate the cost
             if same_sign(accumulator.state['quantity'], self.quantity):
+
+                # Update the cost
                 accumulator.state['price'] = average_price(
                     accumulator.state['quantity'],
                     accumulator.state['price'],
@@ -186,9 +169,8 @@ class Operation(Occurrence):
                     self.real_price
                 )
 
-            # If the traded quantity has an opposite sign of the
-            # asset's accumulated quantity and the accumulated
-            # quantity is not zero, then there was a result.
+            # If they have different signs, and the
+            # original quantity was not zero, update the results
             elif accumulator.state['quantity'] != 0:
 
                 # check if we are trading more than what
@@ -214,9 +196,8 @@ class Operation(Occurrence):
                 if not same_sign(accumulator.state['quantity'], new_quantity):
                     accumulator.state['price'] = self.real_price
 
-            # If the accumulated quantity was zero then
-            # there was no result and the new average price
-            # is the price of the operation
+            # if none of these conditions are met, the new cost
+            # is the operation price
             else:
                 accumulator.state['price'] = self.real_price
             accumulator.state['quantity'] = new_quantity
@@ -290,14 +271,6 @@ class Daytrade(Operation):
     def extract_daytrade(self, purchase, sale):
         """Extracts the daytraded quantity from 2 operations."""
         self.quantity = min([purchase.quantity, abs(sale.quantity)])
-
-        # Update the operations that originated the
-        # daytrade with the new quantity after the
-        # daytraded part has been extracted; One of
-        # the operations will always have zero
-        # quantity after this, being fully consumed
-        # by the daytrade. The other operation may or
-        # may not end with zero quantity.
         purchase.quantity -= self.quantity
         sale.quantity += self.quantity
 
@@ -307,21 +280,24 @@ class Daytrade(Operation):
         If there is already a day trade with the same asset on the
         container, then the day trades are merged.
         """
-        if 'daytrades' not in container.positions:
-            container.positions['daytrades'] = {}
+        if 'positions' not in container.context:
+            container.context['positions'] = {}
 
-        if self.subject.symbol in container.positions['daytrades']:
+        if 'daytrades' not in container.context['positions']:
+            container.context['positions']['daytrades'] = {}
+
+        if self.subject.symbol in container.context['positions']['daytrades']:
             self.merge_underlying(container, 0)
             self.merge_underlying(container, 1)
-            container.positions['daytrades'][self.subject.symbol].quantity +=\
+            container.context['positions']['daytrades'][self.subject.symbol].quantity +=\
                 self.quantity
         else:
-            container.positions['daytrades'][self.subject.symbol] = self
+            container.context['positions']['daytrades'][self.subject.symbol] = self
 
     def merge_underlying(self, container, operation_index):
         """Merges one day trade underlying operation."""
         merge_operations(
-            container.positions['daytrades'][self.subject.symbol]\
+            container.context['positions']['daytrades'][self.subject.symbol]\
                 .operations[operation_index],
             self.operations[operation_index]
         )

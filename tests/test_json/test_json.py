@@ -5,8 +5,10 @@ import unittest
 import json
 
 from trade.trade_json import TradeJSON
-from trade.occurrences import Asset, Operation
-from trade.container_tasks import fetch_daytrades
+from trade.trade import Asset
+from trade.occurrences import Operation
+from trade.container_tasks import fetch_daytrades, group_positions, find_volume
+
 
 class TestJSON(unittest.TestCase):
     """Base class for the JSON tests."""
@@ -20,7 +22,10 @@ class TestJSON(unittest.TestCase):
             'Asset': Asset,
             'Operation': Operation,
         }
-        self.interface = TradeJSON([fetch_daytrades], types)
+        self.interface = TradeJSON(
+            [fetch_daytrades, group_positions, find_volume],
+            types
+        )
 
     def test_json_interface(self):
         """Test the json response."""

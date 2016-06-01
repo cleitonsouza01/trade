@@ -5,7 +5,9 @@ import unittest
 import copy
 
 from trade import trade
-from trade.container_tasks import prorate_commissions, fetch_daytrades
+from trade.container_tasks import (
+    prorate_commissions, fetch_daytrades, group_positions, find_volume
+)
 
 
 class TestFetchPositions(unittest.TestCase):
@@ -19,21 +21,22 @@ class TestFetchPositions(unittest.TestCase):
     volume = False
 
     def setUp(self):
-        self.container = trade.OperationContainer()
+        tasks = [
+            find_volume,
+            fetch_daytrades,
+            group_positions,
+            prorate_commissions,
+        ]
+        self.container = trade.OperationContainer(
+            operations=copy.deepcopy(self.operations),
+            tasks=tasks
+            )
         self.container.commissions = self.commissions
-        self.container.operations = copy.deepcopy(self.operations)
         if not self.volume:
             self.volume = sum(
                 operation.volume for operation in self.container.operations
             )
-        self.container.tasks = [
-            fetch_daytrades,
-        ]
         self.container.fetch_positions()
-
-        # TODO must be a container task
-        prorate_commissions(self.container)
-
         self.state = {
             'operations': self.positions,
             'exercises': self.exercises,
@@ -42,28 +45,30 @@ class TestFetchPositions(unittest.TestCase):
 
     def test_container_volume(self):
         """Check the volume of the OperationContainer."""
-        self.assertEqual(self.container.volume, self.volume)
+        self.assertEqual(self.container.context['volume'], self.volume)
 
     def len_check(self, len_type):
         """Check the len of a type of position in the container."""
-        if len_type in self.container.positions:
-            self.assertEqual(
-                len(self.container.positions[len_type].keys()),
-                len(self.state[len_type].keys())
-            )
+        if 'positions' in self.container.context:
+            if len_type in self.container.context['positions']:
+                self.assertEqual(
+                    len(self.container.context['positions'][len_type].keys()),
+                    len(self.state[len_type].keys())
+                )
 
     def state_check(self, position_type):
         """Check the state of a type of position in the container."""
-        if position_type in self.container.positions:
-            for position in self.container.positions[position_type].values():
+        if position_type in self.container.context['positions']:
+            for position in self.container.context['positions']\
+            [position_type].values():
                 position_details = position.__dict__
                 for key in position_details:
                     if key in \
                         self.state[position_type][position.subject.symbol]:
                         self.assertEqual(
                             position_details[key],
-                            self.state\
-                                [position_type][position.subject.symbol][key]
+                            self.state[position_type]\
+                                [position.subject.symbol][key]
                         )
 
     def test_operations_len(self):
@@ -100,19 +105,20 @@ class TestFetchPositions(unittest.TestCase):
 
     def check_daytrade_suboperation(self, operation_index, operation_type):
         """Check the state of the daytrade suboperations."""
-        for asset in self.daytrades.keys():
-            self.assertEqual(
-                (
-                    self.container.positions['daytrades'][asset]\
-                        .operations[operation_index].price,
-                    self.container.positions['daytrades'][asset]\
-                        .operations[operation_index].quantity,
-                    self.container.positions['daytrades'][asset]\
-                        .operations[operation_index].commissions,
-                ),
-                (
-                    self.daytrades[asset][operation_type + ' price'],
-                    self.daytrades[asset][operation_type + ' quantity'],
-                    self.daytrades[asset][operation_type + ' commissions']
+        if 'daytrades' in self.container.context['positions']:
+            for asset in self.daytrades.keys():
+                self.assertEqual(
+                    (
+                        self.container.context['positions']['daytrades'][asset]\
+                            .operations[operation_index].price,
+                        self.container.context['positions']['daytrades'][asset]\
+                            .operations[operation_index].quantity,
+                        self.container.context['positions']['daytrades'][asset]\
+                            .operations[operation_index].commissions,
+                    ),
+                    (
+                        self.daytrades[asset][operation_type + ' price'],
+                        self.daytrades[asset][operation_type + ' quantity'],
+                        self.daytrades[asset][operation_type + ' commissions']
+                    )
                 )
-            )

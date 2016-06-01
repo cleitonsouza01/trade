@@ -5,7 +5,7 @@ import unittest
 import copy
 
 from trade import trade
-
+from trade.container_tasks import find_volume
 from tests.fixtures.operations import OPERATION39
 from tests.fixtures.operation_sequences import (
     OPERATION_SEQUENCE6, OPERATION_SEQUENCE7
@@ -20,12 +20,13 @@ class TestContainerProperties(unittest.TestCase):
 
     def setUp(self):
         self.container = trade.OperationContainer(
-            operations=copy.deepcopy(self.operations)
+            operations=copy.deepcopy(self.operations),
+            tasks=[find_volume]
         )
         self.container.fetch_positions()
 
     def test_volume_00(self):
-        self.assertEqual(self.container.volume, self.volume)
+        self.assertEqual(self.container.context['volume'], self.volume)
 
 
 class TestContainerPropertiesCase00(TestContainerProperties):
