@@ -31,7 +31,7 @@ from __future__ import division
 
 import math
 from abc import ABCMeta
-from accumulator import Occurrence
+from accumulator import Occurrence, Subject
 
 from . utils import (
     average_price,
@@ -41,6 +41,21 @@ from . utils import (
 )
 
 
+class Asset(Subject):
+    """An asset represents anything that can be traded."""
+
+    default_state = {
+        'quantity': 0,
+        'price': 0,
+        'results': {}
+    }
+
+    def __init__(self, symbol=None, name=None, expiration_date=None, **kwargs):
+        super(Asset, self).__init__(symbol, name, expiration_date)
+        self.underlying_assets = kwargs.get('underlying_assets', {})
+
+
+# TODO must not exist, all Events must be subclasses of Operation
 class Event(Occurrence):
     """An occurrence that changes the state of one or more assets.
 

@@ -29,21 +29,6 @@ THE SOFTWARE.
 from __future__ import absolute_import
 
 import copy
-from accumulator import Subject
-
-
-class Asset(Subject):
-    """An asset represents anything that can be traded."""
-
-    default_state = {
-        'quantity': 0,
-        'price': 0,
-        'results': {}
-    }
-
-    def __init__(self, symbol=None, name=None, expiration_date=None, **kwargs):
-        super(Asset, self).__init__(symbol, name, expiration_date)
-        self.underlying_assets = kwargs.get('underlying_assets', {})
 
 
 class OperationContainer(object):
