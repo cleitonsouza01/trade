@@ -30,7 +30,6 @@ from __future__ import absolute_import
 from __future__ import division
 
 import math
-from abc import ABCMeta
 from accumulator import Occurrence, Subject
 
 from . utils import (
@@ -55,27 +54,16 @@ class Asset(Subject):
         self.underlying_assets = kwargs.get('underlying_assets', {})
 
 
-# TODO must not exist, all Events must be subclasses of Operation
-class Event(Occurrence):
-    """An occurrence that changes the state of one or more assets.
-
-    This is a base class for events.
-
-    Attributes:
-        date: A string 'YYYY-mm-dd', the date the event occurred.
-        asset: The target asset of the event.
-        factor: the factor of the change on the asset state.
-    """
-
-    __metaclass__ = ABCMeta
-
-    def __init__(self, asset, date, factor):
-        super(Event, self).__init__(asset, date)
-        self.factor = factor
-
-
 class Operation(Occurrence):
-    """An Operation represents the purchase or sale of an asset.
+    """An Operation represents an occurrence with an Asset.
+
+    Class Attributes:
+        update_position: A boolean indication if the operation should
+            update the position of the accumulator or not.
+        update_results: A boolean indication if the operation should
+            update the results of the accumulator or not.
+        update_container: A boolean indication if the operation should
+            update the context in a OperationContainer or not.
 
     Attributes:
         date: A string 'YYYY-mm-dd', the date the operation occurred.
@@ -89,10 +77,7 @@ class Operation(Occurrence):
             to be deducted added to the the operation value.
         operations: A list of underlying occurrences that the
             might may have.
-        update_position: A boolean indication if the operation should
-            update the position of the accumulator or not.
-        update_results: A boolean indication if the operation should
-            update the results of the accumulator or not.
+
     """
 
     # By default every operation
@@ -103,9 +88,8 @@ class Operation(Occurrence):
     # updates the accumulator results
     update_results = True
 
-    # By default every operation
-    # updates the OperationContainer
-    # positions
+    # By default every operation updates
+    # the OperationContainer positions
     update_container = True
 
     def __init__(self, subject=None, date=None, **kwargs):

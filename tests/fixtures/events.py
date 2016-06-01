@@ -3,11 +3,15 @@
 from __future__ import absolute_import
 
 from . assets import ASSET
-from trade.occurrences import Event
+from trade.occurrences import Operation
 
 
-class TestEvent(Event):
+class TestEvent(Operation):
     """A dummy event for the tests."""
+
+    def __init__(self, asset, date, factor):
+        super(TestEvent, self).__init__(asset, date)
+        self.factor = factor
 
     def update_accumulator(self, container):
         pass

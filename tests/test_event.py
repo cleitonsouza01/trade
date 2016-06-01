@@ -4,16 +4,13 @@ from __future__ import absolute_import
 import unittest
 from accumulator import Accumulator
 
-from trade.occurrences import Event
+from trade.occurrences import Operation
 
 from tests.fixtures.assets import ASSET
 
 
-class DummyEvent(Event):
+class DummyEvent(Operation):
     """A dummy event for the tests."""
-
-    def __init__(self, asset, date, factor=1):
-        super(DummyEvent, self).__init__(asset, date, factor)
 
     def update_accumulator(self, accumulator):
         pass

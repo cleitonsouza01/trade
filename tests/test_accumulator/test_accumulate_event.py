@@ -3,7 +3,7 @@
 from __future__ import absolute_import
 from __future__ import division
 
-from trade.occurrences import Event
+from trade.occurrences import Operation
 
 from tests.fixtures.operations import ASSET
 from tests.fixtures.logtest import LogTest
@@ -12,8 +12,12 @@ from tests.fixtures.accumulator_states import (
 )
 
 
-class EventThatChangeResults(Event):
+class EventThatChangeResults(Operation):
     """A fictional event for the tests."""
+
+    def __init__(self, asset, date, factor):
+        super(EventThatChangeResults, self).__init__(asset, date)
+        self.factor = factor
 
     def update_accumulator(self, accumulator):
         """Increment all results in the container with the factor."""
